@@ -1,0 +1,247 @@
+﻿{% extends "layout.html" %}
+
+{% block scripts %}
+
+    {% load staticfiles %}
+
+    <!-- High Charts-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/map.src.js"></script>
+    <script src="https://code.highcharts.com/modules/heatmap.js"></script>
+    <script src="https://code.highcharts.com/modules/vector.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/boost.js"></script>
+
+	<script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+    <script src="https://rawgithub.com/paulo-raca/highcharts-contour/master/highcharts-contour.js"></script>
+    <script src="https://rawgithub.com/ironwallaby/delaunay/master/delaunay.js"></script>
+
+    <!-- Google Charts -->
+	<script src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">google.charts.load('current', {'packages': ['corechart']});</script>
+		
+		<!--Google Tag Manager-->
+		<script>
+        dataLayer = [];
+   </script>
+	 
+	 <!--<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	 })(window,document,'script','dataLayer','GTM-NV5RBN8');</script>-->
+	
+	<!-- Video -->
+	<link rel="stylesheet" href="http://vjs.zencdn.net/6.2.7/video-js.css">
+    <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+
+    <!--jQuery UI-->
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" >
+    <script
+        src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+        integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+        crossorigin="anonymous">
+    </script>
+
+    <!-- Local Scripts -->
+	<script src="{% static 'Buoy_tool/scripts/buoyPage.js' %}"></script>
+	<script src="{% static 'Buoy_tool/scripts/geopoint.js' %}"></script>
+	<script src="{% static 'Buoy_tool/scripts/export-csv.js' %}"></script>
+	<script src="{% static 'Buoy_tool/scripts/PastForecast_Highchart.js' %}"></script>
+	<script src="{% static 'Buoy_tool/scripts/PastTempGrab_Highchart.js' %}"></script>
+	<script src="{% static 'Buoy_tool/scripts/TempString_Highchart.js' %}"></script>
+    <script src="{% static 'Buoy_tool/scripts/ADCP_Highchart.js' %}"></script>
+	<script src="{% static 'Buoy_tool/scripts/fullScreenCheck.js' %}"></script>
+    
+    <!--Buoy enhanced plotting tool (TMR-2017/09/22)-->
+	    <!--
+    <link rel="stylesheet" type="text/css" href="{% static 'Plotting_export_tools/css/tool.css' %}">
+	<script src="{% static 'Plotting_export_tools/scripts/buoy.plot.tool.js' %}"></script>
+        -->
+{% endblock %}
+
+{% block staticHeader %}
+
+    <div id="staticHeader" class="w3-container w3-center" style="padding-left:0px;padding-right:0px;">
+        <p id="stationID" style="margin-bottom:10px"></p>
+        <p id="stationTime" style="padding:0;margin:0"></p>
+    </div>
+
+{% endblock %}
+
+
+{% block content %}
+    <!-- Preloader DIV -->
+    <div class="preloader"></div>
+
+
+    <section id="main" class="w3-container" style="margin-top:110px">
+
+				<div id="recovered"></div>
+				<div id="bannerNews" style="max-width:600px; margin: 0 auto;"></div>
+				<div id = "sponsorsHeader" class="w3-container w3-center" style="margin-bottom:10px"></div>
+				<div id="buoyAlert"></div>
+
+        <!--Added by TMR-->
+        <div id="launch-tool" class="w3-container w3-center" style="margin-top:15px;">
+            <button id="btn-show-tool">Buoy Plotting Tool <span class="red">(NEW!)</span></button>
+        </div>
+
+        <table id="realtime" class="w3-table w3-striped w3-bordered w3-small" style="max-width:500px" align="center" cellspacing="0">
+            <tbody></tbody>
+        </table>
+		
+        <div id="textBuoy" style="max-width:500px; margin: 0 auto;"></div>
+					
+            <div id="id01" class="w3-modal">
+                <div id="id01_a" class="w3-modal-content w3-card-8">
+                    <span onclick="document.getElementById('id01').style.display='none';$('#container').highcharts().destroy();$('#forecastFooter').remove();" class="w3-closebtn" style="z-index:1">&times;</span>
+                    <div id="container" style="min-width: 310px; height: 350px; margin: 0 auto">
+                        <!--<img style="width:100%;max-width:500px" src="img/past7days.jpg" />-->
+                    </div>
+                </div>
+            </div>
+				<div id="Thermistor">
+			        <h4></h4>
+				</div>
+				
+				<div id="id02" class="w3-modal">
+                    <div class="w3-modal-content w3-card-8">
+						<span onclick="document.getElementById('id02').style.display='none';" class="w3-closebtn">&times;</span>
+						<div id="TempStringHighMap" style="min-width: 310px; height: 400px;"></div>
+                    </div>
+                </div>
+                <div id="ADCP">
+                    <h4></h4>
+                </div>
+				
+        <div id="buoyCam">
+					<div id="BuoyCamTitle">
+						<h4></h4>
+					</div>
+					<div id="BuoyCamPic" class="w3-center"></div>
+					<p></p>
+				</div>
+        
+				<div id="MarineForecast">
+					<div id="MarineHazard"></div>
+					<h4></h4>
+					<div class="w3-responsive"><table id="NWSForecast"><tbody></tbody></table></div>
+						<p id="MarineForecastText" class="w3-container"></p>
+						<p id="MarineForecastLink" class="w3-panal"></p>
+				</div>
+				
+		    <div id = "buoyLocation">
+			    <h4></h4>
+				<p></p>
+				<style type="text/css">
+				    div#map_canvas { margin: 0 auto 0 auto; }
+				</style>
+				<div id="map_canvas" style="width:100%;max-width:400px;height:350px;margin: 0 auto">
+				    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhlUyFNacPYsUz4dZZUmf7lu7SrwkLRIo"></script>
+				</div>
+            </div>
+
+        <div id="stationMeta">
+					<h4></h4>
+					<p id="buoyInfo" class="w3-container"></p>
+					<p id="metaGLOS" class="w3-container"></p>
+					<p id="uglosLink" class="w3-container"></p>
+
+					<div id = "sponsorsBottom" class="w3-container w3-center">
+			        <h5></h5>
+			    </div>
+	      </div>
+
+				
+		</section>
+
+        <!-- jQuery UI dialogs -->
+        <div id="dlg-msg" title="Message" style="display:none;">
+
+        </div>
+
+        <div id="dlg-tool" title="Great Lakes Buoy Plotting Tool"  style="display:none;">
+            <div id="tool-plot">
+                <div id="cht-buoy-tool">
+                    <!-- HighChart container -->
+                </div>
+
+            </div>
+
+            <div id="tool-ctrl" >
+                <form>
+                    {% csrf_token %}
+                    <div id="tool-ctrl-left">
+                        <!-- Buoys -->
+                        <label for="lst-buoys" id="lab-lst-buoys" class="lab-tool">Select buoy site(s):</label>
+                        <br />
+                        <div id="lst-buoys" class="multiselect data-med">
+                        </div>
+                    </div>
+
+                    <div id="tool-ctrl-right">
+                        <!-- Parameter list -->
+                        <label for="lst-params" id="lab-lst-params" class="lab-tool">Select parameter(s):</label>
+                        <br />
+                        <div id="lst-params" class="multiselect data-med">
+                        </div>
+
+                        <ul class="tool">
+                            <!-- Time period -->
+                            <li>
+                                <label for="sel-period" class="lab-tool">Time period:</label>
+                                <select id="sel-period" class="opts-buoy">
+                                    <option value="1_d">Past 1 day</option>
+                                    <option value="2_d">Past 2 days</option>
+                                    <option value="3_d">Past 3 days</option>
+                                    <option value="5_d" selected>Past 5 days</option>
+                                    <option value="10_d">Past 10 days</option>
+                                    <option value="30_d">Past 30 days</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </li>
+
+                            <!-- Custom date range -->
+                            <li>
+                                <label for="sel-range" class="lab-tool">Date range:</label>
+                                <input type="text" id="date-start" value="" class="date hasDatePicker" /><span>-</span>
+                                <input type="text" id="date-end" value="" class="date hasDatePicker" />
+                            </li>
+
+                            <!-- Data aggregation -->
+                            <li>
+                                <label for="sel-avg-ivld" class="lab-tool">Averaging interval:</label>
+                                <select id="sel-avg-ivld" class="opts-buoy" disabled>
+                                    <option value="none" selected>None</option>
+                                    <option value="30_min">30 minutes</option>
+                                    <option value="1_hr">1 hour</option>
+                                    <option value="2_hr">2 hours</option>
+                                    <option value="4_hr">4 hours</option>
+                                    <option value="6_hr">6 hours</option>
+                                    <option value="8_hr">8 hours</option>
+                                    <option value="12_hr">12 hours</option>
+                                    <option value="1_day">1 day</option>
+                                    <option value="2_day">2 days</option>
+                                    <option value="3_day">3 days</option>
+                                    <option value="4_day">5 days</option>
+                                </select>
+                            </li>
+                        </ul>
+
+                    </div>
+                </form>
+
+            </div>            
+        </div>
+
+        <footer class="w3-container w3-center">   
+					<p></p>
+					<table id="footerLogos" class="w3-table w3-small">
+						<tbody> 
+						</tbody>
+					</table>
+				</footer>
+
+{% endblock %}

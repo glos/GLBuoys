@@ -1,0 +1,228 @@
+﻿{% extends "layout_tool.html" %}
+
+{% block scripts %}
+
+    <!-- High Charts-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/map.src.js"></script>
+    <script src="https://code.highcharts.com/modules/heatmap.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/boost.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+    <!--jQuery UI-->
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" >
+    <script
+        src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+        integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+        crossorigin="anonymous">
+    </script>
+
+    <!--Plotting tool -->
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'Buoy_tool/css/main.css' %}">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'Plotter_export_tools/css/tool.css' %}">
+	<script src="{% static 'Plotter_export_tools/scripts/plotter_tool.js' %}"></script>
+
+	<script src="{% static 'Buoy_tool/scripts/clipboard.min.js' %}"></script>    
+
+{% endblock %}
+
+{% block staticHeader %}
+
+    <div id="staticHeader" class="w3-container w3-center" style="padding-left:0px;padding-right:0px;">
+        <p id="stationID" style="margin-bottom:10px"></p>
+        <p id="stationTime" style="padding:0;margin:0"></p>
+    </div>
+
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="content-wrapper">
+        <div id="body">
+
+            <section id="main" class="content-wrapper clear-fix" style="margin-top:75px">
+
+            <article>
+                <!-- Chart -->
+                <div id="tool-plot">
+                    <div id="cht-tool">
+                        <!-- HighChart container -->
+                    </div>
+
+                    <!-- Preloader DIV -->
+                    <div id="cht-loader" class="preloader"></div>
+                </div>
+
+                <!-- User Options/Controls -->
+                <div id="tool-ctrl" >
+
+                        <!-- Data type & buttons -->
+                        <div id="div-buttons">
+                            <!-- Monitoring data type -->
+                            <label for="" id="" class="lab-tool2" style="font-size:0.9em;">Monitoring type:</label>
+                            <select id="sel-datatype" class="opts-tool" disabled>
+                                <option value="buoy" selected >Buoy</option>
+                            </select>
+
+                            <button id="btn-export-menu">Export Menu</button>
+                            <button id="btn-get-link">Get Permalink</button>
+                            <button id="btn-plot-update">Update Plot</button>
+                        </div>
+
+                    <form>
+                        {% csrf_token %}
+
+                        <div id="tool-ctrl-left">
+                            <!-- Units selection -->
+                            <label for="" id="" class="lab-tool2" style="font-size:0.9em;">Select units:</label>
+                            <select id="sel-units" class="opts-tool" title="This feautre is not yet implemented."> <!--<disabled>-->
+                                <option value="met" selected >Metric</option>
+                                <option value="eng" >English</option>
+                            </select>
+                           <br/><br/>
+
+                            <!-- Great Lake -->
+                            <label for="" id="" class="lab-tool2" style="font-size:0.9em;">Select lake:</label>
+                            <select id="sel-lake" class="opts-tool">
+                                <option value="ALL" selected >All Lakes</option>
+                                <option value="SUP" >Lake Superior</option>
+                                <option value="HU" >Lake Huron</option>
+                                <option value="MI" >Lake Michigan</option>
+                                <option value="ER" >Lake Erie</option>
+                                <option value="ON" >Lake Ontario</option>
+                            </select>
+                           <br/><br/>
+
+                            <!-- Monitoring locations -->
+                            <label for="" id="lab-lst-locs" class="lab-tool">Select locations (max of 3):</label>
+                            <br />
+                            
+                            <!-- Single-select menus -->
+                            <ul id="ul-locs" class="tool">
+                                <li>#1:
+                                    <select id="sel-loc1" class="sel-loc opts-tool"></select>
+                                </li>
+                                <li>#2:
+                                    <select id="sel-loc2" class="sel-loc opts-tool"></select>
+                                </li>
+                                <li>#3:
+                                    <select id="sel-loc3" class="sel-loc opts-tool"></select>
+                                </li>
+                            </ul>
+
+                            <!-- Multiselect option -->
+                            <div id="lst-locs" class="multiselect data-med">
+                            </div>
+                        </div>
+
+                        <div id="tool-ctrl-right">
+                            <!-- Parameter list -->
+                            <label for="" id="lab-lst-params" class="lab-tool">Select parameters (max of 3):</label>
+                            <br />
+
+                            <!-- Single-select menus -->
+                            <ul id="ul-params" class="tool">
+                                <li>#1:
+                                    <select id="sel-param1" class="sel-param opts-tool"></select>
+                                </li>
+                                <li>#2:
+                                    <select id="sel-param2" class="sel-param opts-tool"></select>
+                                </li>
+                                <li>#3:
+                                    <select id="sel-param3" class="sel-param opts-tool"></select>
+                                </li>
+                            </ul>
+
+                            <!-- Multiselect option -->
+                            <div id="lst-params" class="multiselect data-med">
+                            </div>
+
+
+                            <!--- Time options -->
+                            <label for="" id="" class="lab-tool">Time period options:</label>
+                            <br />
+
+                            <ul class="tool">
+                                <!-- Time period -->
+                                <li>
+                                    <label for="sel-tperiod" class="lab-tool2">Time period:</label>
+                                    <select id="sel-tperiod" class="opts-tool">
+                                        <option value="1_day">Past 1 day</option>
+                                        <option value="2_day">Past 2 days</option>
+                                        <option value="3_day">Past 3 days</option>
+                                        <option value="5_day" selected>Past 5 days</option>
+                                        <option value="10_day">Past 10 days</option>
+                                        <option value="30_day">Past 30 days</option>
+                                        <option value="custom">Custom</option>
+                                    </select>
+                                </li>
+
+                                <!-- Custom date range -->
+                                <li>
+                                    <label for="sel-range" class="lab-tool2">Date range:</label>
+                                    <input type="text" id="date-start" value="" class="date hasDatePicker" /><span>-</span>
+                                    <input type="text" id="date-end" value="" class="date hasDatePicker" />
+                                </li>
+
+                                <!-- Data aggregation -->
+                                <li>
+                                    <label for="sel-tavg" class="lab-tool2">Averaging interval:</label>
+                                    <select id="sel-tavg" class="opts-tool" title="This feature is not yet implemented." disabled>
+                                        <option value="none" selected>None</option>
+                                        <option value="30_min">30 minutes</option>
+                                        <option value="1_hr">1 hour</option>
+                                        <option value="2_hr">2 hours</option>
+                                        <option value="4_hr">4 hours</option>
+                                        <option value="6_hr">6 hours</option>
+                                        <option value="8_hr">8 hours</option>
+                                        <option value="12_hr">12 hours</option>
+                                        <option value="1_day">1 day</option>
+                                    </select>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </form>
+
+                </div>            
+
+            </article>				
+
+		    </section>
+        </div>
+    </div>
+
+
+
+        <!-- jQuery UI dialogs -->
+        <div id="dlg-msg" title="Message" style="display:none;">
+
+        </div>
+
+        <div id="dlg-plink" title="Permalink" style="display:none;">
+            <label for="txt-plink">The following permalink can be copied and used to retrieve this view later:</label>
+            <textarea name="txt-plink" id="txt-plink" spellcheck="false"></textarea>
+            <button id="btn-copy-plink" class="btn-plink" data-clipboard-target="#txt-plink">Copy Link</button>
+            <button id="btn-close-plink" class="btn-plink">Close</button>
+        </div>
+
+        <div id="dlg-export" title="GLOS Data Export Options"  style="display:none;">
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="w3-container w3-center">   
+			<p></p>
+            <table id="footerLogos" class="w3-table w3-small">
+			    <tbody> 
+				</tbody>
+            </table>
+        </footer>
+
+{% endblock %}

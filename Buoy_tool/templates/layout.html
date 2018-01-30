@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+
+	<!-- Google Tag Manager -->
+	<script>
+        dataLayer = [];
+    </script>
+	
+	<!--<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-NV5RBN8');</script>-->
+	<!-- End Google Tag Manager -->
+	
+    <title>Great Lakes Buoys</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load staticfiles %}
+
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link rel="stylesheet" href="{% static 'Buoy_tool/css/main.css' %}">
+	<link rel="shortcut icon" type="image/x-icon" href="http://www.glos.us/wp-content/themes/optimizer-child/favicon.ico">
+	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-blue.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="{% static 'Buoy_tool/scripts/moment.js' %}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone-with-data-2012-2022.min.js"></script>
+
+    {% block scripts %}{% endblock %}
+    
+</head>
+
+
+	<body>
+
+    <!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NV5RBN8"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+	<!-- End Google Tag Manager (noscript) -->	
+		
+		<nav class="w3-sidenav w3-round w3-white w3-collapse w3-card-4 w3-animate-right w3-top" style="width:110px;right:0;z-index:2;" id="mySidenav">
+        <a href="javascript:void(0)" onclick="w3_close(); return false;" class="w3-closenav w3-hide-large w3-right-align">Close X</a>
+        <div class="w3-container w3-padding-tiny">
+            <p id="navHeader" class="glosBlue w3-center w3-round">Buoy List</p>
+        </div>
+        <div class="w3-border" style="cursor:pointer" id="Lake Michigan">
+            <a onclick="myAccFunc();">
+                Lake Michigan <i class="fa fa-caret-down"></i>
+            </a>
+            <div id="MichiganAcc"class="w3-hide w3-white w3-card-4">
+            </div>
+        </div>
+        <div class="w3-border-right w3-border-left w3-border-bottom" style="cursor:pointer" id="Lake Superior">
+            <a onclick="myAccFunc2();">
+                Lake Superior<i class="fa fa-caret-down"></i>
+            </a>
+            <div id="SuperiorAcc" class="w3-hide w3-white w3-card-4">
+            </div>
+        </div>
+        <div class="w3-border-right w3-border-left w3-border-bottom" style="cursor:pointer" id="Lake Erie">
+            <a onclick="myAccFunc3();">
+                Lake Erie<i class="fa fa-caret-down"></i>
+            </a>
+            <div id="ErieAcc" class="w3-hide w3-white w3-card-4">
+            </div>
+        </div>
+        <div class="w3-border-right w3-border-left" style="cursor:pointer" id="Lake Huron">
+            <a onclick="myAccFunc4();">
+                Lake Huron<i class="fa fa-caret-down"></i>
+            </a>
+            <div id="HuronAcc" class="w3-hide w3-white w3-card-4">
+            </div>
+        </div>
+				<div class="w3-border" style="cursor:pointer" id="Lake Ontario">
+            <a onclick="myAccFunc5();">
+                Lake Ontario<i class="fa fa-caret-down"></i>
+            </a>
+            <div id="OntarioAcc" class="w3-hide w3-white w3-card-4">
+            </div>
+        </div>
+				<div id="unitConversion" class="w3-container">
+					<div id="ConvButton">
+						<button onclick="unitConversion();" id="units" class="w3-button w3-white w3-border w3-round w3-text-black">To Metric</button>
+					</div>
+				</div>
+				<div class="w3-container w3-center">
+            <button class="w3-button w3-white w3-border w3-round"><a id="navFooter" style="padding:0px">Feedback</a></button>
+        </div>
+    </nav>
+
+    <div class="w3-main" style="margin-right:100px">
+
+        <header class="w3-container w3-top w3-white">
+
+            <div class="w3-display-container" style="height: 50px;">
+                <a href="http://glos.us" onclick="dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'logo','glbuoysLabel':'http://glos.us','glbuoysAction':'click_internal_url'})" target="_blank">
+                    <img class="headerLogos" src="{% static 'Buoy_tool/img/glos_logo.png' %}"/>
+                </a>
+
+                <a href="#aboutBuoyPortal" onclick="dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'logo','glbuoysLabel':'http://glbuoys.glos.us','glbuoysAction':'click_internal_url'})">
+                    <img class="headerLogos" src="{% static 'Buoy_tool/img/glbuoy_logo.png' %}"/>
+                </a>
+
+                <div class="w3-display-topright">
+                    <span class="glosBlue w3-opennav w3-xxlarge w3-hide-large w3-right" onclick="w3_open()">&#9776;</span>
+                </div>
+		    </div>
+
+            {% block staticHeader %}{% endblock %}
+						
+        </header>
+
+        {% block content %}{% endblock %}
+
+        </div>
+
+	</body>
+</html>

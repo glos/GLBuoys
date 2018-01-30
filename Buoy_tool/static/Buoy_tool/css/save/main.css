@@ -1,0 +1,188 @@
+p, tr, h1, h2, h3, h4, h5, h6 {
+    font-family: Roboto,Verdana;
+}
+
+h1, h2, h3 , h4 {color: #2e6da4;}
+
+p{
+    font-size:13px;
+}
+
+.glosBlue {color: #2e6da4}
+
+mySidenav{border-style:none;}
+
+#navHeader{
+    font-family: Inconsolata,Verdana;
+    line-height:0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#navFooter{
+    font-family: Inconsolata,Verdana;
+    font-size: 15px;
+    font-weight: 600;
+}
+img.headerLogos{
+	float:left;
+	height:50px;
+	width:175px;
+}
+/*Shrink logos by 20%*/
+@media (max-width:450px){
+    img.headerLogos{
+			height:40px;
+			width:140px;
+		}
+}
+
+/*Index Page Styling*/
+table#buoySummary tr {font-size:10px;}
+table#buoySummary thead {font-weight: 700;}
+table#buoySummary thead td {text-align: center;}
+table#buoySummary td.homeWindSpDir {padding-left: 0px; padding-right: 0px}
+table#buoySummary td.homeWaveHeight{text-align:right;width:70px;padding-right:16px}
+
+#NWSForecast img{
+	width:60px;
+}
+
+@media (min-width:590px){
+    #NWSForecast img{
+			width:100px;
+		}
+}
+
+/*Buoy station styling*/
+@media (min-width:993px){
+    #staticHeader{
+        margin-right:100px;
+    }
+}
+
+#buoyCam, #Thermistor, #MarineForecast, #buoyLocation, #stationMeta {
+	max-width:800px;
+	margin: auto;
+}
+
+p#stationID{
+    font-family: Inconsolata,Verdana;
+    line-height: 0;
+    font-size: 19px;
+    font-weight: 700;
+    color: rgb(51,51,51);
+}
+
+#stationTime{
+		margin-top:0px;
+		font-size: 16px;
+}
+
+/*Make logos 20% smaller and text smaller for station ID and time if using a phone with small screens*/
+@media (max-width:358px){
+    p#stationID{
+			font-family: Inconsolata,Verdana;
+			line-height: 0;
+			font-size: 16px;
+			font-weight: 700;
+			color: rgb(51,51,51);
+		}
+		p#stationTime{
+			margin-top:0px;
+			font-size: 13px;
+		}
+		img.headerLogos{
+			height:32px;
+			width:112px;
+		}
+}
+
+#ErieAcc,#MichiganAcc,#SuperiorAcc,#HuronAcc,#OntarioAcc{
+    font-family: Inconsolata,Verdana;
+    line-height: 1;
+    font-size: 12px;
+}
+
+div[id='Lake Erie'],div[id='Lake Michigan'],div[id='Lake Superior'],div[id='Lake Huron'],div[id='Lake Ontario']{
+    font-family: Inconsolata,Verdana;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+div[id='Lake Michigan']{
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+#ErieAcc:active{
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+div[id='Lake Ontario']{
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+img.sponsors{
+	max-height:100px;
+	max-width:160px;
+	vertical-align:middle;
+	margin-bottom:4px;
+}
+/*20% smaller once screen goes below 450px)*/
+@media (max-width:450px){
+    img.sponsors{
+			max-height:80px;
+			max-width:128px;
+			vertical-align:middle;
+			margin-bottom:4px;
+		}
+}
+
+table#realtime tr {font-size:14px;
+	text-align:center;
+}
+table#realtime td.float_value{
+	padding-left:0px;
+	padding-right:0px;
+	margin-right:0px;
+	width:18%;
+}
+table#realtime#TAccord td {
+	padding-left:0px;
+	padding-right:0px;
+	width:30px;
+}
+
+#NWSForecast img{
+	width:60px;
+}
+
+@media (min-width:590px){
+    #NWSForecast img{
+			width:100px;
+		}
+}
+
+table#NWSForecast td.NWSIconSubtext {
+	padding-top:0px;
+	padding-bottom:0px;
+}
+
+#googleMapcontent {
+    font-family: Inconsolata,Verdana;
+    line-height: 0;
+    font-size: 8px;
+    font-weight: 700;
+    color: rgb(51,51,51);
+}
+
+#googleMapLegend {
+    font-family: Arial, sans-serif;
+    background: #fff;
+    padding: 2px;
+    margin: 10px;
+    border: 1px solid #000;
+		text-align: left;
+		vertical-align:middle;
+  }

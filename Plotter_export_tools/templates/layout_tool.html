@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+
+    <head>
+
+        {% load static %}
+
+        <!-- Handle GET request -->
+        <script>
+            objGET = {{ req_data|safe }};
+        </script>
+
+	    <!-- Google Tag Manager -->
+	    <script>
+            dataLayer = [];
+        </script>
+	
+	    <!--<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	    })(window,document,'script','dataLayer','GTM-NV5RBN8');</script>-->
+	    <!-- End Google Tag Manager -->
+	
+        <title>GLOS Plotting Tool</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+	    <link rel="shortcut icon" type="image/x-icon" href="http://www.glos.us/wp-content/themes/optimizer-child/favicon.ico">
+	    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-blue.css">
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+	    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+	    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone-with-data-2012-2022.min.js"></script>-->
+
+        <!--<script src="{% static 'Buoy_tool/scripts/moment.js' %}"></script>-->
+
+        {% block scripts %}
+        
+        {% endblock %}
+    
+    </head>
+
+
+    <body>
+
+    <!-- Google Tag Manager (noscript) -->
+	<noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NV5RBN8"
+	            height="0" width="0" style="display:none;visibility:hidden">
+        </iframe>
+    </noscript>
+	<!-- End Google Tag Manager (noscript) -->	
+
+    <header class="w3-container w3-top w3-white">
+
+            <div class="w3-display-container" style="height: 50px;text-align:center;">
+                <a href="http://glos.us" onclick="dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'logo','glbuoysLabel':'http://glos.us','glbuoysAction':'click_internal_url'})" target="_blank">
+                    <img class="headerLogos" src="{% static 'Plotter_export_tools/img/glos_logo.png' %}"/>
+                </a>
+
+                <h3 style="padding-top:15px;">GLOS Data Plotting Tool</h3>
+
+                <div class="w3-display-topright">
+                    <span class="glosBlue w3-opennav w3-xxlarge w3-hide-large w3-right" onclick="w3_open()">&#9776;</span>
+                </div>
+		    </div>
+
+            {% block staticHeader %}
+            {% endblock %}
+						
+    </header>
+
+    {% block content %}{% endblock %}
+
+
+	</body>
+</html>

@@ -99,3 +99,8 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# LimnoTech added (01/30/2018):
+static_global/
+obj/
+.vs/
