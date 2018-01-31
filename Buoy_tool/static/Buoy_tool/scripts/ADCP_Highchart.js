@@ -30,7 +30,7 @@
     
             //Javascript function JSON.parse to parse JSON data**/
 
-    $.getJSON('../static/app/json/45026_adcp.json', function (jsonObj) {
+    $.getJSON('../static/Buoy_tool/json/45026_adcp.json', function (jsonObj) {
         var Dates = [];
         var Data = [];
         var Depth = [];
