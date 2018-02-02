@@ -67,14 +67,14 @@ $(document).ready(function () {
 var reloadCount = 0;
 
 function loadBuoySummary(){
-	loadbuoyinfo_home(function(response){
+    $.getJSON('../static/Buoy_tool/data/meta_' + units + '.json', function (jsonObj) {
 			//Empty content before second load
 			if (reloadCount > 0){
 				$('#buoySummary tbody').empty();
 				$('#buoySummary thead').empty();
 			}
 			reloadCount += 1;
-			var jsonObj = JSON.parse(response);
+			//var jsonObj = JSON.parse(response);
 			var ErieRows;
 			var MichiganRows;
 			var SuperiorRows;
@@ -407,8 +407,8 @@ function initialize(lat,lon) {
 		var offline = [];
 		var recovered = [];
 
-    loadbuoyinfo_home(function(response){
-			var jsonObj = JSON.parse(response);
+        $.getJSON('../static/Buoy_tool/data/meta_' + units + '.json', function (jsonObj) {
+			//var jsonObj = JSON.parse(response);
 			for (i = 0; i < jsonObj.length; i++) {
             stations[i] = jsonObj[i].id;
             lats[i] = jsonObj[i].lat;

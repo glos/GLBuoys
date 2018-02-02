@@ -65,14 +65,14 @@ var reloadCount = 0;
 
 function loadBuoySummary(){
 	var jsonObj;
-	loadbuoyinfo_home(function(response){
+    $.getJSON('../static/Buoy_tool/data/meta_' + units + '.json', function (jsonObj) {
 			//Empty content before second load
 			if (reloadCount > 0){
 				$('#buoySummary tbody').empty();
 				$('#buoySummary thead').empty();
 			}
 			reloadCount += 1;
-			jsonObj = JSON.parse(response);
+			//jsonObj = JSON.parse(response);
 			var ErieRows;
 			var MichiganRows;
 			var SuperiorRows;
@@ -214,8 +214,8 @@ function initialize() {
 		var offline = [];
 		var recovered = [];
 		
-		loadbuoyinfo_home(function(response){
-			var jsonObj = JSON.parse(response);
+        $.getJSON('../static/Buoy_tool/data/meta_' + units + '.json', function (jsonObj) {
+			//var jsonObj = JSON.parse(response);
 			for (i = 0; i < jsonObj.length; i++) {
             stations[i] = jsonObj[i].id;
             lats[i] = jsonObj[i].lat;

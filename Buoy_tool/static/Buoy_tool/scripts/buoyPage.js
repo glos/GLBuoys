@@ -336,8 +336,8 @@ function DegreeToCardinal(value) {
 
 $(document).ready(function () {
 
-    loadMetaJSON(function(response){
-			var jsonObj = JSON.parse(response);
+    $.getJSON('../static/Buoy_tool/data/meta_'+units+'.json', function (jsonObj) {
+			//var jsonObj = JSON.parse(response);
 			loadbuoyinfo(ID, jsonObj);
 			$.each(jsonObj, function (i, option) {
 				if (!option.WqOnly){
@@ -696,9 +696,9 @@ function reloadbuoyinfo() {
 	//$('#BuoyCamPic').empty();
 	
     var currentTime = moment();
-    loadMetaJSON(function(response){
-        var jsonObj = JSON.parse(response);
-			// jsonObj variable now contains the data structure and can be accessed as jsonObj.keys
+    $.getJSON('../static/Buoy_tool/data/meta_' + units + '.json', function (jsonObj) {
+        //var jsonObj = JSON.parse(response);
+		// jsonObj variable now contains the data structure and can be accessed as jsonObj.keys
         for (i = 0; i < jsonObj.length; i++) {
 				if (jsonObj[i].id == ID) {
 					console.log(jsonObj[i]);

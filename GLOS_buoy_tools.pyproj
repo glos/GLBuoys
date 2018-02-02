@@ -51,8 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Buoy_tool\" />
-    <Folder Include="Buoy_tool\json\" />
     <Folder Include="Buoy_tool\migrations\" />
+    <Folder Include="C:\Users\gcutrell\Source\Repos\GLOS_buoy_tools\Buoy_tool\static\Buoy_tool\data\" />
     <Folder Include="Buoy_tool\static\" />
     <Folder Include="Buoy_tool\static\Buoy_tool\" />
     <Folder Include="Buoy_tool\static\Buoy_tool\content\" />
@@ -126,6 +126,22 @@
     <Content Include="Buoy_tool\static\Buoy_tool\css\save\main.css" />
     <Content Include="Buoy_tool\static\Buoy_tool\css\save\normalize.css" />
     <Content Include="Buoy_tool\static\Buoy_tool\css\site.css" />
+    <Content Include="Buoy_tool\static\Buoy_tool\data\leavon_english_data.json" />
+    <Content Include="Buoy_tool\static\Buoy_tool\data\leavon_metric_data.json" />
+    <Content Include="Buoy_tool\static\Buoy_tool\data\leelyria_english_data.json" />
+    <Content Include="Buoy_tool\static\Buoy_tool\data\leelyria_metric_data.json" />
+    <Content Include="Buoy_tool\static\Buoy_tool\data\lementor_english_data.json" />
+    <Content Include="Buoy_tool\static\Buoy_tool\data\lementor_metric_data.json" />
+    <Content Include="Buoy_tool\static\Buoy_tool\data\lemrbhd_english_data.json" />
+    <Content Include="Buoy_tool\static\Buoy_tool\data\lemrbhd_metric_data.json" />
+    <Content Include="Buoy_tool\static\Buoy_tool\data\leoc_english_data.json" />
+    <Content Include="Buoy_tool\static\Buoy_tool\data\leoc_metric_data.json" />
+    <Content Include="Buoy_tool\static\Buoy_tool\data\leorgn_english_data.json" />
+    <Content Include="Buoy_tool\static\Buoy_tool\data\leorgn_metric_data.json" />
+    <Content Include="Buoy_tool\static\Buoy_tool\data\meta_english.json" />
+    <Content Include="Buoy_tool\static\Buoy_tool\data\meta_metric.json" />
+    <Content Include="Buoy_tool\static\Buoy_tool\data\tollsps_english_data.json" />
+    <Content Include="Buoy_tool\static\Buoy_tool\data\tollsps_metric_data.json" />
     <Content Include="Buoy_tool\static\Buoy_tool\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Buoy_tool\static\Buoy_tool\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Buoy_tool\static\Buoy_tool\fonts\glyphicons-halflings-regular.ttf" />
@@ -327,7 +343,6 @@
     <None Include="Buoy_tool\static\Buoy_tool\scripts\_references.js" />
     <Content Include="Plotter_export_tools\templates\index.html" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\css\tool.css" />
-    <Content Include="Buoy_tool\json\45001_intervals.json" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\plotter_tool.js" />
     <Content Include="Plotter_export_tools\templates\layout_tool.html" />
     <Content Include="Plotter_export_tools\templates\plotter.html" />

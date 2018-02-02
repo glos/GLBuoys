@@ -1,5 +1,5 @@
 ﻿function TempStringGrab(stationID) {
-		var data_file = "http://34.211.180.62/BuoyALP/buoydata_"+units+"/"+stationID+"";
+/**		var data_file = "http://34.211.180.62/BuoyALP/buoydata_"+units+"/"+stationID+"";
     var http_request = new XMLHttpRequest();
 
     try {
@@ -21,74 +21,76 @@
             }
         }
     }
+*/
 
-    http_request.onreadystatechange = function () {
-        if (http_request.readyState == 4) {
-            var Dates = [];
-            var Data = [];
-            var Depth = [];
+    //http_request.onreadystatechange = function () {
+    //    if (http_request.readyState == 4) {
+    $.getJSON('../static/Buoy_tool/data/' + ID + '_' + units + '_data.json', function (jsonObj) {
+        var Dates = [];
+        var Data = [];
+        var Depth = [];
 
-            // Javascript function JSON.parse to parse JSON data
-            var jsonObj = JSON.parse(http_request.responseText);
-            // jsonObj variable now contains the data structure and can
-            // be accessed as jsonObj.name and jsonObj.country.
-						console.log(jsonObj);
-						//Find out which strings have values and only save those depths and associated values.
-						for (h = 0; h < jsonObj.thermistorDepths.length; h++){
-							if (!isNaN(jsonObj.thermistorValues[h][0])){
-								Depth.push(Math.round(jsonObj.thermistorDepths[h]));
-								Data.push(jsonObj.thermistorValues[h]);
-							}
-						}
-            $.each(jsonObj, function (key, value) {
-                if (key == "obsDates") {
-                    Dates.push(value);
-                }
-            });
-            //2 category axis: x and y. Then the index of x/y axis becomes the [x, y, value]. So, if your data starts on "2013-04-01" then it is your first index such that 
-            //[ ["2013-04-01",0,-0.7], ["2013-04-02",0,-3.4], ["2013-04-03",0,-1.1] ] becomes: [ [0,0,-0.7], [1,0,-3.4], [2,0,-1.1] ]
-            var h = -1;
-            var g = -1;
-            var series = [];
-            /**for (j = 0; j < Depth.length; j++) {
-                for (i = 0; i < Dates.length; i++) {
-                    series[h + 1] = [i, j, Data[g + 1]];
-                    h += 1;
-                    g += 1;
-                }
+        // Javascript function JSON.parse to parse JSON data
+        var jsonObj = JSON.parse(http_request.responseText);
+        // jsonObj variable now contains the data structure and can
+        // be accessed as jsonObj.name and jsonObj.country.
+        console.log(jsonObj);
+        //Find out which strings have values and only save those depths and associated values.
+        for (h = 0; h < jsonObj.thermistorDepths.length; h++) {
+            if (!isNaN(jsonObj.thermistorValues[h][0])) {
+                Depth.push(Math.round(jsonObj.thermistorDepths[h]));
+                Data.push(jsonObj.thermistorValues[h]);
             }
-						**/
-						var valueFixed = [];
-						for(j = 0; j < Depth.length; j++) {
-							for (i = 0; i < Dates[0].length; i++) {
-								/**Check if the value is an integer, if so fix value, if not pass the non-int value. 
-								try {
-									valueFixed = ((Data[j][Data[j].length-[i+1]]));//.toFixed(1));
-								} catch (err) {
-									valueFixed = Data[j][Data[j].length-[i+1]];
-								}
-								**/
-								series[h + 1] = [i, j,Data[j][Data[j].length-[i+1]]];	//Read in values in reverse order
-								h += 1;
-							}
-						}
-						//Convert string date and time to unix 
-            var i = -1;
-            var DateTime = [];
-						var DateString = [];
-            while (Dates[0][++i]) {
-                DateTime.push(Date.parse(Dates[0][i]));
-								DateString.push(moment(Dates[0][i]).format('M/D HH:mm'));
-            }
-						DateString.reverse();
-						DateTime.reverse();
-            TempStringHeatMap(Depth, DateString, DateTime, series);
-						TempStringLineChart(Depth, DateString, DateTime, series);
         }
-    }
+        $.each(jsonObj, function (key, value) {
+            if (key == "obsDates") {
+                Dates.push(value);
+            }
+        });
+        //2 category axis: x and y. Then the index of x/y axis becomes the [x, y, value]. So, if your data starts on "2013-04-01" then it is your first index such that 
+        //[ ["2013-04-01",0,-0.7], ["2013-04-02",0,-3.4], ["2013-04-03",0,-1.1] ] becomes: [ [0,0,-0.7], [1,0,-3.4], [2,0,-1.1] ]
+        var h = -1;
+        var g = -1;
+        var series = [];
+        /**for (j = 0; j < Depth.length; j++) {
+            for (i = 0; i < Dates.length; i++) {
+                series[h + 1] = [i, j, Data[g + 1]];
+                h += 1;
+                g += 1;
+            }
+        }
+                    **/
+        var valueFixed = [];
+        for (j = 0; j < Depth.length; j++) {
+            for (i = 0; i < Dates[0].length; i++) {
+                /**Check if the value is an integer, if so fix value, if not pass the non-int value. 
+                try {
+                    valueFixed = ((Data[j][Data[j].length-[i+1]]));//.toFixed(1));
+                } catch (err) {
+                    valueFixed = Data[j][Data[j].length-[i+1]];
+                }
+                **/
+                series[h + 1] = [i, j, Data[j][Data[j].length - [i + 1]]];	//Read in values in reverse order
+                h += 1;
+            }
+        }
+        //Convert string date and time to unix 
+        var i = -1;
+        var DateTime = [];
+        var DateString = [];
+        while (Dates[0][++i]) {
+            DateTime.push(Date.parse(Dates[0][i]));
+            DateString.push(moment(Dates[0][i]).format('M/D HH:mm'));
+        }
+        DateString.reverse();
+        DateTime.reverse();
+        TempStringHeatMap(Depth, DateString, DateTime, series);
+        TempStringLineChart(Depth, DateString, DateTime, series);
+        //}
+    });
     
-    http_request.open("Get", data_file, true)
-    http_request.send()
+    //http_request.open("Get", data_file, true)
+    //http_request.send()
 }
 
 function TempStringHeatMap(Depths, DateString, DateTime, TStringdata) {

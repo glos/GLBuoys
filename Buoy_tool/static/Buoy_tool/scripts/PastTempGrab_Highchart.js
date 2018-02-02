@@ -1,5 +1,5 @@
 ﻿function PastTempGrab(variableName,stationID) {
-		var data_file = "http://34.211.180.62/BuoyALP/buoydata/"+stationID+"";
+/**		var data_file = "http://34.211.180.62/BuoyALP/buoydata/"+stationID+"";
     var http_request = new XMLHttpRequest();
 
     try {
@@ -22,33 +22,34 @@
 
         }
     }
+*/
+    //http_request.onreadystatechange = function () {
+    //    if (http_request.readyState == 4) {
+    $.getJSON('../static/Buoy_tool/data/' + ID + '_' + units + '_data.json', function (jsonObj) {
+        var Dates = [];
+        var Data = [];
+        var Depths = [];
+        // Javascript function JSON.parse to parse JSON data
+        var jsonObj = JSON.parse(http_request.responseText);
+        var tempNode = parseInt(variableName.slice(-2))
+        var Depth = jsonObj.thermistorDepths[tempNode]; //Subtract one since array starts at 0
 
-    http_request.onreadystatechange = function () {
-        if (http_request.readyState == 4) {
-						var Dates = [];
-						var Data = [];
-						var Depths = [];
-            // Javascript function JSON.parse to parse JSON data
-            var jsonObj = JSON.parse(http_request.responseText);
-						var tempNode = parseInt(variableName.slice(-2))
-						var Depth = jsonObj.thermistorDepths[tempNode]; //Subtract one since array starts at 0
-						
-						//Determine what temperature node is being asked for and then start extracting data in large array at that node for the entire timeseries
-						$.each(jsonObj, function (key, value) {
-							if (key == "obsDates") {
+        //Determine what temperature node is being asked for and then start extracting data in large array at that node for the entire timeseries
+        $.each(jsonObj, function (key, value) {
+            if (key == "obsDates") {
                 Dates.push(value);
-							}
-							if (key == "thermistorValues") {
+            }
+            if (key == "thermistorValues") {
                 Data.push(value[tempNode]);
-							}
-						});
-						Data[0].reverse(); 	//Place data in ascending order W.R.T dates for highcharts
-						Dates[0].reverse();	//Place dates in ascending order
-						PastTempNodeGraphic(Dates[0], Data[0], Depth);
-        }
-    }
-    http_request.open("Get", data_file, true)
-    http_request.send()
+            }
+        });
+        Data[0].reverse(); 	//Place data in ascending order W.R.T dates for highcharts
+        Dates[0].reverse();	//Place dates in ascending order
+        PastTempNodeGraphic(Dates[0], Data[0], Depth);
+        //}
+    });
+    //http_request.open("Get", data_file, true)
+    //http_request.send()
 }
 
 function PastTempNodeGraphic(DateTime, Data, Depth) {
