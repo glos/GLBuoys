@@ -1021,11 +1021,14 @@ $(function () {
             newValue = value * (9 / 5) + 32;
             newUnit = 'fahrenheit';
         } else if (unit === 'm') {
-            newValues = value * 3.28084;
+            newValue = value * 3.28084;
             newUnit = 'ft';
         } else if (unit === 'm_s-1') {
-            newValues = value * 1.94384;
+            newValue = value * 1.94384;
             newUnit = 'kts';
+        } else {
+            newValue = value;
+            newUnit = unit;
         }
         return [newValue, newUnit];
     }
