@@ -3,6 +3,7 @@ Definition of views.
 """
 
 from django.shortcuts import render
+from django.shortcuts import render_to_response
 from django.http import HttpRequest
 from django.template import RequestContext
 from django.http import JsonResponse
@@ -11,7 +12,10 @@ from pydap.client import open_url
 from datetime import date, datetime, timedelta;
 import json
 import requests
+import os
+import posixpath
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def home(request):
     """Renders the home page."""
@@ -25,17 +29,50 @@ def home(request):
         }
     )
 
-def buoy(request, buoy_id):
-    # Renders any of the individual buoy pages
-
+def eriehome(request):
+    """Renders the Lake Erie home page."""
     return render(
         request,
-        'buoy.html',
+        'erie.html',
         {
-            'buoy_id':buoy_id,
-        }
+            'title':'Lake Erie Home Page',
+            'year':datetime.now().year,
+            }
     )
 
+def buoy(request, buoy_id):
+    # Determine available buoys and check if entered ID exists. Render buoy page if does exist, render 404.html if not exist
+    #metaFile = open(os.path.join(BASE_DIR,'static/Buoy_tool/data/meta_english.json'))
+    metaFile = open(posixpath.join(*(BASE_DIR.split(os.path.sep) + ['Buoy_tool/static/Buoy_tool/data/meta_english.json'])))
+    metaStr = metaFile.read()
+    metaDic = json.loads(metaStr)
+    idList = []
+    for key in metaDic:
+        idList.append(key['id'])
+    if buoy_id in idList:
+        return render(
+            request,
+            'buoy.html',
+            {
+                'buoy_id':buoy_id,
+            }
+        )
+    else:
+        print('false')
+        return render(
+            request,
+            '404.html',
+            {
+            'title':'Station Not Found',
+            'year':datetime.now().year,
+            }
+        )
+
+def handler404(request):
+    response = render_to_response('404.html', {},
+    context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
 
 #------------------------------------------------------------
 #-  AJAX URLs

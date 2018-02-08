@@ -1,3 +1,5 @@
+var loadLocal = false;
+var prePath = '../static/Buoy_tool/';
 var units = 'english' //global variables
 var speedUnits = 'kts';
 var depthUnits = 'ft';
@@ -65,14 +67,13 @@ var reloadCount = 0;
 
 function loadBuoySummary(){
 	var jsonObj;
-    $.getJSON('../static/Buoy_tool/data/meta_' + units + '.json', function (jsonObj) {
+    loadbuoyinfo_home(function (jsonObj) {
 			//Empty content before second load
 			if (reloadCount > 0){
 				$('#buoySummary tbody').empty();
 				$('#buoySummary thead').empty();
 			}
 			reloadCount += 1;
-			//jsonObj = JSON.parse(response);
 			var ErieRows;
 			var MichiganRows;
 			var SuperiorRows;
@@ -162,16 +163,34 @@ function callAboutGLBuoys(){
 		
 		
 function loadbuoyinfo_home(callback) {
-    var data_file = "http://34.211.180.62//BuoyALP/buoymeta_"+units+"/all";
-    var http_request = new XMLHttpRequest();
-			http_request.overrideMimeType("application/json");
-		http_request.open('GET', data_file, true);
-    http_request.onreadystatechange = function () {
-        if (http_request.readyState == 4 && http_request.status == 200) {
-					callback(http_request.responseText);
-        }	
-    };
-    http_request.send(null);
+    var data_file = '../static/Buoy_tool/data/meta_' + units + '.json';
+    $.getJSON(data_file, function (json) {
+        var ichk = 0;
+        callback(json);
+    });
+}
+
+function w3_open() {
+    document.getElementById("mySidenav").style.display = "block";
+}
+function w3_close() {
+    document.getElementById("mySidenav").style.display = "none";
+    var x = document.getElementById("ErieAcc");
+    x.className = x.className.replace("w3-show", "");
+    x.previousElementSibling.className =
+        x.previousElementSibling.className.replace("w3-theme-d4", "");
+
+}
+function myAccFunc3() {
+    var x = document.getElementById("ErieAcc");
+    if (x.className.indexOf("w3-hide") == -1) {
+        x.className += " w3-hide";
+        x.previousElementSibling.className += "w3-white";
+    } else {
+        x.className = x.className.replace("w3-hide", "");
+        x.previousElementSibling.className =
+            x.previousElementSibling.className.replace("w3-white", "");
+    }
 }
 
 // HABs map overlay
@@ -214,7 +233,7 @@ function initialize() {
 		var offline = [];
 		var recovered = [];
 		
-        $.getJSON('../static/Buoy_tool/data/meta_' + units + '.json', function (jsonObj) {
+        loadbuoyinfo_home(function (jsonObj) {
 			//var jsonObj = JSON.parse(response);
 			for (i = 0; i < jsonObj.length; i++) {
             stations[i] = jsonObj[i].id;
@@ -248,7 +267,7 @@ function initialize() {
 							title:stations[i],
 							map: map,
 							zIndex:3,
-							icon: 'img/BuoyOnlineIcon.png',
+                            icon: prePath + 'img/BuoyOnlineIcon.png',
 						});
 					}else if (offline[i] && obs[i]){
 						marker = new google.maps.Marker({
@@ -256,7 +275,7 @@ function initialize() {
 							title:stations[i],
 							map: map,
 							zIndex:2,
-							icon: 'img/OldDataBuoyIcon.png',
+                            icon: prePath + 'img/OldDataBuoyIcon.png',
 						});	
 					}else if (!obs[i]) {
 						marker = new google.maps.Marker({
@@ -265,7 +284,7 @@ function initialize() {
 							map: map,
 							zIndex:1,
 							opacity:0.7,
-							icon: 'img/RecoveredBuoyIcon.png',
+                            icon: prePath + 'img/RecoveredBuoyIcon.png',
 						});
 					}
 				
@@ -291,15 +310,15 @@ function initialize() {
 				var icons = {
 					online: {
 					name: 'Current',
-					icon: 'img/BuoyOnlineIcon.png'
+                    icon: prePath + 'img/BuoyOnlineIcon.png'
 				},
 				NotCurrent: {
 					name: 'Delayed',
-					icon: 'img/OldDataBuoyIcon.png'
+                    icon: prePath + 'img/OldDataBuoyIcon.png'
 				},
 				Recovered: {
 					name: 'Out of Water',
-					icon: 'img/RecoveredBuoyIcon.png'
+                    icon: prePath + 'img/RecoveredBuoyIcon.png'
 				}
 			};
 			for (var key in icons) {
@@ -344,5 +363,5 @@ else {
 
 function PassStation(stationID) {
     //sessionStorage.setItem("station", stationID);
-		document.location.href = stationID;
+    document.location.href = '../' + stationID;
 }															 

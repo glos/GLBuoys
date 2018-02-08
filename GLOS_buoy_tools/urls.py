@@ -4,10 +4,12 @@ Definition of urls for GLOS_buoy_tools.
 
 from datetime import datetime
 from django.conf.urls import url
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.views.generic.base import RedirectView
 import django.contrib.auth.views
 
 # Main buoy tool app:
-from Buoy_tool.views import buoy
+from Buoy_tool.views import buoy, eriehome, buoyIDcheck
 import Buoy_tool.forms
 #from Buoy_tool import views
 
@@ -21,9 +23,11 @@ from Plotter_export_tools.views import plotter, plotter_get, getTSData
 
 urlpatterns = [
     # Home page:
-    url(r'^$', plotter, name='plotter'),
+    #url(r'^$', plotter, name='plotter'),
+    url(r'^$', Buoy_tool.views.home, name='home'),
 
-    # url(r'^$', Buoy_tool.views.home, name='home'),
+    # Lake Erie Home Page:
+    url(r'^erie/$', Buoy_tool.views.eriehome, name='eriehome'),
 
     # AJAX URLs:
     url(r'^ajax/getTSData$', getTSData, name='getTSData'),
@@ -37,6 +41,9 @@ urlpatterns = [
     url(r'^buoy/([^/]+)/$', buoy, name='buoy'),
     url(r'^([^/]+)/$', buoy, name='buoy'),
 
+    # Requests for /favicon.ico redirected to the URL of 'favicon.ico'according to staticfiles storage. http://staticfiles.productiondjango.com/blog/failproof-favicons/
+    url(r'^favicon.ico$',RedirectView.as_view(url=staticfiles_storage.url('/Buoy_tool/img/favicon.ico'),permanent=False),name="favicon"),
+    
     # Login/logout:
     
     #url(r'^login/$',

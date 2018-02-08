@@ -1,0 +1,77 @@
+﻿{% extends "layout.html" %}
+
+{% block scripts %}
+
+    {% load staticfiles %}
+
+    <script src="{% static 'Buoy_tool/scripts/404.js' %}"></script>
+		
+	<!--Google Tag Manager-->
+	<script>
+        dataLayer = [];
+    </script>
+	 
+	 <!--<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	 })(window,document,'script','dataLayer','GTM-NV5RBN8');</script>-->
+
+    <!--jQuery UI-->
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" >
+    <script
+        src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+        integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+        crossorigin="anonymous">
+    </script>
+
+{% endblock %}
+
+<title>Great Lakes Buoys - Not Found! (HTTP Error 404)</title>
+
+
+{% block content %}	
+
+	<div>&nbsp;</div>
+	<section id="main" class="w3-container w3-center" style="max-width:700px;">
+		<h4 style="padding-left:0px;padding-right:0px;">Station Not Found!</h4>
+		<p align="left">Sorry, we could not find the page you were looking for...</p>
+		<p>&nbsp;</p>
+		<div id="mainText">
+            <p></p>
+        </div>
+        <p align="left">
+    
+		</p>
+		<p>&nbsp;</p>
+		<p align="left">Otherwise, if you continue to have issues, feel free to send us an <a href="mailto:dmac@glos.us">e-mail</a>.</p>
+		<p>&nbsp;</p>
+		<p>&nbsp;</p>
+	</section>
+<!-- footer row: width = grid_width -->
+<footer>
+    <table>
+	    <tr>
+		<td width="400" height="367" valign="top"><p><a href="http://www.glos.us/"><img src="{% static 'Buoy_tool/img/glos_logo_60.png' %}" width="228" height="60"></a></p>
+            <p class="style3">&#169; 2017 Great Lakes Observing System<br>
+            4840 State Road, Ann Arbor, MI 48108</p>
+            <p><a href="http://www.glos.us/contact/" class="style3">Contact Us</a></p>
+       </td>
+        <td width="400"><p><span class="style3">Regional Coastal Observing Systems:</span><br> 
+        <span class="style3"><a href="http://www.aoos.org/" target="_blank">Alaska</a> &#8226; <a href="http://cara.uprm.edu/" target="_blank">Caribbean</a> &#8226; <a href="http://www.cencoos.org/" target="_blank">Central &amp; Northern California</a> &#8226;
+        <a href="http://glos.us" target="_blank">Great Lakes</a> &#8226; 
+        <a href="http://gcoos.org" target="_blank">Gulf of Mexico</a> &#8226; <a href="http://www.soest.hawaii.edu/pacioos/" target="_blank">Pacific Islands</a> &#8226; <a href="http://maracoos.org/" target="_blank">Mid-Atlantic</a> &#8226; <a href="http://www.neracoos.org/" target="_blank">Northeast-Atlantic &#8226;</a> <a href="http://www.nanoos.org/" target="_blank">Pacific Northwest</a> &#8226; 
+        <a href="http://www.sccoos.org/" target="_blank">Southern California</a> &#8226; <a href="http://secoora.org/" target="_blank">Southeast-Atlantic </a>&#8226;
+        <a href="http://www.ioosassociation.org/">Integrated Ocean Observing System Association</a></span></p>
+        <p><span class="style3">National Observing System Partners: </span><br>
+        <span class="style3"><a href="http://www.act-us.info/" target="_blank">Alliance for Coastal Technologies (ACT)</a> &#8226;    <a href="http://www.sura.org/home/" target="_blank">Southeastern Universities Research Association (SURA)</a></span></p>
+        <p><a href="https://ioos.noaa.gov/"><img src="{% static 'Buoy_tool/img/ioos_logo.png' %}" width="160" height="70"></a><img src="{% static 'Buoy_tool/img/RICE_logo.png' %}" width="112" height="110" hspace="20"></p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p></td>
+        </tr>
+    </table>
+</footer>
+{% endblock %}
+
+

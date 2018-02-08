@@ -1,4 +1,3 @@
-
 var prePath = '../static/Buoy_tool/';
 var units = 'english' //global variables
 var speedUnits = 'kts';
@@ -12,16 +11,11 @@ var ID = arr[3];
 
 
 function loadMetaJSON(callback) {
-    var data_file = "http://34.211.180.62//BuoyALP/buoymeta_"+units+"/all";
-		var http_request = new XMLHttpRequest();
-			http_request.overrideMimeType("application/json");
-		http_request.open('GET', data_file, true);
-    http_request.onreadystatechange = function () {
-        if (http_request.readyState == 4 && http_request.status == 200) {
-					callback(http_request.responseText);
-        }	
-    };
-    http_request.send(null);
+    var data_file = '../static/Buoy_tool/data/meta_' + units + '.json';
+    $.getJSON(data_file, function (json) {
+        var ichk = 0;
+        callback(json);
+    });
 }
 
 function ifOffline(time){
@@ -336,8 +330,7 @@ function DegreeToCardinal(value) {
 
 $(document).ready(function () {
 
-    $.getJSON('../static/Buoy_tool/data/meta_'+units+'.json', function (jsonObj) {
-			//var jsonObj = JSON.parse(response);
+    loadMetaJSON(function (jsonObj) {
 			loadbuoyinfo(ID, jsonObj);
 			$.each(jsonObj, function (i, option) {
 				if (!option.WqOnly){
@@ -696,8 +689,7 @@ function reloadbuoyinfo() {
 	//$('#BuoyCamPic').empty();
 	
     var currentTime = moment();
-    $.getJSON('../static/Buoy_tool/data/meta_' + units + '.json', function (jsonObj) {
-        //var jsonObj = JSON.parse(response);
+    loadMetaJSON(function (jsonObj) {
 		// jsonObj variable now contains the data structure and can be accessed as jsonObj.keys
         for (i = 0; i < jsonObj.length; i++) {
 				if (jsonObj[i].id == ID) {
@@ -833,5 +825,5 @@ function callfooterInfo(ID){
 }
 
 function PassStation(stationID,lat,lon) {																 
-		document.location.href = '../'+stationID;
+		document.location.href = '../' + stationID;
 }

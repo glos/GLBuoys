@@ -1,21 +1,21 @@
-{% extends "layout.html" %}
+{% extends "layout_erie.html" %}
 
 {% block scripts %}
 
     {% load staticfiles %}
 
-	<script src="{% static 'Buoy_tool/scripts/homePage.js' %}"></script>
+	<script src="{% static 'Buoy_tool/scripts/homePage_erie.js' %}"></script>
+    
 
 {% endblock %}
 
 {% block staticHeader %}
     
     <div id="staticHeader">
-        <p id="stationID" class="w3-center">Great Lakes Buoy Portal</p>
+        <p id="stationID" class="w3-center">Lake Erie Water Quality Stations</p>
     </div>
 
 {% endblock %}
-
 
 {% block content %}
 
@@ -28,6 +28,13 @@
             </style>
             <div id="map_canvas" class="w3-card-4" style="width:100%;max-width:550px;height:400px">
                 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhlUyFNacPYsUz4dZZUmf7lu7SrwkLRIo"></script>-->
+            </div>
+
+            <div class="w3-center">
+                <br>
+                <form>
+                    <label> <input type="checkbox" name="cbCI" id="cbCI"> Show recent (10/22/17) NOAA cyanobacterial index image (Experimental)</label>
+                </form>
             </div>
 
             <h5 class="glosBlue w3-center w3-margin-top w3-padding-16">Recent Buoy Observations</h5>

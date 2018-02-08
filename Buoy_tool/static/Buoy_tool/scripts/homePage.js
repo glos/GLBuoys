@@ -1,6 +1,4 @@
-
-var loadLocal = false;
-var prePath = 'static/app/';
+var prePath = '../static/Buoy_tool/';
 var units = 'english' //global variables
 var speedUnits = 'kts';
 var depthUnits = 'ft';
@@ -67,7 +65,9 @@ $(document).ready(function () {
 var reloadCount = 0;
 
 function loadBuoySummary(){
-    $.getJSON('../static/Buoy_tool/data/meta_' + units + '.json', function (jsonObj) {
+    loadbuoyinfo_home(function (jsonObj) {
+            //var jsonObj = response;
+            //console.log(jsonObj)
 			//Empty content before second load
 			if (reloadCount > 0){
 				$('#buoySummary tbody').empty();
@@ -269,29 +269,11 @@ function callAboutGLBuoys(){
 		};
 
 function loadbuoyinfo_home(callback) {
-
-    if (loadLocal) {
-        var data_file = "C:/Data/Web/GLOS_buoy_tools/Buoy_tool/BuoyALP/buoymeta/45001_meta.json";        //TMR
-
-        $.getJSON(data_file, function (json) {
-            var ichk = 0;
-            return json;
-        });
-
-    } else {
-        var data_file = "http://34.211.180.62//BuoyALP/buoymeta_"+units+"/all";
-        var http_request = new XMLHttpRequest();
-
-        http_request.overrideMimeType("application/json");
-        http_request.open('GET', data_file, true);
-        http_request.onreadystatechange = function () {
-            if (http_request.readyState == 4 && http_request.status == 200) {
-                callback(http_request.responseText);
-            }
-        };
-
-        http_request.send(null);
-    }
+    var data_file = '../static/Buoy_tool/data/meta_' + units + '.json';   
+    $.getJSON(data_file, function (json) {
+        var ichk = 0;
+        callback(json);
+    });
 }
 
 function w3_open() {
@@ -321,7 +303,6 @@ function w3_close() {
         ab.previousElementSibling.className.replace("w3-theme-d4", "");
 }
 function myAccFunc() {
-				console.log('test');
         var x = document.getElementById("MichiganAcc");
         if (x.className.indexOf("w3-show") == -1) {
             x.className += " w3-show";
@@ -406,9 +387,7 @@ function initialize(lat,lon) {
 		var WQ = [];
 		var offline = [];
 		var recovered = [];
-
-        $.getJSON('../static/Buoy_tool/data/meta_' + units + '.json', function (jsonObj) {
-			//var jsonObj = JSON.parse(response);
+        loadbuoyinfo_home(function (jsonObj) {
 			for (i = 0; i < jsonObj.length; i++) {
             stations[i] = jsonObj[i].id;
             lats[i] = jsonObj[i].lat;
@@ -417,7 +396,7 @@ function initialize(lat,lon) {
 						WQ[i] = jsonObj[i].WqOnly;
 						offline[i] = ifOffline(jsonObj[i].updateTime);
 						recovered[i] = jsonObj[i].recovered;
-      }
+            }
 		
 			map = new google.maps.Map(document.getElementById("map_canvas"), {
             zoom: 5,
@@ -427,7 +406,7 @@ function initialize(lat,lon) {
             navigationControl: true,
             navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
             mapTypeId: google.maps.MapTypeId.ROADMAP
-        });
+            });
 			
 			var infowindow = new google.maps.InfoWindow();
 			
@@ -511,5 +490,5 @@ function reloadTableSummary() {
 }
 
 function PassStation(stationID) {
-		document.location.href = stationID;
+    document.location.href = '../' + stationID;
 }

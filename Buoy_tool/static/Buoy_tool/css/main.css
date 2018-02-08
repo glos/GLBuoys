@@ -79,7 +79,7 @@ table#buoySummary td.homeWaveHeight{text-align:right;width:70px;padding-right:16
     }
 }
 
-#buoyCam, #Thermistor, #MarineForecast, #buoyLocation, #stationMeta, #ADCP {
+#buoyCam, #Thermistor, #MarineForecast, #buoyLocation, #stationMeta, #ADCP, footer {
 	max-width:800px;
 	margin: auto;
 }
