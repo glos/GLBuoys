@@ -14,7 +14,7 @@ import Buoy_tool.forms
 #from Buoy_tool import views
 
 # Plotting & export app:
-from Plotter_export_tools.views import plotter, plotter_get, getTSData
+from Plotter_export_tools.views import plotter, plotter_get, getTSData, export, download_data
 
 # Uncomment the next lines to enable the admin:
 # from django.conf.urls import include
@@ -23,8 +23,8 @@ from Plotter_export_tools.views import plotter, plotter_get, getTSData
 
 urlpatterns = [
     # Home page:
-    #url(r'^$', plotter, name='plotter'),
-    url(r'^$', Buoy_tool.views.home, name='home'),
+    url(r'^$', plotter, name='plotter'),
+    url(r'^export', export, name='export'),
 
     # Lake Erie Home Page:
     url(r'^erie/$', Buoy_tool.views.eriehome, name='eriehome'),
@@ -32,6 +32,9 @@ urlpatterns = [
     # AJAX URLs:
     url(r'^ajax/getTSData$', getTSData, name='getTSData'),
     #url(r'^ajax/getBuoyMeta$', Buoy_tool.views.getBuoyMeta, name='getBuoyMeta'),
+    
+    # Data download call back
+    url(r'download_data$', download_data, name='download_data'),
 
     # Plotter URLs:
     url(r'^plotter/$', plotter_get, name='plotter_get'),

@@ -275,6 +275,8 @@
     <Content Include="Buoy_tool\templates\404.html" />
     <Content Include="Buoy_tool\templates\erie.html" />
     <Content Include="Buoy_tool\templates\layout_erie.html" />
+    <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\export_tool.js" />
+    <Content Include="Plotter_export_tools\templates\export.html" />
     <Content Include="Plotter_export_tools\templates\index.html" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\css\tool.css" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\plotter_tool.js" />

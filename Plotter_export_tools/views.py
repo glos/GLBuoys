@@ -4,8 +4,10 @@ Definition of views.
 
 from django.shortcuts import render
 from django.http import HttpRequest
+from django.http import HttpResponse
 from django.template import RequestContext
 from django.http import JsonResponse
+from django.utils.encoding import smart_str
 
 from pydap.client import open_url
 from datetime import date, datetime, timedelta;
@@ -13,14 +15,17 @@ import json
 import requests
 import urllib.request
 import urllib3
+import xlwt
 import os
+import csv
 
 def plotter(request):
     # Renders plotting tool page
+    pageInfo = {'title': 'GLOS Data Plotting Tool'}
 
     return render(
         request,
-        'plotter.html', {'req_data': {}}
+        'plotter.html', pageInfo #{'req_data': {}}
     )
 
 
@@ -32,6 +37,123 @@ def plotter_get(request):
         'plotter.html', {'req_data': json.dumps(request.GET.dict()) }
     )
 
+def export(request):
+    # Renders data export page
+    pageInfo = {'title': 'GLOS Data Exporting Tool'}
+    return render(
+        request,
+        'export.html', pageInfo
+    )
+
+# source: http://thepythondjango.com/download-data-csv-excel-file-in-django/
+
+def download_data(request):
+    filename = 'glos_data_export'
+    file_type = request.GET.get('ftype','')
+    
+    # get the parameters
+    data_type, lst_locs, lst_params, str_date1, str_date2, dct_owners, avg_ivld = queryRequestVars(request, 'GET')
+
+    flag = 'fast'
+
+    if (flag == 'fast'):
+        dct_response = getTSData_fast(request, 'GET')
+
+        if file_type=='csv':
+            # call csv generator
+                
+            # response content type
+            response = HttpResponse(content_type='text/csv')
+            #decide the file name
+            response['Content-Disposition'] = 'attachment; filename="' + filename + "." + file_type + '"'
+            writer = csv.writer(response)
+            #response.write(u'\ufeff'.encode('utf8'))
+
+            for loc in lst_locs:
+                writer.writerow([smart_str(loc)])
+                numRec = len(dct_response[loc]['dattim'])
+
+                if len(lst_params) >0:
+                    headColums=['Datetime']
+
+                    for param in lst_params:
+                        param_w_units= param + "(" + dct_response[loc]['params'][param]['units'] + ")"
+                        headColums.append(param_w_units)
+                    
+                    writer.writerow(headColums)
+
+                    for i in range(numRec):
+                        dattim = dct_response[loc]['dattim'][i]
+                        date_formated = dattim.strftime('%Y-%m-%d %H:%M:%S')
+                        dataColums=[date_formated]
+
+                        for param in lst_params:
+                            dataColums.append(dct_response[loc]['params'][param]['values'][i])
+
+                        writer.writerow(dataColums)
+            
+            return response;
+        
+        elif file_type=='xls':
+
+            # call excel generator
+            # content-type of response
+            response = HttpResponse(content_type = 'application/ms-excel')
+
+            #decide file name
+            response['Content-Disposition']='attachment; filename="' + filename + "." + file_type + '"'
+
+            #creating workbook
+            wb = xlwt.Workbook(encoding='utf-8')
+
+            for loc in lst_locs:
+
+                #adding sheet
+                ws=wb.add_sheet(loc)
+
+                #sheet header, first row
+                row_num=0
+                col_num=0
+
+                font_style = xlwt.XFStyle()
+                boldfont_style = xlwt.XFStyle()
+                # headers are bold
+                boldfont_style.font.bold = True
+
+                if len(lst_params) >0:
+                    # date time column
+                    ws.write(row_num, col_num, 'Datetime', boldfont_style)
+                    for dattim in dct_response[loc]['dattim']:
+                        row_num +=1
+                        date_formated = dattim.strftime('%Y-%m-%d %H:%M:%S')
+                        ws.write(row_num, col_num, date_formated, font_style)
+
+                    # each parameter
+                    for param in lst_params:
+                        col_num +=1
+                        row_num =0
+                        param_w_units= param + "(" + dct_response[loc]['params'][param]['units'] + ")"
+
+                        ws.write(row_num, col_num, param_w_units, boldfont_style)
+                        for val in dct_response[loc]['params'][param]['values']:
+                            row_num +=1
+                            ws.write(row_num, col_num, val, font_style)
+
+
+            wb.save(response)
+
+            return response
+
+        else:
+            return;
+
+
+    else: # todo: support slow method
+        return
+
+
+download_data.short_description =u"Export data"
+
 
 #==================================================================================
 #-  AJAX URLs
@@ -42,7 +164,7 @@ def getTSData(request):
     flag = 'fast'
 
     if (flag == 'fast'):
-        dct_response = getTSData_fast(request)
+        dct_response = getTSData_fast(request, 'POST')
     else:
         dct_response = getTSData_slow(request)
 
@@ -52,35 +174,22 @@ def getTSData(request):
 #------------------------------------------------------------
 #-  Retrieve time series data via OPeNDAP request for aggregated data:
 #------------------------------------------------------------
-def getTSData_fast(request):
+def getTSData_fast(request, type):
 
     # Pydap Docs: http://pydap.readthedocs.io/en/latest/client.html
 
     # Initialize dictionary for JSON response:
     dct_response = {}
+    lst_locs= []
+    lst_params = []
+    dct_owners= []
     ncFlag = True          #Flag indicating that data was read from netCDF file
 
-    #--------------------------------------------------------
-    # Retrieve input data from POST request:
-    #--------------------------------------------------------
-    dct_request = request.POST.dict()
-
-    data_type = dct_request['data_type'] #request.POST['data_type']
-
-    lst_locs = request.POST.getlist('loc_arr[]')
-    dct_owners = json.loads(dct_request['owners'])
-
-    lst_params = request.POST.getlist('param_arr[]')
-
-    # Start & end date/time:
-    str_date1 = dct_request['date_start']
-    str_date2 = dct_request['date_end']
+    data_type, lst_locs, lst_params, str_date1, str_date2, dct_owners, avg_ivld = queryRequestVars(request, type)
 
     date_start = datetime.strptime(str_date1, '%m/%d/%Y')
     date_end = datetime.strptime(str_date2, '%m/%d/%Y')
 
-    # Time averaging interval:
-    avg_ivld = dct_request['avg_ivld']
     
     #--------------------------------------------------------
     # Iterate over locations list:
@@ -322,6 +431,61 @@ def getTSData_slow(request):
     return dct_response
     #return JsonResponse(dct_response, safe=False)
 
+
+def queryRequestVars(request, type):
+
+    data_type=''
+    lst_locs= []
+    lst_params = []
+    dct_owners= []
+    str_date1=''
+    str_date2=''
+    avg_ivld = ''
+
+    if type=='POST':
+	    #--------------------------------------------------------
+        # Retrieve input data from POST request:
+        #--------------------------------------------------------
+        dct_request = request.POST.dict()
+
+        data_type = dct_request['data_type'] #request.POST['data_type']
+
+        lst_locs = request.POST.getlist('loc_arr[]')
+        dct_owners = json.loads(dct_request['owners'])
+
+        lst_params = request.POST.getlist('param_arr[]')
+
+        # Start & end date/time:
+        str_date1 = dct_request['date_start']
+        str_date2 = dct_request['date_end']
+
+        # Time averaging interval:
+        avg_ivld = dct_request['avg_ivld']
+
+	
+    elif type=='GET':
+	    #--------------------------------------------------------
+        # Retrieve input data from GET request for file download:
+        #--------------------------------------------------------
+
+        data_type = request.GET.get('data_type', '')
+
+        loc = request.GET.get('loc', '')
+        lst_locs.append(loc)
+
+        params= request.GET.get('param_arr', '')
+        lst_params = params.split('|')
+		
+        str_date1 = request.GET.get('date_start','')
+        str_date2 = request.GET.get('date_end','')
+
+        dct_owner = request.GET.get('owner','')
+        dct_owners.append(dct_owner)
+
+        avg_ivld= request.GET.get('avg_ivld','none')
+
+		
+    return data_type, lst_locs, lst_params, str_date1, str_date2, dct_owners, avg_ivld
 
 
 # Function to provide iteration over date range between two dates:
