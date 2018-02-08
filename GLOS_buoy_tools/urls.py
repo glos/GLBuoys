@@ -9,7 +9,7 @@ from django.views.generic.base import RedirectView
 import django.contrib.auth.views
 
 # Main buoy tool app:
-from Buoy_tool.views import buoy, eriehome, buoyIDcheck
+from Buoy_tool.views import buoy, eriehome
 import Buoy_tool.forms
 #from Buoy_tool import views
 
