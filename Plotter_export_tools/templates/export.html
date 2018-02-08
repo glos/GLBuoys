@@ -1,15 +1,7 @@
-﻿{% extends "layout_tool.html" %}
+﻿
+{% extends "layout_tool.html" %}
 
 {% block scripts %}
-
-    <!-- High Charts-->
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/maps/modules/map.src.js"></script>
-    <script src="https://code.highcharts.com/modules/heatmap.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/modules/boost.js"></script>
-    <script src="https://code.highcharts.com/highcharts-more.js"></script>
 
     <!--jQuery UI-->
     <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" >
@@ -25,8 +17,7 @@
     <link rel="stylesheet" href="{% static 'Buoy_tool/css/main.css' %}">
 
 	<link rel="stylesheet" type="text/css" href="{% static 'Plotter_export_tools/css/tool.css' %}">
-	<script src="{% static 'Plotter_export_tools/scripts/plotter_tool.js' %}"></script>
-
+	<script src="{% static 'Plotter_export_tools/scripts/export_tool.js' %}"></script>
 	<script src="{% static 'Buoy_tool/scripts/clipboard.min.js' %}"></script>    
 
 {% endblock %}
@@ -48,36 +39,25 @@
             <section id="main" class="content-wrapper clear-fix" style="margin-top:75px">
 
             <article>
-                <!-- Chart -->
-                <div id="tool-plot">
-                    <div id="cht-tool">
-                        <!-- HighChart container -->
-                    </div>
 
                     <!-- Preloader DIV -->
-                    <div id="cht-loader" class="preloader"></div>
-                </div>
+                    {#<div id="cht-loader" class="preloader"></div>#}
+       
 
                 <!-- User Options/Controls -->
                 <div id="tool-ctrl" >
 
-                        <!-- Data type & buttons -->
-                        <div id="div-buttons">
+                    <form>
+                        {% csrf_token %}
+
+
+                        <div id="tool-ctrl-left">
                             <!-- Monitoring data type -->
                             <label for="" id="" class="lab-tool2" style="font-size:0.9em;">Monitoring type:</label>
                             <select id="sel-datatype" class="opts-tool" disabled>
                                 <option value="buoy" selected >Buoy</option>
                             </select>
-
-                            <button id="btn-export-menu">Export Menu</button>
-                            <button id="btn-get-link">Get Permalink</button>
-                            <button id="btn-plot-update">Update Plot</button>
-                        </div>
-
-                    <form>
-                        {% csrf_token %}
-
-                        <div id="tool-ctrl-left">
+                             <br/><br/>
                             <!-- Units selection -->
                             <label for="" id="" class="lab-tool2" style="font-size:0.9em;">Select units:</label>
                             <select id="sel-units" class="opts-tool" title="This feautre is not yet implemented."> <!--<disabled>-->
@@ -99,9 +79,11 @@
                            <br/><br/>
 
                             <!-- Monitoring locations -->
-                            <label for="" id="lab-lst-locs" class="lab-tool">Select locations (max of 3):</label>
+                            <label for="" id="lab-lst-locs" class="lab-tool">Select location:</label>
                             <br />
-                            
+                            <!-- Single-select menus -->
+                             <!--<select id="sel-loc1" class="sel-loc opts-tool"></select> -->
+
                             <!-- Single-select menus -->
                             <ul id="ul-locs" class="tool">
                                 <li>#1:
@@ -114,6 +96,7 @@
                                     <select id="sel-loc3" class="sel-loc opts-tool"></select>
                                 </li>
                             </ul>
+
 
                             <!-- Multiselect option -->
                             <div id="lst-locs" class="multiselect data-med">
@@ -137,6 +120,7 @@
                                     <select id="sel-param3" class="sel-param opts-tool"></select>
                                 </li>
                             </ul>
+                            
 
                             <!-- Multiselect option -->
                             <div id="lst-params" class="multiselect data-med">
@@ -187,6 +171,15 @@
                             </ul>
 
                         </div>
+
+                        <label for="" id="" class="lab-tool2" style="font-size:0.9em;">Export file format:</label>
+                        <select id="sel-filetype" class="opts-tool">
+                            <option value="xls" selected >Excel</option>
+                            <option value="csv" selected >CSV</option>
+                        </select>
+                             <br/><br/>
+                        <input type="button" id="btn-download" value="Download file" />
+
                     </form>
 
                 </div>            

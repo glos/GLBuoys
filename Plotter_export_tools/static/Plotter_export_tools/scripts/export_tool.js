@@ -1,11 +1,12 @@
 // Global variables:
-var _strTitle = 'GLOS Data Plotting Tool'
+var _strTitle = 'GLOS Data Exporting Tool'
 var _objLocs = {};
 
 var _arrParamOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'WPRD', 'MWD', 'APD', 'ATMP', 'PRES', 'DEWP', 'PH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI'];
 var _arrParamExcl = ['DPD', 'TIDE', 'VIS', 'PTDY', 'DEPTH', 'OTMP', 'CHILL', 'HEAT', 'ICE', 'WSPD10', 'WSPD20'];
 
 var _flagMultiSelect = false;
+var _flagParaMultSelect = true;
 
 // Display preloader during page load:
 $('.preloader').show();
@@ -22,8 +23,11 @@ $(function () {
     });
 
     // Show/hide
-    $('#ul-locs, #ul-params').toggle(!_flagMultiSelect);
-    $('#lst-locs, #lst-params').toggle(_flagMultiSelect);
+    $('#ul-locs').toggle(!_flagMultiSelect);
+    $('#lst-locs').toggle(_flagMultiSelect);
+
+    $('#ul-params').toggle(!_flagParaMultSelect);
+    $('#lst-params').toggle(_flagParaMultSelect);
 
     //==================================================================================
     // IE Polyfills:
@@ -301,7 +305,7 @@ $(function () {
         var arrSelParams = [];
         var $selParams;
 
-        if (_flagMultiSelect) {
+        if (_flagParaMultSelect) {
             $selParams = $('#lst-params input:checked');
             $('#lst-params').empty();
 
@@ -320,7 +324,7 @@ $(function () {
 
             // Multiselect:
             if (param_id in objParams) {
-                if (_flagMultiSelect) {
+                if (_flagParaMultSelect) {
                     var strChk = '';
                     if ($($selParams).filter('#' + param_id).length > 0) { strChk = 'checked' };
 
@@ -336,7 +340,7 @@ $(function () {
         }
 
         // If nothing selected, select first parameter:
-        if (_flagMultiSelect) {
+        if (_flagParaMultSelect) {
             $selParams = $('#lst-params input:checked');
             if ($selParams.length === 0) {
                 $('#lst-params input').first().prop('checked', true);
@@ -380,50 +384,50 @@ $(function () {
     // HighCharts Initialization:
     //==================================================================================
 
-    // High Chart:
-    $('#cht-tool').tooltip();
+    //// High Chart:
+    //$('#cht-tool').tooltip();
 
-    //$.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=usdeur.json&callback=?', function (data) {    });
+    ////$.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=usdeur.json&callback=?', function (data) {    });
 
-    // Initialize Highchart:
-    $('#cht-tool').highcharts({
-        boost: {
-            enabled: false,
-        },
-        chart: {
-            zoomType: 'x',
-        },
-        credits: {
-            enabled: false
-        },
-        exporting: {
-            enabled: true,
-        },
-        title: {
-            text: ''
-        },
-        subtitle: {
-            text: document.ontouchstart === undefined ?
-                'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-        },
-        xAxis: {
-            type: 'datetime',
-            labels: {
-                format: '{value:%e-%b-%Y %H:%m}'
-            },            //dateTimeLabelFormats: 'day'
-        },
-        yAxis: {},
-        legend: {
-            enabled: true
-        },
-        plotOptions: {
-            series: {
-                turboThreshold: 10000//set it to a larger threshold, it is by default to 1000
-            }
-        },
+    //// Initialize Highchart:
+    //$('#cht-tool').highcharts({
+    //    boost: {
+    //        enabled: false,
+    //    },
+    //    chart: {
+    //        zoomType: 'x',
+    //    },
+    //    credits: {
+    //        enabled: false
+    //    },
+    //    exporting: {
+    //        enabled: true,
+    //    },
+    //    title: {
+    //        text: ''
+    //    },
+    //    subtitle: {
+    //        text: document.ontouchstart === undefined ?
+    //            'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+    //    },
+    //    xAxis: {
+    //        type: 'datetime',
+    //        labels: {
+    //            format: '{value:%e-%b-%Y %H:%m}'
+    //        },            //dateTimeLabelFormats: 'day'
+    //    },
+    //    yAxis: {},
+    //    legend: {
+    //        enabled: true
+    //    },
+    //    plotOptions: {
+    //        series: {
+    //            turboThreshold: 10000//set it to a larger threshold, it is by default to 1000
+    //        }
+    //    },
 
-        series: []
-    });
+    //    series: []
+    //});
 
 
 
@@ -482,9 +486,8 @@ $(function () {
 
     $('#btn-export-menu').on('click', function (evt) {
         evt.preventDefault();
-        window.location.href = '/export';
-        return false;
-       // showMessage(_strTitle, 'This option is under development and not yet available.');
+
+        showMessage(_strTitle, 'This option is under development and not yet available.');
     });
 
     // Permalink generation:
@@ -494,23 +497,27 @@ $(function () {
         showMessage(_strTitle, 'The permalink has been copied to the clipboard and can now be pasted elsewhere.');
     });
 
-    $('#btn-get-link').on('click', function (evt) {
-        evt.preventDefault();
+    //$('#btn-get-link').on('click', function (evt) {
+    //    evt.preventDefault();
 
-        // Create & populate permalink:
-        $('#txt-plink').val(getPermalink());
+    //    // Create & populate permalink:
+    //    $('#txt-plink').val(getPermalink());
 
-        // Show dialog:
-        $('#dlg-plink').dialog('open');
-    });
+    //    // Show dialog:
+    //    $('#dlg-plink').dialog('open');
+    //});
 
-    $('#btn-copy-plink').on('click', function (evt) {
-        // Copy permalink to OS clipboard
-    });
+    //$('#btn-copy-plink').on('click', function (evt) {
+    //    // Copy permalink to OS clipboard
+    //});
 
-    $('#btn-close-plink').on('click', function (evt) {
-        // Close permalink dialog
-        $('#dlg-plink').dialog('close');
+    //$('#btn-close-plink').on('click', function (evt) {
+    //    // Close permalink dialog
+    //    $('#dlg-plink').dialog('close');
+    //});
+    $('#btn-download').on('click', function (evt) {
+        // download csv/excel file
+        downloadData();
     });
 
     //==================================================================================
@@ -634,6 +641,86 @@ $(function () {
 
     }
 
+    // can't use ajax to open the file download prompt, a known issue ?
+    // use: 
+    // window.location = "download.action?para1=value1...."
+    //https://stackoverflow.com/questions/4545311/download-a-file-by-jquery-ajax
+
+    function downloadData() {
+
+        // Acquire user selections:
+        var loc_arr = [], owners = {};
+        if (_flagMultiSelect) {
+            $.each($('#lst-locs input:checked'), function (idx, elem) {
+                loc_arr.push($(this).attr('id'));
+            })
+
+        } else {
+            $.each($('select.sel-loc'), function (idx, elem) {
+                var loc_id = $(this).val();
+                if (loc_id !== '' && $.inArray(loc_id, loc_arr) === -1) {
+                    loc_arr.push(loc_id);
+                    owners[loc_id] = _objLocs[loc_id].buoyOwners;
+                }
+            })
+        }
+
+        var param_arr = [];
+
+        if (_flagParaMultSelect) {
+            $.each($('#lst-params input:checked'), function (idx, elem) {
+                param_arr.push($(this).attr('id'));
+            })
+        } else {
+            $.each($('select.sel-param'), function (idx, elem) {
+                var param_id = $(this).val();
+                if (param_id !== '' && $.inArray(param_id, param_arr) === -1) {
+                    param_arr.push(param_id);
+                }
+            })
+        }
+
+        date_start = $('#date-start').val();
+        date_end = $('#date-end').val();
+        avg_ivld = $('#sel-tavg').val();
+
+        var d1 = new Date(date_start);
+        var d2 = new Date(date_end);
+        // Error handling:
+        if (d1 >= d2) {
+            showMessage(_strTitle, 'The selected end date must be later than the start date.');
+            return;
+        } else if (date_end.year !== date_end.year) {
+            showMessage(_strTitle, 'The start and end date must occur within the same calendar year.');
+            return;
+        }
+
+        if (loc_arr.length === 0 || param_arr.length === 0) {
+            var hChart = $('#cht-tool').highcharts();
+            removeAllSeries(hChart);
+            showMessage(_strTitle, 'At least one location and one parameter must be selected for plotting.');
+            return;
+        }
+
+        var file_type = $('#sel-filetype').val();
+        var loc = loc_arr[0];
+        var param = param_arr.join("|");
+        var sdate = date_start;
+        var edate = date_end;
+        var owner = owners[0];
+        var data_type = $('#sel-datatype').val();
+
+        window.location = "download_data?ftype=" + file_type +
+            "&data_type=" + data_type +
+            "&loc=" + loc +
+            "&param_arr=" + param +
+            "&date_start=" + sdate +
+            "&date_end=" + edate +
+            "&owner=" + owner +
+            "&avg_ivld=" + avg_ivld;
+        return;
+
+    }
 
     function queryData() {
 
@@ -656,7 +743,7 @@ $(function () {
 
         var param_arr = [];
 
-        if (_flagMultiSelect) {
+        if (_flagParaMultSelect) {
             $.each($('#lst-params input:checked'), function (idx, elem) {
                 param_arr.push($(this).attr('id'));
             })
@@ -722,104 +809,6 @@ $(function () {
                 //$('#dlg-tool').dialog('option', 'position', 'center');
             }
         });
-    }
-
-    function plotData(objData) {
-
-        var ichk = 0;
-
-        // Reinitialize chart:
-        var hChart = $('#cht-tool').highcharts();
-
-        // Remove all series and Y axes:
-        removeYAxes(hChart);
-        axes_ct = -1;
-
-        // Check if there are any data to plot (if not, show message):
-        var point_ct = 0
-        var objLoc = {};
-
-        for (loc_id in objData) {
-            objLoc = objData[loc_id];
-            point_ct += objLoc.dattim.length;
-        }
-
-        if (point_ct === 0) {
-            showMessage(_strTitle, 'No data were found for this date range for the selected location(s) and parameter(s). ' +
-                'Please note that this viewer does not support NOAA NDBC buoys that are not directly supported in the GLOS DMAC.')
-        }
-
-        // Create chart series:
-        var loc_ct = 0;
-        var arrLocs = [];
-
-        for (loc_id in objData) {
-            objLoc = objData[loc_id];
-
-            if (objLoc.dattim.length > 0) {
-                arrLocs.push(loc_id);
-                loc_ct += 1;
-
-                // Add axis for each parameter:
-                for (param_id in objLoc.params) {
-                    var objParam = objLoc.params[param_id];
-
-                    var seriesName = loc_id + ': ' + objParam.desc;
-
-                    var series_data = [];
-                    var unit = [];
-
-                    if ($('#sel-units').val() === 'met') {
-                        unit = objLoc.params[param_id].units;
-                        for (var t = 0; t < objLoc.dattim.length; t++) {
-                            var dt = Date.parse(objLoc.dattim[t]);
-                            var tsval = objParam.values[t];
-                            if (parseFloat(tsval) === -9999.0) { tsval = null };
-                            series_data.push([dt, tsval]);
-                        }
-                    } else {
-                        for (var t = 0; t < objLoc.dattim.length; t++) {
-                            var dt = Date.parse(objLoc.dattim[t]);
-                            if (parseFloat(tsval) === -9999.0) {
-                                series_data.push([dt, null]);
-                            } else {
-                                [tsval, unit] = unitConversion(objParam.values[t], objParam.units);
-                                series_data.push([dt, tsval])
-                            }
-                        }
-                    }
-
-                    // Add new Y-axis:
-                    if (loc_ct === 1) {
-                        axes_ct += 1;
-
-                        hChart.addAxis({            // New yAxis
-                            id: param_id,
-                            title: {
-                                //text: objParam.desc + ' (' + objParam.units + ')'
-                                text: objParam.desc + ' (' + unit + ')'
-                            },
-                            lineWidth: 0.5,
-                            lineColor: 'black'
-                        });
-                    }
-
-                    // Add the new series:
-                    if (series_data.length > 0) {
-                        hChart.addSeries({
-                            yAxis: param_id,
-                            type: 'line',
-                            name: seriesName,
-                            //color: 'blue',
-                            data: series_data
-                        })
-                    }
-                }
-            }
-        }
-
-        // Update chart title:
-        hChart.setTitle({ text: 'Site(s): ' + arrLocs.join(', ') });
     }
 
 

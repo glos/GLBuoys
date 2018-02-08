@@ -22,7 +22,11 @@
 	    })(window,document,'script','dataLayer','GTM-NV5RBN8');</script>-->
 	    <!-- End Google Tag Manager -->
 	
-        <title>GLOS Plotting Tool</title>
+        <!--GLOS Plotting Tool#} -->
+        <title>
+            {{title}}
+        </title>
+
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
@@ -63,7 +67,9 @@
                     <img class="headerLogos" src="{% static 'Plotter_export_tools/img/glos_logo.png' %}"/>
                 </a>
 
-                <h3 style="padding-top:15px;">GLOS Data Plotting Tool</h3>
+                <!--GLOS Data Plotting Tool-->
+
+                <h3 style="padding-top:15px;">{{title}}</h3>
 
                 <div class="w3-display-topright">
                     <span class="glosBlue w3-opennav w3-xxlarge w3-hide-large w3-right" onclick="w3_open()">&#9776;</span>
