@@ -330,6 +330,26 @@ function DegreeToCardinal(value) {
 
 $(document).ready(function () {
 
+    // Event for buoy page click:
+    $('#btn-show-tool').on('click', function (evt) {
+        console.log('test');
+        var prepend = '';
+
+        if (document.location.href.includes('/buoy/')) {
+            prepend = '../../';
+        } else {
+            prepend = '../';
+        }
+
+        document.location.href = prepend + 'plotter/';
+        console.log(prepend + 'plotter');
+        // Get data:
+        //queryData()
+
+        // Show dialog:
+        //$('#dlg-tool').dialog('open');    
+    });
+
     loadMetaJSON(function (jsonObj) {
 			loadbuoyinfo(ID, jsonObj);
 			$.each(jsonObj, function (i, option) {
