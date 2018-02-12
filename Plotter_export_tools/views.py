@@ -34,7 +34,8 @@ def plotter_get(request):
 
     return render(
         request,
-        'plotter.html', {'req_data': json.dumps(request.GET.dict()) }
+        'plotter.html', 
+        {'req_data': json.dumps(request.GET.dict()), 'title': 'GLOS Data Plotting Tool' }
     )
 
 def export(request):
@@ -45,11 +46,73 @@ def export(request):
         'export.html', pageInfo
     )
 
-# source: http://thepythondjango.com/download-data-csv-excel-file-in-django/
+# avg_ivld - user selected average interval: 
+def process_interval_avg(dct_response, avg_ivld):
+    dct_response_avg ={}
+    lstLoc =[]
 
+    interval_in_mins= get_interval_in_mins(avg_ivld)
+
+    if interval_in_mins ==0:
+        return dct_response
+    # get all locations
+
+    import pandas as pd
+
+    for loc in dct_response.keys():
+        #lstLoc.append(loc)
+        numRec = len(dct_response[loc]['dattim'])
+        # start a new dataframe
+        df= pd.DataFrame()
+
+        df['dattim'] = pd.to_datetime(dct_response[loc]['dattim'])
+        for param in dct_response[loc]['params'].keys():
+            # add columns to dataframe
+            df[param] =dct_response[loc]['params'][param]['values']
+
+        df.set_index(pd.DatetimeIndex(dct_response[loc]['dattim']), inplace=True)
+
+        # resample with new average interval
+        df_avg=df.resample(str(interval_in_mins) + 'min').mean()
+        #df_avg = df.resample('30min').mean()
+
+        dct_loc={}
+        lst_time =[]
+        for t in df_avg.index:
+            lst_time.append(t.to_pydatetime())
+
+        dct_loc['dattim']= lst_time
+        
+        dct_data={}
+        for param in dct_response[loc]['params'].keys():
+            dct_data[param] = {}  
+
+            dct_data[param]['units'] = dct_response[loc]['params'][param]['units']
+            dct_data[param]['desc'] = param
+            lst_val=[]
+            for val in df_avg[param]:
+                lst_val.append(val.item())
+            
+            dct_data[param]['values']=lst_val
+
+        dct_loc['params']= dct_data
+
+        # add to the to-be-returned dictionary
+        dct_response_avg[loc]= dct_loc
+        
+        #for 
+    
+    #if len(lstLoc)>0:
+
+    return dct_response_avg
+
+
+# download data to 'csv' or 'xls' format
 def download_data(request):
+
     filename = 'glos_data_export'
-    file_type = request.GET.get('ftype','')
+    file_type = request.GET.get('ftype','')  # csv / xls
+    unit_type = request.GET.get('utype','')  # metric / english
     
     # get the parameters
     data_type, lst_locs, lst_params, str_date1, str_date2, dct_owners, avg_ivld = queryRequestVars(request, 'GET')
@@ -58,7 +121,10 @@ def download_data(request):
 
     if (flag == 'fast'):
         dct_response = getTSData_fast(request, 'GET')
-
+        
+        # process interval average
+        dct_response= process_interval_avg(dct_response, avg_ivld)
+        # source: http://thepythondjango.com/download-data-csv-excel-file-in-django/
         if file_type=='csv':
             # call csv generator
                 
@@ -92,7 +158,7 @@ def download_data(request):
 
                         writer.writerow(dataColums)
             
-            return response;
+            return response
         
         elif file_type=='xls':
 
@@ -145,7 +211,7 @@ def download_data(request):
             return response
 
         else:
-            return;
+            return
 
 
     else: # todo: support slow method
@@ -319,6 +385,9 @@ def getTSData_fast(request, type):
     #- End location loop
     #--------------------------------------------------------
 
+    # process interval average
+    dct_response= process_interval_avg(dct_response, avg_ivld)
+    
     # Return response:
     return dct_response
     #return JsonResponse(dct_response, safe=False)
@@ -608,6 +677,38 @@ def getTSInterval(loc_id):
             pass
 
     return dctData
+
+# metric units to english conversion
+def unitConversion(value, met_unit):
+    if (met_unit == 'celsius'):
+        newValue = value * (9.0 / 5) + 32.0
+        eng_unit = 'fahrenheit'
+    elif (met_unit == 'm'):
+        newValue = value * 3.28084
+        eng_unit = 'ft'
+    elif (met_unit == 'm_s-1'):
+        newValue = value * 1.94384
+        eng_unit = 'kts'
+    else:
+        newValue = value
+        eng_unit = met_unit
+    return [newValue, eng_unit]
+
+# turn user interval string into minutes i
+def get_interval_in_mins(avg_ivld):
+       switcher = {
+           "none": 0,
+           "30_min": 30,
+           "1_hr": 60,
+           "2_hr": 120,
+           "4_hr": 240, 
+           "6_hr": 360, 
+           "8_hr": 480,
+           "12_hr": 720,
+           "1_day": 1440,
+       }
+
+       return switcher.get(avg_ivld, 0)
 
     # Check 
 

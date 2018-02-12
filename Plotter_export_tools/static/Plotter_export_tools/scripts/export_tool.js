@@ -696,8 +696,6 @@ $(function () {
         }
 
         if (loc_arr.length === 0 || param_arr.length === 0) {
-            var hChart = $('#cht-tool').highcharts();
-            removeAllSeries(hChart);
             showMessage(_strTitle, 'At least one location and one parameter must be selected for plotting.');
             return;
         }
@@ -709,8 +707,11 @@ $(function () {
         var edate = date_end;
         var owner = owners[0];
         var data_type = $('#sel-datatype').val();
+        var unit_type = $('#sel-units').val();
 
-        window.location = "download_data?ftype=" + file_type +
+        window.location = "download_data" +
+            "?ftype=" + file_type +
+            "&Utype=" + unit_type +
             "&data_type=" + data_type +
             "&loc=" + loc +
             "&param_arr=" + param +
@@ -1002,22 +1003,5 @@ $(function () {
         }
 
     }
-
-    function unitConversion(value, unit) {
-        var newValue;
-        var newUnit;
-        if (unit === 'celsius') {
-            newValue = value * (9 / 5) + 32;
-            newUnit = 'fahrenheit';
-        } else if (unit === 'm') {
-            newValues = value * 3.28084;
-            newUnit = 'ft';
-        } else if (unit === 'm_s-1') {
-            newValues = value * 1.94384;
-            newUnit = 'kts';
-        }
-        return [newValue, newUnit];
-    }
-
 
 });         // end jQuery ready function

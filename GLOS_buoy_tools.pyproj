@@ -53,7 +53,6 @@
     <Folder Include="Buoy_tool\" />
     <Folder Include="Buoy_tool\migrations\" />
     <Folder Include="Buoy_tool\static\Buoy_tool\data\" />
-    <Folder Include="C:\Users\gcutrell\Source\Repos\GLOS_buoy_tools\Buoy_tool\static\Buoy_tool\data\" />
     <Folder Include="Buoy_tool\static\" />
     <Folder Include="Buoy_tool\static\Buoy_tool\" />
     <Folder Include="Buoy_tool\static\Buoy_tool\content\" />
@@ -276,6 +275,7 @@
     <Content Include="Buoy_tool\templates\erie.html" />
     <Content Include="Buoy_tool\templates\layout_erie.html" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\export_tool.js" />
+    <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\util.js" />
     <Content Include="Plotter_export_tools\templates\export.html" />
     <Content Include="Plotter_export_tools\templates\index.html" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\css\tool.css" />
