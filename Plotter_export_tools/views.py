@@ -49,18 +49,16 @@ def export(request):
 # avg_ivld - user selected average interval: 
 def process_interval_avg(dct_response, avg_ivld):
     dct_response_avg ={}
-    lstLoc =[]
 
     interval_in_mins= get_interval_in_mins(avg_ivld)
 
     if interval_in_mins ==0:
         return dct_response
-    # get all locations
 
     import pandas as pd
 
     for loc in dct_response.keys():
-        #lstLoc.append(loc)
+        
         numRec = len(dct_response[loc]['dattim'])
         # start a new dataframe
         df= pd.DataFrame()
@@ -74,7 +72,6 @@ def process_interval_avg(dct_response, avg_ivld):
 
         # resample with new average interval
         df_avg=df.resample(str(interval_in_mins) + 'min').mean()
-        #df_avg = df.resample('30min').mean()
 
         dct_loc={}
         lst_time =[]
@@ -100,10 +97,6 @@ def process_interval_avg(dct_response, avg_ivld):
         # add to the to-be-returned dictionary
         dct_response_avg[loc]= dct_loc
         
-        #for 
-    
-    #if len(lstLoc)>0:
-
     return dct_response_avg
 
 
@@ -124,6 +117,16 @@ def download_data(request):
         
         # process interval average
         dct_response= process_interval_avg(dct_response, avg_ivld)
+
+        # convert to English units
+        if (unit_type=='eng'):
+            for loc in lst_locs:
+                for param in lst_params:
+                    newvals, newunit = metricToEnglish(dct_response[loc]['params'][param]['values'],
+                                        dct_response[loc]['params'][param]['units'])
+                    dct_response[loc]['params'][param]['values'] = newvals
+                    dct_response[loc]['params'][param]['units'] = newunit
+
         # source: http://thepythondjango.com/download-data-csv-excel-file-in-django/
         if file_type=='csv':
             # call csv generator
@@ -679,22 +682,29 @@ def getTSInterval(loc_id):
     return dctData
 
 # metric units to english conversion
-def unitConversion(value, met_unit):
-    if (met_unit == 'celsius'):
-        newValue = value * (9.0 / 5) + 32.0
-        eng_unit = 'fahrenheit'
-    elif (met_unit == 'm'):
-        newValue = value * 3.28084
-        eng_unit = 'ft'
-    elif (met_unit == 'm_s-1'):
-        newValue = value * 1.94384
-        eng_unit = 'kts'
-    else:
-        newValue = value
-        eng_unit = met_unit
-    return [newValue, eng_unit]
+# values - list of value
+def metricToEnglish(values, met_unit):
+    
+    cnvFactor = 1
+    intcpt =0
+    new_unit =met_unit
 
-# turn user interval string into minutes i
+    if (met_unit == 'celsius'):
+        cnvFactor = (9.0 / 5)
+        intcpt = 32.0
+        new_unit = 'fahrenheit'
+    elif (met_unit == 'm'):
+        cnvFactor = 3.28084
+        new_unit = 'ft'
+    elif (met_unit == 'm_s-1'):
+        cnvFactor = 1.94384
+        new_unit = 'kts'
+
+    newValues = [val * cnvFactor + intcpt for val in values]
+
+    return [newValues, new_unit]
+
+# turn user interval string into # of minutes
 def get_interval_in_mins(avg_ivld):
        switcher = {
            "none": 0,
