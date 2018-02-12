@@ -381,57 +381,6 @@ $(function () {
     }
 
     //==================================================================================
-    // HighCharts Initialization:
-    //==================================================================================
-
-    //// High Chart:
-    //$('#cht-tool').tooltip();
-
-    ////$.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=usdeur.json&callback=?', function (data) {    });
-
-    //// Initialize Highchart:
-    //$('#cht-tool').highcharts({
-    //    boost: {
-    //        enabled: false,
-    //    },
-    //    chart: {
-    //        zoomType: 'x',
-    //    },
-    //    credits: {
-    //        enabled: false
-    //    },
-    //    exporting: {
-    //        enabled: true,
-    //    },
-    //    title: {
-    //        text: ''
-    //    },
-    //    subtitle: {
-    //        text: document.ontouchstart === undefined ?
-    //            'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-    //    },
-    //    xAxis: {
-    //        type: 'datetime',
-    //        labels: {
-    //            format: '{value:%e-%b-%Y %H:%m}'
-    //        },            //dateTimeLabelFormats: 'day'
-    //    },
-    //    yAxis: {},
-    //    legend: {
-    //        enabled: true
-    //    },
-    //    plotOptions: {
-    //        series: {
-    //            turboThreshold: 10000//set it to a larger threshold, it is by default to 1000
-    //        }
-    //    },
-
-    //    series: []
-    //});
-
-
-
-    //==================================================================================
     // Events Related to User Selections:
     //==================================================================================
     // Event to filter by Great Lake:
@@ -477,19 +426,6 @@ $(function () {
         $(this).val() === 'none';       // TMR!!! - force to "none"
     });
 
-    // Button events:
-    $('#btn-plot-update').on('click', function (evt) {
-        evt.preventDefault();
-
-        queryData();
-    });
-
-    $('#btn-export-menu').on('click', function (evt) {
-        evt.preventDefault();
-
-        showMessage(_strTitle, 'This option is under development and not yet available.');
-    });
-
     // Permalink generation:
     var clipboard = new Clipboard('#btn-copy-plink');
 
@@ -497,24 +433,6 @@ $(function () {
         showMessage(_strTitle, 'The permalink has been copied to the clipboard and can now be pasted elsewhere.');
     });
 
-    //$('#btn-get-link').on('click', function (evt) {
-    //    evt.preventDefault();
-
-    //    // Create & populate permalink:
-    //    $('#txt-plink').val(getPermalink());
-
-    //    // Show dialog:
-    //    $('#dlg-plink').dialog('open');
-    //});
-
-    //$('#btn-copy-plink').on('click', function (evt) {
-    //    // Copy permalink to OS clipboard
-    //});
-
-    //$('#btn-close-plink').on('click', function (evt) {
-    //    // Close permalink dialog
-    //    $('#dlg-plink').dialog('close');
-    //});
     $('#btn-download').on('click', function (evt) {
         // download csv/excel file
         downloadData();
@@ -696,8 +614,6 @@ $(function () {
         }
 
         if (loc_arr.length === 0 || param_arr.length === 0) {
-            var hChart = $('#cht-tool').highcharts();
-            removeAllSeries(hChart);
             showMessage(_strTitle, 'At least one location and one parameter must be selected for plotting.');
             return;
         }
@@ -709,8 +625,11 @@ $(function () {
         var edate = date_end;
         var owner = owners[0];
         var data_type = $('#sel-datatype').val();
+        var unit_type = $('#sel-units').val();
 
-        window.location = "download_data?ftype=" + file_type +
+        window.location = "download_data" +
+            "?ftype=" + file_type +
+            "&utype=" + unit_type +
             "&data_type=" + data_type +
             "&loc=" + loc +
             "&param_arr=" + param +
@@ -1002,22 +921,5 @@ $(function () {
         }
 
     }
-
-    function unitConversion(value, unit) {
-        var newValue;
-        var newUnit;
-        if (unit === 'celsius') {
-            newValue = value * (9 / 5) + 32;
-            newUnit = 'fahrenheit';
-        } else if (unit === 'm') {
-            newValues = value * 3.28084;
-            newUnit = 'ft';
-        } else if (unit === 'm_s-1') {
-            newValues = value * 1.94384;
-            newUnit = 'kts';
-        }
-        return [newValue, newUnit];
-    }
-
 
 });         // end jQuery ready function

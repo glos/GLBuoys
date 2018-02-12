@@ -23,7 +23,7 @@ from Plotter_export_tools.views import plotter, plotter_get, getTSData, export, 
 
 urlpatterns = [
     # Home page:
-    url(r'^$', plotter, name='plotter'),
+    url(r'^$', plotter_get, name='plotter_get'),
     url(r'^export', export, name='export'),
 
     # Lake Erie Home Page:

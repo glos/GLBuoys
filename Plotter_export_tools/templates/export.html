@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{% static 'Buoy_tool/css/main.css' %}">
 
 	<link rel="stylesheet" type="text/css" href="{% static 'Plotter_export_tools/css/tool.css' %}">
+    <script src="{% static 'Plotter_export_tools/scripts/util.js' %}"></script>
 	<script src="{% static 'Plotter_export_tools/scripts/export_tool.js' %}"></script>
 	<script src="{% static 'Buoy_tool/scripts/clipboard.min.js' %}"></script>    
 
@@ -156,7 +157,7 @@
                                 <!-- Data aggregation -->
                                 <li>
                                     <label for="sel-tavg" class="lab-tool2">Averaging interval:</label>
-                                    <select id="sel-tavg" class="opts-tool" title="This feature is not yet implemented." disabled>
+                                    <select id="sel-tavg" class="opts-tool">
                                         <option value="none" selected>None</option>
                                         <option value="30_min">30 minutes</option>
                                         <option value="1_hr">1 hour</option>
