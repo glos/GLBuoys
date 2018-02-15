@@ -81,7 +81,8 @@ function PastForecastGraphic(longName, units, DateTime, ForecastDateTime, Data, 
             renderTo: 'container',
             type: 'series',
             alignTicks: false,
-            zoomType: 'x'
+            zoomType: 'x',
+            spacing: [5,1,5,0]
         },
 
         title: {
@@ -110,9 +111,13 @@ function PastForecastGraphic(longName, units, DateTime, ForecastDateTime, Data, 
         },
         yAxis: {
             title: {
-							text: units
+                text: units,
+                margin: 5,
             },
-						floor: 0
+            labels: {
+                x: -5,
+            },
+            floor: 0,
         },
 
 				tooltip: {
@@ -238,7 +243,8 @@ function PastForecastPolar(longName, units, DateTime, Data) {
 
         chart: {
           renderTo: 'container',
-          polar: true
+          polar: true,
+          spacing: [5, 1, 5, 0],
         },
 				
 				title: {

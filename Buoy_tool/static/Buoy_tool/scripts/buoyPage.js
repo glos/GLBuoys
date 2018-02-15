@@ -479,7 +479,7 @@ function loadbuoyinfo(ID, jsonObj) {
                         $('#ADCP').addClass("w3-center w3-panel w3-card-4 w3-padding");
                         $('#ADCP h4').append('Currents');
                         $('#ADCP h4').addClass("glosBlue w3-center");
-                        $('#ADCP').append('<div id="ADCP_Chart" style="min-width: 400px;height: 500px"></div>');
+                        $('#ADCP').append('<div id="ADCP_Chart" style="height: 500px"></div>');
                         ADCPfig(ID);
                     }
 

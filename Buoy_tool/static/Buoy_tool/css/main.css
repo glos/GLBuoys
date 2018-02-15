@@ -48,6 +48,14 @@ img.headerLogos{
 			height:40px;
 			width:140px;
 		}
+    .w3-container{
+        padding-left: 4px!important;
+        padding-right: 4px!important;
+    }
+    .w3-padding {
+        padding-left: 4px !important;
+        padding-right: 8px !important;
+    }
 }
 
 /*Index Page Styling*/
@@ -226,3 +234,7 @@ table#NWSForecast td.NWSIconSubtext {
 		text-align: left;
 		vertical-align:middle;
   }
+
+g.highcharts-label.highcharts-legend-title text {
+    transform: translateX(90px);
+}

@@ -1,35 +1,5 @@
 ﻿function ADCPfig(stationID) {
 
-	/*
-	var data_file = "http://34.211.180.62/BuoyALP/buoydata_"+units+"/"+stationID+"";
-    var http_request = new XMLHttpRequest();
-
-    try {
-        // Opera 8.0+, Firefox, Chrome, Safari
-        http_request = new XMLHttpRequest();
-    } catch (e) {
-        // Internet Explorer Browsers
-        try {
-            http_request = new ActiveXObject("Msxml2.XMLHTTP");
-
-        } catch (e) {
-
-            try {
-                http_request = new ActiveXObject("Microsoft.XMLHTTP");
-            } catch (e) {
-                // Something went wrong
-                alert("Your browser broke!");
-                return false;
-            }
-        }
-    }
-
-    http_request.onreadystatechange = function () {
-        if (http_request.readyState == 4) {
-            
-    
-            //Javascript function JSON.parse to parse JSON data**/
-
     $.getJSON('../static/Buoy_tool/json/45026_adcp.json', function (jsonObj) {
         var Dates = [];
         var Data = [];
@@ -92,13 +62,11 @@
 
 
 function ADCP_Highchart(data, DateString, depths) {
+    
+    //Add max value of 50 at depth -1 on the last date
+    data.push([data[data.length - 1][0], -1, 50, 360]);
     console.log(data);
-    //console.log(DateString);
-    //console.log(depths);
-    var maxSpeed = String.valueOf(Math.max(data[2]));
-    var minSpeed = String.valueOf(Math.min(data[2]));
 
-    /**
     var H = Highcharts;
     H.seriesTypes['vector'].prototype.drawLegendSymbol = function (legend, item) {
         var options = legend.options,
@@ -119,17 +87,18 @@ function ADCP_Highchart(data, DateString, depths) {
                 zIndex: 3,
                 translateY: symbolWidth / 2,
                 rotation: 270,
-                'stroke-width': 1,
+                'stroke-width': 2,
                 'stroke': 'black'
             }).add(item.legendGroup);
-    }**/
+    }
 
     var options = {
 
         chart: {
             renderTo: 'ADCP_Chart',
             type: 'vector',
-            zoomType: 'x'
+            zoomType: 'x',
+            spacing: [7, 0, 0, 0]
         },
 				
         title: {
@@ -137,8 +106,22 @@ function ADCP_Highchart(data, DateString, depths) {
             style: { display: 'none'}
         },
 
+        legend: {
+            title: {
+                text: 'Speed (cm/s)'
+            }
+        },
+
         credits: {
             enabled: false
+        },
+
+        navigation: {
+            buttonOptions: {
+                verticalAlign: 'top',
+                y: -10,
+                symbolSize: 15,
+            }
         },
 
         xAxis: {
@@ -156,6 +139,7 @@ function ADCP_Highchart(data, DateString, depths) {
             pointStart: Highcharts.dateFormat('%m/%d %H:%M', data[0][0]),
             tickInterval: 6 * 3600 * 1000,
         },
+
         yAxis: {
             //categories: depths,
             name: 'water depth ('+depthUnits+')',
@@ -164,12 +148,14 @@ function ADCP_Highchart(data, DateString, depths) {
             offset: 0,
             reversed: true,
             title: {
-                text: 'Water Depth ('+depthUnits+')'
+                text: 'Water Depth (' + depthUnits + ')',
+                margin: 3,
             },
             labels: {
                 formatter: function () {
 				    return this.value
-                }
+                },
+                x: -5,
             },
             min: depths[0],
             max: depths[depths.length - 1] + depths[0]
@@ -188,17 +174,35 @@ function ADCP_Highchart(data, DateString, depths) {
         },
 
         series: [{
-            name: 'Current speed and direction',
+            name: '50',
             color: Highcharts.getOptions().colors[1],
             data: data,
             showInLegend: true,
-            vectorLength: -10,
-            //tooltip: {
-            //    pointFormat: 'Date: <b>{point.x}</b> <br />Depth: <b>{point.y}</b> <br />Speed: <b>{point.length}</b><br />Direction: <b>{point.direction}°</b>'
-            //}
+            vectorLength: -30,
+            },
+            {vectorLength: 24,
+                name: '40',
+                type: 'vector',
+                color: Highcharts.getOptions().colors[1],
+            },
+            {
+                vectorLength: 18,
+                name: '30',
+                type: 'vector',
+                color: Highcharts.getOptions().colors[1],
+            },
+            {
+                vectorLength: 12,
+                name: '20',
+                type: 'vector',
+                color: Highcharts.getOptions().colors[1],
+            },
+            {
+                vectorLength: 6,
+                name: '10',
+                type: 'vector',
+                color: Highcharts.getOptions().colors[1],
         }],
     };
-
-	//options2.title.text = ('Water Temperature Profile');	
   var chart = new Highcharts.Chart(options);
 }

@@ -59,7 +59,8 @@ function PastTempNodeGraphic(DateTime, Data, Depth) {
             renderTo: 'container',
             type: 'series',
             alignTicks: false,
-            zoomType: 'x'
+            zoomType: 'x',
+            spacing: [5, 1, 5, 0],
         },
 
         title: {
@@ -87,7 +88,11 @@ function PastTempNodeGraphic(DateTime, Data, Depth) {
         },
         yAxis: {
             title: {
-							text: '°F'
+                text: units,
+                margin: 5,
+            },
+            labels: {
+                x: -5,
             },
         },
 				tooltip: {
