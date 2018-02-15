@@ -63,6 +63,9 @@
         var variableIndex = jsonObj.obsID.indexOf(variableName);
         var longName = jsonObj.obsLongName[variableIndex];
         var units = jsonObj.obsUnits[variableIndex];
+        if (variableName == 'PH') {
+            units = 'PH';
+        }
         if (variableName == 'WDIR' || variableName == 'MWD') {
             PastForecastPolar(longName, units, Dates[0], Data[0]);
         } else {
@@ -88,7 +91,7 @@ function PastForecastGraphic(longName, units, DateTime, ForecastDateTime, Data, 
         title: {
             text: longName 
         },
-				
+
 				legend: {
 					enable: true,
 					//y: -35		//Uncomment if adding label under chart

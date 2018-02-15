@@ -342,12 +342,7 @@ $(document).ready(function () {
         }
 
         document.location.href = prepend + 'plotter/';
-        console.log(prepend + 'plotter');
-        // Get data:
-        //queryData()
-
-        // Show dialog:
-        //$('#dlg-tool').dialog('open');    
+        console.log(prepend + 'plotter');   
     });
 
     loadMetaJSON(function (jsonObj) {
@@ -693,9 +688,10 @@ function loadbuoyinfo(ID, jsonObj) {
 					}
         }
       }
-			callfooterInfo(ID);
-			initialize(jsonObj);
+	callfooterInfo(ID);
+	initialize(jsonObj);
 }
+
 function reloadbuoyinfo() {
     var url = window.location.href;
     var arr = url.split("/");
@@ -721,23 +717,23 @@ function reloadbuoyinfo() {
 						if (hourDiff < 6) {  //assumes time from json is local. Checks if data is less than 1 hour old
 							//document.getElementById("stationTime").style.color = "#337ab7"
                             //document.getElementById("stationTime").innerHTML = "" + dateNum.format("LT") + " EDT&nbsp;&nbsp;" + dateNum.format("ddd, MMM D") + ""
-                            var stationDateTime = "" + dateNum.format("LT") + " " + tzAbbr + "  " + dateNum.format("ddd, MMM D") + "";
-                            $("#stationTime").text(stationDateTime);
+                            var stationDateTime = "" + dateNum.format("LT") + " " + tzAbbr + "&nbsp;&nbsp;" + dateNum.format("ddd, MMM D") + "";
+                            $("#stationTime").html(stationDateTime);
                             $("#stationTime").css('color', '#337ab7');
 						}
 						else if (hourDiff > 6 && hourDiff < 24) {  //assumes time from json is local. Checks if data is less than 6 hour old
 							//document.getElementById("stationTime").style.color = "#FFC900"
                             //document.getElementById("stationTime").innerHTML = "" + dateNum.format("LT") + " EDT&nbsp;&nbsp;" + dateNum.format("ddd, MMM D") + " (>6 hours ago)"
-                            var stationDateTime = "" + dateNum.format("LT") + " EDT&nbsp;&nbsp;" + dateNum.format("ddd, MMM D") + " (>6 hours ago)";
-                            $("#stationTime").text(stationDateTime);
-                            $("#stationTime").css('color', '#337ab7');
+                            var stationDateTime = "" + dateNum.format("LT") + " " + tzAbbr + "&nbsp;&nbsp;" + dateNum.format("ddd, MMM D") + " (>6 hours ago)";
+                            $("#stationTime").html(stationDateTime);
+                            $("#stationTime").css('color', '#FFC900');
 						}
 						else {
 							//document.getElementById("stationTime").style.color = "#f70000"
                             //document.getElementById("stationTime").innerHTML = "" + dateNum.format("LT") + " EDT&nbsp;&nbsp;" + dateNum.format("ddd, MMM D") + " (>1 day ago)"
-                            var stationDateTime = "" + dateNum.format("LT") + " EDT&nbsp;&nbsp;" + dateNum.format("ddd, MMM D") + " (>1 day ago)";
-                            $("#stationTime").text(stationDateTime);
-                            $("#stationTime").css('color', '#337ab7');
+                            var stationDateTime = "" + dateNum.format("LT") + " " + tzAbbr + "&nbsp;&nbsp;" + dateNum.format("ddd, MMM D") + " (>1 day ago)";
+                            $("#stationTime").html(stationDateTime);
+                            $("#stationTime").css('color', '#f70000');
 						}
 						var columnSpan  = 1;
 						if (jsonObj[i].thermistorValues.length>1 && !isNaN(jsonObj[i].thermistorValues[0])){ //Check to make sure there are multiple temperature nodes and first two depths are not missing
