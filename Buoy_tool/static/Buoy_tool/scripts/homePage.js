@@ -19,6 +19,39 @@ function ifOffline(time){
 				} 
 			}
 
+//--------------------------Load Banner News if available-----------------------------
+google.charts.load('current', {
+    callback: getBannerNews,
+    packages: ['corechart']
+});
+
+var bannerNews;
+
+function getBannerNews() {
+    var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1pNrNz0BWd_ckJfBmTJbl4Vf8CdGq2rlWLL_1vRAqqco/edit#gid=0/gviz/tq?tq=');
+    query.setQuery('select B where A = "bannerNews"');
+    query.send(BannerNewsResponse);
+}
+
+function BannerNewsResponse(response) {
+    if (response.isError()) {
+        console.log('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+        return;
+    }
+    var data = response.getDataTable();
+    try {
+        bannerNews = data.getValue(0, 0);
+    }
+    catch (err) {
+        console.log("No Banner News");
+    }
+    if (bannerNews) {
+        $('#bannerNews').addClass('w3-panel w3-pale-green w3-small');
+        $('#bannerNews').append('<p>' + bannerNews + '</p>');
+    }
+}
+//------------------------------------------------------------------------------------------------
+
 function DegreeToCardinal(value) {
 	if (value >= 348.75 || value < 11.25){
 		return "N";

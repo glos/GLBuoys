@@ -25,6 +25,7 @@ urlpatterns = [
     # Home page:
     url(r'^$', plotter_get, name='plotter_get'),
     url(r'^export', export, name='export'),
+    #url(r'^$', Buoy_tool.views.home, name='home'),
 
     # Lake Erie Home Page:
     url(r'^erie/$', Buoy_tool.views.eriehome, name='eriehome'),
