@@ -249,7 +249,7 @@ textarea#txt-plink {
     height: 100%;
     z-index: 9999;
     background: #7f7f7f;
-    background: url(images/fading_balls.gif) center no-repeat rgba(255,255,255,0.9);
+    background: url(/static/Plotter_export_tools/img/fading_balls.gif) center no-repeat rgba(255,255,255,0.9);
 }
 
 #cht-loader {
