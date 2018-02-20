@@ -46,7 +46,7 @@ urlpatterns = [
     url(r'^([^/]+)/$', buoy, name='buoy'),
 
     # Requests for /favicon.ico redirected to the URL of 'favicon.ico'according to staticfiles storage. http://staticfiles.productiondjango.com/blog/failproof-favicons/
-    url(r'^favicon.ico$',RedirectView.as_view(url=staticfiles_storage.url('/Buoy_tool/img/favicon.ico'),permanent=False),name="favicon"),
+    url(r'^favicon.ico$',RedirectView.as_view(url=staticfiles_storage.url('static/Buoy_tool/img/favicon.ico'),permanent=False),name="favicon"),
     
     # Login/logout:
     
