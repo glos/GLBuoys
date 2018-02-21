@@ -17,14 +17,11 @@
     <script src="https://rawgithub.com/paulo-raca/highcharts-contour/master/highcharts-contour.js"></script>
     <script src="https://rawgithub.com/ironwallaby/delaunay/master/delaunay.js"></script>
 
-    <!-- Google Charts -->
-	<script src="https://www.gstatic.com/charts/loader.js"></script>
-	<script type="text/javascript">google.charts.load('current', {'packages': ['corechart']});</script>
-		
-		<!--Google Tag Manager-->
-		<script>
+    
+    <!--Google Tag Manager-->
+    <script>
         dataLayer = [];
-   </script>
+    </script>
 	 
 	 <!--<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 	 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -54,11 +51,6 @@
     <script src="{% static 'Buoy_tool/scripts/ADCP_Highchart.js' %}"></script>
 	<script src="{% static 'Buoy_tool/scripts/fullScreenCheck.js' %}"></script>
     
-    <!--Buoy enhanced plotting tool (TMR-2017/09/22)-->
-	   
-    <!--<link rel="stylesheet" type="text/css" href="{% static 'Plotting_export_tools/css/tool.css' %}">
-	<script src="{% static 'Plotting_export_tools/scripts/plotter_tool.js' %}"></script>-->
-       
 {% endblock %}
 
 {% block staticHeader %}
@@ -79,7 +71,7 @@
     <section id="main" class="w3-container" style="margin-top:110px">
 
 				<div id="recovered"></div>
-				<div id="bannerNews" style="max-width:600px; margin: 0 auto;"></div>
+				<div id="bannerNews"></div>
 				<div id = "sponsorsHeader" class="w3-container w3-center" style="margin-bottom:10px"></div>
 				<div id="buoyAlert"></div>
 

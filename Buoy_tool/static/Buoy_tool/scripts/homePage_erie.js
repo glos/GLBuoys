@@ -48,7 +48,9 @@ function BannerNewsResponse(response) {
     }
     if (bannerNews) {
         $('#bannerNews').addClass('w3-panel w3-pale-green w3-small');
-        $('#bannerNews').append('<p>' + bannerNews + '</p>');
+				$('#bannerNews').attr('style','max-width:550px; margin: 0 auto;');
+				$('#bannerNews').append('<p>'+bannerNews+'</p>');
+				$('#main').attr('style','margin-top:70px')
     }
 }
 //------------------------------------------------------------------------------------------------

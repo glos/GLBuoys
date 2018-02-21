@@ -9,7 +9,6 @@ var arr = url.split("/");
 var ID = arr[3]; 
 
 
-
 function loadMetaJSON(callback) {
     var data_file = '../static/Buoy_tool/data/meta_' + units + '.json';
     $.getJSON(data_file, function (json) {
@@ -28,6 +27,72 @@ function ifOffline(time){
 					return false;
 				} 
 }
+
+
+//--------------------------Load Banner News and Buoy alerts if available-----------------------------
+google.charts.load('current', {
+  callback: getBannerNews,
+  packages: ['corechart']
+});
+google.charts.load('current', {
+  callback: getBuoyAlerts,
+  packages: ['corechart']
+});
+var buoyAlert;
+var bannerNews;
+function getBannerNews(){
+	var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1pNrNz0BWd_ckJfBmTJbl4Vf8CdGq2rlWLL_1vRAqqco/edit#gid=0/gviz/tq?tq=');
+	query.setQuery('select B where A = "bannerNews"');
+	query.send(BannerNewsResponse);
+}
+function BannerNewsResponse(response) {
+    if (response.isError()) {
+        console.log('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+        return;
+    }
+    var data = response.getDataTable();
+		try {
+			bannerNews = data.getValue(0,0);
+		}
+		catch(err){
+			console.log("No Banner News");
+		}
+		if (bannerNews){
+				$('#bannerNews').addClass('w3-panel w3-pale-green w3-small');
+				$('#bannerNews').attr('style','max-width:600px; margin: 0 auto;');
+				$('#bannerNews').append('<p>'+bannerNews+'</p>');
+				$('#main').attr('style','margin-top:70px')
+			}
+}
+
+function getBuoyAlerts(){
+	var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1pNrNz0BWd_ckJfBmTJbl4Vf8CdGq2rlWLL_1vRAqqco/edit#gid=0/gviz/tq?tq=');
+	var ID;
+	var url = window.location.href;
+	var arr = url.split("/");
+	ID = arr[3];
+	query.setQuery('select B where A = "'+ID+'"');
+	query.send(BuoyAlertsResponse);
+}
+function BuoyAlertsResponse(response) {
+    if (response.isError()) {
+        console.log('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+        return;
+    }
+    var data = response.getDataTable();
+		try {
+			buoyAlert = data.getValue(0,0);
+		}
+		catch(err){
+			console.log("No buoy alerts");
+		}
+		if (buoyAlert){
+						$('#buoyAlert').addClass('w3-panel w3-center w3-pale-red w3-medium');
+						$('#buoyAlert').attr("style", 'max-width:800px; margin: 0 auto;');
+						$('#buoyAlert').append('<p style="font-size:14px">' + buoyAlert + '</p>');
+					}
+}
+//----------------------------------------------------------------------------------------
 			
 function initialize(jsonObj) {
 	
@@ -370,66 +435,9 @@ $(document).ready(function () {
     var refresher = setInterval("reloadbuoyinfo();", 600000);
 });
 
-//--------------------------Load Banner News and Buoy alerts if available-----------------------------
-google.charts.load('current', {
-  callback: getBannerNews,
-  packages: ['corechart']
-});
-google.charts.load('current', {
-  callback: getBuoyAlerts,
-  packages: ['corechart']
-});
-var buoyAlert;
-var bannerNews;
-function getBannerNews(){
-	var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1pNrNz0BWd_ckJfBmTJbl4Vf8CdGq2rlWLL_1vRAqqco/edit#gid=0/gviz/tq?tq=');
-	query.setQuery('select B where A = "bannerNews"');
-	query.send(BannerNewsResponse);
-}
-function BannerNewsResponse(response) {
-    if (response.isError()) {
-        console.log('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
-        return;
-    }
-    var data = response.getDataTable();
-		try {
-			bannerNews = data.getValue(0,0);
-		}
-		catch(err){
-			console.log("No Banner News");
-		}
-}
-
-function getBuoyAlerts(){
-	var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1pNrNz0BWd_ckJfBmTJbl4Vf8CdGq2rlWLL_1vRAqqco/edit#gid=0/gviz/tq?tq=');
-	var ID;
-	var url = window.location.href;
-	var arr = url.split("/");
-	ID = arr[3];
-	query.setQuery('select B where A = "'+ID+'"');
-	query.send(BuoyAlertsResponse);
-}
-function BuoyAlertsResponse(response) {
-    if (response.isError()) {
-        console.log('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
-        return;
-    }
-    var data = response.getDataTable();
-		try {
-			buoyAlert = data.getValue(0,0);
-		}
-		catch(err){
-			console.log("No buoy alerts");
-		}
-}
-
 
 //----------------------Use for reading in JSON objects array, parse buoy ID, then parse keys to populate webpage.----------------------------
 function loadbuoyinfo(ID, jsonObj) {
-			if (bannerNews){
-				$('#bannerNews').addClass('w3-panel w3-pale-green w3-small');
-				$('#bannerNews').append('<p>'+bannerNews+'</p>');
-			}
 			
 			// jsonObj variable now contains the data structure and can be accessed as jsonObj.keys
 			for (i = 0; i < jsonObj.length; i++) {
@@ -461,11 +469,6 @@ function loadbuoyinfo(ID, jsonObj) {
 								$('#sponsorsBottom #'+a+'').on('click',function(){dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'sponsors','glbuoysLabel':$(this).closest('a').attr('href'),'glbuoysAction':'click_external_url'});});
 							}
 						}
-					}
-					if (buoyAlert){
-						$('#buoyAlert').addClass('w3-panel w3-center w3-pale-red w3-medium');
-						$('#buoyAlert').attr("style", 'max-width:800px; margin: 0 auto;');
-						$('#buoyAlert').append('<p style="font-size:14px">' + buoyAlert + '</p>');
 					}
                     console.log(jsonObj[i]);
                     //Move inside obsUnits check after code checks

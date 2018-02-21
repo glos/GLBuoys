@@ -101,6 +101,14 @@ ENV/
 .mypy_cache/
 
 # LimnoTech added (01/30/2018):
-static_global/
+#static_global/
+static
 obj/
 .vs/
+DataGen/
+bin/
+include/
+lib64
+local/
+*.log
+*.json
