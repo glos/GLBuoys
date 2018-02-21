@@ -74,10 +74,7 @@ def process_interval_avg(dct_response, avg_ivld):
         df_avg=df.resample(str(interval_in_mins) + 'min').mean()
 
         dct_loc={}
-        lst_time =[]
-        for t in df_avg.index:
-            lst_time.append(t.to_pydatetime())
-
+        lst_time =[t.to_pydatetime() for t in df_avg.index]
         dct_loc['dattim']= lst_time
         
         dct_data={}
@@ -86,10 +83,8 @@ def process_interval_avg(dct_response, avg_ivld):
 
             dct_data[param]['units'] = dct_response[loc]['params'][param]['units']
             dct_data[param]['desc'] = param
-            lst_val=[]
-            for val in df_avg[param]:
-                lst_val.append(val.item())
-            
+
+            lst_val=[val.item() for val in df_avg[param]]
             dct_data[param]['values']=lst_val
 
         dct_loc['params']= dct_data
