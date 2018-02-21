@@ -25,10 +25,10 @@ SECRET_KEY = 'd63576b1-c31c-4d3d-a6f9-7ea1124d20b5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #TEMPLATE_DEBUG = True
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*',]
-#ALLOWED_HOSTS = ['localhost', 'ltiweb02.limno.com',]
+#ALLOWED_HOSTS = ['*',]
+ALLOWED_HOSTS = ['localhost', '34.209.199.227',]
 
 # Application definition
 
@@ -130,7 +130,41 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = ()
 
-STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static_global']))
+STATIC_ROOT = os.path.join(BASE_DIR,"static")
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR,"GLOS_buoy_tools/logs/django_debug.log"),
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers':['file'],
+            'propagate': True,
+            'level':'DEBUG',
+        },
+        'MYAPP': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+    }
+}
+
