@@ -112,4 +112,5 @@ lib64
 local/
 *.log
 *.json
+GLOS_buoy_tools/settings.py
 Buoy_tool/static/Buoy_tool/data
