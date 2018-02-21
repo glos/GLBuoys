@@ -151,7 +151,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR,"GLOS_buoy_tools/logs/django_debug.log"),
+            'filename': os.path.join(BASE_DIR,"log/django_debug.log"),
             'formatter': 'verbose'
         },
     },

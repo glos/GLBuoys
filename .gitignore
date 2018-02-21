@@ -112,3 +112,4 @@ lib64
 local/
 *.log
 *.json
+Buoy_tool/static/Buoy_tool/data
