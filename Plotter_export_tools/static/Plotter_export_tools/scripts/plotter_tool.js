@@ -1,8 +1,10 @@
 // Global variables:
 
 
-var _strTitle = 'GLOS Data Plotting Tool'
+var _strTitle = 'Plotting Tool (beta)'
 var _objLocs = {};
+var _metaJSON = '../static/Buoy_tool/data/meta_english.json';
+//var _metaJSON = 'http://34.209.199.227/static/Buoy_tool/data/meta_english.json';
 
 var _arrParamOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'WPRD', 'MWD', 'APD', 'ATMP', 'PRES', 'DEWP', 'PH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI'];
 var _arrParamExcl = ['DPD', 'TIDE', 'VIS', 'PTDY', 'DEPTH', 'OTMP', 'CHILL', 'HEAT', 'ICE', 'WSPD10', 'WSPD20'];
@@ -71,9 +73,7 @@ $(function () {
     //==================================================================================
     // AJAX to Pull Location IDs & Names (** currently hardcoded for buoys **)
     //==================================================================================
-    var data_file = "http://34.211.180.62/BuoyALP/buoymeta_english/all";
-
-    $.getJSON(data_file, function (arrLocMeta) {
+    $.getJSON(_metaJSON, function (arrLocMeta) {
 
         if (_flagMultiSelect) {
             $('#lst-locs').empty();
@@ -129,7 +129,14 @@ $(function () {
         });
 
         // Load request or build parameter list:
-        if ($.isEmptyObject(objGET)) {
+        var loadFlag = true;
+        if (objGET === undefined) {
+            loadFlag = false
+        } else {
+            loadFlag = ($.isEmptyObject(objGET))
+        }
+
+        if (! loadFlag) {
             updateParams();
         } else {
             loadRequest();
@@ -555,7 +562,7 @@ $(function () {
         if (loc_ct > 0) {
             updateParams();
 
-            if (objGET.hasOwnProperty('locs')) {
+            if (objGET.hasOwnProperty('params')) {
                 var param_arr = objGET.params.split('|');
                 var param_ct = 0;
 

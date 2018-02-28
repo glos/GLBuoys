@@ -37,185 +37,183 @@
     <div class="content-wrapper">
         <div id="body">
 
-            <section id="main" class="content-wrapper clear-fix" style="margin-top:75px">
+            <form>
+                {% csrf_token %}
 
-            <article>
-
-                    <!-- Preloader DIV -->
-                    {#<div id="cht-loader" class="preloader"></div>#}
-       
+                <!-- Preloader DIV -->
+                {#<div id="cht-loader" class="preloader"></div>#}
 
                 <!-- User Options/Controls -->
-                <div id="tool-ctrl" >
+                <div id="tool-ctrl" class="row">
+                    <div id="tool-ctrl-left" class="col-md-6">
+                        <!-- Monitoring data type -->
+                        <label for="" id="" class="lab-tool2" style="font-size:0.9em;">Monitoring type:</label>
+                        <select id="sel-datatype" class="opts-tool" disabled>
+                            <option value="buoy" selected >Buoy</option>
+                        </select>
+                            <br/><br/>
+                        <!-- Units selection -->
+                        <label for="" id="" class="lab-tool2" style="font-size:0.9em;">Select units:</label>
+                        <select id="sel-units" class="opts-tool" title="This feautre is not yet implemented."> <!--<disabled>-->
+                            <option value="met" selected >Metric</option>
+                            <option value="eng" >English</option>
+                        </select>
+                        <br/><br/>
 
-                    <form>
-                        {% csrf_token %}
+                        <!-- Great Lake -->
+                        <label for="" id="" class="lab-tool2" style="font-size:0.9em;">Select lake:</label>
+                        <select id="sel-lake" class="opts-tool">
+                            <option value="ALL" selected >All Lakes</option>
+                            <option value="SUP" >Lake Superior</option>
+                            <option value="HU" >Lake Huron</option>
+                            <option value="MI" >Lake Michigan</option>
+                            <option value="ER" >Lake Erie</option>
+                            <option value="ON" >Lake Ontario</option>
+                        </select>
+                        <br/><br/>
 
+                        <!-- Monitoring locations -->
+                        <label for="" id="lab-lst-locs" class="lab-tool">Select location:</label>
+                        <br />
+                        <!-- Single-select menus -->
+                            <!--<select id="sel-loc1" class="sel-loc opts-tool"></select> -->
 
-                        <div id="tool-ctrl-left">
-                            <!-- Monitoring data type -->
-                            <label for="" id="" class="lab-tool2" style="font-size:0.9em;">Monitoring type:</label>
-                            <select id="sel-datatype" class="opts-tool" disabled>
-                                <option value="buoy" selected >Buoy</option>
-                            </select>
-                             <br/><br/>
-                            <!-- Units selection -->
-                            <label for="" id="" class="lab-tool2" style="font-size:0.9em;">Select units:</label>
-                            <select id="sel-units" class="opts-tool" title="This feautre is not yet implemented."> <!--<disabled>-->
-                                <option value="met" selected >Metric</option>
-                                <option value="eng" >English</option>
-                            </select>
-                           <br/><br/>
-
-                            <!-- Great Lake -->
-                            <label for="" id="" class="lab-tool2" style="font-size:0.9em;">Select lake:</label>
-                            <select id="sel-lake" class="opts-tool">
-                                <option value="ALL" selected >All Lakes</option>
-                                <option value="SUP" >Lake Superior</option>
-                                <option value="HU" >Lake Huron</option>
-                                <option value="MI" >Lake Michigan</option>
-                                <option value="ER" >Lake Erie</option>
-                                <option value="ON" >Lake Ontario</option>
-                            </select>
-                           <br/><br/>
-
-                            <!-- Monitoring locations -->
-                            <label for="" id="lab-lst-locs" class="lab-tool">Select location:</label>
-                            <br />
-                            <!-- Single-select menus -->
-                             <!--<select id="sel-loc1" class="sel-loc opts-tool"></select> -->
-
-                            <!-- Single-select menus -->
-                            <ul id="ul-locs" class="tool">
-                                <li>#1:
-                                    <select id="sel-loc1" class="sel-loc opts-tool"></select>
-                                </li>
-                                <li>#2:
-                                    <select id="sel-loc2" class="sel-loc opts-tool"></select>
-                                </li>
-                                <li>#3:
-                                    <select id="sel-loc3" class="sel-loc opts-tool"></select>
-                                </li>
-                            </ul>
+                        <!-- Single-select menus -->
+                        <ul id="ul-locs" class="tool">
+                            <li>#1:
+                                <select id="sel-loc1" class="sel-loc opts-tool"></select>
+                            </li>
+                            <li>#2:
+                                <select id="sel-loc2" class="sel-loc opts-tool"></select>
+                            </li>
+                            <li>#3:
+                                <select id="sel-loc3" class="sel-loc opts-tool"></select>
+                            </li>
+                        </ul>
 
 
-                            <!-- Multiselect option -->
-                            <div id="lst-locs" class="multiselect data-med">
-                            </div>
+                        <!-- Multiselect option -->
+                        <div id="lst-locs" class="multiselect data-med">
                         </div>
+                    </div>
 
-                        <div id="tool-ctrl-right">
-                            <!-- Parameter list -->
-                            <label for="" id="lab-lst-params" class="lab-tool">Select parameters (max of 3):</label>
-                            <br />
+                    <div id="tool-ctrl-right" class="col-md-6">
+                        <!-- Parameter list -->
+                        <label for="" id="lab-lst-params" class="lab-tool">Select parameters:</label>
+                        <br />
 
-                            <!-- Single-select menus -->
-                            <ul id="ul-params" class="tool">
-                                <li>#1:
-                                    <select id="sel-param1" class="sel-param opts-tool"></select>
-                                </li>
-                                <li>#2:
-                                    <select id="sel-param2" class="sel-param opts-tool"></select>
-                                </li>
-                                <li>#3:
-                                    <select id="sel-param3" class="sel-param opts-tool"></select>
-                                </li>
-                            </ul>
+                        <!-- Single-select menus -->
+                        <ul id="ul-params" class="tool">
+                            <li>#1:
+                                <select id="sel-param1" class="sel-param opts-tool"></select>
+                            </li>
+                            <li>#2:
+                                <select id="sel-param2" class="sel-param opts-tool"></select>
+                            </li>
+                            <li>#3:
+                                <select id="sel-param3" class="sel-param opts-tool"></select>
+                            </li>
+                        </ul>
                             
 
-                            <!-- Multiselect option -->
-                            <div id="lst-params" class="multiselect data-med">
-                            </div>
-
-
-                            <!--- Time options -->
-                            <label for="" id="" class="lab-tool">Time period options:</label>
-                            <br />
-
-                            <ul class="tool">
-                                <!-- Time period -->
-                                <li>
-                                    <label for="sel-tperiod" class="lab-tool2">Time period:</label>
-                                    <select id="sel-tperiod" class="opts-tool">
-                                        <option value="1_day">Past 1 day</option>
-                                        <option value="2_day">Past 2 days</option>
-                                        <option value="3_day">Past 3 days</option>
-                                        <option value="5_day" selected>Past 5 days</option>
-                                        <option value="10_day">Past 10 days</option>
-                                        <option value="30_day">Past 30 days</option>
-                                        <option value="custom">Custom</option>
-                                    </select>
-                                </li>
-
-                                <!-- Custom date range -->
-                                <li>
-                                    <label for="sel-range" class="lab-tool2">Date range:</label>
-                                    <input type="text" id="date-start" value="" class="date hasDatePicker" /><span>-</span>
-                                    <input type="text" id="date-end" value="" class="date hasDatePicker" />
-                                </li>
-
-                                <!-- Data aggregation -->
-                                <li>
-                                    <label for="sel-tavg" class="lab-tool2">Averaging interval:</label>
-                                    <select id="sel-tavg" class="opts-tool">
-                                        <option value="none" selected>None</option>
-                                        <option value="30_min">30 minutes</option>
-                                        <option value="1_hr">1 hour</option>
-                                        <option value="2_hr">2 hours</option>
-                                        <option value="4_hr">4 hours</option>
-                                        <option value="6_hr">6 hours</option>
-                                        <option value="8_hr">8 hours</option>
-                                        <option value="12_hr">12 hours</option>
-                                        <option value="1_day">1 day</option>
-                                    </select>
-                                </li>
-                            </ul>
-
+                        <!-- Multiselect option -->
+                        <div id="lst-params" class="multiselect data-med">
                         </div>
+                        <br />
 
-                        <label for="" id="" class="lab-tool2" style="font-size:0.9em;">Export file format:</label>
-                        <select id="sel-filetype" class="opts-tool">
-                            <option value="xls" selected >Excel</option>
-                            <option value="csv" selected >CSV</option>
-                        </select>
-                             <br/><br/>
-                        <input type="button" id="btn-download" value="Download file" />
+                        <input type="button" id="btn-selParam" class="btn-param" value="Select All" />
+                        <input type="button" id="btn-clearParam" class="btn-param" value="Clear All" />
+                        <br /><br />
 
-                    </form>
+                        <!--- Time options -->
+                        <label for="" id="" class="lab-tool">Time period options:</label>
+                        <br />
 
-                </div>            
+                        <ul class="tool">
+                            <!-- Time period -->
+                            <li>
+                                <label for="sel-tperiod" class="lab-tool3">Time period:</label>
+                                <select id="sel-tperiod" class="opts-tool">
+                                    <option value="1_day">Past 1 day</option>
+                                    <option value="2_day">Past 2 days</option>
+                                    <option value="3_day">Past 3 days</option>
+                                    <option value="5_day" selected>Past 5 days</option>
+                                    <option value="10_day">Past 10 days</option>
+                                    <option value="30_day">Past 30 days</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </li>
 
-            </article>				
+                            <!-- Custom date range -->
+                            <li>
+                                <label for="sel-range" class="lab-tool3">Date range:</label>
+                                <input type="text" id="date-start" value="" class="date hasDatePicker" /><span>-</span>
+                                <input type="text" id="date-end" value="" class="date hasDatePicker" />
+                            </li>
 
-		    </section>
+                            <!-- Data aggregation -->
+                            <li>
+                                <label for="sel-tavg" class="lab-tool3">Averaging interval:</label>
+                                <select id="sel-tavg" class="opts-tool">
+                                    <option value="none" selected>None</option>
+                                    <option value="30_min">30 minutes</option>
+                                    <option value="1_hr">1 hour</option>
+                                    <option value="2_hr">2 hours</option>
+                                    <option value="4_hr">4 hours</option>
+                                    <option value="6_hr">6 hours</option>
+                                    <option value="8_hr">8 hours</option>
+                                    <option value="12_hr">12 hours</option>
+                                    <option value="1_day">1 day</option>
+                                </select>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>    
+                
+                <div id="div-export" class="row">
+                    <label for="" id="" class="lab-tool2" style="font-size:0.9em;">Export file format:</label>
+                    <select id="sel-filetype" class="opts-tool">
+                        <option value="xls" selected >Excel</option>
+                        <option value="csv" selected >CSV</option>
+                    </select>
+                    <br/><br/>
+
+                    <button id="btn-download" class="btn-export">Download File</button>
+                    <button id="btn-get-link" class="btn-export">Get Permalink</button>
+                </div>
+            </form>
+
+            <!-- Contact email -->
+            <br />
+            <p style="font-style:italic;">Please report any issues with the export tool to: <a href="mailto:dmac@glos.us">dmac@glos.us</a>.</p>
         </div>
     </div>
 
+    <!-- jQuery UI dialogs -->
+    <div id="dlg-msg" title="Message" style="display:none;">
 
+    </div>
 
-        <!-- jQuery UI dialogs -->
-        <div id="dlg-msg" title="Message" style="display:none;">
+    <div id="dlg-plink" title="Permalink" style="display:none;">
+        <label for="txt-plink">The following permalink can be copied and used to retrieve this view later:</label>
+        <textarea name="txt-plink" id="txt-plink" spellcheck="false"></textarea>
+        <button id="btn-copy-plink" class="btn-plink" data-clipboard-target="#txt-plink">Copy Link</button>
+        <button id="btn-close-plink" class="btn-plink">Close</button>
+    </div>
 
-        </div>
+    <div id="dlg-export" title="Data Export Options"  style="display:none;">
 
-        <div id="dlg-plink" title="Permalink" style="display:none;">
-            <label for="txt-plink">The following permalink can be copied and used to retrieve this view later:</label>
-            <textarea name="txt-plink" id="txt-plink" spellcheck="false"></textarea>
-            <button id="btn-copy-plink" class="btn-plink" data-clipboard-target="#txt-plink">Copy Link</button>
-            <button id="btn-close-plink" class="btn-plink">Close</button>
-        </div>
+    </div>
 
-        <div id="dlg-export" title="GLOS Data Export Options"  style="display:none;">
-
-        </div>
-
-        <!-- Footer -->
-        <footer class="w3-container w3-center">   
-			<p></p>
-            <table id="footerLogos" class="w3-table w3-small">
-			    <tbody> 
-				</tbody>
-            </table>
-        </footer>
+    <!-- Footer -->
+    <footer class="w3-container w3-center">   
+		<p></p>
+        <table id="footerLogos" class="w3-table w3-small">
+			<tbody> 
+			</tbody>
+        </table>
+    </footer>
 
 {% endblock %}

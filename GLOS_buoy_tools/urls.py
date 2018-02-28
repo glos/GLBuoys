@@ -23,9 +23,7 @@ from Plotter_export_tools.views import plotter, plotter_get, getTSData, export, 
 
 urlpatterns = [
     # Home page:
-    url(r'^$', plotter_get, name='plotter_get'),
-    url(r'^export', export, name='export'),
-    #url(r'^$', Buoy_tool.views.home, name='home'),
+    url(r'^$', Buoy_tool.views.home, name='home'),
 
     # Lake Erie Home Page:
     url(r'^erie/$', Buoy_tool.views.eriehome, name='eriehome'),
@@ -38,8 +36,12 @@ urlpatterns = [
     url(r'download_data$', download_data, name='download_data'),
 
     # Plotter URLs:
-    url(r'^plotter/$', plotter_get, name='plotter_get'),
-    url(r'^plotter', plotter, name='plotter'),
+    url(r'^tools/plotter/$', plotter_get, name='plotter_get'),  #permalink URLs
+    url(r'^tools/plotter', plotter, name='plotter'),            #basic URL
+
+    # Export URLs:
+    url(r'^tools/export/$', export, name='export_get'),     #permalink URLs
+    url(r'^tools/export', export, name='export'),           #basic URL
 
     # Buoy page URLs:
     url(r'^buoy/([^/]+)/$', buoy, name='buoy'),

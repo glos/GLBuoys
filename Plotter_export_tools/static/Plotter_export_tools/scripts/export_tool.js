@@ -1,6 +1,8 @@
 // Global variables:
-var _strTitle = 'GLOS Data Exporting Tool'
+var _strTitle = 'Export Tool (beta)'
 var _objLocs = {};
+var _metaJSON = '../static/Buoy_tool/data/meta_english.json';
+//var _metaJSON = 'http://34.209.199.227/static/Buoy_tool/data/meta_english.json';
 
 var _arrParamOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'WPRD', 'MWD', 'APD', 'ATMP', 'PRES', 'DEWP', 'PH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI'];
 var _arrParamExcl = ['DPD', 'TIDE', 'VIS', 'PTDY', 'DEPTH', 'OTMP', 'CHILL', 'HEAT', 'ICE', 'WSPD10', 'WSPD20'];
@@ -73,9 +75,7 @@ $(function () {
     //==================================================================================
     // AJAX to Pull Location IDs & Names (** currently hardcoded for buoys **)
     //==================================================================================
-    var data_file = "http://34.211.180.62/BuoyALP/buoymeta_english/all";
-
-    $.getJSON(data_file, function (arrLocMeta) {
+    $.getJSON(_metaJSON, function (arrLocMeta) {
 
         if (_flagMultiSelect) {
             $('#lst-locs').empty();
@@ -131,7 +131,14 @@ $(function () {
         });
 
         // Load request or build parameter list:
-        if ($.isEmptyObject(objGET)) {
+        var loadFlag = true;
+        if (objGET === undefined) {
+            loadFlag = false
+        } else {
+            loadFlag = ($.isEmptyObject(objGET))
+        }
+
+        if (!loadFlag) {
             updateParams();
         } else {
             loadRequest();
@@ -363,13 +370,22 @@ $(function () {
         if (arrLocs.length > 0) {
             $.each(arrLocs, function (idx) {
                 var objLoc = _objLocs[arrLocs[idx]];
-                if (objLoc.obsID) {
 
+                if (objLoc.obsID) {
                     for (var p = 0; p < objLoc.obsID.length; p++) {
                         var param_id = objLoc.obsID[p];
 
                         if (!(param_id in objParams)) {
                             objParams[param_id] = objLoc.obsLongName[p];
+                        }
+                    }
+
+                } else if (objLoc.staticObs) {
+                    for (var p = 0; p < objLoc.staticObs.length; p++) {
+                        var param_id = objLoc.staticObs[p];
+
+                        if (!(param_id in objParams)) {
+                            objParams[param_id] = param_id;
                         }
                     }
                 }
@@ -433,7 +449,29 @@ $(function () {
         showMessage(_strTitle, 'The permalink has been copied to the clipboard and can now be pasted elsewhere.');
     });
 
+    $('#btn-get-link').on('click', function (evt) {
+        evt.preventDefault();
+        // Create & populate permalink:
+        $('#txt-plink').val(getPermalink());
+
+        // Show dialog:
+        $('#dlg-plink').dialog('open');
+    });
+
+    $('#btn-copy-plink').on('click', function (evt) {
+        evt.preventDefault();
+        // Copy permalink to OS clipboard
+    });
+
+    $('#btn-close-plink').on('click', function (evt) {
+        evt.preventDefault();
+        // Close permalink dialog
+        $('#dlg-plink').dialog('close');
+    });
+
+    // Download file:
     $('#btn-download').on('click', function (evt) {
+        evt.preventDefault();
         // download csv/excel file
         downloadData();
     });
@@ -452,7 +490,7 @@ $(function () {
         var $datatype = $('#sel-datatype');
         var strDataType = 'buoy';               // default
 
-        if (objGET.hasOwnProperty('datatype')) {
+        if (objGET.hasOwnProperty('data_type')) {
             if ($datatype.find('option[value="' + objGET.data_type + '"]').length > 0) {
                 strDataType = objGET.data_type;
             }
@@ -478,7 +516,7 @@ $(function () {
         if (loc_ct > 0) {
             updateParams();
 
-            if (objGET.hasOwnProperty('locs')) {
+            if (objGET.hasOwnProperty('params')) {
                 var param_arr = objGET.params.split('|');
                 var param_ct = 0;
 
@@ -567,6 +605,7 @@ $(function () {
     function downloadData() {
 
         // Acquire user selections:
+        /*
         var loc_arr = [], owners = {};
         if (_flagMultiSelect) {
             $.each($('#lst-locs input:checked'), function (idx, elem) {
@@ -597,13 +636,19 @@ $(function () {
                 }
             })
         }
+        */
 
+        // Get date information:
         date_start = $('#date-start').val();
         date_end = $('#date-end').val();
-        avg_ivld = $('#sel-tavg').val();
 
         var d1 = new Date(date_start);
         var d2 = new Date(date_end);
+
+        // Get location/parameter strings:
+        var locs = getReqParam('locs');
+        var params = getReqParam('params');
+
         // Error handling:
         if (d1 >= d2) {
             showMessage(_strTitle, 'The selected end date must be later than the start date.');
@@ -613,30 +658,32 @@ $(function () {
             return;
         }
 
-        if (loc_arr.length === 0 || param_arr.length === 0) {
+        if (locs.length === 0 || params.length === 0) {
             showMessage(_strTitle, 'At least one location and one parameter must be selected for plotting.');
             return;
         }
 
+        /*
         var file_type = $('#sel-filetype').val();
-        var loc = loc_arr[0];
+        var loc = loc_arr.join('|');  //loc_arr[0];
         var param = param_arr.join("|");
         var sdate = date_start;
         var edate = date_end;
         var owner = owners[0];
         var data_type = $('#sel-datatype').val();
         var unit_type = $('#sel-units').val();
+        */
 
         window.location = "download_data" +
-            "?ftype=" + file_type +
-            "&utype=" + unit_type +
-            "&data_type=" + data_type +
-            "&loc=" + loc +
-            "&param_arr=" + param +
-            "&date_start=" + sdate +
-            "&date_end=" + edate +
-            "&owner=" + owner +
-            "&avg_ivld=" + avg_ivld;
+            "?ftype=" + getReqParam('ftype') +
+            "&units=" + getReqParam('units') +
+            "&data_type=" + getReqParam('data_type') +
+            "&locs=" + locs +
+            "&params=" + params +
+            "&date_start=" + getReqParam('date_start') +
+            "&date_end=" + getReqParam('date_end') +
+            //"&owner=" + owner +
+            "&avg_ivld=" + getReqParam('avg_ivld');
         return;
 
     }
@@ -729,6 +776,15 @@ $(function () {
             }
         });
     }
+
+    // Parameter select/clear all events:
+    $('.btn-param').on('click', function (e) {
+        var strID = $(this).attr('id');
+        var bChk = false;
+        if (strID === 'btn-selParam') { bChk = true };
+
+        $('#lst-params input').prop('checked', bChk);
+    });
 
 
     //==================================================================================
@@ -872,54 +928,88 @@ $(function () {
 
         var arr = document.location.href.split('?');
         var strLink = arr[0] + '?';
+        strLink = strLink.replace('/export?', '/download_data?');
 
-        // Monitoring/data type:
-        strLink += 'data_type=' + $('#sel-datatype').val();
-
-        // Monitoring/data type:
-        strLink += '&units=' + $('#sel-units').val();
+        // File type, data type, units:
+        strLink += 'ftype=' + getReqParam('ftype');
+        strLink += '&data_type=' + getReqParam('data_type');
+        strLink += '&units=' + getReqParam('units');
 
         // Locations and parameters:
-        strLink += '&locs=' + getSelections('sel-loc', '|');
-        strLink += '&params=' + getSelections('sel-param', '|');
+        strLink += '&locs=' + getReqParam('locs');
+        strLink += '&params=' + getReqParam('params');
 
-        // Time period:
-        strTPeriod = $('#sel-tperiod').val();
-        strLink += '&tperiod=' + strTPeriod;
-
-        // Custom dates:
-        if (strTPeriod === 'custom') {
-            var date_start = Date.parse($('#date-start').val());
-            var date_end = Date.parse($('#date-end').val());
-
-            strLink += '&date_start=' + formatDate(date_start, "yyyy-mm-dd");
-            strLink += '&date_end=' + formatDate(date_end, "yyyy-mm-dd");
-        };
+        // Start/end dates:
+        strLink += '&date_start=' + getReqParam('date_start');
+        strLink += '&date_end=' + getReqParam('date_end');
 
         // Time aggregation:
-        strLink += '&tavg=' + $('#sel-tavg').val();
-
+        strLink += '&avg_ivld=' + getReqParam('avg_ivld');
 
         return strLink;
     };
 
 
-    function getSelections(strClass, strDelim) {
+    function getReqParam(reqParam) {
+        var strVal = '';
+
+        switch (reqParam) {
+            // File/data type, units:
+            case ('ftype'):
+                strVal = $('#sel-filetype').val();
+                break;
+            case ('data_type'):
+                strVal = $('#sel-datatype').val();
+                break;
+            case ('units'):
+                strVal = $('#sel-units').val();
+                break;
+            // Locations / owners:
+            case ('locs'):
+            case ('owners'):
+                strVal = getSelections('sel-loc', 'lst-locs', '|');
+                //TMR!!! - handle owners
+                break;
+            case ('params'):
+                strVal = getSelections('sel-param', 'lst-params', '|');
+                break;
+            case ('date_start'):
+            case ('date_end'):
+                var dateVal = Date.parse($('#' + reqParam.replace('_', '-')).val());
+                strVal = formatDate(dateVal, "yyyy-mm-dd");
+                break;
+            case ('avg_ivld'):
+                strVal = $('#sel-tavg').val();
+                break;
+        }
+        // Return string:
+        return strVal;
+    }
+
+    function getSelections(strSelClass, strLstID, strDelim) {
         var arrVals = [];
 
-        $.each($('select.' + strClass), function (idx, elem) {
-            var strID = $(this).val();
-            if (strID !== '' && $.inArray(strID, arrVals) === -1) {
-                arrVals.push(strID);
-            }
-        })
+        var multiFlag = ($('#' + strLstID).css('display') !== 'none');
 
-        if (strDelim !== undefined && strDelim !== '') {
-            return arrVals;
-        } else {
-            return arrVals.join(strDelim);
+        if (multiFlag) {
+            $.each($('#' + strLstID + ' input:checked'), function (idx, elem) {
+                arrVals.push($(this).attr('id'));
+            });
+        }
+        else {
+            $.each($('select.' + strSelClass), function (idx, elem) {
+                var strID = $(this).val();
+                if (strID !== '' && $.inArray(strID, arrVals) === -1) {
+                    arrVals.push(strID);
+                }
+            });
         }
 
-    }
+        if (strDelim !== undefined && strDelim !== '') {
+            return arrVals.join(strDelim);
+        } else {
+            return arrVals;
+        }
+    }           // end "getSelections" function...
 
 });         // end jQuery ready function

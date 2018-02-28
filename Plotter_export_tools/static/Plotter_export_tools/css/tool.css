@@ -40,46 +40,56 @@ div#cht-tool {
 }
 
 div#div-buttons {
-    width: 100%;
+    /* width: 100%; */
     /* float:left;*/
-    height:50px;
-    padding-top: 2px;
+    height: 50px;
+    padding-top: 8px;
     padding-bottom: 2px;
+    padding-right: 12px;
 }
 
-div#div-buttons button {
-    float: right;
-    position: relative;
-    bottom: 3px;
-    margin-right: 8px;
-    border-radius:5px;
-    cursor: pointer;
+    div#div-buttons button {
+        float: right;
+        /* position: relative; */
+        bottom: 3px;
+        margin-right: 8px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+div.row {
+    padding-left: 12px !important;
 }
 
+#div-buttons, #tool-row1, #tool-row2 {
+    padding-left: 12px;
+}
 
-#sel-datatype, #sel-lake {
-    margin-left: 5px;
-    margin-top:0;
+#sel-datatype, #sel-units, #sel-lake {
+    /* margin-left: 5px; */
+    margin-top: 0;
 }
 
 div#tool-ctrl {
+    margin-top: 80px;
+    padding-left: 12px;
+    /*
     float: left;
     width: 100%;
     padding-top: 10px;
     overflow: auto;
     border-top: 1px solid lightgray;
+*/
 }
-
-
+    /*
 div#tool-ctrl-left, div#tool-ctrl-right {
     display: block;
     overflow:auto;
     width: 50%;
     float: left;
 }
-
-
-.clear-fix:after {
+*/
+    .clear-fix:after {
     content: ".";
     clear: both;
     display: block;
@@ -150,7 +160,13 @@ input[type="checkbox"].multiselect {
     font-size: 1.1em;
     font-weight: 800;
     color: #2e6da4;
-    min-width:140px;
+    min-width: 140px;
+}
+
+.lab-tool3 {
+    font-size: 1.1em;
+    color: black;
+    min-width: 140px;
 }
 
 #lab-lst-locs {
@@ -159,7 +175,7 @@ input[type="checkbox"].multiselect {
 
 #lst-params {
     font-size: 0.75em;
-    height: 88px;
+    height: 100px;
     display: block;
 }
 
@@ -263,3 +279,22 @@ textarea#txt-plink {
     height:100%;
 */
 }
+
+/* Export tool */
+input[type="button"] {
+    border-radius: 3px;
+}
+
+.btn-param {
+    margin-left: 12px;
+    min-width: 80px;
+}
+
+.btn-export {
+    margin-top:24px;
+    margin-left: 12px;
+    height: 32px;
+    width: 120px;
+    font-size: 1.1em;
+}
+
