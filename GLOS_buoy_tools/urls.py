@@ -36,11 +36,11 @@ urlpatterns = [
     url(r'download_data$', download_data, name='download_data'),
 
     # Plotter URLs:
-    url(r'^tools/plotter/$', plotter_get, name='plotter_get'),  #permalink URLs
+    #url(r'^tools/plotter/$', plotter_get, name='plotter_get'),  #permalink URLs
     url(r'^tools/plotter', plotter, name='plotter'),            #basic URL
 
     # Export URLs:
-    url(r'^tools/export/$', export, name='export_get'),     #permalink URLs
+    #url(r'^tools/export/$', export, name='export_get'),     #permalink URLs
     url(r'^tools/export', export, name='export'),           #basic URL
 
     # Buoy page URLs:

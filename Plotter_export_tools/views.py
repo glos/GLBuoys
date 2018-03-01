@@ -21,11 +21,11 @@ import csv
 
 def plotter(request):
     # Renders plotting tool page
-    pageInfo = {'req_data': {}, 'title': 'Data Plotting Tool'}
+    pageInfo = {'req_data': json.dumps(request.GET.dict()), 'title': 'Data Plotting Tool (beta)'}
 
     return render(
         request,
-        'plotter.html', pageInfo #{'req_data': {}}
+        'plotter.html', pageInfo
     )
 
 
@@ -35,12 +35,12 @@ def plotter_get(request):
     return render(
         request,
         'plotter.html', 
-        {'req_data': json.dumps(request.GET.dict()), 'title': 'Data Plotting Tool' }
+        {'req_data': json.dumps(request.GET.dict()), 'title': 'Data Plotting Tool (beta)' }
     )
 
 def export(request):
     # Renders data export page
-    pageInfo = {'req_data': {}, 'title': 'Data Export Tool'}
+    pageInfo = {'req_data': json.dumps(request.GET.dict()), 'title': 'Data Export Tool (beta)'}
 
     return render(
         request,
@@ -53,7 +53,7 @@ def export_get(request):
     return render(
         request,
         'export.html', 
-        {'req_data': json.dumps(request.GET.dict()), 'title': 'Data Export Tool' }
+        {'req_data': json.dumps(request.GET.dict()), 'title': 'Data Export Tool (beta)' }
     )
 
 
@@ -175,7 +175,7 @@ def download_data(request):
 
                     for i in range(numRec):
                         dattim = dct_response[loc]['dattim'][i]
-                        date_formated = dattim.strftime('%Y-%m-%d %H:%M:%S')
+                        date_formated = dattim.strftime('%m/%d/%Y %H:%M:%S')
                         dataColumns=[date_formated]
 
                         for param in lst_params:
@@ -229,7 +229,7 @@ def download_data(request):
                     ws.write(row_num, col_num, 'Date/Time (UTC)', boldfont_style)
                     for dattim in dct_response[loc]['dattim']:
                         row_num +=1
-                        date_formated = dattim.strftime('%Y-%m-%d %H:%M:%S')
+                        date_formated = dattim.strftime('%m/%d/%Y %H:%M:%S')
                         ws.write(row_num, col_num, date_formated, font_style)
 
                     # each parameter
@@ -573,7 +573,7 @@ def queryRequestVars(request, type):
         dct_owners = json.loads(dct_request['owners'])
 
         params = request.POST.get('params', '')
-        lst_params = locs.split('|')
+        lst_params = params.split('|')
 
         #lst_params = request.POST.getlist('params[]')
 
@@ -682,7 +682,10 @@ def getTimeIndices(loc_id, date_start, date_end):
             lst_idx.append(idx)
 
 
-        return lst_idx
+        if (lst_idx[0] != lst_idx[1]):      #Indices can't be equal
+            return lst_idx
+        else:
+            return [-9999, -9999]
 
     except Exception as inst:
         print(inst)
