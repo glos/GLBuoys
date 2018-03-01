@@ -7,6 +7,29 @@ var _metaJSON = '../static/Buoy_tool/data/meta_english.json';
 var _arrParamOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'WPRD', 'MWD', 'APD', 'ATMP', 'PRES', 'DEWP', 'PH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI'];
 var _arrParamExcl = ['DPD', 'TIDE', 'VIS', 'PTDY', 'DEPTH', 'OTMP', 'CHILL', 'HEAT', 'ICE', 'WSPD10', 'WSPD20'];
 
+var _objParamNames = {
+    "WVHT": "Significant Wave Height",
+    "MWDIR": "Mean Wave Direction",
+    "WPRD": "Wave Period",
+    "ATMP": "Air Temperature",
+    "RH": "Relative Humidity",
+    "DEWP": "Dew Point",
+    "PRES": "Air Pressure",
+    "WDIR": "Wind Direction",
+    "WSPD": "Wind Speed",
+    "GST": "Wind Gust",
+    "WTMP": "Water Temperature",
+    "SRAD": "Solar Radiation",
+    "VBAT": "Battery Voltage",
+    "DISOXY": "Dissolved Oxygen",
+    "DIOSAT": "Dissolved Oxygen at Saturation",
+    "SPCOND": "Specific Conductivity",
+    "PH": "PH",
+    "YTURBI": "Turbidity",
+    "YCHLOR": "Chlorophyll",
+    "YBGALG": "Blue-Green-Algae"
+}
+
 var _flagMultiSelect = false;
 var _flagParaMultSelect = true;
 
@@ -93,35 +116,38 @@ $(function () {
 
         $.each(arrLocMeta, function (index, objLoc) {
             //Notify users data from NDBC or Env CA is not available. 
-            if (objLoc.buoyOwners == 'NOAA-NDBC' || objLoc.buoyOwners == "Env CA") {
+            var naFlag = (objLoc.buoyOwners == 'NOAA-NDBC' || objLoc.buoyOwners == "Env CA");
+
+            if (naFlag) {
                 var strLoc = objLoc.id + ': ' + objLoc.longName + ' (Not Available)';
             } else {
                 var strLoc = objLoc.id + ': ' + objLoc.longName;
-            }
 
-            var strChk = '', strSel = '';
-
-            if (objLoc.id === strLoc) {
-                strChk = 'checked';
-                strSel = 'selected';
-            };
-            var strHTML = '';
-
-            if (_flagMultiSelect) {
-                strHTML = '<label class="multiselect"><input type="checkbox" class="multiselect loc" id="' + objLoc.id + '" ' + strChk + ' />' + strLoc + '</label>'
+                var strChk = '', strSel = '';
 
                 if (objLoc.id === strLoc) {
-                    $('#lst-locs').prepend(strHTML);
-                } else {
-                    $('#lst-locs').append(strHTML);
+                    strChk = 'checked';
+                    strSel = 'selected';
                 };
+                var strHTML = '';
 
-            } else {
-                strHTML = '<option value="' + objLoc.id + '">' + strLoc + '</option>';
-                $('.sel-loc').append(strHTML);
+                if (_flagMultiSelect) {
+                    strHTML = '<label class="multiselect"><input type="checkbox" class="multiselect loc" id="' + objLoc.id + '" ' + strChk + ' />' + strLoc + '</label>'
+
+                    if (objLoc.id === strLoc) {
+                        $('#lst-locs').prepend(strHTML);
+                    } else {
+                        $('#lst-locs').append(strHTML);
+                    };
+
+                } else {
+                    strHTML = '<option value="' + objLoc.id + '">' + strLoc + '</option>';
+                    $('.sel-loc').append(strHTML);
+                }
+
+                _objLocs[objLoc.id] = objLoc;
+
             }
-
-            _objLocs[objLoc.id] = objLoc;
 
             // Debugging:
             if (objLoc.buoyOwners === 'NOAA-NDBC') {
@@ -209,17 +235,21 @@ $(function () {
         }
     });
 
-    $("#dlg-export").dialog({
+    $("#dlg-map").dialog({
         autoOpen: false,
         resizable: true,
-        width: 400,
-        height: 200,
+        width: 840,
+        height: 760,
         modal: true,
 
         open: function () {
 
         },
         buttons: {
+            "Full Size": function () {
+                //$(this).dialog("close");
+                window.open('../static/Plotter_export_tools/img/BuoyMap.jpg');
+            },
             "Close": function () {
                 $(this).dialog("close");
             },
@@ -370,26 +400,28 @@ $(function () {
         if (arrLocs.length > 0) {
             $.each(arrLocs, function (idx) {
                 var objLoc = _objLocs[arrLocs[idx]];
+                var arrParamID = [];
 
                 if (objLoc.obsID) {
-                    for (var p = 0; p < objLoc.obsID.length; p++) {
-                        var param_id = objLoc.obsID[p];
-
-                        if (!(param_id in objParams)) {
-                            objParams[param_id] = objLoc.obsLongName[p];
-                        }
-                    }
-
+                    arrParamID = objLoc.obsID;
                 } else if (objLoc.staticObs) {
-                    for (var p = 0; p < objLoc.staticObs.length; p++) {
-                        var param_id = objLoc.staticObs[p];
-
-                        if (!(param_id in objParams)) {
-                            objParams[param_id] = param_id;
-                        }
-                    }
+                    arrParamID = objLoc.staticObs;
+                } else {
+                    return objParams;
                 }
 
+                for (var p = 0; p < arrParamID.length; p++) {
+                    var param_id = arrParamID[p];
+
+                    if (!(param_id in objParams)) {
+                        if (_objParamNames[param_id]) {
+                            objParams[param_id] = _objParamNames[param_id];
+                        } else {
+                            objParams[param_id] = param_id;
+                        }
+                        //objParams[param_id] = objLoc.obsLongName[p];
+                    }
+                }
             });
         }
 
@@ -474,6 +506,13 @@ $(function () {
         evt.preventDefault();
         // download csv/excel file
         downloadData();
+    });
+
+    // Show buoy map:
+    $('a#view-map').on('click', function (evt) {
+        evt.preventDefault();
+        // Show dialog:
+        $('#dlg-map').dialog('open');        
     });
 
     //==================================================================================

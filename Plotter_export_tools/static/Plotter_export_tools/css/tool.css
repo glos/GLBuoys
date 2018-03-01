@@ -296,5 +296,6 @@ input[type="button"] {
     height: 32px;
     width: 120px;
     font-size: 1.1em;
+    border-radius: 5px;
 }
 

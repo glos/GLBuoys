@@ -9,10 +9,32 @@ var _metaJSON = '../static/Buoy_tool/data/meta_english.json';
 var _arrParamOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'WPRD', 'MWD', 'APD', 'ATMP', 'PRES', 'DEWP', 'PH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI'];
 var _arrParamExcl = ['DPD', 'TIDE', 'VIS', 'PTDY', 'DEPTH', 'OTMP', 'CHILL', 'HEAT', 'ICE', 'WSPD10', 'WSPD20'];
 
+var _objParamNames = {
+    "WVHT": "Significant Wave Height",
+    "MWDIR": "Mean Wave Direction",
+    "WPRD": "Wave Period",
+    "ATMP": "Air Temperature",
+    "RH": "Relative Humidity",
+    "DEWP": "Dew Point",
+    "PRES": "Air Pressure",
+    "WDIR": "Wind Direction",
+    "WSPD": "Wind Speed",
+    "GST": "Wind Gust",
+    "WTMP": "Water Temperature",
+    "SRAD": "Solar Radiation",
+    "VBAT": "Battery Voltage",
+    "DISOXY": "Dissolved Oxygen",
+    "DIOSAT": "Dissolved Oxygen at Saturation",
+    "SPCOND": "Specific Conductivity",
+    "PH": "PH",
+    "YTURBI": "Turbidity",
+    "YCHLOR": "Chlorophyll",
+    "YBGALG": "Blue-Green-Algae"
+}
 var _flagMultiSelect = false;
 
-// Display preloader during page load:
-$('.preloader').show();
+// Hide preloader during page load:
+$('.preloader').hide();
 
 
 // jQuery "ready" function:
@@ -91,35 +113,38 @@ $(function () {
 
         $.each(arrLocMeta, function (index, objLoc) {
             //Notify users data from NDBC or Env CA is not available. 
-            if (objLoc.buoyOwners == 'NOAA-NDBC' || objLoc.buoyOwners == "Env CA") {
+            var naFlag = (objLoc.buoyOwners == 'NOAA-NDBC' || objLoc.buoyOwners == "Env CA");
+
+            if (naFlag) {
                 var strLoc = objLoc.id + ': ' + objLoc.longName + ' (Not Available)';
             } else {
                 var strLoc = objLoc.id + ': ' + objLoc.longName;
-            }
 
-            var strChk = '', strSel = '';
-
-            if (objLoc.id === strLoc) {
-                strChk = 'checked';
-                strSel = 'selected';
-            };
-            var strHTML = '';
-
-            if (_flagMultiSelect) {
-                strHTML = '<label class="multiselect"><input type="checkbox" class="multiselect loc" id="' + objLoc.id + '" ' + strChk + ' />' + strLoc + '</label>'
+                var strChk = '', strSel = '';
 
                 if (objLoc.id === strLoc) {
-                    $('#lst-locs').prepend(strHTML);
-                } else {
-                    $('#lst-locs').append(strHTML);
+                    strChk = 'checked';
+                    strSel = 'selected';
                 };
+                var strHTML = '';
 
-            } else {
-                strHTML = '<option value="' + objLoc.id + '">' + strLoc + '</option>';
-                $('.sel-loc').append(strHTML);
+                if (_flagMultiSelect) {
+                    strHTML = '<label class="multiselect"><input type="checkbox" class="multiselect loc" id="' + objLoc.id + '" ' + strChk + ' />' + strLoc + '</label>'
+
+                    if (objLoc.id === strLoc) {
+                        $('#lst-locs').prepend(strHTML);
+                    } else {
+                        $('#lst-locs').append(strHTML);
+                    };
+
+                } else {
+                    strHTML = '<option value="' + objLoc.id + '">' + strLoc + '</option>';
+                    $('.sel-loc').append(strHTML);
+                }
+
+                _objLocs[objLoc.id] = objLoc;
+
             }
-
-            _objLocs[objLoc.id] = objLoc;
 
             // Debugging:
             if (objLoc.buoyOwners === 'NOAA-NDBC') {
@@ -136,7 +161,7 @@ $(function () {
             loadFlag = ($.isEmptyObject(objGET))
         }
 
-        if (! loadFlag) {
+        if (!loadFlag) {
             updateParams();
         } else {
             loadRequest();
@@ -368,23 +393,33 @@ $(function () {
         if (arrLocs.length > 0) {
             $.each(arrLocs, function (idx) {
                 var objLoc = _objLocs[arrLocs[idx]];
+                var arrParamID = [];
+
                 if (objLoc.obsID) {
-
-                    for (var p = 0; p < objLoc.obsID.length; p++) {
-                        var param_id = objLoc.obsID[p];
-
-                        if (!(param_id in objParams)) {
-                            objParams[param_id] = objLoc.obsLongName[p];
-                        }
-                    }
+                    arrParamID = objLoc.obsID;
+                } else if (objLoc.staticObs) {
+                    arrParamID = objLoc.staticObs;
+                } else {
+                    return objParams;
                 }
 
+                for (var p = 0; p < arrParamID.length; p++) {
+                    var param_id = arrParamID[p];
+
+                    if (!(param_id in objParams)) {
+                        if (_objParamNames[param_id]) {
+                            objParams[param_id] = _objParamNames[param_id];
+                        } else {
+                            objParams[param_id] = param_id;
+                        }
+                        //objParams[param_id] = objLoc.obsLongName[p];
+                    }
+                }
             });
         }
 
         return objParams;
     }
-
     //==================================================================================
     // HighCharts Initialization:
     //==================================================================================
@@ -491,7 +526,7 @@ $(function () {
 
     $('#btn-export-menu').on('click', function (evt) {
         evt.preventDefault();
-        window.location.href = '/export';
+        window.location.href = '/tools/export';
         return false;
        // showMessage(_strTitle, 'This option is under development and not yet available.');
     });
@@ -536,7 +571,7 @@ $(function () {
         var $datatype = $('#sel-datatype');
         var strDataType = 'buoy';               // default
 
-        if (objGET.hasOwnProperty('datatype')) {
+        if (objGET.hasOwnProperty('data_type')) {
             if ($datatype.find('option[value="' + objGET.data_type + '"]').length > 0) {
                 strDataType = objGET.data_type;
             }
@@ -614,9 +649,9 @@ $(function () {
         var $tavg = $('#sel-tavg');
         var strTAvg = 'none';           // default
 
-        if (objGET.hasOwnProperty('tavg')) {
-            if ($tavg.find('option[value="' + objGET.tavg + '"]').length > 0) {
-                strTAvg = objGET.tavg;
+        if (objGET.hasOwnProperty('avg_ivld')) {
+            if ($tavg.find('option[value="' + objGET.avg_ivld + '"]').length > 0) {
+                strTAvg = objGET.avg_ivld;
             }
         };
 
@@ -709,11 +744,11 @@ $(function () {
             type: 'POST',
             data: {
                 'data_type': $('#sel-datatype').val(),
-                'loc_arr': loc_arr,
+                'locs': loc_arr.join('|'),
                 'owners': JSON.stringify(owners),
-                'param_arr': param_arr,
-                'date_start': date_start,
-                'date_end': date_end,
+                'params': param_arr.join('|'),
+                'date_start': formatDate(date_start, "yyyy-mm-dd"),
+                'date_end': formatDate(date_end, "yyyy-mm-dd"),
                 'avg_ivld': avg_ivld,       // Averaging interval (in seconds)
             },
             dataType: 'json',
@@ -998,7 +1033,7 @@ $(function () {
         };
 
         // Time aggregation:
-        strLink += '&tavg=' + $('#sel-tavg').val();
+        strLink += '&avg_ivld=' + $('#sel-tavg').val();
 
 
         return strLink;
@@ -1016,9 +1051,9 @@ $(function () {
         })
 
         if (strDelim !== undefined && strDelim !== '') {
-            return arrVals;
-        } else {
             return arrVals.join(strDelim);
+        } else {
+            return arrVals;
         }
 
     }

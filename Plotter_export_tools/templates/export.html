@@ -91,6 +91,11 @@
                             </li>
                         </ul>
 
+                        <!-- Link to buoy map -->
+                        <p style="margin-top:24px;">
+                            <a id="view-map" href=# target="_blank" style="">Click here to view map of buoy locations</a>
+                            <!--<a id="view-map" href={% static 'Plotter_export_tools/img/BuoyMap.jpg' %} target="_blank">Click here to view map of buoy locations</a>-->
+                        </p>
 
                         <!-- Multiselect option -->
                         <div id="lst-locs" class="multiselect data-med">
@@ -176,8 +181,8 @@
                     <div class="col-md-12">
                         <label for="" id="" class="lab-tool2" style="font-size:0.9em;">Export file format:</label>
                         <select id="sel-filetype" class="opts-tool">
-                            <option value="xls" selected >Excel</option>
-                            <option value="csv" selected >CSV</option>
+                            <option value="xls" selected>Excel</option>
+                            <option value="csv" >CSV</option>
                         </select>
                         <br/><br/>
 
@@ -198,15 +203,15 @@
 
     </div>
 
-    <div id="dlg-plink" title="Permalink" style="display:none;">
+    <div id="dlg-plink" title="Data Export Permalink" style="display:none;">
         <label for="txt-plink">The following permalink can be copied and used to retrieve this view later:</label>
         <textarea name="txt-plink" id="txt-plink" spellcheck="false"></textarea>
         <button id="btn-copy-plink" class="btn-plink" data-clipboard-target="#txt-plink">Copy Link</button>
         <button id="btn-close-plink" class="btn-plink">Close</button>
     </div>
 
-    <div id="dlg-export" title="Data Export Options"  style="display:none;">
-
+    <div id="dlg-map" title="Great Lakes Buoy Locations"  style="display:none;">
+        <img src="{% static 'Plotter_export_tools/img/BuoyMap.jpg' %}" style="height:auto;width:800px;" />
     </div>
 
     <!-- Footer -->
