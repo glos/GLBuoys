@@ -21,7 +21,7 @@ import csv
 
 def plotter(request):
     # Renders plotting tool page
-    pageInfo = {'title': 'GLOS Data Plotting Tool'}
+    pageInfo = {'req_data': {}, 'title': 'Data Plotting Tool'}
 
     return render(
         request,
@@ -35,16 +35,27 @@ def plotter_get(request):
     return render(
         request,
         'plotter.html', 
-        {'req_data': json.dumps(request.GET.dict()), 'title': 'GLOS Data Plotting Tool' }
+        {'req_data': json.dumps(request.GET.dict()), 'title': 'Data Plotting Tool' }
     )
 
 def export(request):
     # Renders data export page
-    pageInfo = {'title': 'GLOS Data Exporting Tool'}
+    pageInfo = {'req_data': {}, 'title': 'Data Export Tool'}
+
     return render(
         request,
         'export.html', pageInfo
     )
+
+def export_get(request):
+    # Renders plotting tool page
+
+    return render(
+        request,
+        'export.html', 
+        {'req_data': json.dumps(request.GET.dict()), 'title': 'Data Export Tool' }
+    )
+
 
 # avg_ivld - user selected average interval: 
 def process_interval_avg(dct_response, avg_ivld):
@@ -60,63 +71,74 @@ def process_interval_avg(dct_response, avg_ivld):
     for loc in dct_response.keys():
         
         numRec = len(dct_response[loc]['dattim'])
-        # start a new dataframe
-        df= pd.DataFrame()
 
-        df['dattim'] = pd.to_datetime(dct_response[loc]['dattim'])
-        for param in dct_response[loc]['params'].keys():
-            # add columns to dataframe
-            df[param] =dct_response[loc]['params'][param]['values']
+        if (numRec > 0):
 
-        df.set_index(pd.DatetimeIndex(dct_response[loc]['dattim']), inplace=True)
+            # start a new dataframe
+            df= pd.DataFrame()
 
-        # resample with new average interval
-        df_avg=df.resample(str(interval_in_mins) + 'min').mean()
+            df['dattim'] = pd.to_datetime(dct_response[loc]['dattim'])
+            for param in dct_response[loc]['params'].keys():
+                # add columns to dataframe
+                df[param] =dct_response[loc]['params'][param]['values']
 
-        dct_loc={}
-        lst_time =[]
-        for t in df_avg.index:
-            lst_time.append(t.to_pydatetime())
+            df.set_index(pd.DatetimeIndex(dct_response[loc]['dattim']), inplace=True)
 
-        dct_loc['dattim']= lst_time
+            # resample with new average interval
+            df_avg=df.resample(str(interval_in_mins) + 'min').mean()
+
+            dct_loc={}
+            lst_time =[t.to_pydatetime() for t in df_avg.index]
+            dct_loc['dattim']= lst_time
         
-        dct_data={}
-        for param in dct_response[loc]['params'].keys():
-            dct_data[param] = {}  
+            dct_data={}
+            for param in dct_response[loc]['params'].keys():
+                dct_data[param] = {}  
 
-            dct_data[param]['units'] = dct_response[loc]['params'][param]['units']
-            dct_data[param]['desc'] = param
-            lst_val=[]
-            for val in df_avg[param]:
-                lst_val.append(val.item())
-            
-            dct_data[param]['values']=lst_val
+                dct_data[param]['units'] = dct_response[loc]['params'][param]['units']
+                dct_data[param]['desc'] = param
 
-        dct_loc['params']= dct_data
+                lst_val=[val.item() for val in df_avg[param]]
+                dct_data[param]['values']=lst_val
 
-        # add to the to-be-returned dictionary
-        dct_response_avg[loc]= dct_loc
+            dct_loc['params']= dct_data
+
+            # add to the to-be-returned dictionary
+            dct_response_avg[loc]= dct_loc
         
+        else:
+            dct_response_avg[loc] = dct_response[loc]
+
     return dct_response_avg
 
 
 # download data to 'csv' or 'xls' format
 def download_data(request):
 
-    filename = 'glos_data_export'
     file_type = request.GET.get('ftype','')  # csv / xls
-    unit_type = request.GET.get('utype','')  # metric / english
+    unit_type = request.GET.get('units','')  # metric / english
     
     # get the parameters
     data_type, lst_locs, lst_params, str_date1, str_date2, dct_owners, avg_ivld = queryRequestVars(request, 'GET')
 
+    # Define file name:
+    strLocs = ''
+    for loc in lst_locs:
+        if (strLocs != ''):
+            strLocs += '-'
+        strLocs += loc
+    strDateNow = datetime.now().strftime("%Y-%M-%D")
+
+    filename = 'GLOS_data_export_' + strLocs #+ '_' + strDateNow
+
+    # Processing:
     flag = 'fast'
 
     if (flag == 'fast'):
         dct_response = getTSData_fast(request, 'GET')
         
-        # process interval average
-        dct_response= process_interval_avg(dct_response, avg_ivld)
+        # process interval average (this is already handled in "getTSData_fast" function):
+        #dct_response= process_interval_avg(dct_response, avg_ivld)
 
         # convert to English units
         if (unit_type=='eng'):
@@ -142,25 +164,27 @@ def download_data(request):
                 writer.writerow([smart_str(loc)])
                 numRec = len(dct_response[loc]['dattim'])
 
-                if len(lst_params) >0:
-                    headColums=['Datetime']
+                if (len(lst_params) > 0 and numRec > 0):
+                    headColumns=['Date/Time (UTC)']
 
                     for param in lst_params:
-                        param_w_units= param + "(" + dct_response[loc]['params'][param]['units'] + ")"
-                        headColums.append(param_w_units)
+                        param_w_units= param + " (" + dct_response[loc]['params'][param]['units'] + ")"
+                        headColumns.append(param_w_units)
                     
-                    writer.writerow(headColums)
+                    writer.writerow(headColumns)
 
                     for i in range(numRec):
                         dattim = dct_response[loc]['dattim'][i]
                         date_formated = dattim.strftime('%Y-%m-%d %H:%M:%S')
-                        dataColums=[date_formated]
+                        dataColumns=[date_formated]
 
                         for param in lst_params:
-                            dataColums.append(dct_response[loc]['params'][param]['values'][i])
+                            dataColumns.append(dct_response[loc]['params'][param]['values'][i])
 
-                        writer.writerow(dataColums)
-            
+                        writer.writerow(dataColumns)
+                else:
+                    writer.writerow('No data available for this station for the selected period')
+
             return response
         
         elif file_type=='xls':
@@ -176,6 +200,7 @@ def download_data(request):
             wb = xlwt.Workbook(encoding='utf-8')
 
             for loc in lst_locs:
+                numRec = len(dct_response[loc]['dattim'])
 
                 #adding sheet
                 ws=wb.add_sheet(loc)
@@ -184,14 +209,24 @@ def download_data(request):
                 row_num=0
                 col_num=0
 
+                # Create bold font type:
                 font_style = xlwt.XFStyle()
                 boldfont_style = xlwt.XFStyle()
-                # headers are bold
                 boldfont_style.font.bold = True
 
-                if len(lst_params) >0:
+                # Write header rows:
+                ws.write(0, 0, "Station ID:", boldfont_style)
+                ws.write(0, 1, loc, font_style)
+
+                ws.write(1, 0, "Station Description:", boldfont_style)
+                ws.write(1, 1, loc, font_style)
+
+                # Write data:
+                row_num = 5
+
+                if (len(lst_params) > 0 and numRec > 0):
                     # date time column
-                    ws.write(row_num, col_num, 'Datetime', boldfont_style)
+                    ws.write(row_num, col_num, 'Date/Time (UTC)', boldfont_style)
                     for dattim in dct_response[loc]['dattim']:
                         row_num +=1
                         date_formated = dattim.strftime('%Y-%m-%d %H:%M:%S')
@@ -199,15 +234,16 @@ def download_data(request):
 
                     # each parameter
                     for param in lst_params:
-                        col_num +=1
-                        row_num =0
-                        param_w_units= param + "(" + dct_response[loc]['params'][param]['units'] + ")"
+                        col_num += 1
+                        row_num = 5
+                        param_w_units= param + " (" + dct_response[loc]['params'][param]['units'] + ")"
 
                         ws.write(row_num, col_num, param_w_units, boldfont_style)
                         for val in dct_response[loc]['params'][param]['values']:
                             row_num +=1
                             ws.write(row_num, col_num, val, font_style)
-
+                else:
+                    ws.write(5,0, 'No data available for the selected time period.', font_style)
 
             wb.save(response)
 
@@ -254,10 +290,10 @@ def getTSData_fast(request, type):
     dct_owners= []
     ncFlag = True          #Flag indicating that data was read from netCDF file
 
-    data_type, lst_locs, lst_params, str_date1, str_date2, dct_owners, avg_ivld = queryRequestVars(request, type)
+    [data_type, lst_locs, lst_params, str_date1, str_date2, dct_owners, avg_ivld] = queryRequestVars(request, type)
 
-    date_start = datetime.strptime(str_date1, '%m/%d/%Y')
-    date_end = datetime.strptime(str_date2, '%m/%d/%Y')
+    date_start = datetime.strptime(str_date1, '%Y-%m-%d')
+    date_end = datetime.strptime(str_date2, '%Y-%m-%d')
 
     
     #--------------------------------------------------------
@@ -266,7 +302,13 @@ def getTSData_fast(request, type):
     for loc_id in lst_locs:
 
         dct_data = {}       #initialize data dictionary
+         
+        # Initialize response dictionary:
+        dct_response[loc_id] = {}
+        dct_response[loc_id]['dattim'] = []
+        dct_response[loc_id]['params'] = []
 
+        # Get time index:
         lst_timerng = getTimeIndices(loc_id, date_start, date_end) 
         tidx1 = lst_timerng[0]; tidx2 = lst_timerng[1]
 
@@ -281,112 +323,114 @@ def getTSData_fast(request, type):
         lst_dattim  = []
         initFlag = True
 
-        #-------------------------------------------------------
-        #- "Buoy" monitoring type:
-        #-------------------------------------------------------
-        if (data_type == 'buoy'):
+        if (tidx1 >= 0 and tidx2 >= 0):
 
-            # Construct URL for OpenDAP access of date-specific netCDF file (** currently hardcoded for buoys**):
-            url_nc = 'http://tds.glos.us/thredds/dodsC/buoy_agg/{0}/{0}.ncml'.format(loc_id)
+            #-------------------------------------------------------
+            #- "Buoy" monitoring type:
+            #-------------------------------------------------------
+            if (data_type == 'buoy'):
+
+                # Construct URL for OpenDAP access of date-specific netCDF file (** currently hardcoded for buoys**):
+                url_nc = 'http://tds.glos.us/thredds/dodsC/buoy_agg/{0}/{0}.ncml'.format(loc_id)
         
-            try:
-                ds = open_url(url_nc);
-                lstKeys = list(ds.keys());
+                try:
+                    ds = open_url(url_nc);
+                    lstKeys = list(ds.keys());
 
-                # Extend "times" list:
-                #times = ds['time'];
-                lst_times.extend(ds['time'][tidx1:tidx2]);
+                    # Extend "times" list:
+                    #times = ds['time'];
+                    lst_times.extend(ds['time'][tidx1:tidx2]);
 
-                # Determine time zero:
-                if initFlag :
-                    lst = ds['time'].units.split('since')
-                    tunit = lst[0].strip()
-                    tzero = datetime.strptime(lst[1].strip(), '%Y-%m-%d %H:%M:%S')
+                    # Determine time zero:
+                    if initFlag :
+                        lst = ds['time'].units.split('since')
+                        tunit = lst[0].strip()
+                        tzero = datetime.strptime(lst[1].strip(), '%Y-%m-%d %H:%M:%S')
 
-                # Download data for each parameter:
-                for param_id in lst_params:
-                    if param_id in lstKeys:
-                        var = ds[param_id]
-                        dct_data[param_id]['values'].extend(var.data[tidx1:tidx2])
+                    # Download data for each parameter:
+                    for param_id in lst_params:
+                        if param_id in lstKeys:
+                            var = ds[param_id]
+                            dct_data[param_id]['values'].extend(var.data[tidx1:tidx2])
 
-                        if (initFlag == True):
-                            dct_data[param_id]['units'] = var.attributes['units']
-                            dct_data[param_id]['desc'] = var.attributes['description']
+                            if (initFlag == True):
+                                dct_data[param_id]['units'] = var.attributes['units']
+                                dct_data[param_id]['desc'] = var.attributes['description']
 
-                # Reset initialization flag:
-                initFlag = False
+                    # Reset initialization flag:
+                    initFlag = False
 
-            except:
+                except:
 
-                if (dct_owners[loc_id] == 'NOAA-NDBC'):
-                    ncFlag = False
+                    if (dct_owners[loc_id] == 'NOAA-NDBC'):
+                        ncFlag = False
 
-                    break       #TMR!!! - break and return no data
+                        break       #TMR!!! - break and return no data
 
-                    # TMR!!! - example retrieval for data from past years provided below
-                    txtResp = urllib.request.urlopen('http://www.ndbc.noaa.gov/view_text_file.php?filename={0}h2016.txt.gz&dir=data/historical/stdmet/'.format(loc_id))
-                    lines = txtResp.readlines()
+                        # TMR!!! - example retrieval for data from past years provided below
+                        txtResp = urllib.request.urlopen('http://www.ndbc.noaa.gov/view_text_file.php?filename={0}h2016.txt.gz&dir=data/historical/stdmet/'.format(loc_id))
+                        lines = txtResp.readlines()
 
-                    ln_ct = 0
-                    lst_pidx = []
+                        ln_ct = 0
+                        lst_pidx = []
 
-                    for l in lines:
-                        ln_ct += 1
-                        if (ln_ct > 5002): break
+                        for l in lines:
+                            ln_ct += 1
+                            if (ln_ct > 5002): break
 
-                        lst_vals = l.decode('UTF-8').strip().split()
+                            lst_vals = l.decode('UTF-8').strip().split()
 
-                        if (ln_ct == 1): 
-                            lst_fields = lst_vals
-                            for param_id in lst_params:
-                                i_par = lst_fields.index(param_id)                            
-                                lst_pidx.append(i_par)
+                            if (ln_ct == 1): 
+                                lst_fields = lst_vals
+                                for param_id in lst_params:
+                                    i_par = lst_fields.index(param_id)                            
+                                    lst_pidx.append(i_par)
 
-                        elif (ln_ct == 2):
-                            lst_units = lst_vals
-                        else:
-                            #Get date/time:
-                            iyr = int(lst_vals[0]); imon = int(lst_vals[1]); iday = int(lst_vals[2])
-                            ihr = int(lst_vals[3]); imin = int(lst_vals[4])
-                            dt = datetime(iyr,imon,iday,ihr,imin)
-                            lst_dattim.append(dt)
+                            elif (ln_ct == 2):
+                                lst_units = lst_vals
+                            else:
+                                #Get date/time:
+                                iyr = int(lst_vals[0]); imon = int(lst_vals[1]); iday = int(lst_vals[2])
+                                ihr = int(lst_vals[3]); imin = int(lst_vals[4])
+                                dt = datetime(iyr,imon,iday,ihr,imin)
+                                lst_dattim.append(dt)
 
-                            #Get parameter values:
-                            ipar = 0
-                            for param_id in lst_params:
+                                #Get parameter values:
+                                ipar = 0
+                                for param_id in lst_params:
                                 
-                                dct_data[param_id]['values'].append(float(lst_vals[lst_pidx[ipar]]))
-                                dct_data[param_id]['units'] = lst_units[lst_pidx[ipar]]
-                                dct_data[param_id]['desc'] = param_id           #TMR!!!
+                                    dct_data[param_id]['values'].append(float(lst_vals[lst_pidx[ipar]]))
+                                    dct_data[param_id]['units'] = lst_units[lst_pidx[ipar]]
+                                    dct_data[param_id]['desc'] = param_id           #TMR!!!
 
-                                ipar += 1
+                                    ipar += 1
+                        pass
+
+                    # TMR - need error handling here?
                     pass
 
-                # TMR - need error handling here?
-                pass
+            #-----------------------------------
+            # Conduct time averaging (*TMR!!! - code to be developed*):
+            #-----------------------------------
+            #if (int(avg_ivld) > 0):
+            #    ichk = 0
 
-        #-----------------------------------
-        # Conduct time averaging (*TMR!!! - code to be developed*):
-        #-----------------------------------
-        #if (int(avg_ivld) > 0):
-        #    ichk = 0
-
-        #-----------------------------------
-        # Convert list of times to date:
-        #-----------------------------------
-        if (len(lst_times) > 0 and len(lst_dattim) == 0): 
-            for t in lst_times:
-                lst_dattim.append(tzero + timedelta(seconds=t))
-        #-----------------------------------
+            #-----------------------------------
+            # Convert list of times to date:
+            #-----------------------------------
+            if (len(lst_times) > 0 and len(lst_dattim) == 0): 
+                for t in lst_times:
+                    lst_dattim.append(tzero + timedelta(seconds=t))
+            #-----------------------------------
           
-        # Augment dictionary for JSON response:
-        dct_response[loc_id] = {}
-        dct_response[loc_id]['dattim'] = lst_dattim
-        dct_response[loc_id]['params'] = dct_data
+            # Augment dictionary for JSON response:
+            #dct_response[loc_id] = {}
+            dct_response[loc_id]['dattim'] = lst_dattim
+            dct_response[loc_id]['params'] = dct_data
 
-    #--------------------------------------------------------
-    #- End location loop
-    #--------------------------------------------------------
+        #--------------------------------------------------------
+        #- End location loop
+        #--------------------------------------------------------
 
     # process interval average
     dct_response= process_interval_avg(dct_response, avg_ivld)
@@ -413,8 +457,8 @@ def getTSData_slow(request):
     str_date1 = request.POST['date_start']
     str_date2 = request.POST['date_end']
 
-    date_start = datetime.strptime(str_date1, '%m/%d/%Y')
-    date_end = datetime.strptime(str_date2, '%m/%d/%Y')
+    date_start = datetime.strptime(str_date1, '%Y-%m-%d')
+    date_end = datetime.strptime(str_date2, '%Y-%m-%d')
 
     avg_ivld = request.POST['avg_ivld']
 #    try:
@@ -522,10 +566,16 @@ def queryRequestVars(request, type):
 
         data_type = dct_request['data_type'] #request.POST['data_type']
 
-        lst_locs = request.POST.getlist('loc_arr[]')
+        locs = request.POST.get('locs', '')
+        lst_locs = locs.split('|')
+
+        #lst_locs = request.POST.getlist('locs[]')
         dct_owners = json.loads(dct_request['owners'])
 
-        lst_params = request.POST.getlist('param_arr[]')
+        params = request.POST.get('params', '')
+        lst_params = locs.split('|')
+
+        #lst_params = request.POST.getlist('params[]')
 
         # Start & end date/time:
         str_date1 = dct_request['date_start']
@@ -542,10 +592,13 @@ def queryRequestVars(request, type):
 
         data_type = request.GET.get('data_type', '')
 
-        loc = request.GET.get('loc', '')
-        lst_locs.append(loc)
+        locs = request.GET.get('locs', '')
+        lst_locs = locs.split('|')
 
-        params= request.GET.get('param_arr', '')
+        #loc = request.GET.get('loc', '')
+        #lst_locs.append(loc)
+
+        params= request.GET.get('params', '')
         lst_params = params.split('|')
 		
         str_date1 = request.GET.get('date_start','')

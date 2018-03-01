@@ -43,6 +43,11 @@
 
         <!--<script src="{% static 'Buoy_tool/scripts/moment.js' %}"></script>-->
 
+        <!-- Boostrap 3.3.7 -->
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"></script>
+
+        <!-- Scripts -->
         {% block scripts %}
         
         {% endblock %}
@@ -69,7 +74,7 @@
 
                 <!--GLOS Data Plotting Tool-->
 
-                <h3 style="padding-top:15px;">{{title}}</h3>
+                <h3 id="h3-title" style="padding-top:15px;">{{title}}</h3>
 
                 <div class="w3-display-topright">
                     <span class="glosBlue w3-opennav w3-xxlarge w3-hide-large w3-right" onclick="w3_open()">&#9776;</span>
