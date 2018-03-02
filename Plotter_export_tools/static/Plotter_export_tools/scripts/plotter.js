@@ -51,13 +51,16 @@ $(function () {
         },
         xAxis: {
             type: 'datetime',
+            title: {
+                text: 'Date/Time (UTC)'
+            },
             labels: {
                 format: '{value:%e-%b-%Y %H:%m}'
             },            //dateTimeLabelFormats: 'day'
         },
         yAxis: {},
         legend: {
-            enabled: true
+            enabled: true,
         },
         plotOptions: {
             series: {
@@ -223,14 +226,14 @@ plotData = function (objData) {
                 if ($('#sel-units').val() === 'met') {
                     unit = objLoc.params[param_id].units;
                     for (var t = 0; t < objLoc.dattim.length; t++) {
-                        var dt = Date.parse(objLoc.dattim[t]);
+                        var dt = Date.parse(objLoc.dattim[t].replace('T',' ') + ' UTC');  // Append "UTC" to avoid assumption of local time
                         var tsval = objParam.values[t];
                         if (parseFloat(tsval) === -9999.0) { tsval = null };
                         series_data.push([dt, tsval]);
                     }
                 } else {
                     for (var t = 0; t < objLoc.dattim.length; t++) {
-                        var dt = Date.parse(objLoc.dattim[t]);
+                        var dt = Date.parse(objLoc.dattim[t].replace('T', ' ') + ' UTC');  // Append "UTC" to avoid assumption of local time
                         if (parseFloat(tsval) === -9999.0) {
                             series_data.push([dt, null]);
                         } else {
