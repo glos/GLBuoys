@@ -1,8 +1,9 @@
 # LimnoTech added (01/30/2018):
 GLOS_buoy_tools/settings.py
-Buoy_tool/static/Buoy_tool/data/
+data
 static_global/
-static
+static/
+!*/static
 obj/
 .vs/
 DataGen/
@@ -10,6 +11,8 @@ bin/
 include/
 lib64/
 local/
+
+# Static files:
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
