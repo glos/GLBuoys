@@ -11,6 +11,8 @@ from django.utils.encoding import smart_str
 
 from pydap.client import open_url
 from datetime import date, datetime, timedelta;
+
+import numpy as np
 import json
 import requests
 import urllib.request
@@ -99,13 +101,22 @@ def process_interval_avg(dct_response, avg_ivld):
                 dct_data[param]['desc'] = param
 
                 lst_val=[val.item() for val in df_avg[param]]
-                dct_data[param]['values']=lst_val
+
+                # Eradicate NULLs:
+                lst_fval = []
+                for val in lst_val:
+                    if (np.isnan(val)):
+                        lst_fval.append('null')
+                    else:
+                        lst_fval.append(val)
+
+                dct_data[param]['values']=lst_fval    #lst_val
 
             dct_loc['params']= dct_data
 
             # add to the to-be-returned dictionary
             dct_response_avg[loc]= dct_loc
-        
+            
         else:
             dct_response_avg[loc] = dct_response[loc]
 
@@ -550,66 +561,78 @@ def getTSData_slow(request):
 
 def queryRequestVars(request, type):
 
-    data_type=''
+    data_type='buoy'
     lst_locs= []
     lst_params = []
-    dct_owners= []
+    dct_owners= {}
     str_date1=''
     str_date2=''
-    avg_ivld = ''
+    avg_ivld = 'none'
+    tperiod = 'custom'
 
+	#--------------------------------------------------------
+    # Retrieve input data from GET or POST request (as dictionary):
+    #--------------------------------------------------------
     if type=='POST':
-	    #--------------------------------------------------------
-        # Retrieve input data from POST request:
-        #--------------------------------------------------------
         dct_request = request.POST.dict()
+    elif type=='GET':
+        dct_request = request.GET.dict()
 
-        data_type = dct_request['data_type'] #request.POST['data_type']
+    if ('data_type' in dct_request):
+        data_type = dct_request['data_type']
 
-        locs = request.POST.get('locs', '')
-        lst_locs = locs.split('|')
+    locs = dct_request['locs']
+    #locs = request.POST.get('locs', '')
+    lst_locs = locs.split('|')
 
-        #lst_locs = request.POST.getlist('locs[]')
-        dct_owners = json.loads(dct_request['owners'])
+    #Short-term fix to populate asset owners:
+    for loc_id in lst_locs:
+        if (loc_id in dct_owners):
+            pass
+        else:
+            dct_owners[loc_id] = loc_id
 
-        params = request.POST.get('params', '')
-        lst_params = params.split('|')
+    #lst_locs = request.POST.getlist('locs[]')
+    #dct_owners = json.loads(dct_request['owners'])
 
-        #lst_params = request.POST.getlist('params[]')
+    #params = request.POST.get('params', '')
+    params = dct_request['params']
+    lst_params = params.split('|')
 
-        # Start & end date/time:
+    #lst_params = request.POST.getlist('params[]')
+
+    # Start & end date/time:
+    if ('date_start' in dct_request):
         str_date1 = dct_request['date_start']
+    if ('date_end' in dct_request):
         str_date2 = dct_request['date_end']
 
-        # Time averaging interval:
+    # Time averaging interval:
+    avg_ivld = 'none'
+
+    if ('avg_ivld' in dct_request):    
         avg_ivld = dct_request['avg_ivld']
 
-	
-    elif type=='GET':
-	    #--------------------------------------------------------
-        # Retrieve input data from GET request for file download:
-        #--------------------------------------------------------
+    # Time period:
+    tperiod = 'custom'
 
-        data_type = request.GET.get('data_type', '')
+    if ('tperiod' in dct_request):
+        tperiod = dct_request['tperiod']
 
-        locs = request.GET.get('locs', '')
-        lst_locs = locs.split('|')
+    # Modify dates if needed:
+    if (tperiod != 'custom'):
+        lst = tperiod.split('_')
+        tp_os = int(lst[0])
+        tp_unit = lst[1].lower()[0];
 
-        #loc = request.GET.get('loc', '')
-        #lst_locs.append(loc)
+        if (tp_unit == 'd'):
+            dt_end = datetime.now().date() + timedelta(days=1)            
+            dt_start = dt_end - timedelta(days=tp_os)
 
-        params= request.GET.get('params', '')
-        lst_params = params.split('|')
-		
-        str_date1 = request.GET.get('date_start','')
-        str_date2 = request.GET.get('date_end','')
+            str_date1 = datetime.strftime(dt_start, '%Y-%m-%d')
+            str_date2 = datetime.strftime(dt_end, '%Y-%m-%d')
 
-        dct_owner = request.GET.get('owner','')
-        dct_owners.append(dct_owner)
-
-        avg_ivld= request.GET.get('avg_ivld','none')
-
-		
+    # Return values:
     return data_type, lst_locs, lst_params, str_date1, str_date2, dct_owners, avg_ivld
 
 
@@ -663,25 +686,42 @@ def getTimeIndices(loc_id, date_start, date_end):
                     pass
 
             try:
+                #Plan A: Find exact match at time 0:00 of actual start/end date:
                 idx = lst_times.index(idsec)
             except:
                 idx = -9999
 
-                for dday in range(1, 365):           #Check for start date
-                    date_tmp = date_chk + timedelta(lst_sign[i] * dday)    #check forward or backward, 1 day at a time
-                    if (i == 0 and date_tmp >= date_end): break
-                    if (i == 1 and date_tmp <= date_start): break
+                # Plan B: Scan for available viable dates/times to serve as start/end points:
+                for delt_day in range(1, 365):           #Check for start date
+                    date_tmp = date_chk + timedelta(lst_sign[i] * delt_day)    #check forward or backward, 1 day at a time
+                    if (i == 0 and date_tmp > date_end): break
+                    if (i == 1 and date_tmp < date_start): break
 
-                    try:
-                        dsec = int((date_tmp - tzero).total_seconds())        # Number of seconds elapsed
-                        idx = lst_times.index(dsec)
-                        break
-                    except:
-                        idx = -9999
+                    #Check @ midnight of each day (time = 0:00):
+                    if (date_tmp > date_start and date_tmp < date_end):
+                        try:
+                            delt_sec = int((date_tmp - tzero).total_seconds())        # Number of seconds elapsed
+                            idx = lst_times.index(delt_sec)
+                            break
+                        except:
+                            idx = -9999
 
+                    #Check previous hour for the first +/- 5 days:
+                    if (idx == -9999 and delt_day <= 7):
+                        for delt_hr in range(1,23):
+                            os_sec = lst_sign[i] * (86400*(delt_day - 1) + (3600*delt_hr))
+                            dt_tmp = date_chk + timedelta(seconds=os_sec)
+                            try:
+                                delt_sec = int((dt_tmp - tzero).total_seconds())
+                                idx = lst_times.index(delt_sec)
+                                break
+                            except:
+                                idx = -9999
+
+            # Add time index to list:
             lst_idx.append(idx)
 
-
+        # Return list of time indices (len=2):
         if (lst_idx[0] != lst_idx[1]):      #Indices can't be equal
             return lst_idx
         else:
