@@ -99,6 +99,7 @@
     <Folder Include="GLOS_buoy_tools\" />
     <Folder Include="Plotter_export_tools\" />
     <Folder Include="Plotter_export_tools\migrations\" />
+    <Folder Include="Plotter_export_tools\static\Plotter_export_tools\img\" />
     <Folder Include="Plotter_export_tools\templates\" />
     <Folder Include="GLOS_buoy_tools\" />
     <Folder Include="Plotter_export_tools\" />
@@ -274,7 +275,13 @@
     <Content Include="Buoy_tool\templates\404.html" />
     <Content Include="Buoy_tool\templates\erie.html" />
     <Content Include="Buoy_tool\templates\layout_erie.html" />
+    <Content Include="Plotter_export_tools\static\Plotter_export_tools\img\BuoyMap.jpg" />
+    <Content Include="Plotter_export_tools\static\Plotter_export_tools\img\fading_balls.gif" />
+    <Content Include="Plotter_export_tools\static\Plotter_export_tools\img\glos_logo.png" />
+    <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\export.js" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\export_tool.js" />
+    <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\plotter.js" />
+    <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\shared.js" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\util.js" />
     <Content Include="Plotter_export_tools\templates\export.html" />
     <Content Include="Plotter_export_tools\templates\index.html" />

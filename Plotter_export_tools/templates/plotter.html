@@ -26,7 +26,7 @@
 
 	<link rel="stylesheet" type="text/css" href="{% static 'Plotter_export_tools/css/tool.css' %}">
     <script src="{% static 'Plotter_export_tools/scripts/util.js' %}"></script>
-	<script src="{% static 'Plotter_export_tools/scripts/plotter_tool.js' %}"></script>
+	<script src="{% static 'Plotter_export_tools/scripts/plotter.js' %}"></script>
 
 	<script src="{% static 'Buoy_tool/scripts/clipboard.min.js' %}"></script>    
 
@@ -126,6 +126,12 @@
                         </li>
                     </ul>
 
+                    <!-- Link to buoy map -->
+                    <p style="margin-top:24px;">
+                        <a id="view-map" href=# target="_blank" style="">Click here to view map of buoy locations</a>
+                        <!--<a id="view-map" href={% static 'Plotter_export_tools/img/BuoyMap.jpg' %} target="_blank">Click here to view map of buoy locations</a>-->
+                    </p>
+
                     <!-- Multiselect option -->
                     <div id="lst-locs" class="multiselect data-med">
                     </div>
@@ -224,8 +230,8 @@
         <button id="btn-close-plink" class="btn-plink">Close</button>
     </div>
 
-    <div id="dlg-export" title="GLOS Data Export Options"  style="display:none;">
-
+    <div id="dlg-map" title="Great Lakes Buoy Locations"  style="display:none;">
+        <img src="{% static 'Plotter_export_tools/img/BuoyMap.jpg' %}" style="height:auto;width:800px;" />
     </div>
 
     <!-- Footer -->
