@@ -692,31 +692,40 @@ def getTimeIndices(loc_id, date_start, date_end):
                 idx = -9999
 
                 # Plan B: Scan for available viable dates/times to serve as start/end points:
-                for delt_day in range(1, 365):           #Check for start date
+                for delt_day in range(0, 365):           #Check for start date
                     date_tmp = date_chk + timedelta(lst_sign[i] * delt_day)    #check forward or backward, 1 day at a time
                     if (i == 0 and date_tmp > date_end): break
                     if (i == 1 and date_tmp < date_start): break
 
-                    #Check @ midnight of each day (time = 0:00):
-                    if (date_tmp > date_start and date_tmp < date_end):
+                    #Check hour for the first +/- 7 days:
+                    rmin = 0
+                    if (delt_day <= 7):
+                        rmax = 23
+                    else:
+                        rmax = 0
+
+                    #Check forward "rmax" hours from start date, or backward "rmax" hours from end date
+                    for delt_hr in range(rmin,rmax):      
+                        os_sec = lst_sign[i] * (86400*delt_day + (3600*delt_hr))
+                        dt_tmp = date_chk + timedelta(seconds=os_sec)
                         try:
-                            delt_sec = int((date_tmp - tzero).total_seconds())        # Number of seconds elapsed
+                            delt_sec = int((dt_tmp - tzero).total_seconds())
                             idx = lst_times.index(delt_sec)
                             break
                         except:
                             idx = -9999
-
-                    #Check previous hour for the first +/- 5 days:
-                    if (idx == -9999 and delt_day <= 7):
-                        for delt_hr in range(1,23):
-                            os_sec = lst_sign[i] * (86400*(delt_day - 1) + (3600*delt_hr))
-                            dt_tmp = date_chk + timedelta(seconds=os_sec)
-                            try:
-                                delt_sec = int((dt_tmp - tzero).total_seconds())
-                                idx = lst_times.index(delt_sec)
-                                break
-                            except:
-                                idx = -9999
+                    
+                    if (idx != -9999):
+                        break
+                    #Check @ midnight of each day (time = 0:00):
+#                    if (date_tmp > date_start and date_tmp < date_end):
+#                        try:
+#                            delt_sec = int((date_tmp - tzero).total_seconds())        # Number of seconds elapsed
+#                            idx = lst_times.index(delt_sec)
+#                            if (lst_sign[i] > 0):           #If 
+#                                break
+#                        except:
+#                            idx = -9999
 
             # Add time index to list:
             lst_idx.append(idx)
