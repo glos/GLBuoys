@@ -799,11 +799,14 @@ getPermalink = function () {
     strLink += '&params=' + getReqParam('params');
 
     // Time period:
-    strLink += '&tperiod=' + getReqParam('tperiod');
+    var tperiod = getReqParam('tperiod');
+    strLink += '&tperiod=' + tperiod;
 
-    // Start/end dates:
-    strLink += '&date_start=' + getReqParam('date_start');
-    strLink += '&date_end=' + getReqParam('date_end');
+    // Start/end dates (only include for "custom" time period):
+    if (tperiod === 'custom') {
+        strLink += '&date_start=' + getReqParam('date_start');
+        strLink += '&date_end=' + getReqParam('date_end');
+    }
 
     // Time aggregation:
     strLink += '&avg_ivld=' + getReqParam('avg_ivld');
