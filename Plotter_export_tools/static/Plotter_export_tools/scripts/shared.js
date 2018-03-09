@@ -5,7 +5,7 @@
 var _strTitle = '';
 var _isExport = false, _isPlotter = false;
 var _objLocs = {};
-var _metaJSON = '../static/Buoy_tool/data/meta_english.json';
+var _metaJSON = '../../static/Buoy_tool/data/meta_english.json';
 //var _metaJSON = 'http://34.209.199.227/static/Buoy_tool/data/meta_english.json';
 
 var _arrParamOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'WPRD', 'MWD', 'APD', 'ATMP', 'PRES', 'DEWP', 'PH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI'];

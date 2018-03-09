@@ -2,12 +2,15 @@
 
 {% block scripts %}
 
+    {% load static %}
     <!-- High Charts-->
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/maps/modules/map.src.js"></script>
     <script src="https://code.highcharts.com/modules/heatmap.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <!--<script src="https://code.highcharts.com/modules/export-data.js"></script>-->
+    <script src="{% static 'Plotter_export_tools/scripts/highchart_export-data.js' %}"></script>
+    
     <script src="https://code.highcharts.com/modules/boost.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
 
@@ -20,10 +23,9 @@
     </script>
 
     <!--Plotting tool -->
-    {% load static %}
+    
 
     <link rel="stylesheet" href="{% static 'Buoy_tool/css/main.css' %}">
-
 	<link rel="stylesheet" type="text/css" href="{% static 'Plotter_export_tools/css/tool.css' %}">
     <script src="{% static 'Plotter_export_tools/scripts/util.js' %}"></script>
 	<script src="{% static 'Plotter_export_tools/scripts/plotter.js' %}"></script>

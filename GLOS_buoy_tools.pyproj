@@ -279,6 +279,7 @@
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\img\fading_balls.gif" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\img\glos_logo.png" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\export.js" />
+    <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\highchart_export-data.js" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\export_tool.js" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\plotter.js" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\shared.js" />
