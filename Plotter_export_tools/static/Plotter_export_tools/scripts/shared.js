@@ -318,6 +318,34 @@ $(function () {
         }
     });
 
+    // Dialog for plot table:
+    $("#dlg-ptable").dialog({
+        autoOpen: false,
+        resizable: true,
+        width: 700,
+        height: 650,
+        modal: true,
+
+        open: function () {
+
+        },
+        buttons: {
+            "Close": function () {
+                $(this).dialog("close");
+            },
+        },
+
+        show: {
+            effect: "fade",
+            duration: 500
+        },
+        hide: {
+            effect: "fade",
+            duration: 500
+        }
+    });
+
+
     //==================================================================================
     // Events/Functions to Update Parameter List:
     //==================================================================================
@@ -423,6 +451,9 @@ $(function () {
                 var objLoc = _objLocs[arrLocs[idx]];
                 var arrParamID = [];
 
+                arrParamID = objLoc.staticObs;
+
+                /*
                 if (objLoc.obsID) {
                     arrParamID = objLoc.obsID;
                 } else if (objLoc.staticObs) {
@@ -430,6 +461,7 @@ $(function () {
                 } else {
                     return objParams;
                 }
+                */
 
                 for (var p = 0; p < arrParamID.length; p++) {
                     var param_id = arrParamID[p];
@@ -659,6 +691,17 @@ $(function () {
         $('#lst-params input').prop('checked', bChk);
     });
 
+    // Modify "end date" default when start date is updated:
+    $('#date-start').on('change', function (e) {
+        var sDate = new Date($(this).val());
+        var eDate = new Date();
+        var os_days = 1;
+        eDate.setTime(sDate.getTime() + os_days * 86400000);
+
+        $('#date-end').val(formatDate(eDate, 'mm/ dd / yyyy'));
+        $('#date-end').datepicker('option', 'defaultDate', eDate);
+    });
+
 });         // end jQuery ready function
 
 
@@ -709,16 +752,17 @@ formatDate = function (date, fmt) {
 }
 
 formatDateTime = function (dateVal) {
+    // Returns formatted date/time based on UTC
 
-    var d = new Date();
+    var d = new Date(dateVal);
 
-    hour = "" + d.getHours(); if (hour.length === 1) { hour = "0" + hour; }
-    minute = "" + d.getMinutes(); if (minute.length === 1) { minute = "0" + minute; }
-    second = "" + d.getSeconds(); if (second.length === 1) { second = "0" + second; }
+    hour = "" + d.getUTCHours(); if (hour.length === 1) { hour = "0" + hour; }
+    minute = "" + d.getUTCMinutes(); if (minute.length === 1) { minute = "0" + minute; }
+    second = "" + d.getUTCSeconds(); if (second.length === 1) { second = "0" + second; }
 
-    dformat = [d.getMonth() + 1,
-    d.getDate(),
-    d.getFullYear()].join('/') + ' ' +
+    dformat = [d.getUTCMonth() + 1,
+    d.getUTCDate(),
+    d.getUTCFullYear()].join('/') + ' ' +
         [hour, minute, second].join(':');
     return dformat;
 }
@@ -844,8 +888,12 @@ getReqParam = function (reqParam) {
             break;
         case ('date_start'):
         case ('date_end'):
-            var dateVal = Date.parse($('#' + reqParam.replace('_', '-')).val());
-            strVal = formatDate(dateVal, "yyyy-mm-dd");
+            var $date = $('#' + reqParam.replace('_', '-'));
+
+            if ($date.val() !== '') {
+                var dateVal = Date.parse($date.val());
+                strVal = formatDate(dateVal, "yyyy-mm-dd");
+            }
             break;
         case ('avg_ivld'):
             strVal = $('#sel-tavg').val();
