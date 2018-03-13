@@ -50,17 +50,23 @@ $(function () {
         }
 
         // Submit GET request:
-        window.location = "download_data" +
-            "?ftype=" + getReqParam('ftype') +
-            "&units=" + getReqParam('units') +
-            "&data_type=" + getReqParam('data_type') +
-            "&locs=" + locs +
-            "&params=" + params +
-            "&tperiod=" + getReqParam('tperiod') +
-            "&date_start=" + getReqParam('date_start') +
-            "&date_end=" + getReqParam('date_end') +
-            //"&owner=" + owner +
-            "&avg_ivld=" + getReqParam('avg_ivld');
+        if (params !== '') {
+            window.location = "download_data" +
+                "?ftype=" + getReqParam('ftype') +
+                "&units=" + getReqParam('units') +
+                "&data_type=" + getReqParam('data_type') +
+                "&locs=" + locs +
+                "&params=" + params +
+                "&tperiod=" + getReqParam('tperiod') +
+                "&date_start=" + getReqParam('date_start') +
+                "&date_end=" + getReqParam('date_end') +
+                //"&owner=" + owner +
+                "&avg_ivld=" + getReqParam('avg_ivld');
+
+        } else {
+
+        }
+
         return;
 
     }

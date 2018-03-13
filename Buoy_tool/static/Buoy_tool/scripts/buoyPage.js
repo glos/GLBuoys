@@ -396,8 +396,7 @@ function DegreeToCardinal(value) {
 $(document).ready(function () {
 
     // Event for buoy page click:
-    $('#btn-show-tool').on('click', function (evt) {
-        console.log('test');
+    $('#btn-show-plot').on('click', function (evt) {
         var prepend = '';
 
         if (document.location.href.includes('/buoy/')) {
@@ -406,8 +405,18 @@ $(document).ready(function () {
             prepend = '../';
         }
 
-        document.location.href = prepend + 'plotter/';
-        console.log(prepend + 'plotter');   
+        document.location.href = prepend + 'tools/plotter/';  
+    });
+    $('#btn-show-export').on('click', function (evt) {
+        var prepend = '';
+
+        if (document.location.href.includes('/buoy/')) {
+            prepend = '../../';
+        } else {
+            prepend = '../';
+        }
+
+        document.location.href = prepend + 'tools/export/';
     });
 
     loadMetaJSON(function (jsonObj) {

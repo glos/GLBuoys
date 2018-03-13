@@ -1,3 +1,4 @@
+var _objPlotSeries = {};
 
 // jQuery "ready" function:
 $(function () {
@@ -17,6 +18,60 @@ $(function () {
         evt.preventDefault();
         window.location.href = '/tools/export';
         return false;
+    });
+
+    $('#btn-plot-table').on('click', function (evt) {
+        evt.preventDefault();
+
+        if (!$.isEmptyObject(_objPlotSeries)) {
+
+            var strHTML = '<p style="font-weight:bold;font-style:italic;">Location: ' + _objPlotSeries.loc_id + '</p>';
+            
+            strHTML += '<table id="tbl-pdata" class="">';
+
+            // Top header row:
+            strHTML += '<thead><tr>';
+            strHTML += '<th>' + 'Date/Time (UTC)' + '</th>';
+
+            $.each(_objPlotSeries.params, function (param_id, objSeries) {
+                strHTML += '<th>' + objSeries.desc + '</th>';
+            });
+            strHTML += '</tr></thead>';
+
+            // Body of table:
+            strHTML += '<tbody>'
+
+            var dattim = _objPlotSeries.dattim;
+
+            for (var t = 0; t < dattim.length; t++) {
+                strHTML += '<tr>'
+
+                // Date/time:
+                strHTML += '<td class="center">'
+                var dt = Date.parse(dattim[t].replace('T', ' ') + ' UTC');  // Append "UTC" to avoid assumption of local time
+                strHTML += formatDateTime(dt);
+                strHTML += '</td>'
+
+                $.each(_objPlotSeries.params, function (param_id, objSeries) {
+                    strHTML += '<td class="center">' + objSeries.values[t] + '</td>';
+                });
+
+                strHTML += '</tr>'
+            }
+            strHTML += '</tbody>'
+            strHTML += '</table>'
+
+            // Open dialog:
+            $('#dlg-ptable').dialog('option', 'title', 'Plot Data Table (first location only)');
+            $('#dlg-ptable').html(strHTML);
+            /*
+            $('#dlg-ptable').dialog('option', 'width', arrSize[0]);
+            $('#dlg-ptable').dialog('option', 'height', arrSize[1]);
+            */
+
+            $('#dlg-ptable').dialog('open');
+        }
+
     });
 
     //==================================================================================
@@ -74,6 +129,13 @@ $(function () {
         },
 
         series: []
+    });
+
+
+    // Event to hide:
+    $('.highcharts-menu, .highcharts-menu-item').on('click', function (e) {
+
+        alert('toggled!');
     });
 
 });     // end jQuery "ready"
@@ -184,6 +246,7 @@ plotData = function (objData) {
 
     // Reinitialize chart:
     var hChart = $('#cht-tool').highcharts();
+    _objPlotSeries = {};
 
     // Remove all series and Y axes:
     removeYAxes(hChart);
@@ -206,6 +269,7 @@ plotData = function (objData) {
     // Create chart series:
     var loc_ct = 0;
     var arrLocs = [];
+    var seriesCt = 0;
 
     for (loc_id in objData) {
         objLoc = objData[loc_id];
@@ -213,6 +277,13 @@ plotData = function (objData) {
         if (objLoc.dattim.length > 0) {
             arrLocs.push(loc_id);
             loc_ct += 1;
+
+            // Initialize stored data (first loc only!):
+            if (loc_ct === 1) {
+                _objPlotSeries.loc_id = loc_id;
+                _objPlotSeries.dattim = objLoc.dattim;
+                _objPlotSeries.params = {}
+            }
 
             // Add axis for each parameter:
             for (param_id in objLoc.params) {
@@ -222,6 +293,7 @@ plotData = function (objData) {
 
                 var series_data = [];
                 var unit = [];
+                var val_arr = [];
 
                 if ($('#sel-units').val() === 'met') {
                     unit = objLoc.params[param_id].units;
@@ -230,18 +302,27 @@ plotData = function (objData) {
                         var tsval = objParam.values[t];
                         if (parseFloat(tsval) === -9999.0) { tsval = null };
                         series_data.push([dt, tsval]);
+                        val_arr.push(tsval);
                     }
                 } else {
                     for (var t = 0; t < objLoc.dattim.length; t++) {
                         var dt = Date.parse(objLoc.dattim[t].replace('T', ' ') + ' UTC');  // Append "UTC" to avoid assumption of local time
                         if (parseFloat(tsval) === -9999.0) {
                             series_data.push([dt, null]);
+                            val_arr.push(null);
                         } else {
                             [tsval, unit] = unitConversion(objParam.values[t], objParam.units);
                             series_data.push([dt, tsval])
+                            val_arr.push(tsval);
                         }
                     }
                 }
+
+                // Add to series object:
+                seriesCt += 1;
+                _objPlotSeries[seriesCt-1] = {};
+                _objPlotSeries[seriesCt-1].name = seriesName;
+                _objPlotSeries[seriesCt-1].data = series_data;
 
                 // Add new Y-axis:
                 if (loc_ct === 1) {
@@ -256,6 +337,12 @@ plotData = function (objData) {
                         lineWidth: 0.5,
                         lineColor: 'black'
                     });
+
+                    // Add parameter data to object:
+                    _objPlotSeries.params[param_id] = {};
+                    _objPlotSeries.params[param_id].id = param_id;
+                    _objPlotSeries.params[param_id].desc = objParam.desc + ' (' + unit + ')';
+                    _objPlotSeries.params[param_id].values = val_arr;
                 }
 
                 // Add the new series:

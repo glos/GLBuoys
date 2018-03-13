@@ -26,15 +26,17 @@ a#navFooter{
 		padding: 0px;
 }
 
-.w3-button {
-	margin-top:30px;
-	padding: 10px;
+button#feedback {
+    margin-top: 30px;
+    padding: 10px;
 }
 
-button#units{
-	font-family: Roboto,Verdana;
-  font-size: 14px;
-  font-weight: 500;
+button#units {
+    margin-top: 30px;
+    padding: 10px;
+    font-family: Roboto,Verdana;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 img.headerLogos{

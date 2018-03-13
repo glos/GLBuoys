@@ -299,3 +299,73 @@ input[type="button"] {
     border-radius: 5px;
 }
 
+/* Highchart Formatter*/
+.highcharts-data-table {
+    z-index: 1;
+    background: white;
+}
+
+.highcharts-data-table table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    background: white;
+}
+
+.highcharts-data-table td, .highcharts-data-table th {
+    font-family: sans-serif;
+    font-size: 10pt;
+    border: 1px solid silver;
+    padding: 0.5em;
+}
+
+/* Custom plot data table formatting */
+/*--------------------------------------------------*/
+/*  Scorecard Table */
+/*--------------------------------------------------*/
+#tbl-pdata.scorecard {
+    /*width: 100%;*/
+}
+
+#tbl-pdata tbody td, thead th {
+    border: 1px solid #a59f9f;
+    overflow: hidden;
+    /*padding: 4px 0px 4px 0px;*/
+    width: 150px;
+}
+
+#tbl-pdata thead {
+    display: block;
+    margin:0;
+}
+
+#tbl-pdata tbody {
+    display: block;
+    overflow: auto;
+    height:400px;
+    margin-right:-18px;
+}
+
+
+#tbl-pdata tbody td {
+    font-size:0.8em;
+    height: 20px;
+    margin:0px;
+    width:150px;
+}
+
+#tbl-pdata thead th {
+    font-weight: bold;
+    color: black;
+    background-color: lightgray;
+    text-align: center;
+    word-wrap:normal;
+    height:70px;
+}
+
+td.center {
+    text-align: center;
+}
+
+td.offset {
+    padding-left: 20px;
+}
