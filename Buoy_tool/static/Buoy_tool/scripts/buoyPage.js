@@ -620,7 +620,7 @@ function loadbuoyinfo(ID, jsonObj) {
 							$('#buoyCam').addClass("w3-center w3-panel w3-card-4 w3-padding");
 							$('#BuoyCamTitle h4').append('Buoy Cam');
 							$('#BuoyCamTitle h4').addClass("glosBlue w3-center");
-							$('#BuoyCamPic').append('<video id="my-video" class="video-js vjs-default-skin vjs-fluid" controls preload="none" poster=../media'+jsonObj[i].webcamSrc+' data-setup="{}">');
+							$('#BuoyCamPic').append('<video id="my-video" class="video-js vjs-default-skin vjs-fluid" controls preload="none" poster=../media/'+jsonObj[i].webcamSrc+' data-setup="{}">');
 							$('#BuoyCamPic video').append($('<source>').attr("src", "../media/"+jsonObj[i].webcamSrc[0].slice(0,-10)+".mp4").attr("type","video/mp4"));
 							$('#BuoyCamPic video').append('<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>');
 							$('#BuoyCamPic').append('</video>');
@@ -742,7 +742,7 @@ function reloadbuoyinfo() {
                             $("#stationTime").css('color', '#337ab7');
 						}
 						else if (hourDiff > 6 && hourDiff < 24) {  //assumes time from json is local. Checks if data is less than 6 hour old
-							//document.getElementById("stationTime").style.color = "#FFC900"
+							//document.getElementById("stationTime").style.color = "#FFC900"G
                             //document.getElementById("stationTime").innerHTML = "" + dateNum.format("LT") + " EDT&nbsp;&nbsp;" + dateNum.format("ddd, MMM D") + " (>6 hours ago)"
                             var stationDateTime = "" + dateNum.format("LT") + " " + tzAbbr + "&nbsp;&nbsp;" + dateNum.format("ddd, MMM D") + " (>6 hours ago)";
                             $("#stationTime").html(stationDateTime);
@@ -839,7 +839,7 @@ function reloadbuoyinfo() {
 						}
 					
                         if (jsonObj[i].webcamSrc.length > 0) {
-                            $('#BuoyCamPic').replaceWith('<video id="my-video" class="video-js vjs-default-skin vjs-fluid" controls preload="none" poster=../media' + jsonObj[i].webcamSrc +' data-setup="{}">');
+                            $('#BuoyCamPic').replaceWith('<video id="my-video" class="video-js vjs-default-skin vjs-fluid" controls preload="none" poster=../media/' + jsonObj[i].webcamSrc +' data-setup="{}">');
                             $('#BuoyCamPic video').replaceWith($('<source>').attr("src", jsonObj[i].webcamSrc[0].slice(0,-10)+".mp4").attr("type","video/mp4"));
                             $('#BuoyCamPic video').replaceWith('<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>');
                             $('#BuoyCamPic').replaceWith('</video>');
