@@ -52,7 +52,6 @@ def buoy(request, buoy_id):
     #)
     
     # Determine available buoys and check if entered ID exists. Render buoy page if does exist, render 404.html if not exist
-    #metaFile = open(static('Buoy_tool/data/meta_english.json'))
     metaFile = open(os.path.join(BASE_DIR,'static/Buoy_tool/data/meta_english.json'))
     #metaFile = open(posixpath.join(*(BASE_DIR.split(os.path.sep) + ['Buoy_tool/static/Buoy_tool/data/meta_english.json'])))
     metaStr = metaFile.read()
@@ -134,7 +133,7 @@ def getBuoyData(request):
         for dateVal in dateRange(date_start, date_end):
 
             # Construct URL for OpenDAP access of date-specific netCDF file:
-            url_nc = 'http://tds.glos.us/thredds/dodsC/buoys/{0}/{1}/{0}_{2}.nc'.format(buoy_id, dateVal.strftime("%Y"), dateVal.strftime("%Y%m%d"));
+            url_nc = 'http://tds.glos.us/thredds/dodsC/buoys_standard/{0}/{1}/{0}_{2}.nc'.format(buoy_id, dateVal.strftime("%Y"), dateVal.strftime("%Y%m%d"));
         
             try:
                 ds = open_url(url_nc);

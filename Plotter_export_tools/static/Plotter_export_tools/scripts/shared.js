@@ -8,30 +8,30 @@ var _objLocs = {};
 var _metaJSON = '../../static/Buoy_tool/data/meta_english.json';
 //var _metaJSON = 'http://34.209.199.227/static/Buoy_tool/data/meta_english.json';
 
-var _arrParamOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'WPRD', 'MWD', 'APD', 'ATMP', 'PRES', 'DEWP', 'PH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI'];
-var _arrParamExcl = ['DPD', 'TIDE', 'VIS', 'PTDY', 'DEPTH', 'OTMP', 'CHILL', 'HEAT', 'ICE', 'WSPD10', 'WSPD20'];
+var _arrParamOrder = ['Wind_Speed', 'Wind_Gust', 'Wind_from_Direction', 'Water_Temperature_at_Surface', 'Significant_Wave_Height', 'sea_surface_wave_maximum_height', 'Significant_Wave_Period', 'significant_wave_from_direction', 'Air_Temperature', 'Air_Pressure', 'Dew_Point', 'Relative_Humidity', 'Solar_Radiation', 'dissolved_oxygen', 'dissolved_oxygen_saturation', 'water_conductivity', 'ysi_chlorophyll', 'ysi_blue_green_algae', 'ysi_turbidity'];
 
 var _objParamNames = {
-    "WVHT": "Significant Wave Height",
-    "MWDIR": "Mean Wave Direction",
-    "WPRD": "Wave Period",
-    "ATMP": "Air Temperature",
-    "RH": "Relative Humidity",
-    "DEWP": "Dew Point",
-    "PRES": "Air Pressure",
-    "WDIR": "Wind Direction",
-    "WSPD": "Wind Speed",
-    "GST": "Wind Gust",
-    "WTMP": "Water Temperature",
-    "SRAD": "Solar Radiation",
-    "VBAT": "Battery Voltage",
-    "DISOXY": "Dissolved Oxygen",
-    "DIOSAT": "Dissolved Oxygen at Saturation",
-    "SPCOND": "Specific Conductivity",
-    "PH": "PH",
-    "YTURBI": "Turbidity",
-    "YCHLOR": "Chlorophyll",
-    "YBGALG": "Blue-Green-Algae"
+    "Significant_Wave_Height": "Significant Wave Height",
+    "sea_surface_wave_maximum_height": "Maximum Wave Height",
+    "significant_wave_from_direction": "Mean Wave Direction",
+    "Significant_Wave_Period": "Wave Period",
+    "Air_Temperature": "Air Temperature",
+    "Relative_Humidity":"Relative Humidity",
+    "Dew_Point": "Dew Point",
+    "Air_Pressure": "Air Pressure",
+    "Wind_from_Direction": "Wind Direction",
+    "Wind_Speed": "Wind Speed",
+    "Wind_Gust": "Wind Gust",
+    "Water_Temperature_at_Surface": "Water Temperature",
+    "Solar_Radiation": "Solar Radiation",
+    "battery_voltage": "Battery Voltage",
+    "dissolved_oxygen": "Dissolved Oxygen",
+    "dissolved_oxygen_saturation": "Dissolved Oxygen at Saturation",
+    "water_conductivity": "Specific Conductivity",
+    "ph": "PH",
+    "ysi_turbidity": "Turbidity",
+    "ysi_chlorophyll": "Chlorophyll",
+    "ysi_blue_green_algae": "Blue-Green-Algae"
 }
 
 var _flagLocChkbox = false;

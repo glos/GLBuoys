@@ -138,6 +138,11 @@ $(function () {
         alert('toggled!');
     });
 
+    //Hide html table from export module
+    if (Highcharts.getOptions().exporting) {
+        Highcharts.getOptions().exporting.buttons.contextButton.menuItems.pop();
+    }
+
 });     // end jQuery "ready"
 
 

@@ -404,8 +404,12 @@ $(document).ready(function () {
         } else {
             prepend = '../';
         }
-
-        document.location.href = prepend + 'tools/plotter/';  
+        if (units == 'english') {
+            document.location.href = prepend + 'tools/plotter?data_type=buoy&units=eng&locs=' + ID;
+        }
+        else if (units == 'metric') {
+            document.location.href = prepend + 'tools/plotter?data_type=buoy&units=met&locs=' + ID;
+        }
     });
     $('#btn-show-export').on('click', function (evt) {
         var prepend = '';
@@ -415,8 +419,12 @@ $(document).ready(function () {
         } else {
             prepend = '../';
         }
-
-        document.location.href = prepend + 'tools/export/';
+        if (units == 'english') {
+            document.location.href = prepend + 'tools/export?data_type=buoy&units=eng&locs=' + ID;
+        }
+        else if (units == 'metric') {
+            document.location.href = prepend + 'tools/export?data_type=buoy&units=met&locs=' + ID;
+        }
     });
 
     loadMetaJSON(function (jsonObj) {
@@ -612,8 +620,8 @@ function loadbuoyinfo(ID, jsonObj) {
 							$('#buoyCam').addClass("w3-center w3-panel w3-card-4 w3-padding");
 							$('#BuoyCamTitle h4').append('Buoy Cam');
 							$('#BuoyCamTitle h4').addClass("glosBlue w3-center");
-							$('#BuoyCamPic').append('<video id="my-video" class="video-js vjs-default-skin vjs-fluid" controls preload="none" poster='+jsonObj[i].webcamSrc+' data-setup="{}">');
-							$('#BuoyCamPic video').append($('<source>').attr("src", jsonObj[i].webcamSrc[0].slice(0,-10)+".mp4").attr("type","video/mp4"));
+							$('#BuoyCamPic').append('<video id="my-video" class="video-js vjs-default-skin vjs-fluid" controls preload="none" poster=../media'+jsonObj[i].webcamSrc+' data-setup="{}">');
+							$('#BuoyCamPic video').append($('<source>').attr("src", "../media/"+jsonObj[i].webcamSrc[0].slice(0,-10)+".mp4").attr("type","video/mp4"));
 							$('#BuoyCamPic video').append('<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>');
 							$('#BuoyCamPic').append('</video>');
 							$('body').append('<script src="http://vjs.zencdn.net/6.2.7/video.js"></script>');
@@ -831,7 +839,7 @@ function reloadbuoyinfo() {
 						}
 					
                         if (jsonObj[i].webcamSrc.length > 0) {
-                            $('#BuoyCamPic').replaceWith('<video id="my-video" class="video-js vjs-default-skin vjs-fluid" controls preload="none" poster=' + jsonObj[i].webcamSrc + ' data-setup="{}">');
+                            $('#BuoyCamPic').replaceWith('<video id="my-video" class="video-js vjs-default-skin vjs-fluid" controls preload="none" poster=../media' + jsonObj[i].webcamSrc +' data-setup="{}">');
                             $('#BuoyCamPic video').replaceWith($('<source>').attr("src", jsonObj[i].webcamSrc[0].slice(0,-10)+".mp4").attr("type","video/mp4"));
                             $('#BuoyCamPic video').replaceWith('<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>');
                             $('#BuoyCamPic').replaceWith('</video>');

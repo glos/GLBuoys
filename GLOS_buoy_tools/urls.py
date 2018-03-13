@@ -54,8 +54,8 @@ urlpatterns = [
 ]
     
 #Tell django how to handle location of media files when in DEBUG mode
-if settings.DEBUG is True:
-    urlpatters += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+#if settings.DEBUG is True:
+#    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
     # Login/logout:
     
