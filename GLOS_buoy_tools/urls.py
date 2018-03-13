@@ -7,6 +7,8 @@ from django.conf.urls import url
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView
 import django.contrib.auth.views
+from django.conf import settings
+from django.conf.urls.static import static
 
 # Main buoy tool app:
 from Buoy_tool.views import buoy, eriehome
@@ -49,7 +51,12 @@ urlpatterns = [
 
     # Requests for /favicon.ico redirected to the URL of 'favicon.ico'according to staticfiles storage. http://staticfiles.productiondjango.com/blog/failproof-favicons/
     url(r'^favicon.ico$',RedirectView.as_view(url=staticfiles_storage.url('Buoy_tool/img/favicon.ico'),permanent=False),name="favicon"),
+]
     
+#Tell django how to handle location of media files when in DEBUG mode
+if settings.DEBUG is True:
+    urlpatters += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
     # Login/logout:
     
     #url(r'^login/$',
@@ -78,4 +85,4 @@ urlpatterns = [
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-]
+
