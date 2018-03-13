@@ -342,7 +342,7 @@ def getTSData_fast(request, type):
             if (data_type == 'buoy'):
 
                 # Construct URL for OpenDAP access of date-specific netCDF file (** currently hardcoded for buoys**):
-                url_nc = 'http://tds.glos.us/thredds/dodsC/buoy_agg/{0}/{0}.ncml'.format(loc_id)
+                url_nc = 'http://tds.glos.us/thredds/dodsC/buoy_agg_standard/{0}/{0}.ncml'.format(loc_id)
         
                 try:
                     ds = open_url(url_nc);
