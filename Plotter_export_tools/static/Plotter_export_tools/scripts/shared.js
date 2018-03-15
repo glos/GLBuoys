@@ -52,6 +52,11 @@ $(function () {
         }
     });
 
+    // Append thermistor string options to end of param order list:
+    for (var itmp = 1; itmp < 40; itmp++) {
+        _arrParamOrder.push('Thermistor_String_at_' + itmp.toString() + 'm');
+    }
+
     // Set page-specific parameters:
     var arrParts = window.location.href.split('/');
     var strPage = arrParts[arrParts.length - 1]; 
@@ -429,6 +434,7 @@ $(function () {
         }
 
         // Add thermistor string entries at end of list:
+        /*
         for (param_id in objParams) {
             if (param_id.startsWith('Thermistor_String_at_')) {
                 param_name = objParams[param_id];
@@ -446,6 +452,7 @@ $(function () {
                 }
             }
         }
+        */
 
         // If nothing selected, select first parameter:
         if (_flagParChkbox) {
