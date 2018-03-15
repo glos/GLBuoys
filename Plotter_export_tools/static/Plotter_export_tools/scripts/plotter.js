@@ -296,6 +296,12 @@ plotData = function (objData) {
 
                 var seriesName = loc_id + ': ' + objParam.desc;
 
+                // Add depth for thermistor depth:
+                if (param_id.startsWith('Thermistor_String_at_')) {
+                    var arr = param_id.split('_at_');
+                    seriesName += ' (' + arr[1] + ')';
+                }
+
                 var series_data = [];
                 var unit = [];
                 var val_arr = [];

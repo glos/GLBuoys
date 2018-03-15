@@ -402,6 +402,7 @@ $(function () {
         }
 
         var param1 = '';
+        var param_name = '';
 
         for (i = 0; i < _arrParamOrder.length; i++) {
             param_id = _arrParamOrder[i];
@@ -410,19 +411,40 @@ $(function () {
 
             // Multiselect:
             if (param_id in objParams) {
+                param_name = objParams[param_id];
+
                 if (_flagParChkbox) {
                     var strChk = '';
                     if ($($selParams).filter('#' + param_id).length > 0) { strChk = 'checked' };
 
-                    strHTML = '<label class="multiselect"><input type="checkbox" class="multiselect param" id="' + param_id + '" ' + strChk + ' />' + objParams[param_id] + '</label>'
+                    strHTML = '<label class="multiselect"><input type="checkbox" class="multiselect param" id="' + param_id + '" ' + strChk + ' />' + param_name + '</label>'
                     $('#lst-params').append(strHTML);
 
                 } else {
-                    strHTML = '<option value="' + param_id + '">' + objParams[param_id] + '</option>';
+                    strHTML = '<option value="' + param_id + '">' + param_name + '</option>';
                     $('.sel-param').append(strHTML);
                 }
 
             };
+        }
+
+        // Add thermistor string entries at end of list:
+        for (param_id in objParams) {
+            if (param_id.startsWith('Thermistor_String_at_')) {
+                param_name = objParams[param_id];
+
+                if (_flagParChkbox) {
+                    var strChk = '';
+                    if ($($selParams).filter('#' + param_id).length > 0) { strChk = 'checked' };
+
+                    strHTML = '<label class="multiselect"><input type="checkbox" class="multiselect param" id="' + param_id + '" ' + strChk + ' />' + param_name + '</label>'
+                    $('#lst-params').append(strHTML);
+
+                } else {
+                    strHTML = '<option value="' + param_id + '">' + param_name + '</option>';
+                    $('.sel-param').append(strHTML);
+                }
+            }
         }
 
         // If nothing selected, select first parameter:
@@ -453,27 +475,25 @@ $(function () {
 
                 arrParamID = objLoc.staticObs;
 
-                /*
-                if (objLoc.obsID) {
-                    arrParamID = objLoc.obsID;
-                } else if (objLoc.staticObs) {
-                    arrParamID = objLoc.staticObs;
-                } else {
-                    return objParams;
-                }
-                */
-
                 for (var p = 0; p < arrParamID.length; p++) {
                     var param_id = arrParamID[p];
 
                     if (!(param_id in objParams)) {
                         if (_objParamNames[param_id]) {
                             objParams[param_id] = _objParamNames[param_id];
-                        } else {
-                            objParams[param_id] = param_id;
+
+                        } else {            // Not in the lookup list
+                            if (param_id.startsWith('Thermistor_String_at_')) {
+                                var arr = param_id.split('_at_');
+                                objParams[param_id] = 'Water Temperature at ' + arr[1] + '';
+
+                            } else {
+                                objParams[param_id] = param_id;
+                            }
                         }
                         //objParams[param_id] = objLoc.obsLongName[p];
                     }
+
                 }
             });
         }
