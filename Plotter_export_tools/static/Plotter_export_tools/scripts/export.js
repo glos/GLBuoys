@@ -51,6 +51,8 @@ $(function () {
 
         // Submit GET request:
         if (params !== '') {
+            //showMessage('Please wait...', 'A file containing the data you requested will be downloaded shortly.', false);
+
             window.location = "download_data" +
                 "?ftype=" + getReqParam('ftype') +
                 "&units=" + getReqParam('units') +
@@ -70,8 +72,5 @@ $(function () {
         return;
 
     }
-
-
-
 
 });     // end jQuery "ready"
