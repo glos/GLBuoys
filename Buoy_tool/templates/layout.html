@@ -122,8 +122,67 @@
         </header>
 
         {% block content %}{% endblock %}
+        <div id="alertForm" class="w3-modal">
+            <div class="w3-modal-content">
+                <header class="w3-container glosBlue"> 
+                    <span onclick="document.getElementById('alertForm').style.display='none'" class="w3-button w3-white w3-display-topright">&times;</span>
+                    <h3>Buoy Alert Notifications</h3>
+                </header>
+                <form class="w3-container" action="javascript:sendRequest()">
+                    <div class="w3-row-padding">
+                        <div class="w3-half">
+                            <label class="w3-text-teal"><b>Buoy ID</b></label>
+                            <select required id="buoyID" class="w3-select w3-border" name="buoyIDoptions">
+                            </select>
+                        </div>  
+                        <div class="w3-half">
+                            <label class="w3-text-teal"><b>Choose Parameter</b></label>
+                            <select required id="parameters" class="w3-select w3-border" name="parametersOption">
+                            </select>
+                        </div>
+                    </div>
+                    <div id="radioUnits" class="w3-row-padding" >
+                        <p style="padding-left:5px">
+                            <input class="w3-radio" type="radio" name="units" value="english" checked>
+                            <label>English</label>
+                            <input class="w3-radio" type="radio" name="units" value="metric">
+                            <label>Metric</label>
+                        </p>
+                    </div>
 
+                    <div class="w3-row-padding">
+                        <div class="w3-half" >
+                            <label class="w3-text-teal"><b>Minimum Threshold</b></label>
+                            <input id="minThreshold" class="w3-input w3-border w3-white" type="text" placeholder="Observation lower trigger alert">
+                        </div>
+                        <div class="w3-half">
+                            <label class="w3-text-teal"><b>Maximum Threshold</b></label>
+                            <input id="maxThreshold" class="w3-input w3-border w3-white" type="text" placeholder="Observation higher will trigger alert">
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="w3-row-padding">
+                        <div class="w3-third">
+                            <label class="w3-text-teal"><b>Email Address</b></label>
+                            <input required id="email" class="w3-input w3-border w3-white" type="text" placeholder="Email Address">
+                        </div>
+                        <div class="w3-third">
+                            <label class="w3-text-teal"><b>User ID</b></label>
+                            <input id="email" disabled class="w3-input w3-border w3-light-grey" type="text" placeholder="GLOS User ID">
+                        </div>
+                        <div class="w3-third">
+                            <label class="w3-text-teal"><b>Cell Number</b></label>
+                            <input id="phoneNum" disabled class="w3-input w3-border w3-light-grey" type="text" placeholder="Cell Number">
+                        </div>
+                    </div>
+
+                    <br>
+                    <p><button type="submit" id="alertRequest" class="w3-btn w3-blue-grey">Register Alert</button></p>
+                </form>
+            </div>
         </div>
+    </div>
 
 	</body>
 </html>

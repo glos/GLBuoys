@@ -93,7 +93,114 @@ function BuoyAlertsResponse(response) {
 					}
 }
 //----------------------------------------------------------------------------------------
-			
+
+//-------------------------Buoy Alerts Function and Buttons-------------------------------
+function alertFormPop(ID, allBuoysObj) {
+    var paramOptions = [];
+    var buoysList = [];
+    $('#parameters').empty();
+    $('#buoyID').empty();
+    for (i = 0; i < allBuoysObj.length; i++) {
+        if (allBuoysObj[i].buoyOwners != "NOAA-NDBC" && allBuoysObj[i].buoyOwners != "Env CA") {
+            buoysList.push(allBuoysObj[i].id);
+        }
+        if (allBuoysObj[i].id == ID) {
+            paramOptions = allBuoysObj[i].obsLongName;
+            $.each(paramOptions, function (i, p) {
+                $('#parameters').append($('<option></option>').val(p).html(p));
+            });
+        }
+    }
+
+    $.each(buoysList, function (i, p) {
+        $('#buoyID').append($('<option></option>').val(p).html(p));
+    });
+    $('#buoyID').val(ID);
+}
+
+function sendRequest() {
+    //Close modal
+    document.getElementById('alertForm').style.display = 'none';
+
+    //Use conversion from obslongname to GLOS standard names
+    var _objParamNames = {
+        "Significant_Wave_Height": "Significant Wave Height",
+        "sea_surface_wave_maximum_height": "Maximum Wave Height",
+        "significant_wave_from_direction": "Mean Wave Direction",
+        "Significant_Wave_Period": "Wave Period",
+        "Air_Temperature": "Air Temperature",
+        "Relative_Humidity": "Relative Humidity",
+        "Dew_Point": "Dew Point",
+        "Air_Pressure": "Air Pressure",
+        "Wind_from_Direction": "Wind Direction",
+        "Wind_Speed": "Wind Speed",
+        "Wind_Gust": "Wind Gust",
+        "WaterTemperature": "Water Temp.",
+        "Solar_Radiation": "Solar Radiation",
+        "battery_voltage": "Battery Voltage",
+        "dissolved_oxygen": "Dissolved Oxygen",
+        "dissolved_oxygen_saturation": "DO Saturation",
+        "water_conductivity": "Specific Conductivity",
+        "ph": "PH",
+        "ysi_turbidity": "Turbidity",
+        "ysi_chlorophyll": "Chlorophyll",
+        "ysi_blue_green_algae": "Blue-Green-Algae"
+    }
+    //Define standard parameter ID
+    function getKeyByValue(object, value) {
+        return Object.keys(object).find(key => object[key] === value);
+    }
+
+    radioUnits
+    //Define units
+    var unitsSelect = $("#radioUnits input[type='radio']:checked");
+
+    if (unitsSelect == 'english') {
+        alertUnits = 'degrees_Fahrenheit';
+    } else {
+        alertUnits = 'degrees_Celsius';
+    }
+
+    //Define min and max threshold, 
+    if ($("#minThreshold").val() == "") {
+        var alertMinThreshold = null;
+    }else {
+        var alertMinThreshold = $("#minThreshold").val()
+    }
+    if ($("#maxThreshold").val() == "") {
+        var alertMaxThreshold = null;
+    } else {
+        var alertMaxThreshold = $("#maxThreshold").val()
+    }
+
+    var alertParameter = getKeyByValue(_objParamNames, $('#parameters').val())
+    var SendInfo = {
+        "parameter": alertParameter,
+        "units": alertUnits,
+        "url": "https://portal.glos.us/api/observations?provider=glos&platform=" + $('#buoyID').val() + '&parameter=' + alertParameter,
+        "origin": "9087023",
+        "catalog_id": "data.oceansmap.com:9087023",
+        "email": $('#email').val(),
+        "user_id": "",
+        "min_threshold": alertMinThreshold,
+        "max_threshold": alertMaxThreshold,
+        "contact_flag": true
+    }
+    console.log(SendInfo);
+
+    $.ajax({
+        type: 'post',
+        url: 'http://dev.oceansmap.com/myglos/api/alert',
+        contentType: "application/json",
+        dataType: "json",
+        data: JSON.stringify(SendInfo),
+        success: function (data) {
+            console.log(data);
+        }
+    })
+}
+
+
 function initialize(jsonObj) {
 	
 		var stations = [];
@@ -395,7 +502,7 @@ function DegreeToCardinal(value) {
 
 $(document).ready(function () {
 
-    // Event for buoy page click:
+    //---------------------- Event for buoy page buttons------------------------------------------
     $('#btn-show-plot').on('click', function (evt) {
         var prepend = '';
 
@@ -426,6 +533,19 @@ $(document).ready(function () {
             document.location.href = prepend + 'tools/export?data_type=buoy&units=met&locs=' + ID;
         }
     });
+
+    $('#buoyID').on('change', function () {
+        var newID = $(this).val()
+        loadMetaJSON(function (jsonObj) {
+            alertFormPop(newID, jsonObj);
+        });
+    });
+
+    //$('form').submit(function () {
+    //    sendRequest();
+    //});
+
+    //-------------------------------------------------------------------------------------------
 
     loadMetaJSON(function (jsonObj) {
 			loadbuoyinfo(ID, jsonObj);
@@ -705,11 +825,13 @@ function loadbuoyinfo(ID, jsonObj) {
 					if (jsonObj[i].uglosLink){
 						$('#stationMeta p#uglosLink').append("The legacy webpage for buoy " +jsonObj[i].id+ " can be viewed at <a id='uglos' target='_blank' href= http://uglos.mtu.edu/station_page.php?station="+ jsonObj[i].id +">uglos.mtu.edu</a>.");
 						$('#stationMeta a#uglos').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'legacy webpage for buoy','glbuoysLabel':ID,'glbuoysAction':'click_external_url'});});
-					}
-        }
+                    }
+                //Populate alert form
+                alertFormPop(ID,jsonObj);   
+            }
       }
 	callfooterInfo(ID);
-	initialize(jsonObj);
+    initialize(jsonObj);
 }
 
 function reloadbuoyinfo() {

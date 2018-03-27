@@ -1,31 +1,5 @@
 ﻿function PastForecastGrab(variableName,stationID) {
-	/**	var data_file = "http://34.211.180.62/BuoyALP/buoydata_"+units+"/"+stationID+"";
-    var http_request = new XMLHttpRequest();
 
-    try {
-        // Opera 8.0+, Firefox, Chrome, Safari
-        http_request = new XMLHttpRequest();
-    } catch (e) {
-        // Internet Explorer Browsers
-        try {
-            http_request = new ActiveXObject("Msxml2.XMLHTTP");
-
-        } catch (e) {
-
-            try {
-                http_request = new ActiveXObject("Microsoft.XMLHTTP");
-            } catch (e) {
-                // Something went wrong
-                alert("Your browser broke!");
-                return false;
-            }
-
-        }
-    }
- */
-
-    //http_request.onreadystatechange = function () {
-    //    if (http_request.readyState == 4) {
     $.getJSON('../static/Buoy_tool/data/' + ID + '_' + units + '_data.json', function (jsonObj) {
         var Dates = [];
         var ForecastDates = [];
@@ -69,7 +43,7 @@
         if (variableName == 'WDIR' || variableName == 'MWD') {
             PastForecastPolar(longName, units, Dates[0], Data[0]);
         } else {
-            PastForecastGraphic(longName, units, Dates[0], ForecastDates[0], Data[0], ForecastData[0]);
+            PastForecastGraphic(ID, longName, units, Dates[0], ForecastDates[0], Data[0], ForecastData[0]);
         }
         //}
     });
@@ -77,7 +51,23 @@
     //http_request.send()
 }
 
-function PastForecastGraphic(longName, units, DateTime, ForecastDateTime, Data, ForecastData) {
+function PastForecastGraphic(ID, longName, units, DateTime, ForecastDateTime, Data, ForecastData) {
+    
+    if (Highcharts.getOptions().exporting) {
+        Highcharts.getOptions().exporting.buttons.contextButton.menuItems.pop();
+    }
+    
+    var buttons = Highcharts.getOptions().exporting.buttons.contextButton.menuItems;
+    buttons.push({
+        text: "Buoy Alert",
+        onclick: function () {
+            document.getElementById("alertForm").style.display = "block";
+            $("#parameters").val(longName);
+        }
+    });
+    
+
+
     var options = {
 
         chart: {
@@ -236,7 +226,8 @@ function PastForecastGraphic(longName, units, DateTime, ForecastDateTime, Data, 
 			//options.chart = addFooter.chart;
 			$("#id01_a").append('<div id="forecastFooter" class="w3-panel w3-center" style="padding-top:8px"><p style="font-size:10px;"></p></div>');
 			$("#forecastFooter p").append("Forecasts are created by NOAA’s <a href='https://www.glerl.noaa.gov/' target='_blank'> Great Lakes Environmental Research Laboratory</a>'s <a href='https://www.glerl.noaa.gov/res/glcfs/' target='_blank'> Great Lakes Coastal Forecasting System</a> model.");
-		}
+        }
+
     var chart = new Highcharts.Chart(options);
 }
 
