@@ -143,6 +143,7 @@ $(function () {
         $.each(arrLocMeta, function (index, objLoc) {
             //Notify users data from NDBC or Env CA is not available. 
             var naFlag = (objLoc.buoyOwners == 'NOAA-NDBC' || objLoc.buoyOwners == "Env CA");
+            var loc_id = objLoc.id;
 
             if (naFlag) {
                 var strLoc = objLoc.id + ': ' + objLoc.longName + ' (Not Available)';
@@ -158,7 +159,7 @@ $(function () {
                 var strHTML = '';
 
                 if (_flagLocChkbox) {
-                    strHTML = '<label class="multiselect"><input type="checkbox" class="multiselect loc" id="' + objLoc.id + '" ' + strChk + ' />' + strLoc + '</label>'
+                    strHTML = '<label class="multiselect"><input type="checkbox" class="multiselect loc" id="' + loc_id + '" ' + strChk + ' />' + strLoc + '</label>'
 
                     if (objLoc.id === strLoc) {
                         $('#lst-locs').prepend(strHTML);
@@ -167,7 +168,7 @@ $(function () {
                     };
 
                 } else {
-                    strHTML = '<option value="' + objLoc.id + '">' + strLoc + '</option>';
+                    strHTML = '<option value="' + loc_id + '">' + strLoc + '</option>';
                     $('.sel-loc').append(strHTML);
                 }
 
@@ -477,7 +478,14 @@ $(function () {
 
         if (arrLocs.length > 0) {
             $.each(arrLocs, function (idx) {
-                var objLoc = _objLocs[arrLocs[idx]];
+                var loc_id = arrLocs[idx]
+                var objLoc = _objLocs[loc_id];
+
+                if (objLoc === undefined) {
+                    loc_id = loc_id.slice(0, -2);
+                    objLoc = _objLocs[loc_id];
+                }
+
                 var arrParamID = [];
 
                 arrParamID = objLoc.staticObs;
@@ -517,16 +525,30 @@ $(function () {
         var arrSelLocs = [];
         $.each($('.sel-loc'), function (idx, objLoc) { arrSelLocs.push($(this).val()) });
 
-        $('.sel-loc').empty();
-        $('.sel-loc').append('<option value="" selected>' + '-------' + '</option>')
+        if (_flagLocChkbox) {
+            $('#lst-locs').empty();
+        } else {
+            $('.sel-loc').empty();
+            $('.sel-loc').append('<option value="">' + '-------' + '</option>')
+        }
 
         var strLake = $(this).val();
+        var strHTML = '';
 
         $.each(_objLocs, function (key, objLoc) {
             if (strLake === 'ALL' || objLoc.lake === strLake) {
-                var strLoc = objLoc.id + ': ' + objLoc.longName;
-                var strHTML = '<option value="' + objLoc.id + '">' + strLoc + '</option>';
-                $('.sel-loc').append(strHTML);
+                var loc_id = objLoc.id;
+                var strLoc = loc_id + ': ' + objLoc.longName;
+
+                // Populate multi-checkbox or selects:
+                if (_flagLocChkbox) {
+                    strHTML = '<label class="multiselect"><input type="checkbox" class="multiselect loc" id="' + loc_id + '" ' + strChk + ' />' + strLoc + '</label>'
+                    $('#lst-locs').append(strHTML);
+                } else {
+                    strHTML = '<option value="' + loc_id + '">' + strLoc + '</option>';
+                    $('.sel-loc').append(strHTML);
+                }
+
             }
         });
 

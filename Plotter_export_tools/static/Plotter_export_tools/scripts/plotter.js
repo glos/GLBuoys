@@ -163,7 +163,9 @@ queryData = function () {
             var loc_id = $(this).val();
             if (loc_id !== '' && $.inArray(loc_id, loc_arr) === -1) {
                 loc_arr.push(loc_id);
-                owners[loc_id] = _objLocs[loc_id].buoyOwners;
+
+                var objLoc = _objLocs[loc_id];
+                owners[loc_id] = objLoc.buoyOwners;
             }
         })
     }
