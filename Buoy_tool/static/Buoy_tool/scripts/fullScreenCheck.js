@@ -89,8 +89,14 @@
         }
         ,$window = $(window)
     ;
-    
-    var thisKeys = keys[BrowserDetect.browser][BrowserDetect.OS];
+
+    try {
+        var thisKeys = keys[BrowserDetect.browser][BrowserDetect.OS];
+    //Assuming error is related to browser being internet explorer on a windows computer
+    } catch (err) {
+        var thisKeys = keys['MSIE']['Windows'];
+    }
+
     var shortcut = { shortcut: thisKeys.string, longform: thisKeys.alt };
 
     $window

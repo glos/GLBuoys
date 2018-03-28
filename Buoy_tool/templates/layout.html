@@ -58,7 +58,7 @@
             <a onclick="myAccFunc();">
                 Lake Michigan <i class="fa fa-caret-down"></i>
             </a>
-            <div id="MichiganAcc"class="w3-hide w3-white w3-card-4">
+            <div id="MichiganAcc" class="w3-hide w3-white w3-card-4">
             </div>
         </div>
         <div class="w3-border-right w3-border-left w3-border-bottom" style="cursor:pointer" id="Lake Superior">
@@ -128,7 +128,8 @@
                     <span onclick="document.getElementById('alertForm').style.display='none'" class="w3-button w3-white w3-display-topright">&times;</span>
                     <h3>Buoy Alert Notifications</h3>
                 </header>
-                <form class="w3-container" action="javascript:sendRequest()">
+                <form method='post' class="w3-container" action="javascript:sendRequest()">
+                    {% csrf_token %}
                     <div class="w3-row-padding">
                         <div class="w3-half">
                             <label class="w3-text-teal"><b>Buoy ID</b></label>

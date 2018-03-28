@@ -43,14 +43,7 @@ def eriehome(request):
     )
 
 def buoy(request, buoy_id):
-    #return render (
-    #    request,
-    #    'buoy.html',
-    #    {
-    #       'buoy_id':buoy_id,
-    #    }
-    #)
-    
+
     # Determine available buoys and check if entered ID exists. Render buoy page if does exist, render 404.html if not exist
     metaFile = open(os.path.join(BASE_DIR,'static/Buoy_tool/data/meta_english.json'))
     #metaFile = open(posixpath.join(*(BASE_DIR.split(os.path.sep) + ['Buoy_tool/static/Buoy_tool/data/meta_english.json'])))

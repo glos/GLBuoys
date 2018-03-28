@@ -148,14 +148,18 @@ function sendRequest() {
     }
     //Define standard parameter ID
     function getKeyByValue(object, value) {
-        return Object.keys(object).find(key => object[key] === value);
+        //return Object.keys(object).find(key => object[key] === value);
+        for (var key in object) {
+            if (object.hasOwnProperty(key) && object[key] == value) {
+                return key;
+            }
+        }
+
     }
 
-    radioUnits
     //Define units
     var unitsSelect = $("#radioUnits input[type='radio']:checked");
-
-    if (unitsSelect == 'english') {
+    if (unitsSelect.val() == 'english') {
         alertUnits = 'degrees_Fahrenheit';
     } else {
         alertUnits = 'degrees_Celsius';
@@ -184,15 +188,14 @@ function sendRequest() {
         "user_id": "",
         "min_threshold": alertMinThreshold,
         "max_threshold": alertMaxThreshold,
-        "contact_flag": true
+        "contact_flag": false
     }
-    console.log(SendInfo);
 
     $.ajax({
-        type: 'post',
+        type: 'POST',
         url: 'http://dev.oceansmap.com/myglos/api/alert',
-        contentType: "application/json",
         dataType: "json",
+        crossDomain: true,
         data: JSON.stringify(SendInfo),
         success: function (data) {
             console.log(data);
