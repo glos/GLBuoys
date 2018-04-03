@@ -31,7 +31,7 @@
         var Depth = [];
 
         // Javascript function JSON.parse to parse JSON data
-        var jsonObj = JSON.parse(http_request.responseText);
+        //var jsonObj = JSON.parse(http_request.responseText);
         // jsonObj variable now contains the data structure and can
         // be accessed as jsonObj.name and jsonObj.country.
         console.log(jsonObj);
