@@ -1,5 +1,298 @@
 [
 {
+"lon": -83.743,
+"recovered": false,
+"lat": 42.2808,
+"timeZone": "America/New_York",
+"buoyInfo": "A number of South Haven organizations have partnered together to support the annual deployment, retrieval, and maintenance cost and add additional sensors to the buoy. These include major contributions from the City of South Haven, Van Buren County, and Entergy Palisades Nuclear Plant. Other organizations supporting annual maintenance costs include the South Haven Yacht Club, South Haven Steelheaders, South Haven Convention and Visitors Bureau, Covert Generating Station, US Coast Guard Auxiliary, River Bend Boat Club, South Haven Kiwanis, Tournament Trail 333, and the South Haven Chamber of Commerce.<br><br>The South Haven Steelheaders are supporting the addition of a string of nine temperature sensors below the buoy to report water temperatures in real-time. WOOD-TV out of Grand Rapids is supporting the addition of a high definition webcam to the buoy to provide hourly images and video clips. Padnos Metal Recycling of Holland has donated two recycled train wheels to be used as the permanent mooring anchor for the buoy. The NOAA field research station in Muskegon, MI is supporting the deployment of the mooring anchor and the buoy by donating use of its 80 ft research vessel, the R/V Laurentian.",
+"buoyAlert": "",
+"metaGLOS": "http://data.glos.us/metadata/srv/eng/main.home?uuid=2a18080d-cb01-4d3e-abe5-1f12d89eed53",
+"uglosLink": true,
+"contact": [
+"everhamme@limno.com"
+],
+"id": "test",
+"staticObs": [
+"Thermistor_String_at_9m",
+"Thermistor_String_at_13m",
+"Significant_Wave_Height",
+"Wind_Gust",
+"Significant_Wave_Period",
+"Wind_from_Direction",
+"Thermistor_String_at_11m",
+"Air_Temperature",
+"Thermistor_String_at_3m",
+"Water_Temperature_at_Surface",
+"Dew_Point",
+"Thermistor_String_at_15m",
+"Thermistor_String_at_19m",
+"Wind_Speed",
+"Thermistor_String_at_1m",
+"Thermistor_String_at_5m",
+"Thermistor_String_at_7m",
+"Air_Pressure",
+"significant_wave_from_direction",
+"Solar_Radiation",
+"battery_voltage",
+"sea_surface_wave_maximum_height"
+],
+"lake": "MI",
+"longName": "GLOS",
+"buoyOwners": "LimnoTech",
+"sponsors": [
+"img/45168_sponsors.jpg",
+"img/LimnoTech_logo.jpg",
+"img/ConGenStation_logo.png",
+"img/Entergy_logo.jpg",
+"img/RiverBendClub_logo.png",
+"img/SHYachts_logo.jpg",
+"img/SouthHaven_logo.png",
+"img/SouthHaven_Steelheaders_logo.jpg",
+"img/SouthHaven2_logo.png",
+"img/TowBoatUS_logo.jpg",
+"img/USCG_SH_logo.png",
+"img/VanBurenCo_Logo.png",
+"img/WOOD TV8.jpg"
+],
+"sponsorsSrc": [
+"#sponsorsBottom",
+"http://www.limno.com/",
+"http://www.easterngeneration.com/portfolio/covert/",
+"https://www.facebook.com/pages/River-Bend-Boat-Club/159068330782052",
+"http://southhavenyachtclub.com/",
+"http://www.southhaven.org/attraction-details.cfm?rowID=56F3E0101E840A56EB0E1E9D7500D4CD",
+"http://southhavensteelheaders.com/",
+"http://www.southhaven.org/",
+"http://www.boatus.com/towboatus/south-haven",
+"http://wow.uscgaux.info/?unit=095-33-01",
+"http://www.vbco.org/",
+"http://woodtv.com/"
+],
+"webcamSrc": [
+"SouthHaven_image.jpg"
+],
+"webcamLink": [
+"http://www.limnotechdata.com/stations/SouthHaven/"
+],
+"obsID": [
+"YBGALG",
+"YCHLOR",
+"WSPD",
+"WTMP",
+"MWDIR",
+"GST",
+"VBAT",
+"WDIR",
+"PH",
+"SRAD",
+"DIOSAT",
+"MAXWHT",
+"ATMP",
+"SPCOND",
+"DISOXY",
+"Thermistor_String",
+"CurSpd",
+"CurDir"
+],
+"obsUnits": [
+"RFU",
+"RFU",
+"kts",
+"\u00b0F",
+"\u00b0",
+"kts",
+"volts",
+"\u00b0",
+"",
+"Watts per meter square",
+"%",
+"ft",
+"\u00b0F",
+"\u03bcS/cm",
+"mg/L",
+"\u00b0F",
+"cm_s-1",
+"\u00b0"
+],
+"obsLongName": [
+"Blue-Green-Algae",
+"Chlorophyll",
+"Wind Speed",
+"Water Temp.",
+"Wave Direection",
+"Wind Gust",
+"Battery Voltage",
+"Wind Direction",
+"PH",
+"Solar Radiation",
+"DO Saturation",
+"MAXWHT",
+"Air Temp.",
+"Specific Conductivity",
+"Dissolved Oxygen",
+"Thermistor_String",
+"Surface Current Speed",
+"Surface Current to Direction"
+],
+"updateTime": "2018-04-03T22:00:00Z",
+"obsValues": [
+0.61,
+0.03,
+14.67210432,
+"NaN",
+200.0,
+17.4556832,
+12.03,
+31.49,
+8.32,
+134.9,
+97.32,
+6.56168,
+26.0474,
+"NaN",
+14.19,
+53.6,
+8.069478863129886,
+306.9548173519966
+],
+"thermistorDepths": [
+3.28084,
+6.56168,
+9.84252,
+13.12336,
+16.4042,
+19.68504,
+22.96588,
+26.24672,
+29.52756,
+32.8084,
+36.08924,
+39.37008,
+42.65092,
+45.93176,
+49.2126,
+52.49344,
+55.77428
+],
+"thermistorValues": [
+48.758,
+48.578,
+48.397999999999996,
+48.578,
+48.578,
+48.578,
+48.578,
+48.578,
+46.778000000000006,
+46.778000000000006,
+46.778000000000006,
+46.778000000000006,
+"NaN",
+"NaN",
+"NaN",
+"NaN",
+"NaN"
+],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/DualImage.php?i=ntsra&j=nra_sn&ip=100&jp=70",
+"/DualImage.php?i=ra_sn&j=wind_bkn&ip=40",
+"/newimages/medium/nbkn.png",
+"/DualImage.php?i=sct&j=shra&jp=30",
+"/DualImage.php?i=nra_sn&j=nsn&ip=50&jp=50",
+"/newimages/medium/bkn.png",
+"/newimages/medium/nsct.png",
+"/newimages/medium/sct.png",
+"/newimages/medium/nsct.png"
+],
+"temperature": [
+"38",
+"36",
+"22",
+"41",
+"31",
+"39",
+"20",
+"38",
+"20"
+],
+"waveheight": [
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+""
+],
+"windspeed": [
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+""
+],
+"title": [
+"Tonight: Rain showers before 5am, then a chance of rain and snow showers. Some thunder is also possible.  Steady temperature around 38. Light and variable wind becoming west 9 to 14 mph after midnight. Winds could gust as high as 20 mph.  Chance of precipitation is 100%. Little or no snow accumulation expected. ",
+"Wednesday: A chance of rain showers before 8am, then a chance of snow showers between 8am and 11am.  Cloudy, with a high near 36. Breezy, with a west northwest wind 20 to 24 mph, with gusts as high as 36 mph.  Chance of precipitation is 40%.",
+"Wednesday Night: Mostly cloudy, with a low around 22. West northwest wind 7 to 17 mph, with gusts as high as 25 mph. ",
+"Thursday: A chance of showers after 2pm.  Partly sunny, with a high near 41. West wind around 9 mph.  Chance of precipitation is 30%.",
+"Thursday Night: A chance of rain showers before 9pm, then a chance of rain and snow showers between 9pm and 11pm, then a chance of snow showers after 11pm.  Cloudy, with a low around 31. South southwest wind 6 to 9 mph.  Chance of precipitation is 50%.",
+"Friday: Mostly cloudy, with a high near 39.",
+"Friday Night: Partly cloudy, with a low around 20.",
+"Saturday: Mostly sunny, with a high near 38.",
+"Saturday Night: Partly cloudy, with a low around 20."
+],
+"synopsis": "",
+"forecastText": [
+"Rain showers before 5am, then a chance of rain and snow showers. Some thunder is also possible.  Steady temperature around 38. Light and variable wind becoming west 9 to 14 mph after midnight. Winds could gust as high as 20 mph.  Chance of precipitation is 100%. Little or no snow accumulation expected. ",
+"A chance of rain showers before 8am, then a chance of snow showers between 8am and 11am.  Cloudy, with a high near 36. Breezy, with a west northwest wind 20 to 24 mph, with gusts as high as 36 mph.  Chance of precipitation is 40%.",
+"Mostly cloudy, with a low around 22. West northwest wind 7 to 17 mph, with gusts as high as 25 mph. ",
+"A chance of showers after 2pm.  Partly sunny, with a high near 41. West wind around 9 mph.  Chance of precipitation is 30%.",
+"A chance of rain showers before 9pm, then a chance of rain and snow showers between 9pm and 11pm, then a chance of snow showers after 11pm.  Cloudy, with a low around 31. South southwest wind 6 to 9 mph.  Chance of precipitation is 50%.",
+"Mostly cloudy, with a high near 39.",
+"Partly cloudy, with a low around 20.",
+"Mostly sunny, with a high near 38.",
+"Partly cloudy, with a low around 20.",
+"Mostly sunny, with a high near 41.",
+"A chance of snow showers.  Mostly cloudy, with a low around 27.",
+"A chance of rain and snow showers.  Cloudy, with a high near 42.",
+"Mostly cloudy, with a low around 27.",
+"Partly sunny, with a high near 44."
+],
+"hazardName": [],
+"hazardLink": []
+}
+},
+{
 "lon": -87.793,
 "recovered": false,
 "lat": 48.061,
@@ -22,7 +315,104 @@
 "http://www.ndbc.noaa.gov/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_blizzard.png",
+"/images/wtf/medium/m_blizzard.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_blizzard.png",
+"/images/wtf/medium/m_blizzard.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"17",
+"25",
+"21",
+"30",
+"20",
+"28",
+"18",
+"26",
+"18"
+],
+"waveheight": [
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft"
+],
+"windspeed": [
+"NNE 20kt",
+"N 20kt",
+"WNW 10kt",
+"WNW 10kt",
+"NW 15kt",
+"NW 25kt",
+"NW 20kt",
+"NW 15kt",
+"NNW 15kt"
+],
+"title": [
+"Blowing Snow",
+"Blowing Snow",
+"Slight Chc Snow",
+"Chance Snow",
+"Chance Snow",
+"Blowing Snow",
+"Blowing Snow",
+"Chance Snow",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"NNE wind 15 to 20 kt, with gusts as high as 25 kt. Patchy blowing snow before 3am, then patchy blowing snow and a slight chance of snow after 3am.   Waves 1 ft or less.",
+"N wind 15 to 20 kt becoming NW in the afternoon. A slight chance of snow before 7am, then patchy blowing snow after 7am.   Waves 1 ft or less.",
+"WNW wind around 10 kt. A slight chance of snow showers.   Waves 1 ft or less.",
+"WNW wind around 10 kt becoming WSW in the afternoon. A chance of snow showers, mainly after 1pm.   Waves 1 ft or less.",
+"WSW wind 10 to 15 kt becoming NNW after midnight. A chance of snow showers.   Waves 1 ft or less.",
+"NW wind 15 to 25 kt. Patchy blowing snow and a chance of snow showers.   Waves 1 ft or less.",
+"NW wind 15 to 20 kt. Patchy blowing snow and a chance of snow showers.   Waves 1 ft or less.",
+"NW wind around 15 kt. A chance of snow showers.   Waves 1 ft or less.",
+"NNW wind 10 to 15 kt. A chance of snow showers.   Waves 1 ft or less."
+],
+"hazardName": [
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LSZ264&warncounty=marine&firewxzone=&local_place1=33NM E Isle Royale National Park MI&product1=Hazardous+Weather+Outlook&lat=48.061&lon=-87.793"
+]
+}
 },
 {
 "lon": -86.411,
@@ -47,7 +437,106 @@
 "http://www.ndbc.noaa.gov/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"27",
+"28",
+"25",
+"34",
+"28",
+"32",
+"24",
+"31",
+"25"
+],
+"waveheight": [
+"7-8ft",
+"8ft",
+"2-3ft",
+"3-4ft",
+"4-5ft",
+"5-7ft",
+"4-5ft",
+"2-4ft",
+"2ft"
+],
+"windspeed": [
+"NNE 30kt",
+"NW 25kt",
+"W 15kt",
+"SW 15kt",
+"SSW 15kt",
+"WNW 20kt",
+"NW 20kt",
+"WNW 15kt",
+"NW 15kt"
+],
+"title": [
+"Heavy Snow",
+"Chance Snow",
+"Mostly Cloudy",
+"Slight Chc Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"NE wind 25 to 30 kt becoming N after midnight. Winds could gust as high as 35 kt. Snow, mainly before 5am. The snow could be heavy at times.   Waves 7 to 8 ft.",
+"NW wind 20 to 25 kt, with gusts as high as 35 kt. A chance of snow showers before 1pm.   Waves 8 ft subsiding to 4 ft.",
+"NW wind 10 to 15 kt becoming W after midnight. Mostly cloudy. Waves 2 to 3 ft.",
+"SW wind around 15 kt. A slight chance of snow.   Waves 3 to 4 ft.",
+"SSW wind 10 to 15 kt becoming NNW after midnight. A chance of snow.   Waves 4 to 5 ft.",
+"WNW wind 15 to 20 kt. A chance of snow showers.   Waves 5 to 7 ft.",
+"NW wind 15 to 20 kt, with gusts as high as 25 kt. A chance of snow showers.   Waves 4 to 5 ft.",
+"WNW wind around 15 kt. A chance of snow showers.   Waves 2 to 4 ft.",
+"NW wind 10 to 15 kt. A chance of snow showers.   Waves around 2 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 3,  03:00 PM CDT until April 4, 09:00 AM CDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ261&warncounty=marine&firewxzone=&local_place1=20NM SSE Fairport MI&product1=Gale+Warning&lat=45.344&lon=-86.411",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ261&warncounty=marine&firewxzone=&local_place1=20NM SSE Fairport MI&product1=Hazardous+Weather+Outlook&lat=45.344&lon=-86.411"
+]
+}
 },
 {
 "lon": -82.84,
@@ -72,7 +561,106 @@
 "http://www.ndbc.noaa.gov/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_bkn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_wave.png",
+"/images/wtf/medium/m_bkn.png",
+"/images/wtf/medium/m_nbkn.png"
+],
+"temperature": [
+"28",
+"31",
+"25",
+"35",
+"29",
+"34",
+"25",
+"33",
+"24"
+],
+"waveheight": [
+"8ft",
+"8-10ft",
+"10ft",
+"3-4ft",
+"2-4ft",
+"8ft",
+"7-9ft",
+"5-6ft",
+"4-5ft"
+],
+"windspeed": [
+"NE 30kt",
+"NW 30kt",
+"NW 25kt",
+"WSW 15kt",
+"WSW 10kt",
+"NW 15kt",
+"WNW 20kt",
+"WNW 20kt",
+"NW 20kt"
+],
+"title": [
+"Snow",
+"Snow",
+"Slight Chc Snow",
+"Mostly Cloudy",
+"Chance Rain/Snow",
+"Chance Rain/Snow",
+"Mostly Cloudy",
+"Partly Sunny",
+"Mostly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"NE wind 20 to 30 kt. Snow.   Waves 5 ft building to 8 ft.",
+"NW wind around 30 kt, with gusts as high as 40 kt. Snow showers, mainly before 2pm.   Waves 8 to 10 ft.",
+"NW wind 20 to 25 kt, with gusts as high as 35 kt. A slight chance of snow showers after 2am.   Waves 10 ft subsiding to 7 ft.",
+"WSW wind around 15 kt. Mostly cloudy. Waves 3 to 4 ft.",
+"WSW wind around 10 kt. A chance of snow showers before 8pm, then a chance of rain and snow showers between 8pm and 9pm, then a chance of snow showers after 9pm.   Waves 2 to 4 ft.",
+"NW wind 10 to 15 kt. A chance of snow showers before 3pm, then a chance of rain and snow showers.   Waves 4 ft building to 8 ft.",
+"WNW wind around 20 kt, with gusts as high as 30 kt. Mostly cloudy. Waves 7 to 9 ft.",
+"WNW wind 15 to 20 kt. Partly sunny. Waves 5 to 6 ft.",
+"NW wind 15 to 20 kt. Mostly cloudy. Waves 4 to 5 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 3,  10:00 PM EDT until April 4, 10:00 PM EDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LHZ362&warncounty=marine&firewxzone=&local_place1=30NM ENE Alpena MI&product1=Gale+Warning&lat=45.351&lon=-82.84",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LHZ362&warncounty=marine&firewxzone=&local_place1=30NM ENE Alpena MI&product1=Hazardous+Weather+Outlook&lat=45.351&lon=-82.84"
+]
+}
 },
 {
 "lon": -86.585,
@@ -97,7 +685,106 @@
 "http://www.ndbc.noaa.gov/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"21",
+"27",
+"24",
+"31",
+"24",
+"30",
+"22",
+"28",
+"22"
+],
+"waveheight": [
+"7ft",
+"6-7ft",
+"3-5ft",
+"2ft",
+"2ft",
+"7ft",
+"5-7ft",
+"5ft",
+"3-5ft"
+],
+"windspeed": [
+"NNE 25kt",
+"N 25kt",
+"WNW 20kt",
+"WNW 10kt",
+"W 15kt",
+"NW 25kt",
+"NW 25kt",
+"NW 20kt",
+"NNW 20kt"
+],
+"title": [
+"Slight Chc Snow",
+"Slight Chc Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Snow Likely",
+"Snow Likely",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"NNE wind 15 to 25 kt. A slight chance of snow after 8pm.   Waves 4 ft building to 7 ft.",
+"N wind 20 to 25 kt becoming NW in the afternoon. A slight chance of snow showers before 9am, then a slight chance of snow showers after 5pm.   Waves 6 to 7 ft.",
+"WNW wind 10 to 20 kt. A chance of snow showers.   Waves 3 to 5 ft.",
+"WNW wind around 10 kt, with gusts as high as 20 kt. A chance of snow showers.   Waves around 2 ft.",
+"W wind 10 to 15 kt. A chance of snow showers.   Waves around 2 ft.",
+"NW wind 15 to 25 kt. A chance of snow showers.   Waves 3 ft building to 7 ft.",
+"NW wind 20 to 25 kt. Snow showers likely.   Waves 5 to 7 ft.",
+"NW wind 15 to 20 kt. Snow showers likely.   Waves around 5 ft.",
+"NNW wind 10 to 20 kt. A chance of snow showers.   Waves 3 to 5 ft."
+],
+"hazardName": [
+"Heavy Freezing Spray Warning in effect from April 4,  03:00 AM CDT until April 4, 03:00 PM CDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LSZ266&warncounty=marine&firewxzone=&local_place1=61NM NNW Grand Marais MI&product1=Heavy+Freezing+Spray+Warning&lat=47.585&lon=-86.585",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LSZ266&warncounty=marine&firewxzone=&local_place1=61NM NNW Grand Marais MI&product1=Hazardous+Weather+Outlook&lat=47.585&lon=-86.585"
+]
+}
 },
 {
 "lon": -82.398,
@@ -147,7 +834,104 @@
 "http://www.ndbc.noaa.gov/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"20",
+"31",
+"29",
+"32",
+"23",
+"30",
+"20",
+"30",
+"21"
+],
+"waveheight": [
+"5-6ft",
+"3-4ft",
+"3-4ft",
+"2-4ft",
+"2-3ft",
+"4-5ft",
+"4-5ft",
+"3-4ft",
+"2-3ft"
+],
+"windspeed": [
+"NE 20kt",
+"N 15kt",
+"W 15kt",
+"WNW 15kt",
+"NW 15kt",
+"WNW 20kt",
+"NW 20kt",
+"WNW 15kt",
+"NNW 10kt"
+],
+"title": [
+"Slight Chc Snow",
+"Slight Chc Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"NE wind around 20 kt becoming N after midnight. A slight chance of snow before 8pm, then a slight chance of snow after 3am.   Waves 5 to 6 ft.",
+"N wind 10 to 15 kt becoming W in the afternoon. Winds could gust as high as 20 kt. A slight chance of snow showers after 1pm.   Waves 3 to 4 ft.",
+"W wind around 15 kt. A chance of snow showers, mainly before 1am.   Waves 3 to 4 ft.",
+"WNW wind 10 to 15 kt. A chance of snow showers, mainly after 1pm.   Waves 2 to 4 ft.",
+"W wind 10 to 15 kt becoming NW after midnight. A chance of snow showers.   Waves 2 to 3 ft.",
+"WNW wind around 20 kt. A chance of snow showers.   Waves 4 to 5 ft.",
+"NW wind 15 to 20 kt. A chance of snow showers.   Waves 4 to 5 ft.",
+"WNW wind 10 to 15 kt, with gusts as high as 20 kt. A chance of snow showers.   Waves 3 to 4 ft.",
+"NNW wind around 10 kt. A chance of snow showers.   Waves 2 to 3 ft."
+],
+"hazardName": [
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LSZ263&warncounty=marine&firewxzone=&local_place1=34NM SE Grand Marais MN&product1=Hazardous+Weather+Outlook&lat=47.335&lon=-89.793"
+]
+}
 },
 {
 "lon": -87.026,
@@ -172,7 +956,106 @@
 "http://www.ndbc.noaa.gov/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nrasn.png"
+],
+"temperature": [
+"30",
+"32",
+"29",
+"35",
+"31",
+"34",
+"26",
+"34",
+"29"
+],
+"waveheight": [
+"15ft",
+"16ft",
+"6ft",
+"2-3ft",
+"6ft",
+"11ft",
+"9ft",
+"3-4ft",
+"2ft"
+],
+"windspeed": [
+"NNW 34kt",
+"NW 31kt",
+"WNW 18kt",
+"SSW 12kt",
+"W 15kt",
+"WNW 21kt",
+"NNW 23kt",
+"NW 16kt",
+"NW 13kt"
+],
+"title": [
+"Rain/Snow",
+"Snow Likely",
+"Mostly Cloudy",
+"Chance Snow",
+"Chance Rain/Snow",
+"Chance Snow",
+"Slight Chc Snow",
+"Mostly Sunny",
+"Slight Chc Rain/Snow"
+],
+"synopsis": "",
+"forecastText": [
+"N wind 21 to 26 kt becoming NNW 29 to 34 kt after midnight. Winds could gust as high as 43 kt. Rain and snow, becoming all snow after 2am.  Patchy fog before 7pm.  Waves 6 ft building to 15 ft.",
+"NW wind 26 to 31 kt decreasing to 19 to 24 kt in the afternoon. Winds could gust as high as 39 kt. Snow showers likely, mainly before 10am.   Waves 16 ft subsiding to 7 ft.",
+"WNW wind 11 to 18 kt. Mostly cloudy. Waves 6 ft subsiding to 3 ft.",
+"W wind 7 to 12 kt becoming S in the afternoon. A chance of snow, mainly after 1pm.   Waves 2 to 3 ft.",
+"S wind 11 to 15 kt becoming NW after midnight. Winds could gust as high as 23 kt. A chance of rain and snow before 2am, then a slight chance of snow.   Waves 3 ft building to 6 ft.",
+"WNW wind 18 to 21 kt, with gusts as high as 29 kt. A chance of snow showers, mainly after 1pm.   Waves 8 ft building to 11 ft.",
+"NNW wind 18 to 23 kt, with gusts as high as 29 kt. A slight chance of snow showers.   Waves 9 ft subsiding to 4 ft.",
+"NW wind 13 to 16 kt. Mostly sunny. Waves 3 to 4 ft.",
+"NW wind 11 to 13 kt. A slight chance of rain and snow showers.   Waves around 2 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 4,  01:00 AM CDT until April 4, 09:00 AM CDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ876&warncounty=marine&firewxzone=&local_place1=35NM E Racine WI&product1=Gale+Warning&lat=42.674&lon=-87.026",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ876&warncounty=marine&firewxzone=&local_place1=35NM E Racine WI&product1=Hazardous+Weather+Outlook&lat=42.674&lon=-87.026"
+]
+}
 },
 {
 "lon": -82.416,
@@ -197,7 +1080,106 @@
 "http://www.ndbc.noaa.gov/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_bkn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"34",
+"33",
+"25",
+"36",
+"29",
+"36",
+"26",
+"34",
+"25"
+],
+"waveheight": [
+"11ft",
+"13ft",
+"10ft",
+"2-4ft",
+"2-4ft",
+"8ft",
+"8-10ft",
+"4-6ft",
+"4ft"
+],
+"windspeed": [
+"NE 30kt",
+"NW 30kt",
+"NW 25kt",
+"WSW 15kt",
+"SSW 15kt",
+"W 15kt",
+"NW 20kt",
+"WNW 20kt",
+"NW 15kt"
+],
+"title": [
+"Rain/Snow",
+"Snow",
+"Slight Chc Snow",
+"Partly Sunny",
+"Chance Rain/Snow",
+"Chance Rain/Snow",
+"Chance Rain/Snow",
+"Chance Snow",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"NE wind 20 to 30 kt. Rain, possibly mixed with snow showers before midnight, then rain showers between midnight and 4am, then rain, possibly mixed with snow showers after 4am. Some thunder is also possible.   Waves 5 ft building to 11 ft.",
+"NW wind around 30 kt, with gusts as high as 40 kt. Snow showers, mainly before 2pm.   Waves 10 ft building to 13 ft.",
+"NW wind 20 to 25 kt, with gusts as high as 35 kt. A slight chance of snow showers after 8pm.   Waves 10 ft subsiding to 7 ft.",
+"WNW wind around 15 kt becoming WSW in the afternoon. Partly sunny. Waves 2 to 4 ft.",
+"SSW wind 10 to 15 kt. A chance of rain and snow showers between 8pm and 11pm, then a chance of snow showers after 11pm.   Waves 2 to 4 ft.",
+"W wind 10 to 15 kt. A chance of snow showers before 3pm, then a chance of rain and snow showers.   Waves 5 ft building to 8 ft.",
+"NW wind around 20 kt, with gusts as high as 30 kt. A chance of rain and snow showers before 10pm, then a chance of snow showers.   Waves 8 to 10 ft.",
+"WNW wind 10 to 20 kt. A chance of snow showers.   Waves 4 to 6 ft.",
+"NW wind around 15 kt. A chance of snow showers.   Waves around 4 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 3,  10:00 PM EDT until April 4, 10:00 PM EDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LHZ363&warncounty=marine&firewxzone=&local_place1=24NM NNE Port Hope MI&product1=Gale+Warning&lat=44.283&lon=-82.416",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LHZ363&warncounty=marine&firewxzone=&local_place1=24NM NNE Port Hope MI&product1=Hazardous+Weather+Outlook&lat=44.283&lon=-82.416"
+]
+}
 },
 {
 "lon": -77.406,
@@ -221,7 +1203,104 @@
 "http://www.ndbc.noaa.gov/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nra.png",
+"/images/wtf/medium/m_shra.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"38",
+"44",
+"26",
+"35",
+"33",
+"37",
+"27",
+"36",
+"26"
+],
+"waveheight": [
+"4-5ft",
+"17ft",
+"15ft",
+"7ft",
+"6ft",
+"5-6ft",
+"8-9ft",
+"5-6ft",
+"4-5ft"
+],
+"windspeed": [
+"E 19kt",
+"WSW 44kt",
+"WNW 37kt",
+"W 20kt",
+"W 15kt",
+"WSW 23kt",
+"W 23kt",
+"W 16kt",
+"W 15kt"
+],
+"title": [
+"Rain",
+"Showers Likely",
+"Chance Rain/Snow",
+"Chance Snow",
+"Snow Likely",
+"Snow Likely",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"E wind 14 to 19 kt becoming SSE 9 to 12 kt after midnight. Winds could gust as high as 26 kt. Rain, with thunderstorms also possible after 5am.   Waves 4 to 5 ft.",
+"WSW wind 19 to 24 kt increasing to 39 to 44 kt. Winds could gust as high as 60 kt. Showers likely and possibly a thunderstorm before 8am, then a chance of showers.   Waves 3 ft building to 17 ft.",
+"WNW wind 32 to 37 kt decreasing to 24 to 29 kt after midnight. Winds could gust as high as 50 kt. A slight chance of rain and snow showers before 9pm, then a chance of snow showers.   Waves 15 ft subsiding to 10 ft.",
+"W wind around 20 kt. A chance of snow showers, mainly after 5pm.   Waves 7 ft subsiding to 5 ft.",
+"W wind 10 to 15 kt becoming S after midnight. Snow likely, mainly after midnight.   Waves 6 ft subsiding to 2 ft.",
+"S wind 19 to 23 kt becoming W in the afternoon. Snow likely, mainly before 2pm.   Waves 5 to 6 ft.",
+"W wind 21 to 23 kt. A chance of snow.   Waves 8 to 9 ft.",
+"W wind 14 to 16 kt. A chance of snow showers.   Waves 5 to 6 ft.",
+"W wind 13 to 15 kt. A chance of snow showers.   Waves 4 to 5 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 4,  08:00 AM EDT until April 5, 02:00 AM EDT"
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LOZ063&warncounty=marine&firewxzone=&local_place1=26NM NNE Irondequoit NY&product1=Gale+Warning&lat=43.621&lon=-77.406"
+]
+}
 },
 {
 "lon": -87.85,
@@ -273,7 +1352,108 @@
 "http://uwm.edu/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_bkn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"25",
+"34",
+"22",
+"36",
+"27",
+"33",
+"18",
+"33",
+"23"
+],
+"waveheight": [
+"6-8ft",
+"6ft",
+"< 1ft",
+"< 1ft",
+"1ft",
+"1ft",
+"1ft",
+"< 1ft",
+"< 1ft"
+],
+"windspeed": [
+"NNW 25kt",
+"NW 20kt",
+"WNW 10kt",
+"S 10kt",
+"WNW 10kt",
+"WNW 20kt",
+"NW 15kt",
+"WNW 10kt",
+"NW 10kt"
+],
+"title": [
+"Rain/Snow",
+"Slight Chc Snow",
+"Partly Cloudy",
+"Chance Rain/Snow",
+"Chance Rain/Snow",
+"Partly Sunny",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"NNE wind 20 to 25 kt becoming NNW after midnight. Winds could gust as high as 35 kt. Rain and snow, becoming all snow after 3am.   Waves 6 to 8 ft.",
+"NW wind 15 to 20 kt, with gusts as high as 30 kt. A slight chance of snow showers before 7am, then a slight chance of flurries after 1pm.   Waves 6 ft subsiding to 2 ft.",
+"WNW wind 5 to 10 kt. Partly cloudy. Waves 1 ft or less.",
+"SW wind 5 to 10 kt becoming S in the afternoon. A chance of snow before 2pm, then a chance of rain and snow.   Waves 1 ft or less.",
+"S wind 5 to 10 kt becoming WNW after midnight. A chance of rain and snow before 11pm, then a chance of snow between 11pm and 1am.   Waves around 1 ft.",
+"WNW wind 15 to 20 kt, with gusts as high as 30 kt. Partly sunny. Waves around 1 ft.",
+"NW wind 10 to 15 kt, with gusts as high as 25 kt. Partly cloudy. Waves around 1 ft.",
+"WNW wind around 10 kt. Mostly sunny. Waves 1 ft or less.",
+"NW wind 5 to 10 kt. Partly cloudy. Waves 1 ft or less."
+],
+"hazardName": [
+"Hazardous Weather Outlook ",
+"Small Craft Advisory  until April 3, 10:00 PM CDT",
+"Gale Warning in effect from April 3,  10:00 PM CDT until April 4, 09:00 AM CDT"
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ644&warncounty=marine&firewxzone=&local_place1=6NM ENE Milwaukee WI&product1=Hazardous+Weather+Outlook&lat=43.1&lon=-87.85",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ644&warncounty=marine&firewxzone=&local_place1=6NM ENE Milwaukee WI&product1=Small+Craft+Advisory&lat=43.1&lon=-87.85",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ644&warncounty=marine&firewxzone=&local_place1=6NM ENE Milwaukee WI&product1=Gale+Warning&lat=43.1&lon=-87.85"
+]
+}
 },
 {
 "lon": -87.76,
@@ -322,7 +1502,106 @@
 "http://uwm.edu/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_blizzard.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"18",
+"30",
+"15",
+"34",
+"22",
+"30",
+"13",
+"30",
+"13"
+],
+"waveheight": [
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft"
+],
+"windspeed": [
+"NNE 25kt",
+"NW 17kt",
+"WSW 9kt",
+"SW 10kt",
+"NW 9kt",
+"WNW 15kt",
+"WNW 12kt",
+"W 11kt",
+"NW 9kt"
+],
+"title": [
+"Heavy Snow",
+"Chance Snow",
+"Partly Cloudy",
+"Chance Snow",
+"Chance Snow",
+"Slight Chc Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"NNE wind 19 to 25 kt becoming NNW after midnight. Winds could gust as high as 31 kt. Snow with areas of blowing snow before 1am, then snow likely with areas of blowing snow between 1am and 3am, then areas of blowing snow and a chance of snow after 3am. The snow could be heavy at times.   Waves 1 ft or less.",
+"NW wind 13 to 17 kt. A slight chance of snow showers before 7am, then a chance for flurries.   Waves 1 ft or less.",
+"WSW wind 7 to 9 kt. Partly cloudy. Waves 1 ft or less.",
+"SW wind 7 to 10 kt. A chance of snow showers after 1pm.   Waves 1 ft or less.",
+"S wind 5 to 9 kt becoming NW after midnight. A chance of snow showers, mainly before 1am.   Waves 1 ft or less.",
+"WNW wind 10 to 15 kt, with gusts as high as 23 kt. A slight chance of snow showers.   Waves 1 ft or less.",
+"WNW wind 10 to 12 kt, with gusts as high as 20 kt. Partly cloudy. Waves 1 ft or less.",
+"W wind around 11 kt. Mostly sunny. Waves 1 ft or less.",
+"NW wind 7 to 9 kt. Partly cloudy. Waves 1 ft or less."
+],
+"hazardName": [
+"Gale Warning  until April 4, 09:00 AM CDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ522&warncounty=marine&firewxzone=&local_place1=7NM SE Oconto WI&product1=Gale+Warning&lat=44.8&lon=-87.76",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ522&warncounty=marine&firewxzone=&local_place1=7NM SE Oconto WI&product1=Hazardous+Weather+Outlook&lat=44.8&lon=-87.76"
+]
+}
 },
 {
 "lon": -85.604,
@@ -362,11 +1641,110 @@
 "http://www.boatus.com/Towing/"
 ],
 "webcamSrc": [
-"img/LGTB_image.jpg"
+"LGTB_image.jpg"
 ],
 "webcamLink": [
 "http://www.limnotechdata.com/stations/LGTB/"
+],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"26",
+"29",
+"19",
+"35",
+"25",
+"31",
+"21",
+"30",
+"18"
+],
+"waveheight": [
+"2-4ft",
+"2-3ft",
+"1ft",
+"1ft",
+"1ft",
+"2ft",
+"1-2ft",
+"1ft",
+"1ft"
+],
+"windspeed": [
+"N 20kt",
+"NNW 20kt",
+"NW 10kt",
+"WSW 10kt",
+"Light Wind",
+"WNW 15kt",
+"NW 15kt",
+"WNW 10kt",
+"NNW 10kt"
+],
+"title": [
+"Snow",
+"Snow",
+"Chance Snow",
+"Chance Rain/Snow",
+"Chance Snow",
+"Chance Snow",
+"Snow Likely",
+"Chance Snow",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"NE wind 15 to 20 kt becoming N after midnight. Winds could gust as high as 30 kt. Snow.   Waves 2 to 4 ft.",
+"NNW wind 15 to 20 kt. Snow before 4pm, then a slight chance of snow after 5pm.   Waves 2 to 3 ft.",
+"NW wind 5 to 10 kt becoming WSW after midnight. A chance of snow showers, mainly between 7pm and 1am.   Waves around 1 ft.",
+"WSW wind 5 to 10 kt. A chance of rain and snow showers after 1pm.   Waves around 1 ft.",
+"Variable winds 5 kt or less. A chance of snow.   Waves around 1 ft.",
+"WNW wind 10 to 15 kt. A chance of snow.   Waves around 2 ft.",
+"NW wind 10 to 15 kt. Snow showers likely, mainly before 1am.   Waves 1 to 2 ft.",
+"WNW wind around 10 kt. A chance of snow showers.   Waves around 1 ft.",
+"NNW wind 5 to 10 kt. A chance of snow showers.   Waves around 1 ft."
+],
+"hazardName": [
+"Hazardous Weather Outlook ",
+"Small Craft Advisory  until April 4, 05:00 PM CDT"
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ323&warncounty=marine&firewxzone=&local_place1=2NM N Traverse City MI&product1=Hazardous+Weather+Outlook&lat=44.789&lon=-85.604",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ323&warncounty=marine&firewxzone=&local_place1=2NM N Traverse City MI&product1=Small+Craft+Advisory&lat=44.789&lon=-85.604"
 ]
+}
 },
 {
 "lon": -85.088,
@@ -405,7 +1783,106 @@
 "https://ciler.snre.umich.edu/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"23",
+"27",
+"19",
+"34",
+"25",
+"31",
+"20",
+"29",
+"18"
+],
+"waveheight": [
+"1-3ft",
+"4-5ft",
+"2-4ft",
+"3ft",
+"2-3ft",
+"4ft",
+"4ft",
+"3-4ft",
+"1-3ft"
+],
+"windspeed": [
+"N 20kt",
+"NW 20kt",
+"NW 15kt",
+"WSW 15kt",
+"WSW 10kt",
+"WNW 15kt",
+"NW 15kt",
+"WNW 10kt",
+"NW 10kt"
+],
+"title": [
+"Snow",
+"Snow Likely",
+"Slight Chc Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Snow Likely",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"NE wind 15 to 20 kt becoming N after midnight. Winds could gust as high as 30 kt. Snow.   Waves 1 to 3 ft.",
+"NW wind around 20 kt, with gusts as high as 30 kt. Snow likely, mainly before 11am.   Waves 4 to 5 ft.",
+"NW wind 10 to 15 kt becoming W after midnight. A slight chance of snow showers.   Waves 2 to 4 ft.",
+"WSW wind 10 to 15 kt. A chance of snow showers.   Waves around 3 ft.",
+"WSW wind 5 to 10 kt becoming N after midnight. A chance of snow.   Waves 2 to 3 ft.",
+"WNW wind 10 to 15 kt. A chance of snow.   Waves around 4 ft.",
+"NW wind 10 to 15 kt. A chance of snow showers.   Waves around 4 ft.",
+"WNW wind around 10 kt. Snow showers likely.   Waves 3 to 4 ft.",
+"NW wind 5 to 10 kt. A chance of snow showers.   Waves 1 to 3 ft."
+],
+"hazardName": [
+"Hazardous Weather Outlook ",
+"Gale Warning in effect from April 3,  03:00 PM CDT until April 4, 10:00 AM CDT"
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ342&warncounty=marine&firewxzone=&local_place1=6NM WNW Petoskey MI&product1=Hazardous+Weather+Outlook&lat=45.403&lon=-85.088",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ342&warncounty=marine&firewxzone=&local_place1=6NM WNW Petoskey MI&product1=Gale+Warning&lat=45.403&lon=-85.088"
+]
+}
 },
 {
 "lon": -88.60705,
@@ -444,7 +1921,106 @@
 "http://www.mtri.org/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_blizzard.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"19",
+"26",
+"26",
+"32",
+"21",
+"28",
+"19",
+"27",
+"18"
+],
+"waveheight": [
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft"
+],
+"windspeed": [
+"N 20kt",
+"N 15kt",
+"W 10kt",
+"W 10kt",
+"NW 10kt",
+"NW 20kt",
+"NW 15kt",
+"NW 15kt",
+"WNW 10kt"
+],
+"title": [
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Snow Likely",
+"Snow Likely",
+"Snow Likely",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"N wind 15 to 20 kt. A chance of snow, mainly after 3am.   Waves 1 ft or less.",
+"N wind around 15 kt becoming W in the afternoon. A chance of snow showers, mainly before 7am.   Waves 1 ft or less.",
+"W wind around 10 kt, with gusts as high as 15 kt. A chance of snow showers.   Waves 1 ft or less.",
+"W wind around 10 kt, with gusts as high as 15 kt. A chance of snow showers.   Waves 1 ft or less.",
+"NW wind 5 to 10 kt. A chance of snow showers.   Waves 1 ft or less.",
+"NW wind 10 to 20 kt. Snow showers likely with patchy blowing snow.   Waves 1 ft or less.",
+"NW wind around 15 kt, with gusts as high as 25 kt. A chance of snow showers before 1am, then snow showers likely after 1am.   Waves 1 ft or less.",
+"NW wind 10 to 15 kt. Snow showers likely.   Waves 1 ft or less.",
+"WNW wind 5 to 10 kt becoming NNW after midnight. A chance of snow showers.   Waves 1 ft or less."
+],
+"hazardName": [
+"Small Craft Advisory  until April 4, 07:00 AM CDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LSZ243&warncounty=marine&firewxzone=&local_place1=15NM SW Eagle River MI&product1=Small+Craft+Advisory&lat=47.2699&lon=-88.6071",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LSZ243&warncounty=marine&firewxzone=&local_place1=15NM SW Eagle River MI&product1=Hazardous+Weather+Outlook&lat=47.2699&lon=-88.6071"
+]
+}
 },
 {
 "lon": -86.55945,
@@ -491,7 +2067,106 @@
 "https://ciler.snre.umich.edu/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"29",
+"31",
+"25",
+"35",
+"28",
+"32",
+"23",
+"31",
+"24"
+],
+"waveheight": [
+"11ft",
+"11ft",
+"4-5ft",
+"2-3ft",
+"7ft",
+"8-10ft",
+"8ft",
+"3-4ft",
+"3ft"
+],
+"windspeed": [
+"N 27kt",
+"NW 25kt",
+"WNW 15kt",
+"SW 12kt",
+"S 11kt",
+"WNW 17kt",
+"NW 17kt",
+"WNW 13kt",
+"NNW 12kt"
+],
+"title": [
+"Rain/Snow",
+"Snow Likely",
+"Slight Chc Snow",
+"Chance Rain/Snow",
+"Chance Rain/Snow",
+"Snow Likely",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"NE wind 18 to 27 kt becoming N after midnight. Winds could gust as high as 37 kt. Rain and snow showers, becoming all snow after 7pm. The snow could be heavy at times.   Waves 3 ft building to 11 ft.",
+"NW wind 16 to 25 kt, with gusts as high as 33 kt. Snow showers likely, mainly before 10am.   Waves 11 ft subsiding to 6 ft.",
+"WNW wind 13 to 15 kt. A slight chance of snow showers between 11pm and 1am.   Waves 4 to 5 ft.",
+"W wind 10 to 12 kt becoming SSW in the afternoon. A chance of snow showers before 3pm, then a chance of rain and snow showers.   Waves 2 to 3 ft.",
+"S wind 8 to 11 kt becoming NW after midnight. Winds could gust as high as 20 kt. A chance of rain and snow showers before 4am, then a chance of snow showers.   Waves 3 ft building to 7 ft.",
+"WNW wind 13 to 17 kt, with gusts as high as 26 kt. Snow showers likely, mainly before 1pm.   Waves 8 to 10 ft.",
+"NW wind 15 to 17 kt, with gusts as high as 25 kt. A chance of snow showers.   Waves 8 ft subsiding to 5 ft.",
+"WNW wind around 13 kt. A chance of snow showers.   Waves 3 to 4 ft.",
+"NNW wind 9 to 12 kt, with gusts as high as 18 kt. A chance of snow showers.   Waves around 3 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 3,  10:00 PM CDT until April 4, 11:00 AM CDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ849&warncounty=marine&firewxzone=&local_place1=5NM WNW Ludington MI&product1=Gale+Warning&lat=43.9767&lon=-86.5595",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ849&warncounty=marine&firewxzone=&local_place1=5NM WNW Ludington MI&product1=Hazardous+Weather+Outlook&lat=43.9767&lon=-86.5595"
+]
+}
 },
 {
 "lon": -88.39768,
@@ -540,7 +2215,106 @@
 "https://www.glerl.noaa.gov/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"18",
+"25",
+"19",
+"33",
+"20",
+"27",
+"18",
+"27",
+"15"
+],
+"waveheight": [
+"< 1ft",
+"1ft",
+"1ft",
+"< 1ft",
+"< 1ft",
+"1ft",
+"1ft",
+"1ft",
+"< 1ft"
+],
+"windspeed": [
+"NE 15kt",
+"NNW 15kt",
+"WSW 10kt",
+"W 10kt",
+"Light Wind",
+"WNW 15kt",
+"WNW 15kt",
+"WNW 10kt",
+"WNW 10kt"
+],
+"title": [
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Snow Likely",
+"Snow Likely",
+"Chance Snow",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"NE wind 10 to 15 kt becoming N after midnight. A chance of snow, mainly after 3am.   Waves 1 ft or less.",
+"NNW wind 10 to 15 kt. A chance of snow showers, mainly before 7am.   Waves around 1 ft.",
+"WSW wind 5 to 10 kt. A chance of snow showers.   Waves around 1 ft.",
+"W wind 5 to 10 kt. A chance of snow showers.   Waves 1 ft or less.",
+"Variable winds 5 kt or less. A chance of snow showers.   Waves 1 ft or less.",
+"WNW wind 10 to 15 kt, with gusts as high as 25 kt. Snow showers likely, mainly before 1pm.   Waves around 1 ft.",
+"WNW wind 10 to 15 kt, with gusts as high as 20 kt. Snow showers likely, mainly after 1am.   Waves around 1 ft.",
+"WNW wind around 10 kt, with gusts as high as 20 kt. A chance of snow showers.   Waves around 1 ft.",
+"WNW wind 5 to 10 kt becoming variable and less than 5 kt after midnight. A chance of snow showers.   Waves 1 ft or less."
+],
+"hazardName": [
+"Small Craft Advisory  until April 3, 10:00 PM CDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LSZ246&warncounty=marine&firewxzone=&local_place1=7NM NNW Aura MI&product1=Small+Craft+Advisory&lat=46.9687&lon=-88.3977",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LSZ246&warncounty=marine&firewxzone=&local_place1=7NM NNW Aura MI&product1=Hazardous+Weather+Outlook&lat=46.9687&lon=-88.3977"
+]
+}
 },
 {
 "lon": -86.617,
@@ -590,11 +2364,110 @@
 "http://www.limno.com/"
 ],
 "webcamSrc": [
-"img/CookBuoy_image.jpg"
+"CookBuoy_image.jpg"
 ],
 "webcamLink": [
 "http://www.limnotechdata.com/stations/CookBuoy/"
+],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"32",
+"33",
+"26",
+"39",
+"31",
+"35",
+"24",
+"34",
+"27"
+],
+"waveheight": [
+"9ft",
+"13ft",
+"4-6ft",
+"2-3ft",
+"4ft",
+"10ft",
+"9ft",
+"3-4ft",
+"2ft"
+],
+"windspeed": [
+"NW 25kt",
+"NW 25kt",
+"WNW 15kt",
+"SSW 10kt",
+"WNW 10kt",
+"WNW 15kt",
+"NNW 20kt",
+"NW 10kt",
+"NW 10kt"
+],
+"title": [
+"Rain/Snow Likely",
+"Chance Snow",
+"Mostly Cloudy",
+"Chance Rain/Snow",
+"Chance Rain/Snow",
+"Chance Snow",
+"Mostly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"N wind 10 to 15 kt becoming NW 20 to 25 kt after midnight. Winds could gust as high as 35 kt. Rain likely before midnight, then rain and snow likely. Some thunder is also possible.   Waves 2 ft building to 9 ft.",
+"NW wind 20 to 25 kt decreasing to 15 to 20 kt in the afternoon. Winds could gust as high as 35 kt. A chance of snow before 10am.   Waves 13 ft subsiding to 7 ft.",
+"WNW wind 10 to 15 kt, with gusts as high as 20 kt. Mostly cloudy. Waves 4 to 6 ft.",
+"W wind 5 to 10 kt becoming SSW in the afternoon. A chance of rain and snow before 3pm, then a chance of rain.   Waves 2 to 3 ft.",
+"SE wind around 10 kt becoming WNW after midnight. Winds could gust as high as 20 kt. A chance of rain before 9pm, then a chance of rain and snow between 9pm and 1am, then a slight chance of rain after 1am.   Waves 1 ft building to 4 ft.",
+"WNW wind around 15 kt, with gusts as high as 25 kt. A chance of snow after 1pm.   Waves 6 ft building to 10 ft.",
+"NNW wind 15 to 20 kt, with gusts as high as 25 kt. Mostly cloudy. Waves 9 ft subsiding to 5 ft.",
+"NW wind around 10 kt. Mostly sunny. Waves 3 to 4 ft.",
+"NW wind 5 to 10 kt. Partly cloudy. Waves around 2 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 4,  01:00 AM CDT until April 4, 10:00 AM CDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ043&warncounty=marine&firewxzone=&local_place1=8NM WSW Saint Joseph MI&product1=Gale+Warning&lat=41.983&lon=-86.617",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ043&warncounty=marine&firewxzone=&local_place1=8NM WSW Saint Joseph MI&product1=Hazardous+Weather+Outlook&lat=41.983&lon=-86.617"
 ]
+}
 },
 {
 "lon": -91.93,
@@ -639,7 +2512,106 @@
 "http://www.d.umn.edu/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_bkn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"15",
+"33",
+"20",
+"34",
+"19",
+"29",
+"16",
+"30",
+"16"
+],
+"waveheight": [
+"2-3ft",
+"1-2ft",
+"1ft",
+"1ft",
+"1ft",
+"1ft",
+"1ft",
+"1ft",
+"< 1ft"
+],
+"windspeed": [
+"N 10kt",
+"W 10kt",
+"W 10kt",
+"Light Wind",
+"NW 10kt",
+"NW 15kt",
+"WNW 15kt",
+"WNW 10kt",
+"Light Wind"
+],
+"title": [
+"Snow Likely",
+"Chance Flurries",
+"Mostly Cloudy",
+"Chance Snow",
+"Slight Chc Snow",
+"Mostly Sunny",
+"Mostly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"NNE wind around 10 kt becoming NNW after midnight. Winds could gust as high as 20 kt. Snow likely before 11pm, then a chance for flurries before ending.   Waves 2 to 3 ft.",
+"NW wind around 10 kt becoming W in the afternoon. Winds could gust as high as 15 kt. Scattered flurries after 3pm.   Waves 1 to 2 ft.",
+"W wind 5 to 10 kt. Mostly cloudy. Waves around 1 ft.",
+"Variable winds 5 kt or less. A chance of snow showers, mainly after 1pm.   Waves around 1 ft.",
+"NW wind 5 to 10 kt, with gusts as high as 15 kt. A slight chance of snow showers before 1am.   Waves around 1 ft.",
+"NW wind around 15 kt, with gusts as high as 20 kt. Mostly sunny. Waves around 1 ft.",
+"WNW wind 10 to 15 kt. Mostly cloudy. Waves around 1 ft.",
+"WNW wind 5 to 10 kt. Mostly sunny. Waves around 1 ft.",
+"Variable winds 5 kt or less. Partly cloudy. Waves 1 ft or less."
+],
+"hazardName": [
+"Hazardous Weather Outlook ",
+"Small Craft Advisory  until April 4, 03:00 AM CDT"
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LSZ144&warncounty=marine&firewxzone=&local_place1=9NM ENE Duluth MN&product1=Hazardous+Weather+Outlook&lat=46.86&lon=-91.93",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LSZ144&warncounty=marine&firewxzone=&local_place1=9NM ENE Duluth MN&product1=Small+Craft+Advisory&lat=46.86&lon=-91.93"
+]
+}
 },
 {
 "lon": -91.84,
@@ -685,7 +2657,104 @@
 "http://www.d.umn.edu/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_bkn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"18",
+"31",
+"22",
+"33",
+"21",
+"29",
+"18",
+"31",
+"18"
+],
+"waveheight": [
+"3-5ft",
+"1-2ft",
+"1-2ft",
+"1ft",
+"1-2ft",
+"2ft",
+"1-2ft",
+"1ft",
+"< 1ft"
+],
+"windspeed": [
+"N 15kt",
+"W 15kt",
+"W 15kt",
+"Light Wind",
+"WNW 10kt",
+"NW 15kt",
+"WNW 15kt",
+"WNW 10kt",
+"Light Wind"
+],
+"title": [
+"Snow Likely",
+"Increasing Clouds",
+"Mostly Cloudy",
+"Chance Snow",
+"Slight Chc Snow",
+"Mostly Sunny",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"NE wind around 15 kt becoming NNW after midnight. Snow likely, mainly before 11pm.   Waves 3 to 5 ft.",
+"NW wind 10 to 15 kt becoming W in the afternoon. Increasing clouds. Waves 1 to 2 ft.",
+"W wind 10 to 15 kt. Mostly cloudy. Waves 1 to 2 ft.",
+"Variable winds 5 kt or less. A chance of snow showers after 1pm.   Waves around 1 ft.",
+"WNW wind around 10 kt, with gusts as high as 20 kt. A slight chance of snow showers before 1am.   Waves 1 to 2 ft.",
+"NW wind around 15 kt, with gusts as high as 25 kt. Mostly sunny. Waves around 2 ft.",
+"WNW wind 10 to 15 kt, with gusts as high as 20 kt. Partly cloudy. Waves 1 to 2 ft.",
+"WNW wind around 10 kt. Mostly sunny. Waves around 1 ft.",
+"Variable winds 5 kt or less. Partly cloudy. Waves 1 ft or less."
+],
+"hazardName": [
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LSZ162&warncounty=marine&firewxzone=&local_place1=12NM E Duluth MN&product1=Hazardous+Weather+Outlook&lat=46.81&lon=-91.84"
+]
+}
 },
 {
 "lon": -86.272291,
@@ -766,11 +2835,110 @@
 "http://www.zfsinc.com/"
 ],
 "webcamSrc": [
-"img/PortSheldon_image.jpg"
+"PortSheldon_image.jpg"
 ],
 "webcamLink": [
 "http://www.limnotechdata.com/stations/PortSheldon/"
+],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"31",
+"32",
+"26",
+"39",
+"30",
+"35",
+"23",
+"34",
+"25"
+],
+"waveheight": [
+"6ft",
+"11ft",
+"4-6ft",
+"2-3ft",
+"6ft",
+"11ft",
+"9ft",
+"4ft",
+"3ft"
+],
+"windspeed": [
+"NNW 24kt",
+"NW 25kt",
+"WNW 16kt",
+"SW 10kt",
+"WNW 12kt",
+"WNW 20kt",
+"NNW 19kt",
+"WNW 14kt",
+"NW 10kt"
+],
+"title": [
+"Rain/Snow",
+"Chance Snow",
+"Slight Chc Snow",
+"Chance Rain/Snow",
+"Chance Rain/Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"NE wind 14 to 24 kt becoming NNW after midnight. Winds could gust as high as 33 kt. Snow showers, possibly mixed with rain, becoming all snow after 1am. Some thunder is also possible.   Waves 2 ft building to 6 ft.",
+"NW wind 18 to 25 kt, with gusts as high as 36 kt. A chance of snow showers, mainly before 10am.   Waves 11 ft subsiding to 7 ft.",
+"WNW wind 11 to 16 kt, with gusts as high as 22 kt. A slight chance of snow showers between 11pm and 1am.   Waves 4 to 6 ft.",
+"W wind 8 to 10 kt becoming SSW in the afternoon. A slight chance of rain and snow showers before noon, then a chance of rain showers.   Waves 2 to 3 ft.",
+"S wind 6 to 12 kt becoming NW after midnight. Winds could gust as high as 23 kt. A chance of rain and snow showers before 1am, then a chance of rain showers between 1am and 4am, then a chance of rain and snow showers after 4am.   Waves 2 ft building to 6 ft.",
+"WNW wind 12 to 20 kt, with gusts as high as 28 kt. A chance of snow showers.   Waves 8 ft building to 11 ft.",
+"NNW wind 12 to 19 kt, with gusts as high as 27 kt. A chance of snow showers.   Waves 9 ft subsiding to 5 ft.",
+"WNW wind 11 to 14 kt. A chance of snow showers.   Waves around 4 ft.",
+"NW wind 8 to 10 kt. A chance of snow showers.   Waves around 3 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 3,  10:00 PM CDT until April 4, 11:00 AM CDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ846&warncounty=marine&firewxzone=&local_place1=10NM SSW Grand Haven MI&product1=Gale+Warning&lat=42.8996&lon=-86.2723",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ846&warncounty=marine&firewxzone=&local_place1=10NM SSW Grand Haven MI&product1=Hazardous+Weather+Outlook&lat=42.8996&lon=-86.2723"
 ]
+}
 },
 {
 "lon": -81.22,
@@ -979,7 +3147,106 @@
 "https://www.glerl.noaa.gov/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"30",
+"32",
+"25",
+"38",
+"29",
+"34",
+"23",
+"33",
+"24"
+],
+"waveheight": [
+"6ft",
+"9ft",
+"4-5ft",
+"2-3ft",
+"6ft",
+"10ft",
+"8ft",
+"3-4ft",
+"3ft"
+],
+"windspeed": [
+"NNW 23kt",
+"NW 26kt",
+"WNW 16kt",
+"SW 10kt",
+"WNW 11kt",
+"WNW 19kt",
+"NNW 18kt",
+"NW 13kt",
+"NW 10kt"
+],
+"title": [
+"Rain/Snow",
+"Chance Snow",
+"Slight Chc Snow",
+"Chance Rain/Snow",
+"Chance Rain/Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"NE wind 14 to 23 kt becoming NNW after midnight. Winds could gust as high as 33 kt. Snow showers, possibly mixed with rain, becoming all snow after 1am. Some thunder is also possible.   Waves 2 ft building to 6 ft.",
+"NW wind 19 to 26 kt, with gusts as high as 35 kt. A chance of snow showers, mainly before 10am.   Waves 9 ft subsiding to 6 ft.",
+"WNW wind 11 to 16 kt, with gusts as high as 22 kt. A slight chance of snow showers between 11pm and 1am.   Waves 4 to 5 ft.",
+"W wind 8 to 10 kt becoming SSW in the afternoon. A slight chance of rain and snow showers before noon, then a chance of rain showers.   Waves 2 to 3 ft.",
+"S wind 6 to 11 kt becoming NW after midnight. Winds could gust as high as 22 kt. A chance of rain and snow showers before 1am, then a chance of rain showers between 1am and 3am, then a chance of rain and snow showers after 3am.   Waves 3 ft building to 6 ft.",
+"WNW wind 11 to 19 kt, with gusts as high as 28 kt. A chance of snow showers.   Waves 7 ft building to 10 ft.",
+"NNW wind 12 to 18 kt, with gusts as high as 28 kt. A chance of snow showers.   Waves 8 ft subsiding to 4 ft.",
+"NW wind 11 to 13 kt, with gusts as high as 19 kt. A chance of snow showers.   Waves 3 to 4 ft.",
+"NW wind 8 to 10 kt. A chance of snow showers.   Waves around 3 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 3,  10:00 PM CDT until April 4, 11:00 AM CDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ847&warncounty=marine&firewxzone=&local_place1=5NM WSW Muskegon MI&product1=Gale+Warning&lat=43.1791&lon=-86.3608",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ847&warncounty=marine&firewxzone=&local_place1=5NM WSW Muskegon MI&product1=Hazardous+Weather+Outlook&lat=43.1791&lon=-86.3608"
+]
+}
 },
 {
 "lon": -83.331,
@@ -1013,7 +3280,106 @@
 "https://www.glerl.noaa.gov/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_bkn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_bkn.png",
+"/images/wtf/medium/m_nbkn.png"
+],
+"temperature": [
+"26",
+"30",
+"20",
+"35",
+"26",
+"34",
+"21",
+"32",
+"20"
+],
+"waveheight": [
+"4-5ft",
+"3-4ft",
+"2-3ft",
+"1ft",
+"1-2ft",
+"2-3ft",
+"2-3ft",
+"2ft",
+"1-2ft"
+],
+"windspeed": [
+"NNE 25kt",
+"NW 25kt",
+"WNW 20kt",
+"WSW 10kt",
+"Light Wind",
+"WNW 10kt",
+"NW 20kt",
+"WNW 15kt",
+"WNW 15kt"
+],
+"title": [
+"Snow",
+"Snow",
+"Partly Cloudy",
+"Partly Sunny",
+"Chance Snow",
+"Chance Snow",
+"Mostly Cloudy",
+"Partly Sunny",
+"Mostly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"NNE wind 20 to 25 kt, with gusts as high as 35 kt. Snow.   Waves 4 to 5 ft.",
+"NW wind around 25 kt, with gusts as high as 30 kt. Snow, mainly before 1pm.   Waves 3 to 4 ft.",
+"WNW wind 15 to 20 kt, with gusts as high as 25 kt. Partly cloudy. Waves 2 to 3 ft.",
+"WSW wind around 10 kt. Partly sunny. Waves around 1 ft.",
+"Variable winds 5 kt or less. A chance of snow after 8pm.   Waves 1 to 2 ft.",
+"WNW wind around 10 kt. A chance of snow.   Waves 2 to 3 ft.",
+"NW wind 15 to 20 kt. Mostly cloudy. Waves 2 to 3 ft.",
+"WNW wind 10 to 15 kt. Partly sunny. Waves around 2 ft.",
+"WNW wind 10 to 15 kt. Mostly cloudy. Waves 1 to 2 ft."
+],
+"hazardName": [
+"Hazardous Weather Outlook ",
+"Gale Warning in effect from April 3,  05:00 PM EDT until April 4, 06:00 PM EDT"
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LHZ348&warncounty=marine&firewxzone=&local_place1=7NM SE Alpena MI&product1=Hazardous+Weather+Outlook&lat=44.988&lon=-83.331",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LHZ348&warncounty=marine&firewxzone=&local_place1=7NM SE Alpena MI&product1=Gale+Warning&lat=44.988&lon=-83.331"
+]
+}
 },
 {
 "lon": -83.595,
@@ -1049,7 +3415,106 @@
 "https://www.glerl.noaa.gov/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_bkn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_bkn.png",
+"/images/wtf/medium/m_nbkn.png"
+],
+"temperature": [
+"28",
+"32",
+"21",
+"35",
+"28",
+"34",
+"22",
+"32",
+"22"
+],
+"waveheight": [
+"5-6ft",
+"3ft",
+"1-3ft",
+"1ft",
+"1-2ft",
+"3ft",
+"2-3ft",
+"2ft",
+"1-2ft"
+],
+"windspeed": [
+"NE 29kt",
+"WNW 21kt",
+"WNW 18kt",
+"WSW 13kt",
+"SW 10kt",
+"W 14kt",
+"NW 14kt",
+"WNW 11kt",
+"NW 11kt"
+],
+"title": [
+"Rain/Snow",
+"Snow",
+"Mostly Cloudy",
+"Partly Sunny",
+"Chance Rain/Snow",
+"Chance Snow",
+"Mostly Cloudy",
+"Partly Sunny",
+"Mostly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"NE wind 22 to 29 kt. Rain and snow showers. Some thunder is also possible.   Waves 5 to 6 ft. occasionally to 8ft.",
+"WNW wind 19 to 21 kt, with gusts as high as 28 kt. Snow showers, mainly before 11am.   Waves around 3 ft.",
+"WNW wind 8 to 18 kt. Mostly cloudy. Waves 1 to 3 ft.",
+"WSW wind 9 to 13 kt. Partly sunny. Waves around 1 ft.",
+"SW wind 5 to 10 kt becoming SSE after midnight. A chance of rain and snow showers between 8pm and 10pm, then a chance of snow showers after 10pm.   Waves 1 to 2 ft.",
+"W wind 8 to 14 kt. A chance of snow showers.   Waves around 3 ft.",
+"NW wind around 14 kt. Mostly cloudy. Waves 2 to 3 ft.",
+"WNW wind around 11 kt. Partly sunny. Waves around 2 ft.",
+"NW wind around 11 kt. Mostly cloudy. Waves 1 to 2 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 3,  06:00 PM EDT until April 4, 04:00 AM EDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LHZ421&warncounty=marine&firewxzone=&local_place1=5NM SE Au Gres MI&product1=Gale+Warning&lat=43.986&lon=-83.595",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LHZ421&warncounty=marine&firewxzone=&local_place1=5NM SE Au Gres MI&product1=Hazardous+Weather+Outlook&lat=43.986&lon=-83.595"
+]
+}
 },
 {
 "lon": -81.69372,
@@ -1102,7 +3567,106 @@
 "https://www.epa.gov/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_wave.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"36",
+"39",
+"29",
+"37",
+"32",
+"38",
+"25",
+"34",
+"28"
+],
+"waveheight": [
+"6ft",
+"9-10ft",
+"8ft",
+"3-4ft",
+"1-2ft",
+"7ft",
+"7ft",
+"2-3ft",
+"2ft"
+],
+"windspeed": [
+"WSW 25kt",
+"WSW 32kt",
+"WNW 25kt",
+"W 16kt",
+"S 9kt",
+"W 22kt",
+"WNW 22kt",
+"W 13kt",
+"NW 12kt"
+],
+"title": [
+"Thunderstorms",
+"Chance Rain/Snow",
+"Chance Snow",
+"Slight Chc Rain/Snow",
+"Rain/Snow Likely",
+"Slight Chc Rain/Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"SSE wind 14 to 19 kt becoming WSW 20 to 25 kt after midnight. Showers and thunderstorms before 3am, then a chance of showers.   Waves 3 ft building to 6 ft.",
+"WSW wind 28 to 32 kt becoming W in the afternoon. Winds could gust as high as 39 kt. A chance of rain and snow showers before 10am, then a chance of snow showers.   Waves 9 to 10 ft.",
+"WNW wind 22 to 25 kt decreasing to 16 to 19 kt after midnight. A chance of snow showers.   Waves 8 ft subsiding to 5 ft.",
+"W wind 12 to 16 kt. A slight chance of snow showers before 8am, then a slight chance of rain and snow showers after 4pm.   Waves 3 to 4 ft.",
+"S wind 6 to 9 kt. A chance of rain and snow showers before 11pm, then snow showers likely.   Waves 1 to 2 ft.",
+"W wind 18 to 22 kt. A slight chance of rain and snow showers.   Waves 3 ft building to 7 ft.",
+"WNW wind 19 to 22 kt decreasing to 16 to 19 kt after midnight. Partly cloudy. Waves 7 ft subsiding to 5 ft.",
+"W wind 10 to 13 kt. Mostly sunny. Waves 2 to 3 ft.",
+"W wind around 12 kt becoming NNW after midnight. Partly cloudy. Waves around 2 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 4,  05:00 AM EDT until April 4, 05:00 PM EDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ166&warncounty=marine&firewxzone=&local_place1=11NM NW Euclid OH&product1=Gale+Warning&lat=41.7321&lon=-81.6937",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ166&warncounty=marine&firewxzone=&local_place1=11NM NW Euclid OH&product1=Hazardous+Weather+Outlook&lat=41.7321&lon=-81.6937"
+]
+}
 },
 {
 "lon": -83.26145,
@@ -1151,11 +3715,110 @@
 "http://www.limno.com/"
 ],
 "webcamSrc": [
-"img/Toledo_image.jpg"
+"Toledo_image.jpg"
 ],
 "webcamLink": [
 "http://www.limnotechdata.com/stations/Toledo/"
+],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_shra.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"35",
+"38",
+"27",
+"40",
+"31",
+"38",
+"22",
+"36",
+"26"
+],
+"waveheight": [
+"3ft",
+"3-4ft",
+"3ft",
+"1ft",
+"1ft",
+"2-3ft",
+"2-3ft",
+"1ft",
+"1ft"
+],
+"windspeed": [
+"WSW 22kt",
+"WNW 26kt",
+"W 21kt",
+"WSW 11kt",
+"SSW 9kt",
+"W 21kt",
+"WNW 18kt",
+"NW 10kt",
+"WNW 10kt"
+],
+"title": [
+"Thunderstorms",
+"Chance Rain/Snow",
+"Mostly Cloudy",
+"Slight Chc Showers",
+"Rain/Snow Likely",
+"Slight Chc Rain/Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"S wind 10 to 15 kt becoming WSW 17 to 22 kt. Showers and thunderstorms before 2am, then a slight chance of showers.   Waves 1 ft building to 3 ft.",
+"WNW wind 24 to 26 kt, with gusts as high as 32 kt. A chance of rain and snow showers before 9am, then a slight chance of snow showers between 9am and 11am.   Waves 3 to 4 ft.",
+"W wind 16 to 21 kt decreasing to 10 to 15 kt after midnight. Mostly cloudy. Waves 3 ft subsiding to 1 ft.",
+"WSW wind 7 to 11 kt. A slight chance of showers after 4pm.   Waves around 1 ft.",
+"SSW wind 7 to 9 kt. A chance of rain and snow showers before 11pm, then snow showers likely.   Waves around 1 ft.",
+"W wind 16 to 21 kt. A slight chance of rain and snow showers after 2pm.   Waves 2 to 3 ft.",
+"WNW wind 15 to 18 kt decreasing to 12 to 15 kt after midnight. Partly cloudy. Waves 2 to 3 ft.",
+"NW wind 8 to 10 kt becoming W in the afternoon. Mostly sunny. Waves around 1 ft.",
+"WNW wind around 10 kt becoming NNW after midnight. Partly cloudy. Waves around 1 ft."
+],
+"hazardName": [
+"Hazardous Weather Outlook ",
+"Small Craft Advisory in effect from April 4,  12:00 AM EDT until April 4, 05:00 PM EDT"
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ142&warncounty=marine&firewxzone=&local_place1=7NM ENE Oregon OH&product1=Hazardous+Weather+Outlook&lat=41.702&lon=-83.2615",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ142&warncounty=marine&firewxzone=&local_place1=7NM ENE Oregon OH&product1=Small+Craft+Advisory&lat=41.702&lon=-83.2615"
 ]
+}
 },
 {
 "lon": -73.258,
@@ -1208,7 +3871,105 @@
 "http://www.middlebury.edu/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/newimages/medium/nshra100.png",
+"/newimages/medium/shra80.png",
+"/DualImage.php?i=nra_sn&j=nwind_bkn&ip=20",
+"/newimages/medium/wind_few.png",
+"/DualImage.php?i=nbkn&j=nsn&jp=30",
+"/DualImage.php?i=sn&j=ra_sn&ip=80&jp=80",
+"/DualImage.php?i=nra_sn&j=nsn&ip=40&jp=40",
+"/newimages/medium/bkn.png",
+"/newimages/medium/nbkn.png"
+],
+"temperature": [
+"38",
+"51",
+"21",
+"34",
+"23",
+"39",
+"26",
+"37",
+"23"
+],
+"waveheight": [
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+""
+],
+"windspeed": [
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+""
+],
+"title": [
+"Tonight: Rain before 2am, then showers between 2am and 5am, then occasional showers and possibly a thunderstorm after 5am.  Low around 38. Windy, with a southeast wind 11 to 21 mph increasing to 21 to 31 mph after midnight.  Chance of precipitation is 100%. New rainfall amounts between a quarter and half of an inch possible. ",
+"Wednesday: Occasional showers, mainly before 5pm.  High near 51. Very windy, with a south wind 35 to 40 mph decreasing to 25 to 30 mph in the afternoon.  Chance of precipitation is 80%. New precipitation amounts between a quarter and half of an inch possible. ",
+"Wednesday Night: A slight chance of rain and snow showers before 9pm.  Mostly cloudy, with a low around 21. Windy, with a southwest wind 30 to 34 mph.  Chance of precipitation is 20%.",
+"Thursday: Sunny, with a high near 34. Breezy, with a west wind around 23 mph. ",
+"Thursday Night: A 30 percent chance of snow showers after 4am.  Mostly cloudy, with a low around 23. Northwest wind 7 to 10 mph becoming southwest after midnight.  Little or no snow accumulation expected. ",
+"Friday: Snow showers before 2pm, then rain and snow showers.  High near 39. South wind 13 to 18 mph.  Chance of precipitation is 80%. New precipitation amounts of less than a tenth of an inch possible. ",
+"Friday Night: A chance of snow showers before 8pm, then a chance of rain and snow showers between 8pm and 9pm, then a chance of snow showers after 9pm.  Mostly cloudy, with a low around 26. Windy, with a south wind 11 to 16 mph becoming northwest 21 to 26 mph after midnight.  Chance of precipitation is 40%.",
+"Saturday: Partly sunny, with a high near 37. West wind 13 to 15 mph. ",
+"Saturday Night: Mostly cloudy, with a low around 23. West wind 8 to 10 mph. "
+],
+"synopsis": "",
+"forecastText": [
+"Rain before 2am, then showers between 2am and 5am, then occasional showers and possibly a thunderstorm after 5am.  Low around 38. Windy, with a southeast wind 11 to 21 mph increasing to 21 to 31 mph after midnight.  Chance of precipitation is 100%. New rainfall amounts between a quarter and half of an inch possible. ",
+"Occasional showers, mainly before 5pm.  High near 51. Very windy, with a south wind 35 to 40 mph decreasing to 25 to 30 mph in the afternoon.  Chance of precipitation is 80%. New precipitation amounts between a quarter and half of an inch possible. ",
+"A slight chance of rain and snow showers before 9pm.  Mostly cloudy, with a low around 21. Windy, with a southwest wind 30 to 34 mph.  Chance of precipitation is 20%.",
+"Sunny, with a high near 34. Breezy, with a west wind around 23 mph. ",
+"A 30 percent chance of snow showers after 4am.  Mostly cloudy, with a low around 23. Northwest wind 7 to 10 mph becoming southwest after midnight.  Little or no snow accumulation expected. ",
+"Snow showers before 2pm, then rain and snow showers.  High near 39. South wind 13 to 18 mph.  Chance of precipitation is 80%. New precipitation amounts of less than a tenth of an inch possible. ",
+"A chance of snow showers before 8pm, then a chance of rain and snow showers between 8pm and 9pm, then a chance of snow showers after 9pm.  Mostly cloudy, with a low around 26. Windy, with a south wind 11 to 16 mph becoming northwest 21 to 26 mph after midnight.  Chance of precipitation is 40%.",
+"Partly sunny, with a high near 37. West wind 13 to 15 mph. ",
+"Mostly cloudy, with a low around 23. West wind 8 to 10 mph. ",
+"A chance of snow showers before 1pm, then a chance of rain and snow showers between 1pm and 3pm, then a chance of rain showers after 3pm.  Mostly sunny, with a high near 37. West wind 7 to 9 mph.  Chance of precipitation is 30%.",
+"A 30 percent chance of snow showers.  Partly cloudy, with a low around 23. Northwest wind 7 to 14 mph. ",
+"Partly sunny, with a high near 40. Light and variable wind. ",
+"A chance of rain and snow showers.  Mostly cloudy, with a low around 28. East wind 6 to 10 mph.  Chance of precipitation is 40%.",
+"A chance of rain and snow showers.  Mostly cloudy, with a high near 44. Southeast wind 9 to 14 mph becoming northeast in the afternoon.  Chance of precipitation is 40%."
+],
+"hazardName": [],
+"hazardLink": []
+}
 },
 {
 "lon": -80.137,
@@ -1247,7 +4008,106 @@
 "http://wqdatalive.com/public/55"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nra.png",
+"/images/wtf/medium/m_bkn.png",
+"/images/wtf/medium/m_nbkn.png"
+],
+"temperature": [
+"40",
+"37",
+"24",
+"34",
+"28",
+"35",
+"20",
+"32",
+"22"
+],
+"waveheight": [
+"4ft",
+"8-9ft",
+"7ft",
+"3-4ft",
+"1-2ft",
+"5ft",
+"4-5ft",
+"3ft",
+"2ft"
+],
+"windspeed": [
+"SW 24kt",
+"WSW 31kt",
+"WNW 20kt",
+"W 16kt",
+"S 8kt",
+"W 18kt",
+"WNW 17kt",
+"W 11kt",
+"W 9kt"
+],
+"title": [
+"Thunderstorms",
+"Rain/Snow Likely",
+"Chance Snow",
+"Slight Chc Snow",
+"Rain/Snow Likely",
+"Chance Rain/Snow",
+"Chance Rain",
+"Partly Sunny",
+"Mostly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"SE wind 10 to 15 kt becoming SW 19 to 24 kt. Showers and thunderstorms before midnight, then showers and possibly a thunderstorm between midnight and 2am, then showers after 2am.   Waves 1 ft building to 4 ft.",
+"WSW wind 29 to 31 kt, with gusts as high as 38 kt. Rain showers likely before 9am, then a chance of rain and snow showers between 9am and 10am, then a chance of snow showers after 10am.   Waves 8 to 9 ft.",
+"WNW wind 16 to 20 kt. A chance of snow showers.   Waves 7 ft subsiding to 5 ft.",
+"W wind 11 to 16 kt. A slight chance of snow showers before 11am.   Waves 3 to 4 ft.",
+"SW wind 5 to 8 kt becoming S after midnight. A chance of rain and snow showers before 11pm, then snow showers likely.   Waves 1 to 2 ft.",
+"W wind 14 to 18 kt. A chance of snow showers before 2pm, then a chance of rain and snow showers.   Waves 2 ft building to 5 ft.",
+"WNW wind 14 to 17 kt decreasing to 11 to 14 kt after midnight. A chance of rain showers before 8pm.   Waves 4 to 5 ft.",
+"W wind around 11 kt. Partly sunny. Waves around 3 ft.",
+"W wind 6 to 9 kt becoming NNW after midnight. Mostly cloudy. Waves around 2 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 4,  05:00 AM EDT until April 4, 05:00 PM EDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ149&warncounty=marine&firewxzone=&local_place1=4NM NNW Erie PA&product1=Gale+Warning&lat=42.186&lon=-80.137",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ149&warncounty=marine&firewxzone=&local_place1=4NM NNW Erie PA&product1=Hazardous+Weather+Outlook&lat=42.186&lon=-80.137"
+]
+}
 },
 {
 "lon": -86.331,
@@ -1319,11 +4179,110 @@
 "http://woodtv.com/"
 ],
 "webcamSrc": [
-"img/SouthHaven_image.jpg"
+"media/SouthHaven_image.jpg"
 ],
 "webcamLink": [
 "http://www.limnotechdata.com/stations/SouthHaven/"
+],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"31",
+"32",
+"26",
+"40",
+"31",
+"35",
+"24",
+"34",
+"26"
+],
+"waveheight": [
+"8ft",
+"13ft",
+"4-6ft",
+"2-3ft",
+"5ft",
+"11ft",
+"9ft",
+"3-4ft",
+"2-3ft"
+],
+"windspeed": [
+"NNW 25kt",
+"NW 25kt",
+"WNW 16kt",
+"SW 9kt",
+"W 12kt",
+"WNW 18kt",
+"NNW 18kt",
+"NW 13kt",
+"NW 9kt"
+],
+"title": [
+"Rain/Snow",
+"Chance Snow",
+"Mostly Cloudy",
+"Chance Rain/Snow",
+"Chance Rain/Snow",
+"Chance Snow",
+"Chance Snow",
+"Slight Chc Snow",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"N wind 12 to 17 kt becoming NNW 20 to 25 kt after midnight. Winds could gust as high as 33 kt. Snow showers, possibly mixed with rain, becoming all snow after 2am. Some thunder is also possible.   Waves 2 ft building to 8 ft.",
+"NW wind 17 to 25 kt, with gusts as high as 34 kt. A chance of snow showers before 10am.   Waves 13 ft subsiding to 8 ft.",
+"WNW wind 10 to 16 kt. Mostly cloudy. Waves 4 to 6 ft.",
+"W wind 6 to 9 kt becoming SSW in the afternoon. A slight chance of rain and snow showers before noon, then a chance of rain showers.   Waves 2 to 3 ft.",
+"SSE wind 7 to 12 kt becoming NW after midnight. Winds could gust as high as 22 kt. A chance of rain showers before 5am, then a slight chance of rain and snow showers.   Waves 2 ft building to 5 ft.",
+"WNW wind 12 to 18 kt, with gusts as high as 27 kt. A chance of snow showers, mainly after 7am.   Waves 7 ft building to 11 ft.",
+"NNW wind 11 to 18 kt, with gusts as high as 27 kt. A chance of snow showers.   Waves 9 ft subsiding to 5 ft.",
+"NW wind 10 to 13 kt. A slight chance of snow showers.   Waves 3 to 4 ft.",
+"NW wind 7 to 9 kt. A chance of snow showers.   Waves 2 to 3 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 3,  10:00 PM CDT until April 4, 11:00 AM CDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ844&warncounty=marine&firewxzone=&local_place1=3NM W South Haven MI&product1=Gale+Warning&lat=42.397&lon=-86.331",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ844&warncounty=marine&firewxzone=&local_place1=3NM W South Haven MI&product1=Hazardous+Weather+Outlook&lat=42.397&lon=-86.331"
 ]
+}
 },
 {
 "lon": -81.821,
@@ -1369,11 +4328,110 @@
 "http://www.limno.com/"
 ],
 "webcamSrc": [
-"img/Cleveland_image.jpg"
+"Cleveland_image.jpg"
 ],
 "webcamLink": [
 "http://www.limnotechdata.com/stations/Cleveland/"
+],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_wave.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"36",
+"39",
+"29",
+"38",
+"32",
+"38",
+"25",
+"34",
+"28"
+],
+"waveheight": [
+"6ft",
+"8-9ft",
+"8ft",
+"2-3ft",
+"1ft",
+"6ft",
+"6ft",
+"2-3ft",
+"2ft"
+],
+"windspeed": [
+"WSW 24kt",
+"W 30kt",
+"WNW 24kt",
+"W 14kt",
+"S 10kt",
+"W 22kt",
+"WNW 20kt",
+"W 12kt",
+"NW 11kt"
+],
+"title": [
+"Thunderstorms",
+"Chance Rain/Snow",
+"Chance Snow",
+"Slight Chc Rain/Snow",
+"Rain/Snow Likely",
+"Slight Chc Rain/Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"S wind 15 to 18 kt becoming WSW 21 to 24 kt after midnight. Winds could gust as high as 30 kt. Showers and thunderstorms before 2am, then a chance of showers.   Waves 3 ft building to 6 ft.",
+"WSW wind 27 to 30 kt becoming W in the afternoon. Winds could gust as high as 36 kt. A slight chance of rain and snow showers before 10am, then a chance of snow showers.   Waves 8 to 9 ft.",
+"WNW wind 21 to 24 kt decreasing to 15 to 18 kt after midnight. A chance of snow showers, mainly before 5am.   Waves 8 ft subsiding to 4 ft.",
+"W wind 10 to 14 kt. A slight chance of snow showers before 7am, then a slight chance of rain and snow showers after 4pm.   Waves 2 to 3 ft.",
+"S wind 6 to 10 kt. A chance of rain and snow showers before 11pm, then snow showers likely.   Waves around 1 ft.",
+"W wind 17 to 22 kt. A slight chance of rain and snow showers.   Waves 3 ft building to 6 ft.",
+"WNW wind 15 to 20 kt. Partly cloudy. Waves 6 ft subsiding to 4 ft.",
+"W wind 10 to 12 kt. Mostly sunny. Waves 2 to 3 ft.",
+"W wind around 11 kt becoming NNW after midnight. Partly cloudy. Waves around 2 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 4,  05:00 AM EDT until April 4, 05:00 PM EDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ166&warncounty=marine&firewxzone=&local_place1=8NM N Lakewood OH&product1=Gale+Warning&lat=41.615&lon=-81.821",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ166&warncounty=marine&firewxzone=&local_place1=8NM N Lakewood OH&product1=Hazardous+Weather+Outlook&lat=41.615&lon=-81.821"
 ]
+}
 },
 {
 "lon": -86.968,
@@ -1432,7 +4490,108 @@
 "https://engineering.purdue.edu/CE"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nra.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"30",
+"34",
+"29",
+"38",
+"31",
+"34",
+"26",
+"34",
+"28"
+],
+"waveheight": [
+"10ft",
+"12ft",
+"3-5ft",
+"2ft",
+"1-3ft",
+"9ft",
+"8ft",
+"2-3ft",
+"2ft"
+],
+"windspeed": [
+"NW 35kt",
+"NW 25kt",
+"WNW 15kt",
+"SSW 10kt",
+"WNW 15kt",
+"WNW 15kt",
+"NNW 20kt",
+"NNW 15kt",
+"NNW 10kt"
+],
+"title": [
+"Rain/Snow",
+"Chance Snow",
+"Mostly Cloudy",
+"Chance Rain/Snow",
+"Chance Rain",
+"Slight Chc Snow",
+"Slight Chc Snow",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"N wind 15 to 25 kt becoming NW 25 to 35 kt after midnight. Winds could gust as high as 40 kt. Snow, possibly mixed with rain, becoming all snow after 3am. Some thunder is also possible.  Patchy fog before 7pm.  Waves 1 ft building to 10 ft.",
+"NW wind 20 to 25 kt decreasing to 15 to 20 kt in the afternoon. Winds could gust as high as 35 kt. A chance of snow showers, mainly before 7am.   Waves 12 ft subsiding to 6 ft.",
+"WNW wind 10 to 15 kt. Mostly cloudy. Waves 3 to 5 ft.",
+"W wind 5 to 10 kt becoming S in the morning. A chance of snow before 2pm, then a chance of rain and snow.   Waves around 2 ft.",
+"SSE wind 10 to 15 kt becoming WNW after midnight. Winds could gust as high as 20 kt. A chance of rain before 1am.   Waves 1 to 3 ft.",
+"WNW wind around 15 kt, with gusts as high as 25 kt. A slight chance of snow showers after 1pm.   Waves 5 ft building to 9 ft.",
+"NNW wind 15 to 20 kt, with gusts as high as 25 kt. A slight chance of snow showers after 1am.   Waves 8 ft subsiding to 4 ft.",
+"NNW wind 5 to 15 kt. Mostly sunny. Waves 2 to 3 ft.",
+"NNW wind 5 to 10 kt. Partly cloudy. Waves around 2 ft."
+],
+"hazardName": [
+"Small Craft Advisory in effect from April 3,  07:00 PM CDT until April 4, 01:00 AM CDT",
+"Gale Warning in effect from April 4,  01:00 AM CDT until April 4, 09:00 AM CDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ745&warncounty=marine&firewxzone=&local_place1=5NM WNW Michigan City IN&product1=Small+Craft+Advisory&lat=41.755&lon=-86.968",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ745&warncounty=marine&firewxzone=&local_place1=5NM WNW Michigan City IN&product1=Gale+Warning&lat=41.755&lon=-86.968",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ745&warncounty=marine&firewxzone=&local_place1=5NM WNW Michigan City IN&product1=Hazardous+Weather+Outlook&lat=41.755&lon=-86.968"
+]
+}
 },
 {
 "lon": -87.4113888,
@@ -1470,7 +4629,104 @@
 "http://superiorwatersheds.org/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_blizzard.png",
+"/images/wtf/medium/m_blizzard.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_blizzard.png",
+"/images/wtf/medium/m_blizzard.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"20",
+"23",
+"19",
+"32",
+"22",
+"27",
+"18",
+"26",
+"17"
+],
+"waveheight": [
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft"
+],
+"windspeed": [
+"N 20kt",
+"NNW 25kt",
+"WNW 10kt",
+"W 10kt",
+"W 10kt",
+"WNW 20kt",
+"NW 20kt",
+"NW 15kt",
+"WNW 10kt"
+],
+"title": [
+"Snow",
+"Blowing Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Snow Likely",
+"Snow Likely",
+"Snow Likely",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"N wind around 20 kt. Snow with patchy blowing snow before 8pm, then snow likely with areas of blowing snow between 8pm and 3am, then areas of blowing snow and a chance of snow after 3am.   Waves 1 ft or less.",
+"NNW wind 20 to 25 kt. Areas of blowing snow and a chance of snow showers before noon, then patchy blowing snow and a slight chance of snow showers after noon.   Waves 1 ft or less.",
+"WNW wind 5 to 10 kt becoming WSW in the evening. A chance of snow showers, mainly after 1am.   Waves 1 ft or less.",
+"W wind 5 to 10 kt becoming NW in the afternoon. Winds could gust as high as 15 kt. A chance of snow showers.   Waves 1 ft or less.",
+"NNE wind 5 to 10 kt becoming W after midnight. A chance of snow showers.   Waves 1 ft or less.",
+"WNW wind 10 to 15 kt increasing to 15 to 20 kt in the afternoon. Winds could gust as high as 30 kt. Snow showers likely with areas of blowing snow.   Waves 1 ft or less.",
+"NW wind 10 to 20 kt, with gusts as high as 25 kt. Snow showers likely with patchy blowing snow.   Waves 1 ft or less.",
+"NW wind 10 to 15 kt. Snow showers likely.   Waves 1 ft or less.",
+"WNW wind 5 to 10 kt. A chance of snow showers.   Waves 1 ft or less."
+],
+"hazardName": [
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LSZ265&warncounty=marine&firewxzone=&local_place1=10NM N Marquette MI&product1=Hazardous+Weather+Outlook&lat=46.7239&lon=-87.4114"
+]
+}
 },
 {
 "lon": -85.9755555,
@@ -1508,7 +4764,106 @@
 "http://superiorwatersheds.org/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_blizzard.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_blizzard.png",
+"/images/wtf/medium/m_blizzard.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"21",
+"24",
+"21",
+"32",
+"23",
+"29",
+"20",
+"27",
+"20"
+],
+"waveheight": [
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft"
+],
+"windspeed": [
+"NNE 25kt",
+"N 25kt",
+"NW 20kt",
+"WSW 15kt",
+"W 10kt",
+"NW 15kt",
+"NW 20kt",
+"NW 15kt",
+"NW 15kt"
+],
+"title": [
+"Snow",
+"Chance Snow",
+"Blowing Snow",
+"Chance Snow",
+"Chance Snow",
+"Snow Likely",
+"Snow Likely",
+"Snow Likely",
+"Snow Likely"
+],
+"synopsis": "",
+"forecastText": [
+"NNE wind 20 to 25 kt. Snow, mainly before 1am.   Waves 1 ft or less.",
+"N wind 20 to 25 kt, with gusts as high as 30 kt. A chance of snow showers, mainly before noon.   Waves 1 ft or less.",
+"NW wind 10 to 20 kt becoming WSW after midnight. Patchy blowing snow and a chance of snow showers.   Waves 1 ft or less.",
+"WSW wind 10 to 15 kt. A chance of snow showers.   Waves 1 ft or less.",
+"W wind 5 to 10 kt. A chance of snow showers.   Waves 1 ft or less.",
+"NW wind 10 to 15 kt, with gusts as high as 25 kt. A chance of snow showers before 1pm, then snow showers likely with patchy blowing snow after 1pm.   Waves 1 ft or less.",
+"NW wind 15 to 20 kt, with gusts as high as 30 kt. Snow showers likely with patchy blowing snow.   Waves 1 ft or less.",
+"NW wind around 15 kt, with gusts as high as 20 kt. Snow showers likely.   Waves 1 ft or less.",
+"NW wind 10 to 15 kt. Snow showers likely.   Waves 1 ft or less."
+],
+"hazardName": [
+"Small Craft Advisory in effect from April 3,  07:00 PM CDT until April 4, 07:00 AM CDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LSZ251&warncounty=marine&firewxzone=&local_place1=6NM NNE Grand Marais MI&product1=Small+Craft+Advisory&lat=46.7411&lon=-85.9756",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LSZ251&warncounty=marine&firewxzone=&local_place1=6NM NNE Grand Marais MI&product1=Hazardous+Weather+Outlook&lat=46.7411&lon=-85.9756"
+]
+}
 },
 {
 "lon": -86.57217,
@@ -1549,11 +4904,110 @@
 "http://www.limnotech.com"
 ],
 "webcamSrc": [
-"img/Munising_image.jpg"
+"Munising_image.jpg"
 ],
 "webcamLink": [
 "http://www.limnotechdata.com/stations/Munising/"
+],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_blizzard.png",
+"/images/wtf/medium/m_blizzard.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_blizzard.png",
+"/images/wtf/medium/m_blizzard.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"21",
+"22",
+"18",
+"32",
+"22",
+"29",
+"18",
+"27",
+"18"
+],
+"waveheight": [
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft"
+],
+"windspeed": [
+"N 20kt",
+"N 20kt",
+"NW 15kt",
+"W 10kt",
+"W 10kt",
+"WNW 20kt",
+"NW 20kt",
+"WNW 15kt",
+"NW 10kt"
+],
+"title": [
+"Snow",
+"Blowing Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Snow Likely",
+"Snow Likely",
+"Snow Likely",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"N wind around 20 kt, with gusts as high as 25 kt. Snow with patchy blowing snow before 10pm, then snow likely with areas of blowing snow between 10pm and 5am, then a chance of snow after 5am.   Waves 1 ft or less.",
+"N wind around 20 kt, with gusts as high as 30 kt. Patchy blowing snow and a chance of snow showers before 1pm, then patchy blowing snow and a slight chance of snow showers after 1pm.   Waves 1 ft or less.",
+"NW wind 10 to 15 kt becoming SW after midnight. A chance of snow showers, mainly after 1am.   Waves 1 ft or less.",
+"WSW wind 5 to 10 kt becoming WNW in the afternoon. Winds could gust as high as 15 kt. A chance of snow showers.   Waves 1 ft or less.",
+"E wind 5 to 10 kt becoming W after midnight. A chance of snow showers.   Waves 1 ft or less.",
+"WNW wind 10 to 20 kt, with gusts as high as 25 kt. A chance of snow showers before 1pm, then snow showers likely with patchy blowing snow after 1pm.   Waves 1 ft or less.",
+"NW wind 10 to 20 kt, with gusts as high as 25 kt. Snow showers likely with patchy blowing snow.   Waves 1 ft or less.",
+"WNW wind 10 to 15 kt. Snow showers likely.   Waves 1 ft or less.",
+"NW wind around 10 kt, with gusts as high as 20 kt. A chance of snow showers.   Waves 1 ft or less."
+],
+"hazardName": [
+"Small Craft Advisory in effect from April 3,  07:00 PM CDT until April 4, 07:00 AM CDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LSZ250&warncounty=marine&firewxzone=&local_place1=10NM NNE Munising MI&product1=Small+Craft+Advisory&lat=46.5728&lon=-86.5722",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LSZ250&warncounty=marine&firewxzone=&local_place1=10NM NNE Munising MI&product1=Hazardous+Weather+Outlook&lat=46.5728&lon=-86.5722"
 ]
+}
 },
 {
 "lon": -87.655,
@@ -1599,11 +5053,112 @@
 "http://www.boatus.com/Towing/"
 ],
 "webcamSrc": [
-"img/Wilmette_image.jpg"
+"media/Wilmette_image.jpg"
 ],
 "webcamLink": [
 "http://www.limnotechdata.com/stations/Wilmette/"
+],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_bkn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"28",
+"34",
+"27",
+"37",
+"29",
+"33",
+"23",
+"34",
+"27"
+],
+"waveheight": [
+"8ft",
+"8ft",
+"2-3ft",
+"1-2ft",
+"1-2ft",
+"3-4ft",
+"2-3ft",
+"1-2ft",
+"1ft"
+],
+"windspeed": [
+"NW 30kt",
+"NW 25kt",
+"WNW 15kt",
+"S 10kt",
+"NW 10kt",
+"WNW 15kt",
+"NW 15kt",
+"NW 10kt",
+"NW 10kt"
+],
+"title": [
+"Rain/Snow",
+"Slight Chc Snow",
+"Partly Cloudy",
+"Chance Snow",
+"Chance Rain/Snow",
+"Mostly Cloudy",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"NNW wind 15 to 20 kt becoming NW 25 to 30 kt after midnight. Rain and snow, becoming all snow after 3am.  Patchy fog before 7pm.  Waves 5 ft building to 8 ft.",
+"NW wind 15 to 25 kt, with gusts as high as 30 kt. A slight chance of snow before 7am.   Waves 8 ft subsiding to 4 ft.",
+"WNW wind 5 to 15 kt. Partly cloudy. Waves 2 to 3 ft.",
+"SW wind 5 to 10 kt becoming S in the morning. A chance of snow, mainly after 1pm.   Waves 1 to 2 ft.",
+"SSE wind 5 to 10 kt becoming NW after midnight. Winds could gust as high as 20 kt. A chance of rain and snow before 9pm, then a chance of snow between 9pm and 1am.   Waves 1 to 2 ft.",
+"WNW wind 10 to 15 kt, with gusts as high as 25 kt. Mostly cloudy. Waves 3 to 4 ft.",
+"NW wind around 15 kt, with gusts as high as 25 kt. Partly cloudy. Waves 2 to 3 ft.",
+"NW wind 5 to 10 kt. Mostly sunny. Waves 1 to 2 ft.",
+"NW wind 5 to 10 kt. Partly cloudy. Waves around 1 ft."
+],
+"hazardName": [
+"Small Craft Advisory  until April 4, 01:00 AM CDT",
+"Gale Warning in effect from April 4,  01:00 AM CDT until April 4, 09:00 AM CDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ740&warncounty=marine&firewxzone=&local_place1=6NM NNE Evanston IL&product1=Small+Craft+Advisory&lat=42.135&lon=-87.655",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ740&warncounty=marine&firewxzone=&local_place1=6NM NNE Evanston IL&product1=Gale+Warning&lat=42.135&lon=-87.655",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LMZ740&warncounty=marine&firewxzone=&local_place1=6NM NNE Evanston IL&product1=Hazardous+Weather+Outlook&lat=42.135&lon=-87.655"
 ]
+}
 },
 {
 "lon": -84.77217,
@@ -1652,7 +5207,106 @@
 "http://www.mtri.org/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"21",
+"25",
+"17",
+"33",
+"23",
+"30",
+"18",
+"29",
+"17"
+],
+"waveheight": [
+"< 1ft",
+"1ft",
+"1ft",
+"1ft",
+"< 1ft",
+"1ft",
+"1ft",
+"1ft",
+"1ft"
+],
+"windspeed": [
+"NNE 15kt",
+"NW 20kt",
+"NW 15kt",
+"WSW 15kt",
+"SW 10kt",
+"W 15kt",
+"NW 15kt",
+"W 10kt",
+"NW 10kt"
+],
+"title": [
+"Snow",
+"Chance Snow",
+"Slight Chc Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"NNE wind 10 to 15 kt. Snow.   Waves 1 ft or less.",
+"NW wind 15 to 20 kt. A chance of snow, mainly before 11am.   Waves around 1 ft.",
+"NW wind 10 to 15 kt. A slight chance of snow showers.   Waves around 1 ft.",
+"WSW wind 10 to 15 kt. A chance of snow showers after 2pm.   Waves around 1 ft.",
+"SW wind 5 to 10 kt. A chance of snow.   Waves 1 ft or less.",
+"W wind 10 to 15 kt. A chance of snow.   Waves around 1 ft.",
+"NW wind around 15 kt. A chance of snow showers.   Waves around 1 ft.",
+"W wind around 10 kt. A chance of snow showers.   Waves around 1 ft.",
+"NW wind around 10 kt. A chance of snow showers.   Waves around 1 ft."
+],
+"hazardName": [
+"Hazardous Weather Outlook ",
+"Small Craft Advisory  until April 4, 06:00 PM EDT"
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LHZ345&warncounty=marine&firewxzone=&local_place1=3NM NNW Mackinaw City MI&product1=Hazardous+Weather+Outlook&lat=45.8253&lon=-84.7722",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LHZ345&warncounty=marine&firewxzone=&local_place1=3NM NNW Mackinaw City MI&product1=Small+Craft+Advisory&lat=45.8253&lon=-84.7722"
+]
+}
 },
 {
 "lon": -81.76528,
@@ -1710,7 +5364,106 @@
 "http://www.glos.us/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"37",
+"39",
+"29",
+"38",
+"32",
+"39",
+"25",
+"34",
+"28"
+],
+"waveheight": [
+"4ft",
+"8ft",
+"7ft",
+"2-3ft",
+"1ft",
+"5ft",
+"6ft",
+"2-3ft",
+"2ft"
+],
+"windspeed": [
+"WSW 23kt",
+"W 27kt",
+"WNW 22kt",
+"W 13kt",
+"S 8kt",
+"W 20kt",
+"WNW 18kt",
+"W 11kt",
+"NW 9kt"
+],
+"title": [
+"Severe Thunderstorms",
+"Slight Chc Rain/Snow",
+"Chance Snow",
+"Slight Chc Rain/Snow",
+"Rain/Snow Likely",
+"Chance Rain/Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"S wind 15 to 18 kt becoming WSW 20 to 23 kt after midnight. Showers and thunderstorms before 3am, then a chance of showers. Some storms could be severe, with large hail and damaging winds.   Waves 2 ft building to 4 ft.",
+"WSW wind 25 to 27 kt becoming W in the afternoon. Winds could gust as high as 33 kt. A slight chance of rain and snow showers before 10am, then a slight chance of snow showers between 10am and 2pm, then a slight chance of rain showers after 2pm.   Waves 6 ft building to 8 ft.",
+"WNW wind 19 to 22 kt decreasing to 14 to 17 kt after midnight. A chance of snow showers, mainly before 5am.   Waves 7 ft subsiding to 4 ft.",
+"W wind 9 to 13 kt. A slight chance of snow showers before 7am, then a slight chance of rain and snow showers after 4pm.   Waves 2 to 3 ft.",
+"S wind 6 to 8 kt. A chance of rain and snow showers before 11pm, then snow showers likely.   Waves around 1 ft.",
+"W wind 15 to 20 kt. A chance of rain and snow showers, mainly before 2pm.   Waves 2 ft building to 5 ft.",
+"WNW wind 15 to 18 kt decreasing to 12 to 15 kt after midnight. Partly cloudy. Waves 6 ft subsiding to 4 ft.",
+"W wind 8 to 11 kt. Mostly sunny. Waves 2 to 3 ft.",
+"W wind around 9 kt becoming NNW after midnight. Partly cloudy. Waves around 2 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 4,  05:00 AM EDT until April 4, 05:00 PM EDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ146&warncounty=marine&firewxzone=&local_place1=4NM NNE Lakewood OH&product1=Gale+Warning&lat=41.5502&lon=-81.7653",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ146&warncounty=marine&firewxzone=&local_place1=4NM NNE Lakewood OH&product1=Hazardous+Weather+Outlook&lat=41.5502&lon=-81.7653"
+]
+}
 },
 {
 "lon": -81.765,
@@ -1748,7 +5501,106 @@
 "http://www.glos.us/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"37",
+"39",
+"29",
+"38",
+"32",
+"39",
+"25",
+"34",
+"28"
+],
+"waveheight": [
+"4ft",
+"8ft",
+"7ft",
+"2-3ft",
+"1ft",
+"5ft",
+"6ft",
+"2-3ft",
+"2ft"
+],
+"windspeed": [
+"WSW 23kt",
+"W 27kt",
+"WNW 22kt",
+"W 13kt",
+"S 8kt",
+"W 20kt",
+"WNW 18kt",
+"W 11kt",
+"NW 9kt"
+],
+"title": [
+"Severe Thunderstorms",
+"Slight Chc Rain/Snow",
+"Chance Snow",
+"Slight Chc Rain/Snow",
+"Rain/Snow Likely",
+"Chance Rain/Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"S wind 15 to 18 kt becoming WSW 20 to 23 kt after midnight. Showers and thunderstorms before 3am, then a chance of showers. Some storms could be severe, with large hail and damaging winds.   Waves 2 ft building to 4 ft.",
+"WSW wind 25 to 27 kt becoming W in the afternoon. Winds could gust as high as 33 kt. A slight chance of rain and snow showers before 10am, then a slight chance of snow showers between 10am and 2pm, then a slight chance of rain showers after 2pm.   Waves 6 ft building to 8 ft.",
+"WNW wind 19 to 22 kt decreasing to 14 to 17 kt after midnight. A chance of snow showers, mainly before 5am.   Waves 7 ft subsiding to 4 ft.",
+"W wind 9 to 13 kt. A slight chance of snow showers before 7am, then a slight chance of rain and snow showers after 4pm.   Waves 2 to 3 ft.",
+"S wind 6 to 8 kt. A chance of rain and snow showers before 11pm, then snow showers likely.   Waves around 1 ft.",
+"W wind 15 to 20 kt. A chance of rain and snow showers, mainly before 2pm.   Waves 2 ft building to 5 ft.",
+"WNW wind 15 to 18 kt decreasing to 12 to 15 kt after midnight. Partly cloudy. Waves 6 ft subsiding to 4 ft.",
+"W wind 8 to 11 kt. Mostly sunny. Waves 2 to 3 ft.",
+"W wind around 9 kt becoming NNW after midnight. Partly cloudy. Waves around 2 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 4,  05:00 AM EDT until April 4, 05:00 PM EDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ146&warncounty=marine&firewxzone=&local_place1=4NM NNE Lakewood OH&product1=Gale+Warning&lat=41.55&lon=-81.765",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ146&warncounty=marine&firewxzone=&local_place1=4NM NNE Lakewood OH&product1=Hazardous+Weather+Outlook&lat=41.55&lon=-81.765"
+]
+}
 },
 {
 "lon": -87.22389,
@@ -1785,7 +5637,106 @@
 "http://www.glos.us/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"22",
+"26",
+"24",
+"32",
+"24",
+"29",
+"22",
+"28",
+"22"
+],
+"waveheight": [
+"8ft",
+"9ft",
+"3-5ft",
+"2-3ft",
+"2ft",
+"6ft",
+"5-6ft",
+"4ft",
+"2-4ft"
+],
+"windspeed": [
+"NNE 25kt",
+"N 25kt",
+"W 15kt",
+"W 15kt",
+"W 15kt",
+"NW 25kt",
+"NW 25kt",
+"NW 20kt",
+"NNW 15kt"
+],
+"title": [
+"Chance Snow",
+"Slight Chc Snow",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow",
+"Snow Likely",
+"Snow Likely",
+"Snow Likely",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"NNE wind 20 to 25 kt. A chance of snow, mainly between 4am and 5am.   Waves 5 ft building to 8 ft.",
+"N wind 20 to 25 kt becoming NW in the afternoon. A slight chance of snow showers.   Waves 9 ft subsiding to 6 ft.",
+"W wind 10 to 15 kt. A chance of snow showers.   Waves 3 to 5 ft.",
+"W wind 10 to 15 kt. A chance of snow showers.   Waves 2 to 3 ft.",
+"W wind 5 to 15 kt. A chance of snow showers.   Waves around 2 ft.",
+"NW wind 15 to 25 kt, with gusts as high as 30 kt. Snow showers likely, mainly after 1pm.   Waves 3 ft building to 6 ft.",
+"NW wind 20 to 25 kt. Snow showers likely.   Waves 5 to 6 ft.",
+"NW wind 15 to 20 kt. Snow showers likely.   Waves around 4 ft.",
+"NNW wind 10 to 15 kt. A chance of snow showers.   Waves 2 to 4 ft."
+],
+"hazardName": [
+"Hazardous Weather Outlook ",
+"Heavy Freezing Spray Warning in effect from April 4,  03:00 AM CDT until April 4, 03:00 PM CDT"
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LSZ266&warncounty=marine&firewxzone=&local_place1=31NM ESE Copper Harbor MI&product1=Hazardous+Weather+Outlook&lat=47.1947&lon=-87.2239",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LSZ266&warncounty=marine&firewxzone=&local_place1=31NM ESE Copper Harbor MI&product1=Heavy+Freezing+Spray+Warning&lat=47.1947&lon=-87.2239"
+]
+}
 },
 {
 "lon": -82.6727,
@@ -1825,7 +5776,106 @@
 "http://www.bgsu.edu"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_shra.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_shra.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"36",
+"40",
+"28",
+"41",
+"32",
+"40",
+"23",
+"36",
+"27"
+],
+"waveheight": [
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft"
+],
+"windspeed": [
+"WSW 21kt",
+"W 28kt",
+"W 21kt",
+"W 12kt",
+"S 9kt",
+"W 21kt",
+"WNW 18kt",
+"W 9kt",
+"WNW 9kt"
+],
+"title": [
+"Thunderstorms",
+"Chance Showers",
+"Mostly Cloudy",
+"Slight Chc Showers",
+"Chance Rain/Snow",
+"Slight Chc Rain/Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"S wind 13 to 16 kt becoming WSW 18 to 21 kt in the evening. Winds could gust as high as 30 kt. Showers and thunderstorms before midnight, then a chance of showers.   Waves 1 ft or less.",
+"W wind 23 to 28 kt, with gusts as high as 40 kt. A chance of showers before 11am, then a slight chance of showers after 1pm.   Waves 1 ft or less.",
+"W wind 16 to 21 kt decreasing to 11 to 16 kt after midnight. Winds could gust as high as 30 kt. Mostly cloudy. Waves 1 ft or less.",
+"W wind 8 to 12 kt. A slight chance of showers after 4pm.   Waves 1 ft or less.",
+"S wind 7 to 9 kt. A chance of rain showers before 11pm, then a chance of rain and snow showers between 11pm and 2am, then a chance of snow showers after 2am.   Waves 1 ft or less.",
+"W wind 15 to 18 kt increasing to 18 to 21 kt in the afternoon. Winds could gust as high as 30 kt. A slight chance of snow showers before 8am, then a slight chance of rain and snow showers.   Waves 1 ft or less.",
+"WNW wind 15 to 18 kt decreasing to 12 to 15 kt after midnight. Winds could gust as high as 26 kt. Partly cloudy. Waves 1 ft or less.",
+"W wind around 9 kt. Mostly sunny. Waves 1 ft or less.",
+"WNW wind around 9 kt becoming NNW after midnight. Partly cloudy. Waves 1 ft or less."
+],
+"hazardName": [
+"Hazardous Weather Outlook ",
+"Gale Warning in effect from April 4,  05:00 AM EDT until April 4, 05:00 PM EDT"
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ144&warncounty=marine&firewxzone=&local_place1=2NM E Sandusky OH&product1=Hazardous+Weather+Outlook&lat=41.4563&lon=-82.6727",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ144&warncounty=marine&firewxzone=&local_place1=2NM E Sandusky OH&product1=Gale+Warning&lat=41.4563&lon=-82.6727"
+]
+}
 },
 {
 "lon": -82.6502,
@@ -1864,7 +5914,106 @@
 "http://www.bgsu.edu/news/2012/11/saving-lake-erie.html"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_shra.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"37",
+"40",
+"28",
+"42",
+"32",
+"40",
+"23",
+"37",
+"26"
+],
+"waveheight": [
+"2ft",
+"3-4ft",
+"3ft",
+"1ft",
+"1ft",
+"3ft",
+"2-3ft",
+"1ft",
+"1ft"
+],
+"windspeed": [
+"WSW 23kt",
+"W 28kt",
+"W 22kt",
+"W 12kt",
+"S 9kt",
+"W 21kt",
+"WNW 18kt",
+"W 9kt",
+"WNW 9kt"
+],
+"title": [
+"Severe Thunderstorms",
+"Slight Chc Rain/Snow",
+"Slight Chc Snow",
+"Slight Chc Showers",
+"Chance Rain/Snow",
+"Slight Chc Rain/Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"S wind 13 to 18 kt becoming WSW 18 to 23 kt in the evening. Winds could gust as high as 33 kt. Showers and thunderstorms before 2am, then a chance of showers. Some storms could be severe, with large hail and damaging winds.   Waves around 2 ft.",
+"W wind 24 to 28 kt, with gusts as high as 40 kt. A slight chance of rain and snow showers before 11am, then a slight chance of rain showers after 3pm.   Waves 3 to 4 ft.",
+"W wind 17 to 22 kt decreasing to 11 to 16 kt after midnight. Winds could gust as high as 30 kt. A slight chance of snow showers.   Waves 3 ft subsiding to 1 ft.",
+"W wind 8 to 12 kt. A slight chance of showers after 4pm.   Waves around 1 ft.",
+"S wind 7 to 9 kt. A chance of rain showers before 11pm, then a chance of rain and snow showers between 11pm and 2am, then a chance of snow showers after 2am.   Waves around 1 ft.",
+"W wind 15 to 18 kt increasing to 18 to 21 kt in the afternoon. Winds could gust as high as 30 kt. A slight chance of snow showers before 8am, then a slight chance of rain and snow showers.   Waves 1 ft building to 3 ft.",
+"WNW wind 15 to 18 kt decreasing to 12 to 15 kt after midnight. Winds could gust as high as 26 kt. Partly cloudy. Waves 2 to 3 ft.",
+"W wind around 9 kt. Mostly sunny. Waves around 1 ft.",
+"WNW wind around 9 kt becoming NNW after midnight. Partly cloudy. Waves around 1 ft."
+],
+"hazardName": [
+"Hazardous Weather Outlook ",
+"Gale Warning in effect from April 4,  05:00 AM EDT until April 4, 05:00 PM EDT"
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ144&warncounty=marine&firewxzone=&local_place1=3NM E Sandusky OH&product1=Hazardous+Weather+Outlook&lat=41.4629&lon=-82.6502",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ144&warncounty=marine&firewxzone=&local_place1=3NM E Sandusky OH&product1=Gale+Warning&lat=41.4629&lon=-82.6502"
+]
+}
 },
 {
 "lon": -82.75045,
@@ -1906,7 +6055,106 @@
 "http://www.bgsu.edu/news/2012/11/saving-lake-erie.html"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_shra.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"37",
+"40",
+"28",
+"42",
+"32",
+"40",
+"23",
+"37",
+"27"
+],
+"waveheight": [
+"1-2ft",
+"2-3ft",
+"1-2ft",
+"1ft",
+"1ft",
+"1-2ft",
+"1-2ft",
+"1ft",
+"1ft"
+],
+"windspeed": [
+"WSW 24kt",
+"W 27kt",
+"W 21kt",
+"WSW 11kt",
+"S 9kt",
+"W 21kt",
+"WNW 18kt",
+"W 9kt",
+"WNW 9kt"
+],
+"title": [
+"Severe Thunderstorms",
+"Slight Chc Rain/Snow",
+"Mostly Cloudy",
+"Slight Chc Showers",
+"Chance Rain/Snow",
+"Slight Chc Rain/Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"S wind 13 to 18 kt becoming WSW 19 to 24 kt in the evening. Winds could gust as high as 33 kt. Showers and thunderstorms before 2am, then a slight chance of showers. Some storms could be severe, with large hail and damaging winds.   Waves 1 to 2 ft.",
+"W wind 24 to 27 kt, with gusts as high as 39 kt. A slight chance of rain and snow showers before 9am, then a slight chance of snow showers between 9am and 11am.   Waves 2 to 3 ft.",
+"W wind 16 to 21 kt decreasing to 10 to 15 kt after midnight. Winds could gust as high as 30 kt. Mostly cloudy. Waves 1 to 2 ft.",
+"WSW wind 8 to 11 kt. A slight chance of showers after 4pm.   Waves around 1 ft.",
+"S wind 7 to 9 kt. A chance of rain showers before 11pm, then a chance of rain and snow showers between 11pm and 2am, then a chance of snow showers after 2am.   Waves around 1 ft.",
+"W wind 16 to 21 kt, with gusts as high as 30 kt. A slight chance of snow showers before 8am, then a slight chance of rain and snow showers.   Waves 1 to 2 ft.",
+"WNW wind 15 to 18 kt decreasing to 12 to 15 kt after midnight. Winds could gust as high as 26 kt. Partly cloudy. Waves 1 to 2 ft.",
+"W wind around 9 kt. Mostly sunny. Waves around 1 ft.",
+"WNW wind around 9 kt becoming NNW after midnight. Partly cloudy. Waves around 1 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 4,  05:00 AM EDT until April 4, 05:00 PM EDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ144&warncounty=marine&firewxzone=&local_place1=2NM WNW Sandusky OH&product1=Gale+Warning&lat=41.4693&lon=-82.7505",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ144&warncounty=marine&firewxzone=&local_place1=2NM WNW Sandusky OH&product1=Hazardous+Weather+Outlook&lat=41.4693&lon=-82.7505"
+]
+}
 },
 {
 "lon": -76.52,
@@ -1964,7 +6212,104 @@
 "http://www.esf.edu/glrc/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_nra.png",
+"/images/wtf/medium/m_shra.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nsn.png"
+],
+"temperature": [
+"40",
+"48",
+"26",
+"34",
+"32",
+"39",
+"27",
+"37",
+"27"
+],
+"waveheight": [
+"1-2ft",
+"14ft",
+"16ft",
+"9ft",
+"6ft",
+"4ft",
+"9ft",
+"5-6ft",
+"4-5ft"
+],
+"windspeed": [
+"S 16kt",
+"WSW 38kt",
+"WNW 34kt",
+"WNW 18kt",
+"W 12kt",
+"WSW 19kt",
+"W 19kt",
+"W 14kt",
+"WNW 11kt"
+],
+"title": [
+"Rain",
+"Showers",
+"Chance Snow",
+"Chance Snow",
+"Snow Likely",
+"Snow Likely",
+"Chance Snow",
+"Chance Snow",
+"Chance Snow"
+],
+"synopsis": "",
+"forecastText": [
+"ESE wind 10 to 13 kt becoming S 13 to 16 kt after midnight. Rain, with thunderstorms also possible after 4am.   Waves 1 to 2 ft.",
+"SSW wind 14 to 19 kt becoming WSW 33 to 38 kt. Winds could gust as high as 60 kt. Showers and possibly a thunderstorm before 10am, then showers likely.   Waves 1 ft building to 14 ft.",
+"WNW wind 29 to 34 kt decreasing to 21 to 26 kt. Winds could gust as high as 50 kt. A chance of snow showers.   Waves 16 ft subsiding to 11 ft.",
+"WNW wind around 18 kt, with gusts as high as 24 kt. A chance of snow showers.   Waves 9 ft subsiding to 6 ft.",
+"W wind 9 to 12 kt becoming S after midnight. Winds could gust as high as 20 kt. Snow likely, mainly after 1am.   Waves 6 ft subsiding to 3 ft.",
+"SSE wind 17 to 19 kt becoming WSW in the afternoon. Snow likely, mainly before 3pm.   Waves 2 ft building to 4 ft.",
+"W wind 17 to 19 kt. A chance of snow.   Waves 7 ft building to 9 ft.",
+"W wind 12 to 14 kt. A chance of snow showers.   Waves 5 to 6 ft.",
+"WNW wind around 11 kt. A chance of snow showers.   Waves 4 to 5 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 4,  08:00 AM EDT until April 5, 02:00 AM EDT"
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LOZ044&warncounty=marine&firewxzone=&local_place1=2NM NNW Oswego NY&product1=Gale+Warning&lat=43.49&lon=-76.52"
+]
+}
 },
 {
 "lon": -76.94,
@@ -2001,7 +6346,105 @@
 "http://www.esf.edu/glrc/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/newimages/medium/nra100.png",
+"/DualImage.php?i=shra&j=shra&ip=70&jp=40",
+"/DualImage.php?i=nra_sn&j=nsn&ip=60&jp=50",
+"/newimages/medium/sn40.png",
+"/newimages/medium/nsn60.png",
+"/newimages/medium/sn70.png",
+"/newimages/medium/nsn30.png",
+"/newimages/medium/sn30.png",
+"/newimages/medium/nsn30.png"
+],
+"temperature": [
+"41",
+"48",
+"27",
+"34",
+"31",
+"40",
+"27",
+"38",
+"27"
+],
+"waveheight": [
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+""
+],
+"windspeed": [
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+""
+],
+"title": [
+"Tonight: Rain, with thunderstorms also possible after 2am.  Temperature rising to around 52 by 5am. Breezy, with a south wind 9 to 14 mph increasing to 15 to 20 mph after midnight.  Chance of precipitation is 100%. New rainfall amounts between a quarter and half of an inch possible. ",
+"Wednesday: Rain likely and possibly a thunderstorm before 9am, then rain likely between 9am and 10am, then a chance of showers after 10am.  Cloudy, with a temperature falling to around 36 by 5pm. Windy, with a west wind 13 to 23 mph increasing to 27 to 37 mph in the afternoon. Winds could gust as high as 65 mph.  Chance of precipitation is 70%. New precipitation amounts between a tenth and quarter of an inch, except higher amounts possible in thunderstorms. ",
+"Wednesday Night: Rain and snow showers likely before 9pm, then a chance of snow showers.  Mostly cloudy, with a low around 27. Windy, with a west wind 21 to 31 mph, with gusts as high as 50 mph.  Chance of precipitation is 60%. New snow accumulation of less than a half inch possible. ",
+"Thursday: A chance of snow showers, mainly before 2pm.  Partly sunny, with a high near 34. West wind 16 to 18 mph, with gusts as high as 28 mph.  Chance of precipitation is 40%. New snow accumulation of less than a half inch possible. ",
+"Thursday Night: Snow likely, mainly after midnight.  Cloudy, with a low around 31. West wind 7 to 11 mph becoming south after midnight.  Chance of precipitation is 60%.",
+"Friday: Snow likely, mainly before 2pm.  Cloudy, with a high near 40. Breezy.  Chance of precipitation is 70%.",
+"Friday Night: A chance of snow.  Mostly cloudy, with a low around 27. Breezy.  Chance of precipitation is 30%.",
+"Saturday: A chance of snow showers before 1pm.  Mostly cloudy, with a high near 38. Chance of precipitation is 30%.",
+"Saturday Night: A chance of snow showers after 11pm.  Mostly cloudy, with a low around 27. Chance of precipitation is 30%."
+],
+"synopsis": "",
+"forecastText": [
+"Rain, with thunderstorms also possible after 2am.  Temperature rising to around 52 by 5am. Breezy, with a south wind 9 to 14 mph increasing to 15 to 20 mph after midnight.  Chance of precipitation is 100%. New rainfall amounts between a quarter and half of an inch possible. ",
+"Rain likely and possibly a thunderstorm before 9am, then rain likely between 9am and 10am, then a chance of showers after 10am.  Cloudy, with a temperature falling to around 36 by 5pm. Windy, with a west wind 13 to 23 mph increasing to 27 to 37 mph in the afternoon. Winds could gust as high as 65 mph.  Chance of precipitation is 70%. New precipitation amounts between a tenth and quarter of an inch, except higher amounts possible in thunderstorms. ",
+"Rain and snow showers likely before 9pm, then a chance of snow showers.  Mostly cloudy, with a low around 27. Windy, with a west wind 21 to 31 mph, with gusts as high as 50 mph.  Chance of precipitation is 60%. New snow accumulation of less than a half inch possible. ",
+"A chance of snow showers, mainly before 2pm.  Partly sunny, with a high near 34. West wind 16 to 18 mph, with gusts as high as 28 mph.  Chance of precipitation is 40%. New snow accumulation of less than a half inch possible. ",
+"Snow likely, mainly after midnight.  Cloudy, with a low around 31. West wind 7 to 11 mph becoming south after midnight.  Chance of precipitation is 60%.",
+"Snow likely, mainly before 2pm.  Cloudy, with a high near 40. Breezy.  Chance of precipitation is 70%.",
+"A chance of snow.  Mostly cloudy, with a low around 27. Breezy.  Chance of precipitation is 30%.",
+"A chance of snow showers before 1pm.  Mostly cloudy, with a high near 38. Chance of precipitation is 30%.",
+"A chance of snow showers after 11pm.  Mostly cloudy, with a low around 27. Chance of precipitation is 30%.",
+"Mostly cloudy, with a high near 37.",
+"Mostly cloudy, with a low around 29.",
+"A chance of rain and snow.  Cloudy, with a high near 41. Chance of precipitation is 50%.",
+"Rain and snow likely.  Cloudy, with a low around 35. Chance of precipitation is 60%.",
+"Rain and snow likely.  Cloudy, with a high near 43. Chance of precipitation is 60%."
+],
+"hazardName": [],
+"hazardLink": []
+}
 },
 {
 "lon": -79.43,
@@ -2051,7 +6494,106 @@
 "http://www.esf.edu/glrc/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_sn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nra.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"40",
+"38",
+"22",
+"32",
+"27",
+"35",
+"19",
+"31",
+"21"
+],
+"waveheight": [
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft"
+],
+"windspeed": [
+"SSW 22kt",
+"WSW 37kt",
+"W 22kt",
+"W 16kt",
+"SW 8kt",
+"W 19kt",
+"W 18kt",
+"W 12kt",
+"WNW 10kt"
+],
+"title": [
+"Thunderstorms",
+"Chance Rain/Snow",
+"Chance Snow",
+"Slight Chc Snow",
+"Rain/Snow",
+"Chance Rain/Snow",
+"Chance Rain",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"ESE wind 9 to 12 kt becoming SSW 17 to 22 kt. Showers and thunderstorms before midnight, then showers and possibly a thunderstorm between midnight and 2am, then showers after 2am.   Waves 1 ft or less.",
+"WSW wind 33 to 37 kt, with gusts as high as 44 kt. A chance of rain showers before 9am, then a chance of rain and snow showers between 9am and noon, then a chance of snow showers after noon.   Waves 1 ft or less.",
+"W wind 17 to 22 kt. A chance of snow showers.   Waves 1 ft or less.",
+"W wind 13 to 16 kt. A slight chance of snow showers before 11am.   Waves 1 ft or less.",
+"SW wind 6 to 8 kt becoming SSE after midnight. A chance of rain and snow showers before 11pm, then snow showers.   Waves 1 ft or less.",
+"W wind 13 to 16 kt increasing to 16 to 19 kt in the afternoon. A chance of snow showers before 2pm, then a chance of rain and snow showers.   Waves 1 ft or less.",
+"W wind 15 to 18 kt decreasing to 11 to 14 kt after midnight. A chance of rain showers before 8pm.   Waves 1 ft or less.",
+"W wind around 12 kt. Mostly sunny. Waves 1 ft or less.",
+"WNW wind 6 to 10 kt. Partly cloudy. Waves 1 ft or less."
+],
+"hazardName": [
+"Gale Warning in effect from April 4,  05:00 AM EDT until April 4, 05:00 PM EDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ061&warncounty=marine&firewxzone=&local_place1=6NM NW Dunkirk NY&product1=Gale+Warning&lat=42.56&lon=-79.43",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ061&warncounty=marine&firewxzone=&local_place1=6NM NW Dunkirk NY&product1=Hazardous+Weather+Outlook&lat=42.56&lon=-79.43"
+]
+}
 },
 {
 "lon": -76.96,
@@ -2100,7 +6642,105 @@
 "http://www.esf.edu/glrc/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/newimages/medium/nra100.png",
+"/DualImage.php?i=shra&j=shra&ip=70&jp=40",
+"/DualImage.php?i=nra_sn&j=nsn&ip=60&jp=50",
+"/newimages/medium/sn40.png",
+"/newimages/medium/nsn60.png",
+"/newimages/medium/sn70.png",
+"/newimages/medium/nsn30.png",
+"/newimages/medium/sn30.png",
+"/newimages/medium/nsn30.png"
+],
+"temperature": [
+"41",
+"48",
+"27",
+"34",
+"31",
+"40",
+"27",
+"38",
+"27"
+],
+"waveheight": [
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+""
+],
+"windspeed": [
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+""
+],
+"title": [
+"Tonight: Rain, with thunderstorms also possible after 2am.  Temperature rising to around 51 by 4am. Breezy, with a south wind 9 to 14 mph increasing to 15 to 20 mph after midnight.  Chance of precipitation is 100%. New rainfall amounts between a quarter and half of an inch possible. ",
+"Wednesday: Rain likely and possibly a thunderstorm before 9am, then rain likely between 9am and 10am, then a chance of showers after 10am.  Cloudy, with a temperature falling to around 36 by 5pm. Windy, with a west wind 14 to 24 mph increasing to 27 to 37 mph in the afternoon. Winds could gust as high as 65 mph.  Chance of precipitation is 70%. New precipitation amounts between a tenth and quarter of an inch, except higher amounts possible in thunderstorms. ",
+"Wednesday Night: Rain and snow showers likely before 9pm, then a chance of snow showers.  Mostly cloudy, with a low around 27. Windy, with a west wind 22 to 32 mph, with gusts as high as 50 mph.  Chance of precipitation is 60%. New snow accumulation of less than a half inch possible. ",
+"Thursday: A chance of snow showers, mainly before 2pm.  Partly sunny, with a high near 34. West wind around 18 mph, with gusts as high as 28 mph.  Chance of precipitation is 40%. New snow accumulation of less than a half inch possible. ",
+"Thursday Night: Snow likely, mainly after midnight.  Cloudy, with a low around 31. West wind 8 to 11 mph becoming south after midnight. Winds could gust as high as 21 mph.  Chance of precipitation is 60%.",
+"Friday: Snow likely, mainly before 2pm.  Cloudy, with a high near 40. Breezy.  Chance of precipitation is 70%.",
+"Friday Night: A chance of snow.  Mostly cloudy, with a low around 27. Breezy.  Chance of precipitation is 30%.",
+"Saturday: A chance of snow showers before 1pm.  Mostly cloudy, with a high near 38. Chance of precipitation is 30%.",
+"Saturday Night: A chance of snow showers after 11pm.  Mostly cloudy, with a low around 27. Chance of precipitation is 30%."
+],
+"synopsis": "",
+"forecastText": [
+"Rain, with thunderstorms also possible after 2am.  Temperature rising to around 51 by 4am. Breezy, with a south wind 9 to 14 mph increasing to 15 to 20 mph after midnight.  Chance of precipitation is 100%. New rainfall amounts between a quarter and half of an inch possible. ",
+"Rain likely and possibly a thunderstorm before 9am, then rain likely between 9am and 10am, then a chance of showers after 10am.  Cloudy, with a temperature falling to around 36 by 5pm. Windy, with a west wind 14 to 24 mph increasing to 27 to 37 mph in the afternoon. Winds could gust as high as 65 mph.  Chance of precipitation is 70%. New precipitation amounts between a tenth and quarter of an inch, except higher amounts possible in thunderstorms. ",
+"Rain and snow showers likely before 9pm, then a chance of snow showers.  Mostly cloudy, with a low around 27. Windy, with a west wind 22 to 32 mph, with gusts as high as 50 mph.  Chance of precipitation is 60%. New snow accumulation of less than a half inch possible. ",
+"A chance of snow showers, mainly before 2pm.  Partly sunny, with a high near 34. West wind around 18 mph, with gusts as high as 28 mph.  Chance of precipitation is 40%. New snow accumulation of less than a half inch possible. ",
+"Snow likely, mainly after midnight.  Cloudy, with a low around 31. West wind 8 to 11 mph becoming south after midnight. Winds could gust as high as 21 mph.  Chance of precipitation is 60%.",
+"Snow likely, mainly before 2pm.  Cloudy, with a high near 40. Breezy.  Chance of precipitation is 70%.",
+"A chance of snow.  Mostly cloudy, with a low around 27. Breezy.  Chance of precipitation is 30%.",
+"A chance of snow showers before 1pm.  Mostly cloudy, with a high near 38. Chance of precipitation is 30%.",
+"A chance of snow showers after 11pm.  Mostly cloudy, with a low around 27. Chance of precipitation is 30%.",
+"Mostly cloudy, with a high near 36.",
+"Mostly cloudy, with a low around 29.",
+"A chance of rain and snow.  Cloudy, with a high near 41. Chance of precipitation is 50%.",
+"Rain and snow likely.  Cloudy, with a low around 35. Chance of precipitation is 60%.",
+"Rain and snow likely.  Cloudy, with a high near 42. Chance of precipitation is 60%."
+],
+"hazardName": [],
+"hazardLink": []
+}
 },
 {
 "lon": -80.807,
@@ -2138,7 +6778,157 @@
 "http://www.aquaamerica.com/"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"obsID": [
+"SPCOND",
+"WTMP",
+"DIOSAT",
+"DISOXY",
+"YTUBRI",
+"YBGALG",
+"PH",
+"YCHLOR",
+"CurSpd",
+"CurDir"
+],
+"obsUnits": [
+"\u03bcS/cm",
+"\u00b0F",
+"%",
+"mg/L",
+"ntu",
+"RFU",
+"",
+"RFU",
+"cm_s-1",
+"\u00b0"
+],
+"obsLongName": [
+"Specific Conductivity",
+"Water Temp.",
+"DO Saturation",
+"Dissolved Oxygen",
+"YTUBRI",
+"Blue-Green-Algae",
+"PH",
+"Chlorophyll",
+"Surface Current Speed",
+"Surface Current to Direction"
+],
+"updateTime": "2018-04-03T22:10:00Z",
+"obsValues": [
+295.59,
+36.2606,
+104.23,
+14.26,
+6.64,
+0.3,
+8.25,
+0.08,
+8.069478863129886,
+306.9548173519966
+],
+"thermistorDepths": [],
+"thermistorValues": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nra.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"36",
+"40",
+"28",
+"36",
+"31",
+"38",
+"24",
+"34",
+"26"
+],
+"waveheight": [
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft"
+],
+"windspeed": [
+"SW 22kt",
+"W 29kt",
+"WNW 22kt",
+"W 15kt",
+"S 8kt",
+"W 20kt",
+"WNW 20kt",
+"W 11kt",
+"W 10kt"
+],
+"title": [
+"Thunderstorms",
+"Chance Rain/Snow",
+"Snow Likely",
+"Chance Rain/Snow",
+"Rain/Snow Likely",
+"Chance Rain/Snow",
+"Chance Rain",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"SSE wind 11 to 16 kt becoming SW 17 to 22 kt after midnight. Showers and thunderstorms before 4am, then showers likely.   Waves 1 ft or less.",
+"W wind 27 to 29 kt, with gusts as high as 35 kt. A chance of rain and snow showers before 1pm, then a chance of rain showers between 1pm and 5pm, then a chance of rain and snow showers after 5pm.   Waves 1 ft or less.",
+"WNW wind 19 to 22 kt decreasing to 16 to 19 kt after midnight. Snow showers likely, mainly between 7pm and 4am.   Waves 1 ft or less.",
+"W wind 13 to 15 kt. A chance of snow showers before 11am, then a slight chance of rain and snow showers after 4pm.   Waves 1 ft or less.",
+"Variable winds less than 5 kt becoming S 5 to 8 kt after midnight. A chance of rain and snow showers before 11pm, then snow showers likely.   Waves 1 ft or less.",
+"W wind 15 to 20 kt. A chance of snow showers before 2pm, then a chance of rain and snow showers.   Waves 1 ft or less.",
+"WNW wind 17 to 20 kt decreasing to 14 to 17 kt after midnight. A chance of rain showers before 8pm.   Waves 1 ft or less.",
+"W wind around 11 kt. Mostly sunny. Waves 1 ft or less.",
+"W wind 8 to 10 kt becoming NNW after midnight. Partly cloudy. Waves 1 ft or less."
+],
+"hazardName": [
+"Gale Warning in effect from April 4,  05:00 AM EDT until April 4, 05:00 PM EDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ148&warncounty=marine&firewxzone=&local_place1=2NM NNW Ashtabula OH&product1=Gale+Warning&lat=41.904&lon=-80.807",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ148&warncounty=marine&firewxzone=&local_place1=2NM NNW Ashtabula OH&product1=Hazardous+Weather+Outlook&lat=41.904&lon=-80.807"
+]
+}
 },
 {
 "lon": -82.01237832,
@@ -2183,7 +6973,9 @@
 "DISOXY",
 "YBGALG",
 "PH",
-"YCHLOR"
+"YCHLOR",
+"CurSpd",
+"CurDir"
 ],
 "obsUnits": [
 "\u03bcS/cm",
@@ -2192,7 +6984,9 @@
 "mg/L",
 "RFU",
 "",
-"RFU"
+"RFU",
+"cm_s-1",
+"\u00b0"
 ],
 "obsLongName": [
 "Specific Conductivity",
@@ -2201,20 +6995,123 @@
 "Dissolved Oxygen",
 "Blue-Green-Algae",
 "PH",
-"Chlorophyll"
+"Chlorophyll",
+"Surface Current Speed",
+"Surface Current to Direction"
 ],
-"updateTime": "2018-03-13T12:10:00Z",
+"updateTime": "2018-04-03T22:10:00Z",
 "obsValues": [
-226.44,
-38.714,
-97.42,
-12.85,
-0.55,
-8.22,
-0.45
+70.25,
+40.91,
+94.53,
+12.09,
+0.2,
+8.24,
+0.07,
+8.069478863129886,
+306.9548173519966
 ],
 "thermistorDepths": [],
-"thermistorValues": []
+"thermistorValues": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_shra.png",
+"/images/wtf/medium/m_wave.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"37",
+"39",
+"29",
+"39",
+"32",
+"39",
+"24",
+"35",
+"28"
+],
+"waveheight": [
+"4ft",
+"7ft",
+"6ft",
+"2-3ft",
+"1ft",
+"5ft",
+"5ft",
+"2-3ft",
+"1-2ft"
+],
+"windspeed": [
+"WSW 23kt",
+"W 29kt",
+"WNW 23kt",
+"W 13kt",
+"S 9kt",
+"W 21kt",
+"WNW 18kt",
+"WNW 10kt",
+"NW 10kt"
+],
+"title": [
+"Thunderstorms",
+"Chance Showers",
+"Mostly Cloudy",
+"Slight Chc Rain/Snow",
+"Rain/Snow Likely",
+"Slight Chc Rain/Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"S wind 15 to 18 kt becoming WSW 20 to 23 kt after midnight. Showers and thunderstorms before midnight, then a chance of showers.   Waves 2 ft building to 4 ft.",
+"WSW wind 26 to 29 kt becoming W in the afternoon. Winds could gust as high as 35 kt. A chance of showers, mainly before 10am.   Waves 5 ft building to 7 ft.",
+"WNW wind 20 to 23 kt decreasing to 14 to 17 kt after midnight. Mostly cloudy. Waves 6 ft subsiding to 3 ft.",
+"W wind 9 to 13 kt. A slight chance of rain and snow showers after 4pm.   Waves 2 to 3 ft.",
+"S wind 7 to 9 kt. A chance of rain and snow showers before 11pm, then snow showers likely.   Waves around 1 ft.",
+"W wind 16 to 21 kt. A slight chance of rain and snow showers.   Waves 2 ft building to 5 ft.",
+"WNW wind 13 to 18 kt. Partly cloudy. Waves 5 ft subsiding to 3 ft.",
+"WNW wind around 10 kt. Mostly sunny. Waves 2 to 3 ft.",
+"W wind 8 to 10 kt becoming NNW after midnight. Partly cloudy. Waves 1 to 2 ft."
+],
+"hazardName": [
+"Gale Warning in effect from April 4,  05:00 AM EDT until April 4, 05:00 PM EDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ146&warncounty=marine&firewxzone=&local_place1=9NM ENE Lorain OH&product1=Gale+Warning&lat=41.5186&lon=-82.0124",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ146&warncounty=marine&firewxzone=&local_place1=9NM ENE Lorain OH&product1=Hazardous+Weather+Outlook&lat=41.5186&lon=-82.0124"
+]
+}
 },
 {
 "lon": -82.2161,
@@ -2257,7 +7154,9 @@
 "YTUBRI",
 "YBGALG",
 "PH",
-"YCHLOR"
+"YCHLOR",
+"CurSpd",
+"CurDir"
 ],
 "obsUnits": [
 "\u03bcS/cm",
@@ -2265,7 +7164,9 @@
 "ntu",
 "RFU",
 "",
-"RFU"
+"RFU",
+"cm_s-1",
+"\u00b0"
 ],
 "obsLongName": [
 "Specific Conductivity",
@@ -2273,19 +7174,122 @@
 "YTUBRI",
 "Blue-Green-Algae",
 "PH",
-"Chlorophyll"
+"Chlorophyll",
+"Surface Current Speed",
+"Surface Current to Direction"
 ],
-"updateTime": "2018-03-13T12:10:00Z",
+"updateTime": "2018-04-03T22:10:00Z",
 "obsValues": [
-242.68,
-35.816,
-17.83,
-0.53,
-8.32,
-0.26
+246.68,
+40.118,
+15.09,
+0.43,
+8.36,
+0.25,
+8.069478863129886,
+306.9548173519966
 ],
 "thermistorDepths": [],
-"thermistorValues": []
+"thermistorValues": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_shra.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"37",
+"40",
+"28",
+"41",
+"32",
+"40",
+"23",
+"36",
+"27"
+],
+"waveheight": [
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft",
+"< 1ft"
+],
+"windspeed": [
+"WSW 20kt",
+"W 27kt",
+"W 21kt",
+"W 12kt",
+"S 9kt",
+"W 21kt",
+"WNW 18kt",
+"WNW 10kt",
+"NW 9kt"
+],
+"title": [
+"Severe Thunderstorms",
+"Slight Chc Rain/Snow",
+"Chance Snow",
+"Slight Chc Showers",
+"Rain/Snow Likely",
+"Slight Chc Rain/Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"S wind 15 to 20 kt becoming WSW after midnight. Winds could gust as high as 28 kt. Showers and thunderstorms before 2am, then a chance of showers. Some storms could be severe, with large hail and damaging winds.   Waves 1 ft or less.",
+"W wind 24 to 27 kt, with gusts as high as 38 kt. A slight chance of rain and snow showers before noon, then a slight chance of snow showers between noon and 1pm, then a slight chance of rain showers after 1pm.   Waves 1 ft or less.",
+"W wind 18 to 21 kt decreasing to 12 to 15 kt after midnight. Winds could gust as high as 30 kt. A chance of snow showers, mainly before 3am.   Waves 1 ft or less.",
+"W wind 9 to 12 kt. A slight chance of showers after 4pm.   Waves 1 ft or less.",
+"S wind 7 to 9 kt. A chance of rain and snow showers before 11pm, then snow showers likely.   Waves 1 ft or less.",
+"W wind 16 to 21 kt, with gusts as high as 30 kt. A slight chance of rain and snow showers.   Waves 1 ft or less.",
+"WNW wind 15 to 18 kt decreasing to 12 to 15 kt after midnight. Winds could gust as high as 26 kt. Partly cloudy. Waves 1 ft or less.",
+"WNW wind around 10 kt. Mostly sunny. Waves 1 ft or less.",
+"NW wind around 9 kt. Partly cloudy. Waves 1 ft or less."
+],
+"hazardName": [
+"Gale Warning in effect from April 4,  05:00 AM EDT until April 4, 05:00 PM EDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ145&warncounty=marine&firewxzone=&local_place1=2NM WNW Lorain OH&product1=Gale+Warning&lat=41.4545&lon=-82.2161",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ145&warncounty=marine&firewxzone=&local_place1=2NM WNW Lorain OH&product1=Hazardous+Weather+Outlook&lat=41.4545&lon=-82.2161"
+]
+}
 },
 {
 "lon": -82.23877,
@@ -2332,7 +7336,9 @@
 "YTUBRI",
 "YBGALG",
 "PH",
-"YCHLOR"
+"YCHLOR",
+"CurSpd",
+"CurDir"
 ],
 "obsUnits": [
 "\u03bcS/cm",
@@ -2342,7 +7348,9 @@
 "ntu",
 "RFU",
 "",
-"RFU"
+"RFU",
+"cm_s-1",
+"\u00b0"
 ],
 "obsLongName": [
 "Specific Conductivity",
@@ -2352,21 +7360,124 @@
 "YTUBRI",
 "Blue-Green-Algae",
 "PH",
-"Chlorophyll"
+"Chlorophyll",
+"Surface Current Speed",
+"Surface Current to Direction"
 ],
-"updateTime": "2018-03-13T12:20:00Z",
+"updateTime": "2018-04-03T22:20:00Z",
 "obsValues": [
-300.26,
-36.32,
-108.6,
-14.84,
-14.11,
-1.32,
-7.76,
-0.29
+294.18,
+39.542,
+116.57,
+15.19,
+9.18,
+1.19,
+7.83,
+0.21,
+8.069478863129886,
+306.9548173519966
 ],
 "thermistorDepths": [],
-"thermistorValues": []
+"thermistorValues": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_shra.png",
+"/images/wtf/medium/m_wave.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"37",
+"40",
+"29",
+"39",
+"33",
+"38",
+"25",
+"35",
+"28"
+],
+"waveheight": [
+"5ft",
+"6-7ft",
+"6ft",
+"2-3ft",
+"1ft",
+"5ft",
+"5ft",
+"2-3ft",
+"1-2ft"
+],
+"windspeed": [
+"WSW 24kt",
+"W 29kt",
+"W 23kt",
+"W 13kt",
+"S 9kt",
+"W 21kt",
+"WNW 19kt",
+"W 10kt",
+"NW 10kt"
+],
+"title": [
+"Thunderstorms",
+"Chance Showers",
+"Mostly Cloudy",
+"Slight Chc Rain/Snow",
+"Rain/Snow Likely",
+"Slight Chc Rain/Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"S wind 15 to 18 kt becoming WSW 21 to 24 kt after midnight. Showers and thunderstorms before midnight, then a chance of showers.   Waves 2 ft building to 5 ft.",
+"W wind 26 to 29 kt, with gusts as high as 35 kt. A chance of showers before 11am, then a slight chance of showers after 1pm.   Waves 6 to 7 ft.",
+"W wind 18 to 23 kt decreasing to 13 to 18 kt after midnight. Mostly cloudy. Waves 6 ft subsiding to 3 ft.",
+"W wind 9 to 13 kt. A slight chance of rain and snow showers after 4pm.   Waves 2 to 3 ft.",
+"S wind 7 to 9 kt. A chance of rain and snow showers before 11pm, then snow showers likely.   Waves around 1 ft.",
+"W wind 16 to 21 kt. A slight chance of rain and snow showers.   Waves 3 ft building to 5 ft.",
+"WNW wind 16 to 19 kt decreasing to 13 to 16 kt after midnight. Partly cloudy. Waves 5 ft subsiding to 3 ft.",
+"W wind around 10 kt. Mostly sunny. Waves 2 to 3 ft.",
+"WNW wind 8 to 10 kt becoming NNW after midnight. Partly cloudy. Waves 1 to 2 ft."
+],
+"hazardName": [
+"Hazardous Weather Outlook ",
+"Gale Warning in effect from April 4,  05:00 AM EDT until April 4, 05:00 PM EDT"
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ145&warncounty=marine&firewxzone=&local_place1=4NM NW Lorain OH&product1=Hazardous+Weather+Outlook&lat=41.4866&lon=-82.2388",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ145&warncounty=marine&firewxzone=&local_place1=4NM NW Lorain OH&product1=Gale+Warning&lat=41.4866&lon=-82.2388"
+]
+}
 },
 {
 "lon": -81.363,
@@ -2413,7 +7524,9 @@
 "YTUBRI",
 "YBGALG",
 "PH",
-"YCHLOR"
+"YCHLOR",
+"CurSpd",
+"CurDir"
 ],
 "obsUnits": [
 "\u03bcS/cm",
@@ -2423,7 +7536,9 @@
 "ntu",
 "RFU",
 "",
-"RFU"
+"RFU",
+"cm_s-1",
+"\u00b0"
 ],
 "obsLongName": [
 "Specific Conductivity",
@@ -2433,21 +7548,123 @@
 "YTUBRI",
 "Blue-Green-Algae",
 "PH",
-"Chlorophyll"
+"Chlorophyll",
+"Surface Current Speed",
+"Surface Current to Direction"
 ],
-"updateTime": "2018-03-13T12:10:00Z",
+"updateTime": "2018-04-03T22:10:00Z",
 "obsValues": [
-310.42,
-36.068,
-97.03,
-13.31,
-15.24,
-0.55,
-8.22,
-0.54
+301.43,
+39.974,
+98.61,
+12.77,
+16.94,
+0.41,
+8.18,
+0.34,
+8.069478863129886,
+306.9548173519966
 ],
 "thermistorDepths": [],
-"thermistorValues": []
+"thermistorValues": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/DualImage.php?i=ntsra&j=nshra&ip=90&jp=90",
+"/DualImage.php?i=ra_sn&j=sn&ip=30&jp=40",
+"/newimages/medium/nsn60.png",
+"/DualImage.php?i=sn&j=bkn&ip=30",
+"/DualImage.php?i=nra_sn&j=nsn&ip=70&jp=70",
+"/DualImage.php?i=sn&j=ra_sn&ip=30&jp=30",
+"/DualImage.php?i=nwind_bkn&j=nsct",
+"/newimages/medium/sct.png",
+"/newimages/medium/nsct.png"
+],
+"temperature": [
+"36",
+"39",
+"28",
+"39",
+"32",
+"40",
+"24",
+"35",
+"27"
+],
+"waveheight": [
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+""
+],
+"windspeed": [
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+""
+],
+"title": [
+"Tonight: Showers and thunderstorms before 3am, then showers likely.  Low around 36. Breezy, with a southeast wind 11 to 16 mph becoming southwest 18 to 23 mph after midnight.  Chance of precipitation is 90%. New rainfall amounts between a quarter and half of an inch possible. ",
+"Wednesday: A chance of rain and snow showers before 10am, then a chance of snow showers.  Cloudy, with a high near 39. Windy, with a west wind 28 to 30 mph, with gusts as high as 43 mph.  Chance of precipitation is 40%. Little or no snow accumulation expected. ",
+"Wednesday Night: Snow showers likely, mainly before 3am.  Mostly cloudy, with a low around 28. Breezy, with a west wind 16 to 23 mph, with gusts as high as 33 mph.  Chance of precipitation is 60%. New snow accumulation of 2 to 4 inches possible. ",
+"Thursday: A chance of snow showers before 8am, then a slight chance of rain and snow showers after 4pm.  Partly sunny, with a high near 39. West wind 13 to 15 mph.  Chance of precipitation is 30%. New snow accumulation of less than one inch possible. ",
+"Thursday Night: A chance of rain and snow showers before 11pm, then snow showers likely.  Mostly cloudy, with a low around 32. Light south wind increasing to 5 to 9 mph in the evening.  Chance of precipitation is 70%. New snow accumulation of less than one inch possible. ",
+"Friday: A chance of snow showers before 2pm, then a slight chance of rain and snow showers.  Mostly cloudy, with a high near 40. Breezy.  Chance of precipitation is 30%. New snow accumulation of less than a half inch possible. ",
+"Friday Night: Mostly cloudy, with a low around 24. Blustery. ",
+"Saturday: Mostly sunny, with a high near 35.",
+"Saturday Night: Partly cloudy, with a low around 27."
+],
+"synopsis": "",
+"forecastText": [
+"Showers and thunderstorms before 3am, then showers likely.  Low around 36. Breezy, with a southeast wind 11 to 16 mph becoming southwest 18 to 23 mph after midnight.  Chance of precipitation is 90%. New rainfall amounts between a quarter and half of an inch possible. ",
+"A chance of rain and snow showers before 10am, then a chance of snow showers.  Cloudy, with a high near 39. Windy, with a west wind 28 to 30 mph, with gusts as high as 43 mph.  Chance of precipitation is 40%. Little or no snow accumulation expected. ",
+"Snow showers likely, mainly before 3am.  Mostly cloudy, with a low around 28. Breezy, with a west wind 16 to 23 mph, with gusts as high as 33 mph.  Chance of precipitation is 60%. New snow accumulation of 2 to 4 inches possible. ",
+"A chance of snow showers before 8am, then a slight chance of rain and snow showers after 4pm.  Partly sunny, with a high near 39. West wind 13 to 15 mph.  Chance of precipitation is 30%. New snow accumulation of less than one inch possible. ",
+"A chance of rain and snow showers before 11pm, then snow showers likely.  Mostly cloudy, with a low around 32. Light south wind increasing to 5 to 9 mph in the evening.  Chance of precipitation is 70%. New snow accumulation of less than one inch possible. ",
+"A chance of snow showers before 2pm, then a slight chance of rain and snow showers.  Mostly cloudy, with a high near 40. Breezy.  Chance of precipitation is 30%. New snow accumulation of less than a half inch possible. ",
+"Mostly cloudy, with a low around 24. Blustery. ",
+"Mostly sunny, with a high near 35.",
+"Partly cloudy, with a low around 27.",
+"Mostly sunny, with a high near 38.",
+"A chance of snow.  Mostly cloudy, with a low around 31. Chance of precipitation is 30%.",
+"A chance of rain.  Mostly cloudy, with a high near 43. Chance of precipitation is 40%.",
+"Mostly cloudy, with a low around 32.",
+"Partly sunny, with a high near 40."
+],
+"hazardName": [],
+"hazardLink": []
+}
 },
 {
 "lon": -82.7269,
@@ -2488,32 +7705,138 @@
 "PH",
 "YCHLOR",
 "WTMP",
-"SPCOND"
+"SPCOND",
+"CurSpd",
+"CurDir"
 ],
 "obsUnits": [
 "RFU",
 "",
 "RFU",
 "\u00b0F",
-"\u03bcS/cm"
+"\u03bcS/cm",
+"cm_s-1",
+"\u00b0"
 ],
 "obsLongName": [
 "Blue-Green-Algae",
 "PH",
 "Chlorophyll",
 "Water Temp.",
-"Specific Conductivity"
+"Specific Conductivity",
+"Surface Current Speed",
+"Surface Current to Direction"
 ],
-"updateTime": "2018-03-12T20:00:00Z",
+"updateTime": "2018-04-03T20:10:00Z",
 "obsValues": [
-0.52,
+1.45,
 8.25,
-0.55,
-35.978,
-60.69
+1.56,
+40.262,
+60.64,
+8.069478863129886,
+306.9548173519966
 ],
 "thermistorDepths": [],
-"thermistorValues": []
+"thermistorValues": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/newimages/medium/ntsra90.png",
+"/newimages/medium/ra_sn20.png",
+"/newimages/medium/nsn20.png",
+"/newimages/medium/bkn.png",
+"/newimages/medium/nra_sn50.png",
+"/newimages/medium/ra_sn20.png",
+"/DualImage.php?i=nwind_bkn&j=nsct",
+"/newimages/medium/sct.png",
+"/newimages/medium/nsct.png"
+],
+"temperature": [
+"37",
+"39",
+"28",
+"40",
+"32",
+"39",
+"24",
+"36",
+"27"
+],
+"waveheight": [
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+""
+],
+"windspeed": [
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+""
+],
+"title": [
+"Tonight: Showers and thunderstorms before 2am, then a slight chance of showers. Some storms could be severe, with large hail and damaging winds.  Low around 37. Windy, with a southeast wind 13 to 18 mph becoming west 23 to 28 mph in the evening.  Chance of precipitation is 90%. New rainfall amounts between a quarter and half of an inch possible. ",
+"Wednesday: A slight chance of rain and snow showers before 4pm, then a slight chance of rain showers between 4pm and 5pm, then a slight chance of snow showers after 5pm.  Mostly cloudy, with a high near 39. Windy, with a west wind 29 to 33 mph.  Chance of precipitation is 20%.",
+"Wednesday Night: A slight chance of snow showers.  Mostly cloudy, with a low around 28. Windy, with a west wind 21 to 26 mph decreasing to 15 to 20 mph after midnight.  Chance of precipitation is 20%.",
+"Thursday: Partly sunny, with a high near 40. West wind 8 to 15 mph. ",
+"Thursday Night: A chance of rain showers before 11pm, then a chance of rain and snow showers between 11pm and 2am, then a chance of snow showers after 2am.  Mostly cloudy, with a low around 32. South wind 9 to 11 mph.  Chance of precipitation is 50%. New snow accumulation of less than a half inch possible. ",
+"Friday: A slight chance of snow showers before 8am, then a slight chance of rain and snow showers.  Mostly cloudy, with a high near 39. Breezy.  Chance of precipitation is 20%.",
+"Friday Night: Partly cloudy, with a low around 24. Blustery. ",
+"Saturday: Mostly sunny, with a high near 36.",
+"Saturday Night: Partly cloudy, with a low around 27."
+],
+"synopsis": "",
+"forecastText": [
+"Showers and thunderstorms before 2am, then a slight chance of showers. Some storms could be severe, with large hail and damaging winds.  Low around 37. Windy, with a southeast wind 13 to 18 mph becoming west 23 to 28 mph in the evening.  Chance of precipitation is 90%. New rainfall amounts between a quarter and half of an inch possible. ",
+"A slight chance of rain and snow showers before 4pm, then a slight chance of rain showers between 4pm and 5pm, then a slight chance of snow showers after 5pm.  Mostly cloudy, with a high near 39. Windy, with a west wind 29 to 33 mph.  Chance of precipitation is 20%.",
+"A slight chance of snow showers.  Mostly cloudy, with a low around 28. Windy, with a west wind 21 to 26 mph decreasing to 15 to 20 mph after midnight.  Chance of precipitation is 20%.",
+"Partly sunny, with a high near 40. West wind 8 to 15 mph. ",
+"A chance of rain showers before 11pm, then a chance of rain and snow showers between 11pm and 2am, then a chance of snow showers after 2am.  Mostly cloudy, with a low around 32. South wind 9 to 11 mph.  Chance of precipitation is 50%. New snow accumulation of less than a half inch possible. ",
+"A slight chance of snow showers before 8am, then a slight chance of rain and snow showers.  Mostly cloudy, with a high near 39. Breezy.  Chance of precipitation is 20%.",
+"Partly cloudy, with a low around 24. Blustery. ",
+"Mostly sunny, with a high near 36.",
+"Partly cloudy, with a low around 27.",
+"Mostly sunny, with a high near 38.",
+"A chance of snow.  Mostly cloudy, with a low around 32. Chance of precipitation is 30%.",
+"A chance of rain.  Cloudy, with a high near 42. Chance of precipitation is 40%.",
+"Mostly cloudy, with a low around 33.",
+"Partly sunny, with a high near 41."
+],
+"hazardName": [],
+"hazardLink": []
+}
 },
 {
 "lon": -82.9386,
@@ -2559,7 +7882,9 @@
 "DISOXY",
 "YBGALG",
 "PH",
-"YCHLOR"
+"YCHLOR",
+"CurSpd",
+"CurDir"
 ],
 "obsUnits": [
 "\u03bcS/cm",
@@ -2568,7 +7893,9 @@
 "mg/L",
 "RFU",
 "",
-"RFU"
+"RFU",
+"cm_s-1",
+"\u00b0"
 ],
 "obsLongName": [
 "Specific Conductivity",
@@ -2577,20 +7904,123 @@
 "Dissolved Oxygen",
 "Blue-Green-Algae",
 "PH",
-"Chlorophyll"
+"Chlorophyll",
+"Surface Current Speed",
+"Surface Current to Direction"
 ],
-"updateTime": "2018-03-13T12:10:00Z",
+"updateTime": "2018-04-03T22:10:00Z",
 "obsValues": [
-356.92,
-36.626,
-95.02,
-12.92,
-0.82,
-7.33,
-0.37
+274.84,
+40.802,
+95.4,
+12.21,
+0.87,
+7.53,
+0.48,
+8.069478863129886,
+306.9548173519966
 ],
 "thermistorDepths": [],
-"thermistorValues": []
+"thermistorValues": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_shra.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"36",
+"40",
+"28",
+"42",
+"32",
+"40",
+"23",
+"37",
+"27"
+],
+"waveheight": [
+"1-2ft",
+"3ft",
+"3ft",
+"1ft",
+"< 1ft",
+"2-3ft",
+"2-3ft",
+"1ft",
+"1ft"
+],
+"windspeed": [
+"WSW 23kt",
+"W 27kt",
+"W 21kt",
+"W 11kt",
+"S 9kt",
+"W 21kt",
+"WNW 19kt",
+"W 10kt",
+"WNW 10kt"
+],
+"title": [
+"Severe Thunderstorms",
+"Slight Chc Rain/Snow",
+"Mostly Cloudy",
+"Slight Chc Showers",
+"Chance Rain/Snow",
+"Slight Chc Rain/Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"S wind 13 to 18 kt becoming WSW 18 to 23 kt after midnight. Winds could gust as high as 32 kt. Showers and thunderstorms before 2am, then a slight chance of showers. Some storms could be severe, with large hail and damaging winds.   Waves 1 to 2 ft.",
+"W wind 23 to 27 kt, with gusts as high as 38 kt. A slight chance of rain and snow showers before 9am, then a slight chance of snow showers between 9am and 11am.   Waves around 3 ft.",
+"W wind 16 to 21 kt decreasing to 10 to 15 kt after midnight. Winds could gust as high as 29 kt. Mostly cloudy. Waves 3 ft subsiding to 1 ft.",
+"W wind 8 to 11 kt. A slight chance of showers after 4pm.   Waves around 1 ft.",
+"S wind 7 to 9 kt. A chance of rain showers before 11pm, then a chance of rain and snow showers between 11pm and 2am, then a chance of snow showers after 2am.   Waves 1 ft or less.",
+"W wind 16 to 21 kt, with gusts as high as 30 kt. A slight chance of snow showers before 8am, then a slight chance of rain and snow showers.   Waves 2 to 3 ft.",
+"WNW wind 16 to 19 kt decreasing to 12 to 15 kt after midnight. Winds could gust as high as 26 kt. Partly cloudy. Waves 2 to 3 ft.",
+"W wind 8 to 10 kt. Mostly sunny. Waves around 1 ft.",
+"WNW wind around 10 kt becoming NNW after midnight. Partly cloudy. Waves around 1 ft."
+],
+"hazardName": [
+"Hazardous Weather Outlook ",
+"Small Craft Advisory in effect from April 4,  12:00 AM EDT until April 4, 05:00 PM EDT"
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ143&warncounty=marine&firewxzone=&local_place1=Port Clinton OH&product1=Hazardous+Weather+Outlook&lat=41.5143&lon=-82.9386",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ143&warncounty=marine&firewxzone=&local_place1=Port Clinton OH&product1=Small+Craft+Advisory&lat=41.5143&lon=-82.9386"
+]
+}
 },
 {
 "lon": -83.2903,
@@ -2633,7 +8063,9 @@
 "YTUBRI",
 "YBGALG",
 "PH",
-"YCHLOR"
+"YCHLOR",
+"CurSpd",
+"CurDir"
 ],
 "obsUnits": [
 "\u03bcS/cm",
@@ -2641,7 +8073,9 @@
 "ntu",
 "RFU",
 "",
-"RFU"
+"RFU",
+"cm_s-1",
+"\u00b0"
 ],
 "obsLongName": [
 "Specific Conductivity",
@@ -2649,19 +8083,121 @@
 "YTUBRI",
 "Blue-Green-Algae",
 "PH",
-"Chlorophyll"
+"Chlorophyll",
+"Surface Current Speed",
+"Surface Current to Direction"
 ],
-"updateTime": "2018-03-13T12:10:00Z",
+"updateTime": "2018-04-03T22:10:00Z",
 "obsValues": [
-385.03,
-36.769999999999996,
-31.04,
-0.65,
-8.270001,
-0.44
+384.98,
+41.09,
+72.76,
+0.87,
+8.32,
+0.82,
+8.069478863129886,
+306.9548173519966
 ],
 "thermistorDepths": [],
-"thermistorValues": []
+"thermistorValues": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/DualImage.php?i=ntsra&j=nshra&ip=90&jp=60",
+"/DualImage.php?i=ra_sn&j=wind_bkn&ip=30",
+"/DualImage.php?i=nwind_bkn&j=nbkn",
+"/newimages/medium/bkn.png",
+"/DualImage.php?i=nra_sn&j=nsn&ip=60&jp=60",
+"/DualImage.php?i=wind_bkn&j=ra_sn&jp=20",
+"/DualImage.php?i=nwind_bkn&j=nsct",
+"/newimages/medium/sct.png",
+"/newimages/medium/nsct.png"
+],
+"temperature": [
+"34",
+"39",
+"26",
+"42",
+"31",
+"39",
+"21",
+"37",
+"25"
+],
+"waveheight": [
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+""
+],
+"windspeed": [
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+""
+],
+"title": [
+"Tonight: Showers and thunderstorms before 2am, then a slight chance of showers.  Low around 34. Breezy, with a south wind 10 to 15 mph becoming west 17 to 22 mph in the evening.  Chance of precipitation is 90%. New rainfall amounts between a quarter and half of an inch possible. ",
+"Wednesday: A chance of rain and snow showers before 7am, then a chance of snow showers between 7am and 11am.  Mostly cloudy, with a high near 39. Windy, with a west wind 25 to 29 mph, with gusts as high as 41 mph.  Chance of precipitation is 30%. Little or no snow accumulation expected. ",
+"Wednesday Night: Mostly cloudy, with a low around 26. Breezy, with a west wind 18 to 23 mph decreasing to 10 to 15 mph after midnight. ",
+"Thursday: Partly sunny, with a high near 42. Southwest wind 9 to 11 mph. ",
+"Thursday Night: A chance of rain and snow showers before 11pm, then snow showers likely.  Mostly cloudy, with a low around 31. South wind 7 to 9 mph.  Chance of precipitation is 60%. New snow accumulation of less than a half inch possible. ",
+"Friday: A slight chance of rain and snow showers after 2pm.  Mostly cloudy, with a high near 39. Breezy.  Chance of precipitation is 20%.",
+"Friday Night: Partly cloudy, with a low around 21. Blustery. ",
+"Saturday: Mostly sunny, with a high near 37.",
+"Saturday Night: Partly cloudy, with a low around 25."
+],
+"synopsis": "",
+"forecastText": [
+"Showers and thunderstorms before 2am, then a slight chance of showers.  Low around 34. Breezy, with a south wind 10 to 15 mph becoming west 17 to 22 mph in the evening.  Chance of precipitation is 90%. New rainfall amounts between a quarter and half of an inch possible. ",
+"A chance of rain and snow showers before 7am, then a chance of snow showers between 7am and 11am.  Mostly cloudy, with a high near 39. Windy, with a west wind 25 to 29 mph, with gusts as high as 41 mph.  Chance of precipitation is 30%. Little or no snow accumulation expected. ",
+"Mostly cloudy, with a low around 26. Breezy, with a west wind 18 to 23 mph decreasing to 10 to 15 mph after midnight. ",
+"Partly sunny, with a high near 42. Southwest wind 9 to 11 mph. ",
+"A chance of rain and snow showers before 11pm, then snow showers likely.  Mostly cloudy, with a low around 31. South wind 7 to 9 mph.  Chance of precipitation is 60%. New snow accumulation of less than a half inch possible. ",
+"A slight chance of rain and snow showers after 2pm.  Mostly cloudy, with a high near 39. Breezy.  Chance of precipitation is 20%.",
+"Partly cloudy, with a low around 21. Blustery. ",
+"Mostly sunny, with a high near 37.",
+"Partly cloudy, with a low around 25.",
+"Mostly sunny, with a high near 40.",
+"A chance of snow.  Mostly cloudy, with a low around 31. Chance of precipitation is 30%.",
+"A chance of rain.  Mostly cloudy, with a high near 44. Chance of precipitation is 40%.",
+"Mostly cloudy, with a low around 31.",
+"Partly sunny, with a high near 43."
+],
+"hazardName": [],
+"hazardLink": []
+}
 },
 {
 "lon": -81.637,
@@ -2801,7 +8337,106 @@
 "https://ohioseagrant.osu.edu/about/stonelab"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"36",
+"38",
+"29",
+"38",
+"32",
+"37",
+"24",
+"36",
+"27"
+],
+"waveheight": [
+"2-3ft",
+"3-4ft",
+"2-3ft",
+"1-2ft",
+"1ft",
+"2-3ft",
+"2ft",
+"1ft",
+"1ft"
+],
+"windspeed": [
+"WSW 24kt",
+"W 29kt",
+"W 23kt",
+"WSW 14kt",
+"S 10kt",
+"W 22kt",
+"WNW 20kt",
+"NW 11kt",
+"NW 11kt"
+],
+"title": [
+"Thunderstorms",
+"Slight Chc Rain/Snow",
+"Slight Chc Snow",
+"Slight Chc Rain/Snow",
+"Rain/Snow Likely",
+"Slight Chc Rain/Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"SSE wind 13 to 18 kt becoming WSW 19 to 24 kt after midnight. Showers and thunderstorms before 2am, then a slight chance of showers.   Waves 2 to 3 ft.",
+"W wind 25 to 29 kt, with gusts as high as 36 kt. A slight chance of rain and snow showers before 11am, then a slight chance of snow showers after 3pm.   Waves 3 to 4 ft.",
+"W wind 18 to 23 kt decreasing to 13 to 18 kt after midnight. A slight chance of snow showers.   Waves 2 to 3 ft.",
+"WSW wind 11 to 14 kt decreasing to 7 to 10 kt in the afternoon. A slight chance of rain and snow showers after 4pm.   Waves 1 to 2 ft.",
+"S wind 8 to 10 kt. A chance of rain and snow showers before 11pm, then snow showers likely.   Waves around 1 ft.",
+"W wind 17 to 22 kt. A slight chance of rain and snow showers.   Waves 2 to 3 ft.",
+"WNW wind 17 to 20 kt decreasing to 13 to 16 kt after midnight. Partly cloudy. Waves around 2 ft.",
+"NW wind 8 to 11 kt becoming W in the afternoon. Mostly sunny. Waves around 1 ft.",
+"WNW wind around 11 kt becoming NNW after midnight. Partly cloudy. Waves around 1 ft."
+],
+"hazardName": [
+"Hazardous Weather Outlook ",
+"Small Craft Advisory in effect from April 4,  12:00 AM EDT until April 4, 05:00 PM EDT"
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ143&warncounty=marine&firewxzone=&local_place1=10NM NNE Port Clinton OH&product1=Hazardous+Weather+Outlook&lat=41.6591&lon=-82.8231",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ143&warncounty=marine&firewxzone=&local_place1=10NM NNE Port Clinton OH&product1=Small+Craft+Advisory&lat=41.6591&lon=-82.8231"
+]
+}
 },
 {
 "lon": -83.258675,
@@ -2837,11 +8472,110 @@
 "http://toledo.oh.gov/services/public-utilities/water-treatment/"
 ],
 "webcamSrc": [
-"img/ToledoCrib_image.jpg"
+"ToledoCrib_image.jpg"
 ],
 "webcamLink": [
 "http://www.limnotechdata.com/stations/ToledoCrib/"
+],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_shra.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"35",
+"38",
+"27",
+"40",
+"31",
+"38",
+"22",
+"36",
+"26"
+],
+"waveheight": [
+"3ft",
+"3-4ft",
+"3ft",
+"1ft",
+"1ft",
+"2-3ft",
+"2-3ft",
+"1ft",
+"1ft"
+],
+"windspeed": [
+"WSW 22kt",
+"WNW 26kt",
+"W 21kt",
+"WSW 11kt",
+"SSW 9kt",
+"W 21kt",
+"WNW 18kt",
+"NW 10kt",
+"WNW 10kt"
+],
+"title": [
+"Thunderstorms",
+"Slight Chc Rain/Snow",
+"Mostly Cloudy",
+"Slight Chc Showers",
+"Rain/Snow Likely",
+"Slight Chc Rain/Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"S wind 10 to 15 kt becoming WSW 17 to 22 kt. Showers and thunderstorms before 11pm, then a chance of showers.   Waves 1 ft building to 3 ft.",
+"WNW wind 24 to 26 kt, with gusts as high as 32 kt. A slight chance of rain and snow showers before 10am, then a slight chance of rain showers after 2pm.   Waves 3 to 4 ft.",
+"W wind 16 to 21 kt decreasing to 10 to 15 kt after midnight. Mostly cloudy. Waves 3 ft subsiding to 1 ft.",
+"WSW wind 7 to 11 kt. A slight chance of showers after 4pm.   Waves around 1 ft.",
+"SSW wind 7 to 9 kt. A chance of rain and snow showers before 11pm, then snow showers likely.   Waves around 1 ft.",
+"W wind 16 to 21 kt. A slight chance of rain and snow showers after 2pm.   Waves 2 to 3 ft.",
+"WNW wind 15 to 18 kt decreasing to 12 to 15 kt after midnight. Partly cloudy. Waves 2 to 3 ft.",
+"NW wind 8 to 10 kt becoming W in the afternoon. Mostly sunny. Waves around 1 ft.",
+"WNW wind around 10 kt becoming NNW after midnight. Partly cloudy. Waves around 1 ft."
+],
+"hazardName": [
+"Hazardous Weather Outlook ",
+"Small Craft Advisory in effect from April 4,  12:00 AM EDT until April 4, 05:00 PM EDT"
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ142&warncounty=marine&firewxzone=&local_place1=7NM ENE Oregon OH&product1=Hazardous+Weather+Outlook&lat=41.6995&lon=-83.2587",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ142&warncounty=marine&firewxzone=&local_place1=7NM ENE Oregon OH&product1=Small+Craft+Advisory&lat=41.6995&lon=-83.2587"
 ]
+}
 },
 {
 "lon": -83.3079,
@@ -2884,7 +8618,9 @@
 "YTUBRI",
 "YBGALG",
 "PH",
-"YCHLOR"
+"YCHLOR",
+"CurSpd",
+"CurDir"
 ],
 "obsUnits": [
 "\u03bcS/cm",
@@ -2892,7 +8628,9 @@
 "ntu",
 "RFU",
 "",
-"RFU"
+"RFU",
+"cm_s-1",
+"\u00b0"
 ],
 "obsLongName": [
 "Specific Conductivity",
@@ -2900,19 +8638,121 @@
 "YTUBRI",
 "Blue-Green-Algae",
 "PH",
-"Chlorophyll"
+"Chlorophyll",
+"Surface Current Speed",
+"Surface Current to Direction"
 ],
-"updateTime": "2018-03-13T12:20:00Z",
+"updateTime": "2018-04-03T22:20:00Z",
 "obsValues": [
-300.71,
-36.266,
-29.2,
-0.33,
-8.17,
-0.31
+331.3,
+40.406,
+91.11,
+0.48,
+8.2,
+0.76,
+8.069478863129886,
+306.9548173519966
 ],
 "thermistorDepths": [],
-"thermistorValues": []
+"thermistorValues": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/DualImage.php?i=ntsra&j=nshra&ip=90&jp=60",
+"/DualImage.php?i=ra_sn&j=wind_bkn&ip=30",
+"/DualImage.php?i=nwind_bkn&j=nbkn",
+"/newimages/medium/bkn.png",
+"/DualImage.php?i=nra_sn&j=nsn&ip=60&jp=60",
+"/DualImage.php?i=wind_bkn&j=ra_sn&jp=20",
+"/DualImage.php?i=nwind_bkn&j=nsct",
+"/newimages/medium/sct.png",
+"/newimages/medium/nsct.png"
+],
+"temperature": [
+"34",
+"39",
+"26",
+"42",
+"31",
+"39",
+"21",
+"37",
+"25"
+],
+"waveheight": [
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+""
+],
+"windspeed": [
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+""
+],
+"title": [
+"Tonight: Showers and thunderstorms before 2am, then a slight chance of showers.  Low around 34. Breezy, with a south wind 10 to 15 mph becoming west 17 to 22 mph in the evening.  Chance of precipitation is 90%. New rainfall amounts between a quarter and half of an inch possible. ",
+"Wednesday: A chance of rain and snow showers before 7am, then a chance of snow showers between 7am and 11am.  Mostly cloudy, with a high near 39. Windy, with a west wind 25 to 29 mph, with gusts as high as 41 mph.  Chance of precipitation is 30%. Little or no snow accumulation expected. ",
+"Wednesday Night: Mostly cloudy, with a low around 26. Breezy, with a west wind 18 to 23 mph decreasing to 10 to 15 mph after midnight. ",
+"Thursday: Partly sunny, with a high near 42. Southwest wind 9 to 11 mph. ",
+"Thursday Night: A chance of rain and snow showers before 11pm, then snow showers likely.  Mostly cloudy, with a low around 31. South wind 7 to 9 mph.  Chance of precipitation is 60%. New snow accumulation of less than a half inch possible. ",
+"Friday: A slight chance of rain and snow showers after 2pm.  Mostly cloudy, with a high near 39. Breezy.  Chance of precipitation is 20%.",
+"Friday Night: Partly cloudy, with a low around 21. Blustery. ",
+"Saturday: Mostly sunny, with a high near 37.",
+"Saturday Night: Partly cloudy, with a low around 25."
+],
+"synopsis": "",
+"forecastText": [
+"Showers and thunderstorms before 2am, then a slight chance of showers.  Low around 34. Breezy, with a south wind 10 to 15 mph becoming west 17 to 22 mph in the evening.  Chance of precipitation is 90%. New rainfall amounts between a quarter and half of an inch possible. ",
+"A chance of rain and snow showers before 7am, then a chance of snow showers between 7am and 11am.  Mostly cloudy, with a high near 39. Windy, with a west wind 25 to 29 mph, with gusts as high as 41 mph.  Chance of precipitation is 30%. Little or no snow accumulation expected. ",
+"Mostly cloudy, with a low around 26. Breezy, with a west wind 18 to 23 mph decreasing to 10 to 15 mph after midnight. ",
+"Partly sunny, with a high near 42. Southwest wind 9 to 11 mph. ",
+"A chance of rain and snow showers before 11pm, then snow showers likely.  Mostly cloudy, with a low around 31. South wind 7 to 9 mph.  Chance of precipitation is 60%. New snow accumulation of less than a half inch possible. ",
+"A slight chance of rain and snow showers after 2pm.  Mostly cloudy, with a high near 39. Breezy.  Chance of precipitation is 20%.",
+"Partly cloudy, with a low around 21. Blustery. ",
+"Mostly sunny, with a high near 37.",
+"Partly cloudy, with a low around 25.",
+"Mostly sunny, with a high near 40.",
+"A chance of snow.  Mostly cloudy, with a low around 31. Chance of precipitation is 30%.",
+"A chance of rain.  Mostly cloudy, with a high near 44. Chance of precipitation is 40%.",
+"Mostly cloudy, with a low around 31.",
+"Partly sunny, with a high near 43."
+],
+"hazardName": [],
+"hazardLink": []
+}
 },
 {
 "lon": -83.370224,
@@ -2928,9 +8768,9 @@
 ],
 "id": "utlcp",
 "staticObs": [
+"Air_Temperature",
 "dissolved_oxygen",
 "ysi_chlorophyll",
-"Significant_Wave_Period",
 "Wind_from_Direction",
 "Water_Temperature_at_Surface",
 "water_conductivity",
@@ -2955,7 +8795,106 @@
 "http://www.utoledo.edu/nsm/lec/untitled.html"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_shra.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"35",
+"38",
+"27",
+"40",
+"32",
+"37",
+"22",
+"36",
+"26"
+],
+"waveheight": [
+"1-2ft",
+"2ft",
+"1-2ft",
+"1ft",
+"1ft",
+"1-2ft",
+"1-2ft",
+"1ft",
+"1ft"
+],
+"windspeed": [
+"WSW 21kt",
+"WNW 24kt",
+"W 19kt",
+"WSW 10kt",
+"SSW 8kt",
+"W 20kt",
+"WNW 17kt",
+"W 9kt",
+"WNW 9kt"
+],
+"title": [
+"Thunderstorms",
+"Chance Rain/Snow",
+"Mostly Cloudy",
+"Slight Chc Showers",
+"Rain/Snow Likely",
+"Slight Chc Rain/Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"SSE wind 10 to 15 kt becoming WSW 16 to 21 kt in the evening. Showers and thunderstorms before 2am, then a slight chance of showers.   Waves 1 to 2 ft.",
+"WNW wind 22 to 24 kt. A chance of rain and snow showers before 9am, then a slight chance of snow showers between 9am and 11am.   Waves around 2 ft.",
+"W wind 14 to 19 kt decreasing to 9 to 14 kt after midnight. Mostly cloudy. Waves 1 to 2 ft.",
+"WSW wind 8 to 10 kt. A slight chance of showers after 4pm.   Waves around 1 ft.",
+"SSW wind 6 to 8 kt. A chance of rain and snow showers before 11pm, then snow showers likely.   Waves around 1 ft.",
+"W wind 15 to 20 kt. A slight chance of rain and snow showers after 2pm.   Waves 1 to 2 ft.",
+"WNW wind 14 to 17 kt decreasing to 11 to 14 kt after midnight. Partly cloudy. Waves 1 to 2 ft.",
+"W wind around 9 kt. Mostly sunny. Waves around 1 ft.",
+"WNW wind around 9 kt becoming NNW after midnight. Partly cloudy. Waves around 1 ft."
+],
+"hazardName": [
+"Hazardous Weather Outlook ",
+"Small Craft Advisory in effect from April 4,  12:00 AM EDT until April 4, 05:00 PM EDT"
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ142&warncounty=marine&firewxzone=&local_place1=4NM NNE Oregon OH&product1=Hazardous+Weather+Outlook&lat=41.7244&lon=-83.3702",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ142&warncounty=marine&firewxzone=&local_place1=4NM NNE Oregon OH&product1=Small+Craft+Advisory&lat=41.7244&lon=-83.3702"
+]
+}
 },
 {
 "lon": -83.331,
@@ -2998,7 +8937,106 @@
 "http://www.glerl.noaa.gov/res/waterQuality/#hab"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"35",
+"38",
+"27",
+"40",
+"32",
+"37",
+"23",
+"36",
+"27"
+],
+"waveheight": [
+"2-3ft",
+"3ft",
+"3ft",
+"1ft",
+"1ft",
+"2-3ft",
+"2ft",
+"1ft",
+"1ft"
+],
+"windspeed": [
+"WSW 21kt",
+"WNW 25kt",
+"W 20kt",
+"W 10kt",
+"SSW 8kt",
+"W 21kt",
+"WNW 18kt",
+"W 9kt",
+"WNW 10kt"
+],
+"title": [
+"Thunderstorms",
+"Chance Rain/Snow",
+"Mostly Cloudy",
+"Slight Chc Rain/Snow",
+"Rain/Snow Likely",
+"Slight Chc Rain/Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"SSE wind 10 to 15 kt becoming WSW 16 to 21 kt after midnight. Showers and thunderstorms before 2am, then a slight chance of showers.   Waves 2 to 3 ft.",
+"WNW wind 23 to 25 kt. A chance of rain and snow showers before 9am, then a slight chance of snow showers between 9am and 11am.   Waves around 3 ft.",
+"W wind 15 to 20 kt decreasing to 10 to 15 kt after midnight. Mostly cloudy. Waves 3 ft subsiding to 1 ft.",
+"W wind 7 to 10 kt becoming SW in the afternoon. A slight chance of rain and snow showers after 4pm.   Waves around 1 ft.",
+"SSW wind 6 to 8 kt. A chance of rain and snow showers before 11pm, then snow showers likely.   Waves around 1 ft.",
+"W wind 16 to 21 kt. A slight chance of rain and snow showers after 2pm.   Waves 2 to 3 ft.",
+"WNW wind 15 to 18 kt decreasing to 11 to 14 kt after midnight. Partly cloudy. Waves around 2 ft.",
+"W wind around 9 kt. Mostly sunny. Waves around 1 ft.",
+"WNW wind 8 to 10 kt becoming NNW after midnight. Partly cloudy. Waves around 1 ft."
+],
+"hazardName": [
+"Hazardous Weather Outlook ",
+"Small Craft Advisory in effect from April 4,  12:00 AM EDT until April 4, 05:00 PM EDT"
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ142&warncounty=marine&firewxzone=&local_place1=7NM NE Oregon OH&product1=Hazardous+Weather+Outlook&lat=41.762&lon=-83.331",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ142&warncounty=marine&firewxzone=&local_place1=7NM NE Oregon OH&product1=Small+Craft+Advisory&lat=41.762&lon=-83.331"
+]
+}
 },
 {
 "lon": -83.195,
@@ -3041,7 +9079,104 @@
 "http://www.glerl.noaa.gov/res/waterQuality/#hab"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"35",
+"38",
+"28",
+"39",
+"32",
+"37",
+"23",
+"36",
+"27"
+],
+"waveheight": [
+"4ft",
+"4ft",
+"4ft",
+"1-2ft",
+"1ft",
+"3-4ft",
+"2-3ft",
+"1-2ft",
+"1-2ft"
+],
+"windspeed": [
+"W 22kt",
+"WNW 26kt",
+"W 21kt",
+"W 12kt",
+"S 9kt",
+"W 22kt",
+"WNW 20kt",
+"NW 11kt",
+"WNW 11kt"
+],
+"title": [
+"Thunderstorms",
+"Chance Rain/Snow",
+"Mostly Cloudy",
+"Slight Chc Rain/Snow",
+"Rain/Snow Likely",
+"Slight Chc Rain/Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"SSE wind 10 to 15 kt becoming W 17 to 22 kt after midnight. Showers and thunderstorms before 2am, then a slight chance of showers.   Waves 2 ft building to 4 ft.",
+"WNW wind 24 to 26 kt. A chance of rain and snow showers before 9am, then a slight chance of snow showers between 9am and 11am.   Waves around 4 ft.",
+"W wind 16 to 21 kt decreasing to 11 to 16 kt after midnight. Mostly cloudy. Waves 4 ft subsiding to 2 ft.",
+"W wind 8 to 12 kt becoming SW in the afternoon. A slight chance of rain and snow showers after 4pm.   Waves 1 to 2 ft.",
+"S wind around 9 kt. A chance of rain and snow showers before 11pm, then snow showers likely.   Waves around 1 ft.",
+"W wind 17 to 22 kt. A slight chance of rain and snow showers after 2pm.   Waves 3 to 4 ft.",
+"WNW wind 17 to 20 kt decreasing to 13 to 16 kt after midnight. Partly cloudy. Waves 2 to 3 ft.",
+"NW wind 9 to 11 kt becoming W in the afternoon. Mostly sunny. Waves 1 to 2 ft.",
+"WNW wind around 11 kt becoming NNW after midnight. Partly cloudy. Waves 1 to 2 ft."
+],
+"hazardName": [
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ162&warncounty=marine&firewxzone=&local_place1=8NM SSE Stony Point MI&product1=Hazardous+Weather+Outlook&lat=41.8267&lon=-83.195"
+]
+}
 },
 {
 "lon": -83.359167,
@@ -3084,7 +9219,106 @@
 "http://www.glerl.noaa.gov/res/waterQuality/#hab"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_bkn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_bkn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"34",
+"39",
+"27",
+"40",
+"34",
+"40",
+"25",
+"36",
+"26"
+],
+"waveheight": [
+"2ft",
+"2-3ft",
+"1-2ft",
+"1ft",
+"1-2ft",
+"2-3ft",
+"1-2ft",
+"1ft",
+"1ft"
+],
+"windspeed": [
+"W 20kt",
+"W 22kt",
+"WNW 18kt",
+"W 9kt",
+"S 11kt",
+"W 15kt",
+"NW 15kt",
+"WNW 11kt",
+"NW 10kt"
+],
+"title": [
+"Thunderstorms",
+"Mostly Cloudy",
+"Partly Cloudy",
+"Partly Sunny",
+"Rain/Snow Likely",
+"Chance Rain/Snow",
+"Mostly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"E wind 10 to 20 kt becoming W after midnight. Winds could gust as high as 26 kt. Showers and thunderstorms before 4am, then a chance of showers.   Waves around 2 ft.",
+"W wind around 22 kt, with gusts as high as 29 kt. Mostly cloudy. Waves 2 to 3 ft.",
+"WNW wind 9 to 18 kt, with gusts as high as 24 kt. Partly cloudy. Waves 1 to 2 ft.",
+"W wind 7 to 9 kt. Partly sunny. Waves around 1 ft.",
+"S wind 6 to 11 kt. Rain and snow showers likely before 5am, then a chance of rain showers.   Waves 1 to 2 ft.",
+"W wind around 15 kt, with gusts as high as 21 kt. A chance of rain and snow showers before 7am, then a chance of rain showers between 7am and 8am.   Waves 2 to 3 ft.",
+"NW wind 13 to 15 kt. Mostly cloudy. Waves 1 to 2 ft.",
+"WNW wind 7 to 11 kt. Mostly sunny. Waves around 1 ft.",
+"NW wind around 10 kt. Partly cloudy. Waves around 1 ft."
+],
+"hazardName": [
+"Small Craft Advisory in effect from April 3,  10:00 PM EDT until April 4, 10:00 PM EDT",
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ444&warncounty=marine&firewxzone=&local_place1=6NM SSE Monroe MI&product1=Small+Craft+Advisory&lat=41.8192&lon=-83.3592",
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ444&warncounty=marine&firewxzone=&local_place1=6NM SSE Monroe MI&product1=Hazardous+Weather+Outlook&lat=41.8192&lon=-83.3592"
+]
+}
 },
 {
 "lon": -83.13336,
@@ -3126,7 +9360,104 @@
 "http://www.glerl.noaa.gov/res/waterQuality/#hab"
 ],
 "webcamSrc": [],
-"webcamLink": []
+"webcamLink": [],
+"NWSForecast": {
+"startPeriodName": [
+"Tonight",
+"Wednesday",
+"Wednesday Night",
+"Thursday",
+"Thursday Night",
+"Friday",
+"Friday Night",
+"Saturday",
+"Saturday Night"
+],
+"tempLabel": [
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low",
+"High",
+"Low"
+],
+"iconLink": [
+"/images/wtf/medium/m_ntsra.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nbkn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nrasn.png",
+"/images/wtf/medium/m_rasn.png",
+"/images/wtf/medium/m_nsct.png",
+"/images/wtf/medium/m_sct.png",
+"/images/wtf/medium/m_nsct.png"
+],
+"temperature": [
+"35",
+"38",
+"28",
+"39",
+"32",
+"37",
+"23",
+"36",
+"27"
+],
+"waveheight": [
+"4ft",
+"4-5ft",
+"4ft",
+"1-2ft",
+"1ft",
+"3-4ft",
+"4ft",
+"1-2ft",
+"1-2ft"
+],
+"windspeed": [
+"WSW 23kt",
+"WNW 28kt",
+"W 22kt",
+"W 12kt",
+"S 10kt",
+"W 22kt",
+"WNW 20kt",
+"NW 11kt",
+"WNW 11kt"
+],
+"title": [
+"Thunderstorms",
+"Chance Rain/Snow",
+"Mostly Cloudy",
+"Slight Chc Rain/Snow",
+"Rain/Snow Likely",
+"Slight Chc Rain/Snow",
+"Partly Cloudy",
+"Mostly Sunny",
+"Partly Cloudy"
+],
+"synopsis": "",
+"forecastText": [
+"SSE wind 11 to 16 kt becoming WSW 18 to 23 kt after midnight. Showers and thunderstorms before 2am, then a slight chance of showers.   Waves 2 ft building to 4 ft.",
+"WNW wind 24 to 28 kt, with gusts as high as 34 kt. A chance of rain and snow showers before 9am, then a slight chance of snow showers between 9am and 11am.   Waves 4 to 5 ft.",
+"W wind 17 to 22 kt decreasing to 12 to 17 kt after midnight. Mostly cloudy. Waves 4 ft subsiding to 2 ft.",
+"W wind 7 to 12 kt becoming WSW in the afternoon. A slight chance of rain and snow showers after 4pm.   Waves 1 to 2 ft.",
+"S wind 8 to 10 kt. A chance of rain and snow showers before 11pm, then snow showers likely.   Waves around 1 ft.",
+"W wind 17 to 22 kt. A slight chance of rain and snow showers after 2pm.   Waves 3 to 4 ft.",
+"WNW wind 17 to 20 kt decreasing to 13 to 16 kt after midnight. Partly cloudy. Waves 4 ft subsiding to 2 ft.",
+"NW wind 9 to 11 kt becoming W in the afternoon. Mostly sunny. Waves 1 to 2 ft.",
+"WNW wind around 11 kt becoming NNW after midnight. Partly cloudy. Waves 1 to 2 ft."
+],
+"hazardName": [
+"Hazardous Weather Outlook "
+],
+"hazardLink": [
+"http://forecast.weather.gov/showsigwx.php?warnzone=LEZ163&warncounty=marine&firewxzone=&local_place1=13NM ENE Oregon OH&product1=Hazardous+Weather+Outlook&lat=41.7335&lon=-83.1334"
+]
+}
 },
 {
 "lon": -84.6723,

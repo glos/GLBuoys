@@ -1,9 +1,12 @@
 ﻿function ADCPfig(stationID) {
 
-    $.getJSON('../static/Buoy_tool/json/45026_adcp.json', function (jsonObj) {
+    $.getJSON('../static/Buoy_tool/data/' + ID + '_' + units + '_data.json', function (jsonObj) {
         var Dates = [];
         var Data = [];
         var Depth = [];
+	
+	//Define ADCP object in the data file
+	jsonObj = jsonObj.ADCP
 
         // jsonObj variable now contains the data structure and can
         // be accessed as jsonObj.name and jsonObj.country.

@@ -191,11 +191,13 @@ function sendRequest() {
         "contact_flag": false
     }
 
-    $.ajax({
-        type: 'POST',
+    $.ajax({   
+ 	//headers : {'Content-Type' : 'text/html; charset=utf-8'},
+	type: 'POST',
         url: 'http://dev.oceansmap.com/myglos/api/alert',
-        dataType: "json",
-        crossDomain: true,
+        contentType: 'application/json',
+	crosDomain: true,
+	dataType: "json",
         data: JSON.stringify(SendInfo),
         success: function (data) {
             console.log(data);
@@ -612,7 +614,7 @@ function loadbuoyinfo(ID, jsonObj) {
 					}
                     console.log(jsonObj[i]);
                     //Move inside obsUnits check after code checks
-                    if (ID == "45026") {
+                    if (jsonObj[i].obsID.indexOf('CurSpd')) {
                         console.log('true');
                         $('#ADCP').addClass("w3-center w3-panel w3-card-4 w3-padding");
                         $('#ADCP h4').append('Currents');
@@ -661,7 +663,7 @@ function loadbuoyinfo(ID, jsonObj) {
 							columnSpan = 2;
 						}
 					
-						var parameterOrder = ['WSPD','GST','WDIR','WTMP','WVHT','WPRD','MWD','APD','ATMP','PRES','DEWP','PH','DISOXY','DIOSAT','SPCOND','COND','YCHLOR','YBGALG','YTURBI'];
+						var parameterOrder = ['WSPD','GST','WDIR','WTMP','WVHT','WPRD','MWD','APD','CurSpd','CurDir','ATMP','PRES','DEWP','PH','DISOXY','DIOSAT','SPCOND','COND','YCHLOR','YBGALG','YTURBI'];
 						var excludedObs = ['DPD','TIDE','VIS','PTDY','DEPTH','OTMP','CHILL','HEAT','ICE','WSPD10','WSPD20'];
 						for (g = 0; g < parameterOrder.length; g++){
 							for (j = 0; j < jsonObj[i].obsLongName.length; j++) {
@@ -837,22 +839,19 @@ function loadbuoyinfo(ID, jsonObj) {
     initialize(jsonObj);
 }
 
-function reloadbuoyinfo() {
-    var url = window.location.href;
-    var arr = url.split("/");
-    var ID = arr[3]; 
+function reloadbuoyinfo() { 
 
 	//$('#stationTime').empty();
 	//$('#realtime tbody').empty();
-	//$('#Thermistor img').remove();
-	//$('#TempStringLineChart').remove();
-	//$('#Thermistor p').remove();
-	//$('#BuoyCamPic').empty();
+	$('#Thermistor img').remove();
+	$('#TempStringLineChart').remove();
+	$('#Thermistor p').remove();
+	$('#BuoyCamPic').empty();
 	
     var currentTime = moment();
     loadMetaJSON(function (jsonObj) {
 		// jsonObj variable now contains the data structure and can be accessed as jsonObj.keys
-        for (i = 0; i < jsonObj.length; i++) {
+	for (i = 0; i < jsonObj.length; i++) {
 				if (jsonObj[i].id == ID) {
 					console.log(jsonObj[i]);
 					if(jsonObj[i].obsUnits){
@@ -883,10 +882,10 @@ function reloadbuoyinfo() {
 						var columnSpan  = 1;
 						if (jsonObj[i].thermistorValues.length>1 && !isNaN(jsonObj[i].thermistorValues[0])){ //Check to make sure there are multiple temperature nodes and first two depths are not missing
 							columnSpan = 2;
-                            //$('#Thermistor').append("<img onclick=document.getElementById('id02').style.display='block';dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'temp_string','glbuoysAction':'popup'}); style='height:350px; width:100%; max-width:550px; cursor: pointer'/>");
-							//$('#Thermistor').append('<p style="margin-top:0px">(Click image for interactive graph.)</p>');
-							//$('#Thermistor').append('<div id="TempStringLineChart" style="min-width: 310px; height: 400px;"></div>');
-							//$('#Thermistor').append('<p style="margin-top:0px">(Click depths in legend to turn on/off depth.)</p>');
+                            $('#Thermistor').append("<img onclick=document.getElementById('id02').style.display='block';dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'temp_string','glbuoysAction':'popup'}); style='height:350px; width:100%; max-width:550px; cursor: pointer'/>");
+							$('#Thermistor').append('<p style="margin-top:0px">(Click image for interactive graph.)</p>');
+							$('#Thermistor').append('<div id="TempStringLineChart" style="min-width: 310px; height: 400px;"></div>');
+							$('#Thermistor').append('<p style="margin-top:0px">(Click depths in legend to turn on/off depth.)</p>');
 							TempStringGrab(ID);
 						} else if(jsonObj[i].thermistorValues.length==1){		//Add if statement if buoy owners issues surface temp as 'tp001' and not 'wtmp'
 							columnSpan = 2;
@@ -957,24 +956,25 @@ function reloadbuoyinfo() {
 																		 "<td class='float_value'><div align=left>"+ (jsonObj[i].thermistorValues[k]-Math.floor(jsonObj[i].thermistorValues[k])).toFixed(1).substring(1) + "" +tempUnits+ "</div></td>" +
 																		 "</tr>";
                                         //$(moreTemps).appendTo($("#realtime tbody"));
-                                        $('tr#TAccord').replaceWith(moreTemps);
+                                        $('tr#tp0'+k).replaceWith(moreTemps);
 									}
 								}
 							}
 						}
 					
                         if (jsonObj[i].webcamSrc.length > 0) {
-                            $('#BuoyCamPic').replaceWith('<video id="my-video" class="video-js vjs-default-skin vjs-fluid" controls preload="none" poster=../media/' + jsonObj[i].webcamSrc +' data-setup="{}">');
-                            $('#BuoyCamPic video').replaceWith($('<source>').attr("src", jsonObj[i].webcamSrc[0].slice(0,-10)+".mp4").attr("type","video/mp4"));
-                            $('#BuoyCamPic video').replaceWith('<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>');
-                            $('#BuoyCamPic').replaceWith('</video>');
-                            $('body').replaceWith('<script src="http://vjs.zencdn.net/6.2.7/video.js"></script>');
+                           $('#BuoyCamPic').append('<video id="my-video" class="video-js vjs-default-skin vjs-fluid" controls preload="none" poster=../media/' + jsonObj[i].webcamSrc +' data-setup="{}">');
+                           $('#BuoyCamPic video').append($('<source>').attr("src", jsonObj[i].webcamSrc[0].slice(0,-10)+".mp4").attr("type","video/mp4"));
+                           $('#BuoyCamPic video').append('<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>');
+                           $('#BuoyCamPic').append('</video>');
+                           $('body').append('<script src="http://vjs.zencdn.net/6.2.7/video.js"></script>');
 							$('#my-video').on('loadeddata', function (e) {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'buoycam','glbuoysLabel':ID,'glbuoysAction':'play_buoycam'});});
 						}
 					}
 				}	
       }
     });
+
 }
 
 function callfooterInfo(ID){

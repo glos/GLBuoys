@@ -30,7 +30,7 @@
         var Data = [];
         var Depths = [];
         // Javascript function JSON.parse to parse JSON data
-        var jsonObj = JSON.parse(http_request.responseText);
+        //var jsonObj = JSON.parse(http_request.responseText);
         var tempNode = parseInt(variableName.slice(-2))
         var Depth = jsonObj.thermistorDepths[tempNode]; //Subtract one since array starts at 0
 
@@ -88,7 +88,7 @@ function PastTempNodeGraphic(DateTime, Data, Depth) {
         },
         yAxis: {
             title: {
-                text: units,
+                text: 'Temperature '+tempUnits+'',
                 margin: 5,
             },
             labels: {
