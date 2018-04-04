@@ -1,5 +1,9 @@
-﻿function ADCPfig(stationID) {
+﻿function ADCPfig(jsonObj, stationID) {
 
+    if (jsonObj.length > 0) {
+        console.log('Is not empty');
+
+    }
     $.getJSON('../static/Buoy_tool/data/' + ID + '_' + units + '_data.json', function (jsonObj) {
         var Dates = [];
         var Data = [];
@@ -8,16 +12,6 @@
 	//Define ADCP object in the data file
 	jsonObj = jsonObj.ADCP
 
-        // jsonObj variable now contains the data structure and can
-        // be accessed as jsonObj.name and jsonObj.country.
-
-        //Find out which strings have values and only save those depths and associated values.
-        //for (h = 0; h < jsonObj.thermistorDepths.length; h++){
-        //	if (!isNaN(jsonObj.thermistorValues[h][0])){
-        //		Depth.push(Math.round(jsonObj.thermistorDepths[h]));
-        //		Data.push(jsonObj.thermistorValues[h]);
-        //	}
-        //}
         $.each(jsonObj, function (key, value) {
             if (key == "obsDates") {
                 Dates.push(value);
@@ -55,12 +49,6 @@
         ADCP_Highchart(series, Dates[0], jsonObj.ADCP_Depths)
     });
 
-						
-        //}
-    //}
-    
-    //http_request.open("Get", data_file, true)
-    //http_request.send()
 }
 
 

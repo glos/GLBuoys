@@ -614,16 +614,8 @@ function loadbuoyinfo(ID, jsonObj) {
 					}
                     console.log(jsonObj[i]);
                     //Move inside obsUnits check after code checks
-                    if (jsonObj[i].obsID.indexOf('CurSpd')) {
-                        console.log('true');
-                        $('#ADCP').addClass("w3-center w3-panel w3-card-4 w3-padding");
-                        $('#ADCP h4').append('Currents');
-                        $('#ADCP h4').addClass("glosBlue w3-center");
-                        $('#ADCP').append('<div id="ADCP_Chart" style="height: 500px"></div>');
-                        ADCPfig(ID);
-                    }
 
-					if(jsonObj[i].obsUnits){
+                    if (jsonObj[i].obsUnits) {
 						$('#staticHeader h4').append('Most Recent Observations');
 						document.getElementById("stationID").innerHTML = "" + jsonObj[i].longName + " (" + jsonObj[i].id + ")";
 						moment.tz.setDefault(jsonObj[i].timeZone); //set time zone from metadata
@@ -662,8 +654,15 @@ function loadbuoyinfo(ID, jsonObj) {
 						} else if(jsonObj[i].thermistorValues.length==1){		//Add if statement if buoy owners issues surface temp as 'tp001' and not 'wtmp'
 							columnSpan = 2;
 						}
-					
-						var parameterOrder = ['WSPD','GST','WDIR','WTMP','WVHT','WPRD','MWD','APD','CurSpd','CurDir','ATMP','PRES','DEWP','PH','DISOXY','DIOSAT','SPCOND','COND','YCHLOR','YBGALG','YTURBI'];
+                        if (jsonObj[i].obsID.indexOf('CurSpd')) {       //Check if there is any current data
+                            $('#ADCP').addClass("w3-center w3-panel w3-card-4 w3-padding");
+                            $('#ADCP h4').append('Currents');
+                            $('#ADCP h4').addClass("glosBlue w3-center");
+                            $('#ADCP').append('<div id="ADCP_Chart" style="height: 500px"></div>');
+                            ADCPfig(ID);
+                        }
+
+						var parameterOrder = ['WSPD','GST','WDIR','WTMP','WVHT','MAXWVHT','WPRD','MWDIR','MWD','APD','CurSpd','CurDir','ATMP','PRES','SRAD','DEWP','PH','DISOXY','DIOSAT','SPCOND','COND','YCHLOR','YBGALG','YTURBI','VBAT'];
 						var excludedObs = ['DPD','TIDE','VIS','PTDY','DEPTH','OTMP','CHILL','HEAT','ICE','WSPD10','WSPD20'];
 						for (g = 0; g < parameterOrder.length; g++){
 							for (j = 0; j < jsonObj[i].obsLongName.length; j++) {
