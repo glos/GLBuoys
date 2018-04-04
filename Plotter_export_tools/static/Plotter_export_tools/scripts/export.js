@@ -9,6 +9,9 @@ $(function () {
     // Download file:
     $('#btn-download').on('click', function (evt) {
         evt.preventDefault();
+        // GTM! - "Download File"
+        updateTracker('Tool Options', 'Download File', '');
+
         // download csv/excel file
         downloadData();
     });
