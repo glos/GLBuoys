@@ -2,32 +2,30 @@
 <html>
 
     <head>
-	<!-- Google Analytics -->
-	<script>
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-98457682-1', 'auto');
-	ga('send', 'pageview');
-	</script>
-	<script async src='https://www.google-analytics.com/analytics.js'></script>
-	<!-- End Google Analytics -->
+
+	<!-- Google Tag Manager -->
+	    <script>
+            isActiveTracking = false;   // set to "true" to activate GTM
+            dataLayer = [];
+        </script>
+
+        {# {% block GTM_script %}{% endblock %} #}
+
+	    <!-- Google Analytics -->
+	    <!--<script>
+	    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	    ga('create', 'UA-98457682-1', 'auto');
+	    ga('send', 'pageview');
+	    </script>
+	    <script async src='https://www.google-analytics.com/analytics.js'></script> -->
+	    <!-- End Google Analytics -->
+
         {% load static %}
 
         <!-- Handle GET request -->
         <script>
             objGET = {{ req_data|safe }};
         </script>
-
-	    <!-- Google Tag Manager -->
-	    <script>
-            dataLayer = [];
-        </script>
-	
-	    <!--<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-	    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-	    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	    })(window,document,'script','dataLayer','GTM-NV5RBN8');</script>-->
-	    <!-- End Google Tag Manager -->
 	
         <!--GLOS Plotting Tool#} -->
         <title>
@@ -68,11 +66,8 @@
     <body>
 
     <!-- Google Tag Manager (noscript) -->
-	<noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NV5RBN8"
-	            height="0" width="0" style="display:none;visibility:hidden">
-        </iframe>
-    </noscript>
+        {% block GTM_iframe %}        
+        {% endblock %}
 	<!-- End Google Tag Manager (noscript) -->	
 
     <header class="w3-container w3-top w3-white">

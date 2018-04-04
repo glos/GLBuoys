@@ -4,6 +4,7 @@
 
 var _strTitle = '';
 var _isExport = false, _isPlotter = false;
+var _toolType = '';
 var _objLocs = {};
 var _metaJSON = '../../static/Buoy_tool/data/meta_english.json';
 //var _metaJSON = 'http://34.209.199.227/static/Buoy_tool/data/meta_english.json';
@@ -62,6 +63,7 @@ $(function () {
     var strPage = arrParts[arrParts.length - 1]; 
     _isExport = (strPage.startsWith('export'));
     _isPlotter = (strPage.startsWith('plotter'));
+    if (_isExport) { _toolType = 'exporter' } else { _toolType = 'plotter' };
 
     if (_isExport) {
         _strTitle = "Data Export";
@@ -359,12 +361,19 @@ $(function () {
 
         // Select event for location list:
         $(document).on('change', '#lst-locs input[type="checkbox"]', function (e) {
+            // GTM! - "Locations"
+            if ($(this).is(':checked')) {
+                updateTracker('Data Selections', 'Locations', $(this).attr('id'));
+            }
             updateParams();
         });
 
     } else {
         // Select event for location select:
         $('.sel-loc').on('change', function (evt) {
+            // GTM! - "Locations"
+            updateTracker('Data Selections', 'Locations', $(this).val());
+
             updateParams();
         });
 
@@ -456,6 +465,8 @@ $(function () {
         */
 
         // If nothing selected, select first parameter:
+        
+
         if (_flagParChkbox) {
             $selParams = $('#lst-params input:checked');
             if ($selParams.length === 0) {
@@ -469,6 +480,22 @@ $(function () {
             });
         };
 
+    }
+
+    // Parameter selection tracking:
+    if (_flagParChkbox) {
+        $(document).on('change', '#lst-params input[type="checkbox"]', function (e) {
+            // GTM! - "Parameters"
+            if ($(this).is(':checked')) {
+                updateTracker('Data Selections', 'Parameters', $(this).attr('id'));
+            }
+        });
+
+    } else {
+        $('.sel-param').on('change', function (e) {
+            // GTM! - "Parameters"
+            updateTracker('Data Selections', 'Parameters', $(this).val());
+        });
     }
 
 
@@ -519,8 +546,24 @@ $(function () {
     //==================================================================================
     // Events Related to User Selections (shared across plotter & export pages):
     //==================================================================================
+    // Event to filter by monitoring data type (*disabled* - placeholder for now)
+    $('#sel-datatype').on('change', function (e) {
+        e.preventDefault();
+        // GTM! - "Monitoring Type"
+        updateTracker('Data Selections', 'Monitoring Type', $(this).val());
+    });
+
+    $('#sel-filetype').on('change', function (e) {
+        e.preventDefault();
+        // GTM! - "File Format"
+        updateTracker('Tool Options', 'File Format', $(this).val());
+    });
+
     // Event to filter by Great Lake:
     $('#sel-lake').on('change', function (e) {
+        e.preventDefault();
+        // GTM! - "Lake"
+        updateTracker('Data Selections', 'Lake', $(this).val());
 
         var arrSelLocs = [];
         $.each($('.sel-loc'), function (idx, objLoc) { arrSelLocs.push($(this).val()) });
@@ -561,8 +604,17 @@ $(function () {
 
     });
 
+    // Select units:
+    $('#sel-units').on('change', function (e) {
+        // GTM! - "Units"
+        updateTracker('Data Selections', 'Units', $(this).val());
+    });
+
     // Select event for time period:
     $('#sel-tperiod').on('change', function (e) {
+        // GTM! - "Time Period"
+        updateTracker('Data Selections', 'Time Period', $(this).val());
+
         $('#date-start, #date-end').prop('disabled', $(this).val() !== 'custom');
 
         if ($(this).val() !== 'custom') {
@@ -573,7 +625,10 @@ $(function () {
 
     // Time-averaging interval:
     $('#sel-tavg').on('change', function (e) {
-        $(this).val() === 'none';       // TMR!!! - force to "none"
+        // GTM! - "Avg Interval"
+        updateTracker('Data Selections', 'Avg Interval', $(this).val());
+
+        //$(this).val() === 'none';       // TMR!!! - force to "none"
     });
 
     // Permalink generation:
@@ -585,6 +640,9 @@ $(function () {
 
     $('#btn-get-link').on('click', function (evt) {
         evt.preventDefault();
+        // GTM! - "Get Permalink"
+        updateTracker('Tool Options', 'Get Permalink', '');
+
         // Create & populate permalink:
         $('#txt-plink').val(getPermalink());
 
@@ -606,6 +664,9 @@ $(function () {
     // Show buoy map:
     $('a#view-map').on('click', function (evt) {
         evt.preventDefault();
+        // GTM! - "View Map"
+        updateTracker('Tool Options', 'View Map', '');
+
         // Show dialog:
         $('#dlg-map').dialog('open');
     });
@@ -977,3 +1038,24 @@ getSelections = function (strSelClass, strLstID, strDelim) {
         return arrVals;
     }
 }           // end "getSelections" function...
+
+
+// Update Google Tracking array:
+updateTracker = function (strCategory, strAction, strLabel) {
+
+    // Event key/value:
+    var evt_key = 'event';
+    var evt_val = _toolType + 'Event';
+    // Category, Action, Label keys:
+    var cat_key = _toolType + 'Category';
+    var act_key = _toolType + 'Action';
+    var lab_key = _toolType + 'Label';
+
+    var objGTM = {};
+    objGTM[evt_key] = evt_val;
+    objGTM[cat_key] = strCategory;
+    objGTM[act_key] = strAction;
+    objGTM[lab_key] = strLabel;
+
+    dataLayer.push(objGTM);
+}           // end "updateTracker" function

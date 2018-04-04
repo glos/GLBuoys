@@ -10,18 +10,25 @@ $(function () {
     // Button events:
     $('#btn-plot-update').on('click', function (evt) {
         evt.preventDefault();
+        // GTM! - "Update Plot"
+        updateTracker('Tool Options', 'Update Plot', '');
 
         queryData();
     });
 
     $('#btn-export-menu').on('click', function (evt) {
         evt.preventDefault();
+        // GTM! - "GoTo Export"
+        updateTracker('Tool Options', 'GoTo Export', '');
+
         window.location.href = '/tools/export';
         return false;
     });
 
     $('#btn-plot-table').on('click', function (evt) {
         evt.preventDefault();
+        // GTM! - "View Table"
+        updateTracker('Tool Options', 'View Table', '');
 
         if (!$.isEmptyObject(_objPlotSeries)) {
 
