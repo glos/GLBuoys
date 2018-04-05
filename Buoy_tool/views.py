@@ -9,6 +9,7 @@ from django.template import RequestContext
 from django.http import JsonResponse
 from django.templatetags.static import static
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.conf import settings
 
 from pydap.client import open_url
 from datetime import date, datetime, timedelta;
@@ -45,8 +46,10 @@ def eriehome(request):
 def buoy(request, buoy_id):
 
     # Determine available buoys and check if entered ID exists. Render buoy page if does exist, render 404.html if not exist
-    metaFile = open(os.path.join(BASE_DIR,'static/Buoy_tool/data/meta_english.json'))
-    #metaFile = open(posixpath.join(*(BASE_DIR.split(os.path.sep) + ['Buoy_tool/static/Buoy_tool/data/meta_english.json'])))
+    if not settings.DEBUG:
+        metaFile = open(os.path.join(BASE_DIR,'static/Buoy_tool/data/meta_english.json'))
+    else:
+        metaFile = open(posixpath.join(*(BASE_DIR.split(os.path.sep) + ['Buoy_tool/static/Buoy_tool/data/meta_english.json'])))
     metaStr = metaFile.read()
     metaDic = json.loads(metaStr)
     idList = []
