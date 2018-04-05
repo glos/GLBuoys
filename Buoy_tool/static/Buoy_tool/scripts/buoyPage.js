@@ -892,9 +892,6 @@ function reloadbuoyinfo() {
                         }
 
                         if (jsonObj[i].obsID.indexOf('CurSpd')) {       //Check if there is any current data
-                            $('#ADCP').addClass("w3-center w3-panel w3-card-4 w3-padding");
-                            $('#ADCP h4').append('Currents');
-                            $('#ADCP h4').addClass("glosBlue w3-center");
                             $('#ADCP').append('<div id="ADCP_Chart" style="height: 500px"></div>');
                             ADCPfig(ID);
                         }
