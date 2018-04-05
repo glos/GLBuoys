@@ -11,9 +11,7 @@ $(function () {
         evt.preventDefault();
         // GTM! - "Download File"
         updateTracker('Tool Options', 'Download File', '');
-
-        // download csv/excel file
-        downloadData();
+        downloadData();         // download csv/xls file
     });
 
 
@@ -25,7 +23,7 @@ $(function () {
     // window.location = "download.action?para1=value1...."
     //https://stackoverflow.com/questions/4545311/download-a-file-by-jquery-ajax
 
-    function downloadData() {
+    downloadData = function() {
 
         // Get date information:
         date_start = $('#date-start').val();

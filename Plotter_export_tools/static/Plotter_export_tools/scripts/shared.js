@@ -715,11 +715,25 @@ $(function () {
                 var param_arr = objGET.params.split('|');
                 var param_ct = 0;
 
+                // Make sure no parameters are selected:
+                $('.sel-param').val('');
+                $('#lst-params input').prop('checked', false);
+
+                // Select parameters in UI:
                 $.each(param_arr, function (idx, param_id) {
-                    var $par = $('#sel-param' + (idx + 1).toString());
-                    if ($par.find('option[value="' + param_id + '"]').length > 0) {
-                        $par.val(param_id);
-                        param_ct += 1;
+                    if (_flagParChkbox) {
+                        var $chkPar = $('#lst-params input').filter('#' + param_id);
+                        if ($chkPar.length > 0) {
+                            $chkPar.prop('checked', true);
+                            param_ct += 1;
+                        }
+
+                    } else {
+                        var $par = $('#sel-param' + (idx + 1).toString());
+                        if ($par.find('option[value="' + param_id + '"]').length > 0) {
+                            $par.val(param_id);
+                            param_ct += 1;
+                        }
                     }
                 });
             };
@@ -786,8 +800,15 @@ $(function () {
         //--------------------------------------------
         // Query data & update chart:
         //--------------------------------------------
-        if (_isPlotter && loc_ct > 0 && param_ct > 0 && !errDate) {
-            queryData();
+        if (loc_ct > 0 && param_ct > 0 && !errDate) {
+            if (_isPlotter) {
+                queryData();
+
+            } else if (_isExport) {
+                // GTM! - "Download File"
+                updateTracker('Tool Options', 'Download File', '');
+                downloadData();         // download csv/xls file
+            }
         }
 
     }
@@ -938,7 +959,7 @@ getPermalink = function () {
 
     var arr = document.location.href.split('?');
     var strLink = arr[0] + '?';
-    strLink = strLink.replace('/export?', '/download_data?');
+    //strLink = strLink.replace('/export?', '/download_data?');
 
     // File type, data type, units:
     if (_isExport) {

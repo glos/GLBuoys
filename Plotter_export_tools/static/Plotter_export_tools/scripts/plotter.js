@@ -135,7 +135,81 @@ $(function () {
             }
         },
 
-        series: []
+        series: [],
+
+        exporting: {
+            buttons: {
+                contextButton: {
+                    menuItems: [
+                        // Print chart:
+                        {
+                            text: 'Print Chart',
+                            onclick: function () {
+                                // GTM! - "Print Chart"
+                                updateTracker('Plotter Menu', 'Print Chart', '');
+                                this.print();
+                            }
+                        },
+                        'separator',
+                        // PNG export:
+                        {
+                            text: 'Download PNG image',
+                            onclick: function () {
+                                // GTM! - "Download: PNG"
+                                updateTracker('Plotter Menu', 'Download', 'PNG');
+                                this.exportChart({ type: 'image/png', filename: 'chart' });
+                            }
+                        },
+                        // JPEG export:
+                        {
+                            text: 'Download JPEG image',
+                            onclick: function () {
+                                // GTM! - "Download: JPEG"
+                                updateTracker('Plotter Menu', 'Download', 'JPEG');
+                                this.exportChart({ type: 'image/jpeg', filename: 'chart' });
+                            }
+                        },
+                        // PDF export:
+                        {
+                            text: 'Download PDF document',
+                            onclick: function () {
+                                // GTM! - "Download: PDF"
+                                updateTracker('Plotter Menu', 'Download', 'PDF');
+                                this.exportChart({ type: 'application/pdf', filename: 'chart' });
+                            }
+                        },
+                        // SVG export:
+                        {
+                            text: 'Download SVG vector image',
+                            onclick: function () {
+                                // GTM! - "Download: SVG"
+                                updateTracker('Plotter Menu', 'Download', 'SVG');
+                                this.exportChart({ type: 'image/svg+xml', filename: 'chart' });
+                            }
+                        },
+                        'separator',
+                        // CSV download:
+                        {
+                            text: 'Download CSV',
+                            onclick: function () {
+                                // GTM! - "Download: CSV"
+                                updateTracker('Plotter Menu', 'Download', 'CSV');
+                                this.downloadCSV();
+                            }
+                        },
+                        // XLS download:
+                        {
+                            text: 'Download XLS',
+                            onclick: function () {
+                                // GTM! - "Download: XLS"
+                                updateTracker('Plotter Menu', 'Download', 'XLS');
+                                this.downloadXLS();
+                            }
+                        }
+                    ]
+                }
+            }
+        }
     });
 
 
