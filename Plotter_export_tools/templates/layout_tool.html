@@ -5,20 +5,11 @@
 
 	<!-- Google Tag Manager -->
 	    <script>
-            isActiveTracking = false;   // set to "true" to activate GTM
+            isActiveTracking = true;   // set to "true" to activate GTM
             dataLayer = [];
         </script>
 
-        {# {% block GTM_script %}{% endblock %} #}
-
-	    <!-- Google Analytics -->
-	    <!--<script>
-	    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	    ga('create', 'UA-98457682-1', 'auto');
-	    ga('send', 'pageview');
-	    </script>
-	    <script async src='https://www.google-analytics.com/analytics.js'></script> -->
-	    <!-- End Google Analytics -->
+        {% block GTM_script %}{% endblock %} 
 
         {% load static %}
 

@@ -896,7 +896,7 @@ function reloadbuoyinfo() {
                             ADCPfig(ID);
                         }
 
-						var parameterOrder = ['WSPD','GST','WDIR','WTMP','WVHT','WPRD','MWD','APD','ATMP','PRES','DEWP','PH','DISOXY','DIOSAT','SPCOND','COND','YCHLOR','YBGALG','YTURBI'];
+                        var parameterOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'MAXWVHT', 'WPRD', 'MWDIR', 'MWD', 'APD', 'CurSpd', 'CurDir', 'ATMP', 'PRES', 'SRAD', 'DEWP', 'PH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI', 'VBAT'];
 						for (g = 0; g < parameterOrder.length; g++){
 							for (j = 0; j < jsonObj[i].obsLongName.length; j++) {
 								if(jsonObj[i].obsID[j]===parameterOrder[g] && jsonObj[i].obsValues[j]!=='NaN' && jsonObj[i].obsValues[j]!=='NULL'){
