@@ -62,7 +62,7 @@ function ADCP_Highchart(data, DateString, depths, speedUnits) {
     }
 
     //Add max value of 50 at depth -1 on the last date
-    data.push([data[data.length - 1][0], -1, 50 * 0.0194384, 360]);
+    data.push([data[data.length - 1][0], -1, 50 * conv, 360]);
 
     var H = Highcharts;
     H.seriesTypes['vector'].prototype.drawLegendSymbol = function (legend, item) {

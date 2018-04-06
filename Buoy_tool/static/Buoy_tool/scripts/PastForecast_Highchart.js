@@ -1,54 +1,101 @@
 ﻿function PastForecastGrab(variableName,stationID) {
 
     $.getJSON('../static/Buoy_tool/data/' + ID + '_' + units + '_data.json', function (jsonObj) {
+        
         var Dates = [];
         var ForecastDates = [];
         var Data = [];
         var ForecastData = [];
         var Depths = [];
-        // Javascript function JSON.parse to parse JSON data
-        //var jsonObj = JSON.parse(http_request.responseText);
 
-        $.each(jsonObj, function (key, value) {
-            if (key == variableName) {
-                Data.push(value);
+        if (variableName !== 'CurSpd' && variableName !== 'CurDir') {
+
+            // Javascript function JSON.parse to parse JSON data
+            //var jsonObj = JSON.parse(http_request.responseText);
+
+            $.each(jsonObj, function (key, value) {
+                if (key == variableName) {
+                    Data.push(value);
+                }
+                if (key == "obsDates") {
+                    Dates.push(value);
+                }
+            });
+            if (variableName === 'WVHT') {
+                var variableName_GLCFS = 'WVHGT';
             }
-            if (key == "obsDates") {
-                Dates.push(value);
+            if (variableName === 'WPRD' || variableName === 'APD') {
+                var variableName_GLCFS = 'DOMPD';
             }
-        });
-        if (variableName === 'WVHT') {
-            var variableName_GLCFS = 'WVHGT';
-        }
-        if (variableName === 'WPRD' || variableName === 'APD') {
-            var variableName_GLCFS = 'DOMPD';
-        }
-        $.each(jsonObj.GLCFS, function (key, value) {
-            if (key == variableName_GLCFS) {
-                ForecastData.push(value);
+            $.each(jsonObj.GLCFS, function (key, value) {
+                if (key == variableName_GLCFS) {
+                    ForecastData.push(value);
+                }
+                if (key == "GlcfsDates") {
+                    ForecastDates.push(value);
+                }
+            });
+            console.log(jsonObj);
+            Data[0].reverse(); 	//Place data in ascending order W.R.T dates for highcharts
+            Dates[0].reverse();	//Place dates in ascending order
+            var variableIndex = jsonObj.obsID.indexOf(variableName);
+            var longName = jsonObj.obsLongName[variableIndex];
+            var units = jsonObj.obsUnits[variableIndex];
+            if (variableName == 'PH') {
+                units = 'PH';
             }
-            if (key == "GlcfsDates") {
-                ForecastDates.push(value);
+            if (variableName == 'WDIR' || variableName == 'MWD') {
+                console.log(longName, units, Dates[0], Data[0]);
+                PastForecastPolar(longName, units, Dates[0], Data[0]);
+            } else {
+                PastForecastGraphic(ID, longName, units, Dates[0], ForecastDates[0], Data[0], ForecastData[0]);
             }
-        });
-        console.log(jsonObj);
-        Data[0].reverse(); 	//Place data in ascending order W.R.T dates for highcharts
-        Dates[0].reverse();	//Place dates in ascending order
-        var variableIndex = jsonObj.obsID.indexOf(variableName);
-        var longName = jsonObj.obsLongName[variableIndex];
-        var units = jsonObj.obsUnits[variableIndex];
-        if (variableName == 'PH') {
-            units = 'PH';
+
+        }else {
+
+            jsonObj = jsonObj.ADCP
+            dateLength = jsonObj.obsDates.length
+            var i = 0    
+            //Run if current speed
+            if (variableName == 'CurSpd') {
+                $.each(jsonObj, function (key, value) {
+                    if (key == 'ADCP_Speed') {
+                        Data.push(value);
+                    }
+                    if (key == "obsDates") {
+                        Dates.push(value);
+                    }
+                    i++
+                });
+
+                Data[0].reverse(); 	//Place data in ascending order W.R.T dates for highcharts
+                Dates[0].reverse();	//Place dates in ascending order
+                var units = jsonObj.obsUnits[0];
+                PastForecastGraphic(ID, 'Surface Current', units, Dates[0], ForecastDates[0], Data[0].slice(0, dateLength), ForecastData[0]);
+            }
+            //Run if current direction
+            console.log(dateLength);
+            if (variableName == 'CurDir') {
+                $.each(jsonObj, function (key, value) {
+                    if (key == 'ADCP_Dir') {
+                        Data.push(value);
+                        console.log(value);
+                    }
+                    if (key == "obsDates") {
+                        Dates.push(value);
+                    }
+                    console.log(i);
+                    i++
+                });
+
+                Data[0].reverse(); 	//Place data in ascending order W.R.T dates for highcharts
+                Dates[0].reverse();	//Place dates in ascending order
+                var units = jsonObj.obsUnits[0];
+                console.log('Current Direction', units, Dates[0], Data[0].slice(0, dateLength));
+                PastForecastPolar('Current Direction', units, Dates[0], Data[0].slice(0, dateLength));
+            }
         }
-        if (variableName == 'WDIR' || variableName == 'MWD') {
-            PastForecastPolar(longName, units, Dates[0], Data[0]);
-        } else {
-            PastForecastGraphic(ID, longName, units, Dates[0], ForecastDates[0], Data[0], ForecastData[0]);
-        }
-        //}
     });
-    //http_request.open("Get", data_file, true)
-    //http_request.send()
 }
 
 function PastForecastGraphic(ID, longName, units, DateTime, ForecastDateTime, Data, ForecastData) {
