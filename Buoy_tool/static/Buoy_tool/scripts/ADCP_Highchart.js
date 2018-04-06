@@ -150,7 +150,7 @@ function ADCP_Highchart(data, DateString, depths, speedUnits) {
             },
             labels: {
                 formatter: function () {
-                    return this.value
+                    return this.value.toFixed(1)
                 },
                 x: -5,
             },

@@ -44,8 +44,7 @@
             if (variableName == 'PH') {
                 units = 'PH';
             }
-            if (variableName == 'WDIR' || variableName == 'MWD') {
-                console.log(longName, units, Dates[0], Data[0]);
+            if (variableName == 'WDIR' || variableName == 'MWD' || variableName == 'MWDIR') {
                 PastForecastPolar(longName, units, Dates[0], Data[0]);
             } else {
                 PastForecastGraphic(ID, longName, units, Dates[0], ForecastDates[0], Data[0], ForecastData[0]);
@@ -74,7 +73,6 @@
                 PastForecastGraphic(ID, 'Surface Current', units, Dates[0], ForecastDates[0], Data[0].slice(0, dateLength), ForecastData[0]);
             }
             //Run if current direction
-            console.log(dateLength);
             if (variableName == 'CurDir') {
                 $.each(jsonObj, function (key, value) {
                     if (key == 'ADCP_Dir') {
@@ -155,6 +153,7 @@ function PastForecastGraphic(ID, longName, units, DateTime, ForecastDateTime, Da
                 margin: 5,
             },
             labels: {
+                format: '{value:.1f}',
                 x: -5,
             },
             floor: 0,
@@ -280,6 +279,20 @@ function PastForecastGraphic(ID, longName, units, DateTime, ForecastDateTime, Da
 
 //Function to plot directional parameters
 function PastForecastPolar(longName, units, DateTime, Data) {
+
+    if (Highcharts.getOptions().exporting) {
+        Highcharts.getOptions().exporting.buttons.contextButton.menuItems.pop();
+    }
+
+    var buttons = Highcharts.getOptions().exporting.buttons.contextButton.menuItems;
+    buttons.push({
+        text: "Buoy Alert",
+        onclick: function () {
+            document.getElementById("alertForm").style.display = "block";
+            $("#parameters").val(longName);
+        }
+    });
+
     var options = {
 
         chart: {

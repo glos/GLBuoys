@@ -74,6 +74,7 @@ function getBuoyAlerts(){
 	query.setQuery('select B where A = "'+ID+'"');
 	query.send(BuoyAlertsResponse);
 }
+
 function BuoyAlertsResponse(response) {
     if (response.isError()) {
         console.log('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
@@ -135,7 +136,7 @@ function sendRequest() {
         "Wind_from_Direction": "Wind Direction",
         "Wind_Speed": "Wind Speed",
         "Wind_Gust": "Wind Gust",
-        "WaterTemperature": "Water Temp.",
+        "WaterTemperature": "Water Temp",
         "Solar_Radiation": "Solar Radiation",
         "battery_voltage": "Battery Voltage",
         "dissolved_oxygen": "Dissolved Oxygen",
@@ -165,8 +166,20 @@ function sendRequest() {
         alertUnits = 'degrees_Celsius';
     }
 
-    //Define min and max threshold, 
-    if ($("#minThreshold").val() == "") {
+    //Define min and max threshold
+    var thresholdSelect = $("#radioThresholds input[type='radio']:checked");
+    if (thresholdSelect.val() == 'maximum') {
+        thresholdType = 'maximum';
+        var alertMinThreshold = null;
+        var alertMaxThreshold = $("#threshold").val()
+
+    } else {
+        thresholdType = 'minimum';
+        var alertMaxThreshold = null;
+        var alertMinThreshold = $("#threshold").val()
+    }
+
+    /**if ($("#minThreshold").val() == "") {
         var alertMinThreshold = null;
     }else {
         var alertMinThreshold = $("#minThreshold").val()
@@ -176,8 +189,9 @@ function sendRequest() {
     } else {
         var alertMaxThreshold = $("#maxThreshold").val()
     }
-
+    **/
     var alertParameter = getKeyByValue(_objParamNames, $('#parameters').val())
+
     var SendInfo = {
         "parameter": alertParameter,
         "units": alertUnits,
@@ -361,6 +375,16 @@ function initialize(jsonObj) {
 				legend.appendChild(div);
 			}    
 }
+
+function toggleSection(divID) {
+    var x = document.getElementById(divID);
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+
 function w3_open() {
         document.getElementById("mySidenav").style.display = "block";
 				dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':'open','glbuoysAction':'expand'});
@@ -523,6 +547,7 @@ $(document).ready(function () {
             document.location.href = prepend + 'tools/plotter?data_type=buoy&units=met&locs=' + ID;
         }
     });
+
     $('#btn-show-export').on('click', function (evt) {
         var prepend = '';
 
@@ -537,6 +562,10 @@ $(document).ready(function () {
         else if (units == 'metric') {
             document.location.href = prepend + 'tools/export?data_type=buoy&units=met&locs=' + ID;
         }
+    });
+
+    $('#btn-show-alerts').on('click', function (evt) {
+        document.getElementById("alertForm").style.display = "block";
     });
 
     $('#buoyID').on('change', function () {
@@ -643,14 +672,24 @@ function loadbuoyinfo(ID, jsonObj) {
 						var columnSpan  = 1;
 						if (jsonObj[i].thermistorValues.length>1 && !isNaN(jsonObj[i].thermistorValues[0])){ //Check to make sure there are multiple temperature nodes and first two depths are not missing
 							columnSpan = 2;
-							$('#Thermistor').addClass("w3-center w3-panel w3-card-4 w3-padding");
-							$('#Thermistor h4').append('Water Temperature Profile');
-							$('#Thermistor h4').addClass("glosBlue w3-center");
-							$('#Thermistor').append("<img onclick=document.getElementById('id02').style.display='block';dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'temp_string','glbuoysAction':'popup'}); style='height:350px; width:100%; max-width:550px; cursor: pointer'/>");
-							$('#Thermistor').append('<p style="margin-top:0px">(Click image for interactive graph.)</p>');
-							$('#Thermistor').append('<div id="TempStringLineChart" style="min-width: 310px; height: 400px;"></div>');
-							$('#Thermistor').append('<p style="margin-top:0px">(Click depths in legend to turn on/off depth.)</p>');
-							TempStringGrab(ID);
+                            $('#ThermistorHeat').addClass("w3-center w3-panel w3-card-4 w3-padding");
+                            $('#ThermistorHeat h4').append('Water Temperature Heat Map');
+                            $('#ThermistorHeat h4').addClass("glosBlue w3-center");
+                            $('#ThermistorHeat h4').click(function () { toggleSection('heatMap'); });
+                            var tempStringProfile = "<div id='heatMap' class='w3-hide'><img onclick=document.getElementById('id02').style.display='block';dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'temp_string','glbuoysAction':'popup'}); style='height:350px; width:100%; max-width:550px; cursor: pointer'/>" +
+                                                    '<p style="margin-top:0px">(Click image for interactive graph.)</p></div>';
+                            $('#ThermistorHeat').append(tempStringProfile);
+
+                            $('#ThermistorLine').addClass("w3-center w3-panel w3-card-4 w3-padding");
+                            $('#ThermistorLine h4').append('Water Temperature Line Graph');
+                            $('#ThermistorLine h4').addClass("glosBlue w3-center");
+                            $('#ThermistorLine h4').click(function () { toggleSection('lineChart'); });
+                            var tempStringLines = '<div id="lineChart" class="w3-hide"><div id="TempStringLineChart" style="min-width: 310px; height: 400px;"></div>' + 
+                                '<button id= "showAll" class="w3-button-small w3-small w3-white w3-border w3-round w3-text-black" > Show All</button > ' +
+                                '<button id="hideAll" class="w3-button-small w3-small w3-white w3-border w3-round w3-text-black">Hide All</button>' +
+                                '<p style="margin-top:0px">(Click depths in legend to turn on/off depth.)</p></div>'
+                            $('#ThermistorLine').append(tempStringLines);
+                            TempStringGrab(ID);
 						} else if(jsonObj[i].thermistorValues.length==1){		//Add if statement if buoy owners issues surface temp as 'tp001' and not 'wtmp'
 							columnSpan = 2;
 						}
@@ -658,7 +697,8 @@ function loadbuoyinfo(ID, jsonObj) {
                             $('#ADCP').addClass("w3-center w3-panel w3-card-4 w3-padding");
                             $('#ADCP h4').append('Currents');
                             $('#ADCP h4').addClass("glosBlue w3-center");
-                            $('#ADCP').append('<div id="ADCP_Chart" style="height: 500px"></div>');
+                            $('#ADCP h4').click(function () { toggleSection('adcpMap'); });
+                            $('#ADCP').append('<div id="adcpMap" class="w3-hide"><div id="ADCP_Chart" style="height: 500px"></div></div>');
                             ADCPfig(ID);
                         }
 
@@ -704,7 +744,7 @@ function loadbuoyinfo(ID, jsonObj) {
 																		 "<td style='cursor:pointer; width:10px;'><div class='TAccord' align='left'><i onclick=$('.TAccord').toggle();dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'temp_string','glbuoysLabel':'water_temp','glbuoysAction':'expand'}); class='material-icons'>remove</i></div>" +
 																		 "<div class='TAccord' style='display:none' align=right><i onclick=$('.TAccord').toggle();dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'temp_string','glbuoysLabel':'water_temp','glbuoysAction':'collapse'}); class='material-icons'>add</i></div></td>" +
 																		 "<td class='graph' width='10px' style='cursor: pointer;'><div align=right><i class='material-icons' onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block'>timeline</i></div></td>" +
-																		 "<td class='long_name' align=left onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>Water Temp. @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
+																		 "<td class='long_name' align=left onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>Water Temp @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
 																		 "<td class='interger_value' style='padding:8px 0px;cursor: pointer;' onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block'><div align=right>" + Math.round(jsonObj[i].thermistorValues[k]) + "</div></td>" +
 																		 "<td class='float_value' style='cursor: pointer;' onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"','glbuoysAction':'popup'});document.getElementById('id01').style.display='block'><div align=left >"+ (jsonObj[i].thermistorValues[k]-Math.floor(jsonObj[i].thermistorValues[k])).toFixed(1).substring(1) + "" +tempUnits+ "</div></td>" +
 																		 "</tr>";
@@ -712,7 +752,7 @@ function loadbuoyinfo(ID, jsonObj) {
 									}	else if (k == jsonObj[i].thermistorValues.length - 1) {
 										var newRowContent2 = "<tr id='tp0" + (k) + "'onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" + 
 																		 "<td class='graph' width='20px' colspan='"+columnSpan+"'><div align=right><i class='material-icons'>timeline</i></div></td>" +
-																		 "<td class='long_name' align=left>Water Temp. @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
+																		 "<td class='long_name' align=left>Water Temp @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
 																		 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + Math.round(jsonObj[i].thermistorValues[k]) + "</div></td>" +
 																		 "<td class='float_value'><div align=left>"+ (jsonObj[i].thermistorValues[k]-Math.floor(jsonObj[i].thermistorValues[k])).toFixed(1).substring(1) + "" +tempUnits+ "</div></td>" +
 																		 "</tr>";
@@ -721,7 +761,7 @@ function loadbuoyinfo(ID, jsonObj) {
 										var moreTemps = //"<tr class='TAccord' style='display:none' id='tp0" + (k) + "'onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;''>" + 
 																		"<tr class='TAccord' id='tp0" + (k) + "'onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;''>" + 
 																		"<td class='graph' width='15px' colspan='"+columnSpan+"'><div align=right><i class='material-icons' onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');document.getElementById('id01').style.display='block' style='cursor: pointer;'>timeline</i></div></td>" +
-																		 "<td class='long_name' align=left>Water Temp. @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
+																		 "<td class='long_name' align=left>Water Temp @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
 																		 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + Math.round(jsonObj[i].thermistorValues[k]) + "</div></td>" +
 																		 "<td class='float_value'><div align=left>"+ (jsonObj[i].thermistorValues[k]-Math.floor(jsonObj[i].thermistorValues[k])).toFixed(1).substring(1) + "" +tempUnits+ "</div></td>" +
 																		 "</tr>";
@@ -791,7 +831,7 @@ function loadbuoyinfo(ID, jsonObj) {
 						newRowContent4 += "</tr>";
 						newRowContent5 += "</tr>";
 						newRowContent6 += "</tr>";
-						var newRowContent7 = "</br><p>Click <a href='http://marine.weather.gov/MapClick.php?lon=" + jsonObj[i].lon + "&lat=" + jsonObj[i].lat + "' target='_blank'> here</a> to visit the full National Weather Service forecast page for the " + jsonObj[i].longName + " buoy location.</p>";
+						var newRowContent7 = "<p>Click <a href='http://marine.weather.gov/MapClick.php?lon=" + jsonObj[i].lon + "&lat=" + jsonObj[i].lat + "' target='_blank'> here</a> to visit the full National Weather Service forecast page for the " + jsonObj[i].longName + " buoy location.</p>";
 						$('#MarineForecast').addClass("w3-panel w3-card-4 w3-padding");
 						$('#MarineForecast h4').append('National Weather Service Forecast');
 						$('#MarineForecast h4').addClass("glosBlue w3-center");
@@ -827,7 +867,6 @@ function loadbuoyinfo(ID, jsonObj) {
 						$('#stationMeta a#metadata').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'View metadata for buoy','glbuoysLabel':ID,'glbuoysAction':'click_external_url'});});
 					}
 					if (jsonObj[i].uglosLink){
-						$('#stationMeta p#uglosLink').append("The legacy webpage for buoy " +jsonObj[i].id+ " can be viewed at <a id='uglos' target='_blank' href= http://uglos.mtu.edu/station_page.php?station="+ jsonObj[i].id +">uglos.mtu.edu</a>.");
 						$('#stationMeta a#uglos').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'legacy webpage for buoy','glbuoysLabel':ID,'glbuoysAction':'click_external_url'});});
                     }
                 //Populate alert form
@@ -842,10 +881,15 @@ function reloadbuoyinfo() {
 
 	//$('#stationTime').empty();
 	//$('#realtime tbody').empty();
-    $('#ADCP_Chart').empty();
+    $('#ADCP_Chart').remove();
 	$('#Thermistor img').remove();
-	$('#TempStringLineChart').remove();
-	$('#Thermistor p').remove();
+    $('#TempStringLineChart').remove();
+    $('#heatMap').remove();
+    $('#lineChart').remove();
+    $('#adcpMap').remove();
+    //$('button#showAll').remove();
+    //$('button#hideAll').remove();
+    //$('#Thermistor p').remove();
 	$('#BuoyCamPic').empty();
 	
     var currentTime = moment();
@@ -881,18 +925,25 @@ function reloadbuoyinfo() {
 						}
 						var columnSpan  = 1;
 						if (jsonObj[i].thermistorValues.length>1 && !isNaN(jsonObj[i].thermistorValues[0])){ //Check to make sure there are multiple temperature nodes and first two depths are not missing
-							columnSpan = 2;
-                            $('#Thermistor').append("<img onclick=document.getElementById('id02').style.display='block';dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'temp_string','glbuoysAction':'popup'}); style='height:350px; width:100%; max-width:550px; cursor: pointer'/>");
-							$('#Thermistor').append('<p style="margin-top:0px">(Click image for interactive graph.)</p>');
-							$('#Thermistor').append('<div id="TempStringLineChart" style="min-width: 310px; height: 400px;"></div>');
-							$('#Thermistor').append('<p style="margin-top:0px">(Click depths in legend to turn on/off depth.)</p>');
-							TempStringGrab(ID);
+                            columnSpan = 2;
+
+                            var tempStringProfile = "<div id='heatMap' class='w3-hide'><img onclick=document.getElementById('id02').style.display='block';dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'temp_string','glbuoysAction':'popup'}); style='height:350px; width:100%; max-width:550px; cursor: pointer'/>" +
+                                '<p style="margin-top:0px">(Click image for interactive graph.)</p></div>';
+                            $('#ThermistorHeat').append(tempStringProfile);
+
+                            var tempStringLines = '<div id="lineChart" class="w3-hide"><div id="TempStringLineChart" style="min-width: 310px; height: 400px;"></div>' +
+                                '<button id= "showAll" class="w3-button-small w3-small w3-white w3-border w3-round w3-text-black" > Show All</button > ' +
+                                '<button id="hideAll" class="w3-button-small w3-small w3-white w3-border w3-round w3-text-black">Hide All</button>' +
+                                '<p style="margin-top:0px">(Click depths in legend to turn on/off depth.)</p></div>'
+                            $('#ThermistorLine').append(tempStringLines);
+                            TempStringGrab(ID);
+
 						} else if(jsonObj[i].thermistorValues.length==1){		//Add if statement if buoy owners issues surface temp as 'tp001' and not 'wtmp'
 							columnSpan = 2;
                         }
 
                         if (jsonObj[i].obsID.indexOf('CurSpd')) {       //Check if there is any current data
-                            $('#ADCP').append('<div id="ADCP_Chart" style="height: 500px"></div>');
+                            $('#ADCP').append('<div id="adcpMap" class="w3-hide"><div id="ADCP_Chart" style="height: 500px"></div></div>');
                             ADCPfig(ID);
                         }
 
@@ -938,7 +989,7 @@ function reloadbuoyinfo() {
 																		 "<td style='cursor:pointer; width:10px;'><div class='TAccord' align=right><i onclick=$('.TAccord').toggle();dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'temp_string','glbuoysLabel':'water_temp','glbuoysAction':'expand'}); class='material-icons'>remove</i></div>" +
 																		 "<div class='TAccord' style='display:none' align=right><i onclick=$('.TAccord').toggle();dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'temp_string','glbuoysLabel':'water_temp','glbuoysAction':'collapse'}); class='material-icons'>add</i></div></td>" +
 																		 "<td class='graph' width='10px' style='cursor: pointer;'><div align=right><i class='material-icons' onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block'>timeline</i></div></td>" +
-																		 "<td class='long_name' align=left onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>Water Temp. @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
+																		 "<td class='long_name' align=left onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>Water Temp @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
 																		 "<td class='interger_value' style='padding:8px 0px;cursor: pointer;' onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block'><div align=right>" + Math.round(jsonObj[i].thermistorValues[k]) + "</div></td>" +
 																		 "<td class='float_value' style='cursor: pointer;' onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"','glbuoysAction':'popup'});document.getElementById('id01').style.display='block'><div align=left >"+ (jsonObj[i].thermistorValues[k]-Math.floor(jsonObj[i].thermistorValues[k])).toFixed(1).substring(1) + "" +tempUnits+ "</div></td>" +
 																		 "</tr>";
@@ -947,7 +998,7 @@ function reloadbuoyinfo() {
 									}	else if (k == jsonObj[i].thermistorValues.length - 1) {
 										var newRowContent2 = "<tr id='tp0" + (k) + "'onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" + 
 																		 "<td class='graph' width='20px' colspan='"+columnSpan+"'><div align=right><i class='material-icons'>timeline</i></div></td>" +
-																		 "<td class='long_name' align=left>Water Temp. @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
+																		 "<td class='long_name' align=left>Water Temp @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
 																		 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + Math.round(jsonObj[i].thermistorValues[k]) + "</div></td>" +
 																		 "<td class='float_value'><div align=left>"+ (jsonObj[i].thermistorValues[k]-Math.floor(jsonObj[i].thermistorValues[k])).toFixed(1).substring(1) + "" +tempUnits+ "</div></td>" +
 																		 "</tr>";
@@ -957,7 +1008,7 @@ function reloadbuoyinfo() {
 										var moreTemps = //"<tr class='TAccord' style='display:none' id='tp0" + (k) + "'onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;''>" + 
 																		"<tr class='TAccord' id='tp0" + (k) + "'onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;''>" + 
 																		"<td class='graph' width='15px' colspan='"+columnSpan+"'><div align=right><i class='material-icons' onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');document.getElementById('id01').style.display='block' style='cursor: pointer;'>timeline</i></div></td>" +
-																		 "<td class='long_name' align=left>Water Temp. @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
+																		 "<td class='long_name' align=left>Water Temp @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
 																		 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + Math.round(jsonObj[i].thermistorValues[k]) + "</div></td>" +
 																		 "<td class='float_value'><div align=left>"+ (jsonObj[i].thermistorValues[k]-Math.floor(jsonObj[i].thermistorValues[k])).toFixed(1).substring(1) + "" +tempUnits+ "</div></td>" +
 																		 "</tr>";
@@ -984,11 +1035,13 @@ function reloadbuoyinfo() {
 }
 
 function callfooterInfo(ID){
-	$('footer p').append('<p>Please click <a id="comments" href="https://docs.google.com/forms/d/e/1FAIpQLSdYV4V0Dw6CpZHZRzZRgEyoRJb8erSdoSBQgLCtlXc-jLN9kQ/viewform?usp=pp_url&entry.1512652591&entry.578184834&entry.1388061372&entry.1336006565='+ID+'" target="_blank">here</a> for assistance or to provide suggestions for improvement.</p>');
-	$('a#comments').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'feedback','glbuoysLabel':'mailto:dmac@glos.us','glbuoysAction':'click_external_url'});});
+    $('footer p').append('<p>Please click <a id="comments" href="https://docs.google.com/forms/d/e/1FAIpQLSdYV4V0Dw6CpZHZRzZRgEyoRJb8erSdoSBQgLCtlXc-jLN9kQ/viewform?usp=pp_url&entry.1512652591&entry.578184834&entry.1388061372&entry.1336006565=' + ID +'" target="_blank">here</a> for assistance or to provide suggestions for improvement. Return to GLBuoys <a id="homepage" href="http://glbuoys.glos.us">Homepage</a>.</p>');
+    $('a#comments').click(function () { dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'feedback', 'glbuoysLabel': 'mailto:dmac@glos.us', 'glbuoysAction': 'click_external_url' }); });
+    $('a#comments').click(function () { dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'footer', 'glbuoysLabel': 'http://glbuoys.glos.us', 'glbuoysAction': 'click_internal_url' }); });
 	var googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdYV4V0Dw6CpZHZRzZRgEyoRJb8erSdoSBQgLCtlXc-jLN9kQ/viewform?usp=pp_url&entry.1512652591&entry.578184834&entry.1388061372&entry.1336006565='+ID+'';
 	$('a#navFooter').click(function() {window.open(googleFormUrl,'_blank')});
 	$('a#navFooter').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':'mailto:dmac@glos.us','glbuoysAction':'click_external_url'});});
+
 }
 
 function PassStation(stationID,lat,lon) {																 

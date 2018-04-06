@@ -64,6 +64,7 @@ function PastTempNodeGraphic(DateTime, Data, Depth) {
                 margin: 5,
             },
             labels: {
+                format: '{value:.1f}',
                 x: -5,
             },
             allowDecimals: false,

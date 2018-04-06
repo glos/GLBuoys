@@ -79,7 +79,7 @@ function TempStringHeatMap(Depths, DateString, DateTime, TStringdata) {
 				},
 				
         legend: {
-						align: 'left',
+						align: 'center', //was left
             //verticalAlign: 'bottom',
 						//enabled: true,
             margin: 0,
@@ -188,7 +188,7 @@ function TempStringHeatMap(Depths, DateString, DateTime, TStringdata) {
         url: exportUrl,
         data: obj,
         success: function (data) {
-						$('#Thermistor img').attr('src', exportUrl + data);
+            $('#ThermistorHeat img').attr('src', exportUrl + data);
         }
     });
 
@@ -196,7 +196,22 @@ function TempStringHeatMap(Depths, DateString, DateTime, TStringdata) {
   var chart2 = new Highcharts.Chart(options2);
 }
 
+
 function TempStringLineChart(Depths, DateString, DateTime, TStringdata) {
+
+    $('button#showAll').click(function () {
+        dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'graph', 'glbuoysLabel': 'temp_string_lines', 'glbuoysAction': 'showAll' });
+        for (i = 0; i < chart3.series.length; i++) {
+            chart3.series[i].show();
+        }
+    });
+    $('button#hideAll').click(function () {
+        dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'graph', 'glbuoysLabel': 'temp_string_lines', 'glbuoysAction': 'hideAll' });
+        for (i = 0; i < chart3.series.length; i++) {
+            chart3.series[i].hide();
+        }
+    });
+
     var options3 = {
 
         chart: {
@@ -216,7 +231,12 @@ function TempStringLineChart(Depths, DateString, DateTime, TStringdata) {
         credits: {
             enabled: false
         },
-
+        legend: {
+            align: 'center', 
+            marginBottom: 0,
+            itemMarginBottom: 0,
+            padding: 0
+        },
         xAxis: {
             type: 'datetime',
             title: 'Date and Time',
@@ -229,10 +249,14 @@ function TempStringLineChart(Depths, DateString, DateTime, TStringdata) {
 				
         yAxis: {
             title: {
-							text: 'Temperature '+tempUnits+''
+			    text: 'Temperature '+tempUnits+''
             },
-						floor: 0
+            floor: 0,
+            labels: {
+                format: '{value:.1f}',
+            }
         },
+
 				
 				tooltip: {
 					valueDecimals: 1,
@@ -298,5 +322,5 @@ function TempStringLineChart(Depths, DateString, DateTime, TStringdata) {
 		options3.series.push(buoyData[i]);
 		tempData = [];
 	}
-  var chart2 = new Highcharts.Chart(options3);  
+  var chart3 = new Highcharts.Chart(options3);  
 }	
