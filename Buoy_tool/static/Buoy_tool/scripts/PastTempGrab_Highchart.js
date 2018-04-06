@@ -25,6 +25,20 @@
 }
 
 function PastTempNodeGraphic(DateTime, Data, Depth) {
+
+    if (Highcharts.getOptions().exporting) {
+        Highcharts.getOptions().exporting.buttons.contextButton.menuItems.pop();
+    }
+
+    var buttons = Highcharts.getOptions().exporting.buttons.contextButton.menuItems;
+    buttons.push({
+        text: "Buoy Alert",
+        onclick: function () {
+            document.getElementById("alertForm").style.display = "block";
+            $("#parameters").val('Water Temp at ' + Depth.toFixed(0) + ' ' + depthUnits);
+        }
+    });
+
     var options = {
 
         chart: {

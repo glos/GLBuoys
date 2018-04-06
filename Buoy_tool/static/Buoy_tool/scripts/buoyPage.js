@@ -95,6 +95,7 @@ function BuoyAlertsResponse(response) {
 }
 //----------------------------------------------------------------------------------------
 
+
 //-------------------------Buoy Alerts Function and Buttons-------------------------------
 function alertFormPop(ID, allBuoysObj) {
     var paramOptions = [];
@@ -105,11 +106,22 @@ function alertFormPop(ID, allBuoysObj) {
         if (allBuoysObj[i].buoyOwners != "NOAA-NDBC" && allBuoysObj[i].buoyOwners != "Env CA") {
             buoysList.push(allBuoysObj[i].id);
         }
+        
         if (allBuoysObj[i].id == ID) {
-            paramOptions = allBuoysObj[i].obsLongName;
+            var paramOptions = allBuoysObj[i].obsLongName;
             $.each(paramOptions, function (i, p) {
-                $('#parameters').append($('<option></option>').val(p).html(p));
+                if (paramOptions != 'Current Speed' || paramOptions != 'Current Direction') {
+                    $('#parameters').append($('<option></option>').val(p).html(p));
+                }
             });
+            if (allBuoysObj[i].thermistorDepths.length > 0) {
+                for (j = 0; j < allBuoysObj[i].thermistorValues.length; j++) {
+                    if (allBuoysObj[i].thermistorValues[j] != 'NaN') {
+                        var depth = allBuoysObj[i].thermistorDepths[j];
+                        $('#parameters').append($('<option></option>').val('Water Temp at ' + depth.toFixed(0) + ' ' + depthUnits).html('Water Temp at ' + depth.toFixed(0) + ' ' + depthUnits));
+                    }
+                }
+            }
         }
     }
 
@@ -179,19 +191,21 @@ function sendRequest() {
         var alertMinThreshold = $("#threshold").val()
     }
 
-    /**if ($("#minThreshold").val() == "") {
-        var alertMinThreshold = null;
-    }else {
-        var alertMinThreshold = $("#minThreshold").val()
-    }
-    if ($("#maxThreshold").val() == "") {
-        var alertMaxThreshold = null;
-    } else {
-        var alertMaxThreshold = $("#maxThreshold").val()
-    }
-    **/
-    var alertParameter = getKeyByValue(_objParamNames, $('#parameters').val())
+    paramValue = $('#parameters').val();
+    var alertParameter = getKeyByValue(_objParamNames, paramValue)
 
+    console.log($('#parameters').val());
+    if (alertParameter == null) {// && paramValue.indexOf('Water Temp at')){
+        var depthVal = (paramValue.match(/\d/g));
+        if (units == 'english') {
+            alertParameter = 'Thermistor_String_at_' + Math.round(depthVal * 0.3048) + 'm';
+        }
+        else {
+            alertParameter = 'Thermistor_string_at_' + depthVal + 'm';
+        }
+    }
+
+    console.log(alertParameter);
     var SendInfo = {
         "parameter": alertParameter,
         "units": alertUnits,
@@ -675,6 +689,7 @@ function loadbuoyinfo(ID, jsonObj) {
                             $('#ThermistorHeat').addClass("w3-center w3-panel w3-card-4 w3-padding");
                             $('#ThermistorHeat h4').append('Water Temperature Heat Map');
                             $('#ThermistorHeat h4').addClass("glosBlue w3-center");
+                            $('#ThermistorHeat h4').css("cursor","pointer");
                             $('#ThermistorHeat h4').click(function () { toggleSection('heatMap'); });
                             var tempStringProfile = "<div id='heatMap' class='w3-hide'><img onclick=document.getElementById('id02').style.display='block';dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'temp_string','glbuoysAction':'popup'}); style='height:350px; width:100%; max-width:550px; cursor: pointer'/>" +
                                                     '<p style="margin-top:0px">(Click image for interactive graph.)</p></div>';
@@ -683,6 +698,7 @@ function loadbuoyinfo(ID, jsonObj) {
                             $('#ThermistorLine').addClass("w3-center w3-panel w3-card-4 w3-padding");
                             $('#ThermistorLine h4').append('Water Temperature Line Graph');
                             $('#ThermistorLine h4').addClass("glosBlue w3-center");
+                            $('#ThermistorLine h4').css("cursor", "pointer");
                             $('#ThermistorLine h4').click(function () { toggleSection('lineChart'); });
                             var tempStringLines = '<div id="lineChart" class="w3-hide"><div id="TempStringLineChart" style="min-width: 310px; height: 400px;"></div>' + 
                                 '<button id= "showAll" class="w3-button-small w3-small w3-white w3-border w3-round w3-text-black" > Show All</button > ' +
@@ -697,6 +713,7 @@ function loadbuoyinfo(ID, jsonObj) {
                             $('#ADCP').addClass("w3-center w3-panel w3-card-4 w3-padding");
                             $('#ADCP h4').append('Currents');
                             $('#ADCP h4').addClass("glosBlue w3-center");
+                            $('#ADCP h4').css("cursor", "pointer");
                             $('#ADCP h4').click(function () { toggleSection('adcpMap'); });
                             $('#ADCP').append('<div id="adcpMap" class="w3-hide"><div id="ADCP_Chart" style="height: 500px"></div></div>');
                             ADCPfig(ID);

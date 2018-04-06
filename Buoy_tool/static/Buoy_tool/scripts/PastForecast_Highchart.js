@@ -112,7 +112,6 @@ function PastForecastGraphic(ID, longName, units, DateTime, ForecastDateTime, Da
     });
     
 
-
     var options = {
 
         chart: {
