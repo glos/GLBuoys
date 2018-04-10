@@ -219,7 +219,8 @@ function sendRequest() {
     paramValue = $('#parameters').val();
     var alertParameter = getKeyByValue(_objParamNames, paramValue)
 
-    if (alertParameter != null && alertUnits == ')
+    if (alertParameter != null && alertUnits == 'english'){
+    }
 
 
     //Check to see if a water temperature string depth was selected. If so check the units, convert if neccesary then pass name to API. 
