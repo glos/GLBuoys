@@ -89,7 +89,7 @@
             <div id="OntarioAcc" class="w3-hide w3-white w3-card-4">
             </div>
         </div>
-		<div id="unitConversion" class="w3-container">
+		<div id="unitConversion" class="w3-container w3-center">
 			<div id="ConvButton">
 				<button onclick="unitConversion();" id="units" class="w3-button w3-white w3-border w3-round w3-text-black">To Metric</button>
 			</div>
@@ -97,7 +97,7 @@
            <div class="w3-container w3-center">
             <button id="homepage" class="w3-button w3-white w3-border w3-round"><a id="navFooter" href="http://glbuoys.glos.us" style="padding:0px">Home</a></button>
         </div>
-		<div class="w3-container">
+		<div class="w3-container w3-center">
             <button id="feedback" class="w3-button w3-white w3-border w3-round"><a id="navFooter" style="padding:0px">Feedback</a></button>
         </div>
     </nav>
@@ -185,11 +185,11 @@
                     <div class="w3-row-padding">
                         <div class="w3-half" >
                             <label class="w3-text-teal"><b>Threshold Value</b></label>
-                            <input id="threshold" class="w3-input w3-border w3-white" type="text" placeholder="Value to trigger alert">
+                            <input required id="threshold" class="w3-input w3-border w3-white" type="text" placeholder="Value to trigger alert">
                         </div>
                         <div class="w3-half">
                             <label class="w3-text-teal"><b>Email Address</b></label>
-                            <input required id="email" class="w3-input w3-border w3-white" type="text" placeholder="Email Address">
+                            <input required id="email" class="w3-input w3-border w3-white" type="email" placeholder="Email Address">
                         </div>
                     </div>
 

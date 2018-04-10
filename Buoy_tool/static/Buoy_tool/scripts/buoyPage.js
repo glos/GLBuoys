@@ -159,6 +159,31 @@ function sendRequest() {
         "ysi_chlorophyll": "Chlorophyll",
         "ysi_blue_green_algae": "Blue-Green-Algae"
     }
+
+    var _objUnits = {
+        "Significant_Wave_Height": "meters",
+        "sea_surface_wave_maximum_height": "meters",
+        "significant_wave_from_direction": "degrees",
+        "Significant_Wave_Period": "seconds",
+        "Air_Temperature": "degrees_Celsius",
+        "Relative_Humidity": "%",
+        "Dew_Point": "degrees_Celsius",
+        "Air_Pressure": "mbar",
+        "Wind_from_Direction": "degrees",
+        "Wind_Speed": "m/s",
+        "Wind_Gust": "m/s",
+        "WaterTemperature": "degrees_Celsius",
+        "Solar_Radiation": "",
+        "battery_voltage": "volts",
+        "dissolved_oxygen": "",
+        "dissolved_oxygen_saturation": "%",
+        "water_conductivity": "",
+        "ph": "PH",
+        "ysi_turbidity": "",
+        "ysi_chlorophyll": "",
+        "ysi_blue_green_algae": ""
+    }
+
     //Define standard parameter ID
     function getKeyByValue(object, value) {
         //return Object.keys(object).find(key => object[key] === value);
@@ -194,9 +219,12 @@ function sendRequest() {
     paramValue = $('#parameters').val();
     var alertParameter = getKeyByValue(_objParamNames, paramValue)
 
-    console.log($('#parameters').val());
-    if (alertParameter == null) {// && paramValue.indexOf('Water Temp at')){
-        var depthVal = (paramValue.match(/\d/g));
+    if (alertParameter != null && alertUnits == ')
+
+
+    //Check to see if a water temperature string depth was selected. If so check the units, convert if neccesary then pass name to API. 
+    if (alertParameter == null && paramValue.includes('Water Temp at')) {
+        var depthVal = (paramValue.match(/\d/g)).join(""); //Join values in error without commmas in between
         if (units == 'english') {
             alertParameter = 'Thermistor_String_at_' + Math.round(depthVal * 0.3048) + 'm';
         }
@@ -205,7 +233,7 @@ function sendRequest() {
         }
     }
 
-    console.log(alertParameter);
+    console.log('alertParameter: '+alertParameter);
     var SendInfo = {
         "parameter": alertParameter,
         "units": alertUnits,
