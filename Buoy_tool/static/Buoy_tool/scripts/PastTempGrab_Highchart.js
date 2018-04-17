@@ -26,7 +26,7 @@
 
 function PastTempNodeGraphic(DateTime, Data, Depth) {
 
-    if (Highcharts.getOptions().exporting) {
+    /**if (Highcharts.getOptions().exporting) {
         Highcharts.getOptions().exporting.buttons.contextButton.menuItems.pop();
     }
 
@@ -37,7 +37,7 @@ function PastTempNodeGraphic(DateTime, Data, Depth) {
             document.getElementById("alertForm").style.display = "block";
             $("#parameters").val('Water Temp at ' + Depth.toFixed(0) + ' ' + depthUnits);
         }
-    });
+    });**/
 
     var options = {
 

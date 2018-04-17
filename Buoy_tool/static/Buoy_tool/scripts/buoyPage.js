@@ -97,6 +97,88 @@ function BuoyAlertsResponse(response) {
 
 
 //-------------------------Buoy Alerts Function and Buttons-------------------------------
+//Use conversion from obslongname to GLOS standard names
+var _objParamNames = {
+    "Significant_Wave_Height": "Significant Wave Height",
+    "sea_surface_wave_maximum_height": "Maximum Wave Height",
+    "significant_wave_from_direction": "Wave Direction",
+    "Significant_Wave_Period": "Wave Period",
+    "Air_Temperature": "Air Temp",
+    "Relative_Humidity": "Relative Humidity",
+    "Dew_Point": "Dew Point",
+    "Air_Pressure": "Air Pressure",
+    "Wind_from_Direction": "Wind Direction",
+    "Wind_Speed": "Wind Speed",
+    "Wind_Gust": "Wind Gust",
+    "WaterTemperature": "Water Temp",
+    "Solar_Radiation": "Solar Radiation",
+    "battery_voltage": "Battery Voltage",
+    "dissolved_oxygen": "Dissolved Oxygen",
+    "dissolved_oxygen_saturation": "DO Saturation",
+    "water_conductivity": "Specific Conductivity",
+    "ph": "pH",
+    "ysi_turbidity": "Turbidity",
+    "ysi_chlorophyll": "Chlorophyll",
+    "ysi_blue_green_algae": "Blue-Green Algae"
+}
+
+var _objUnits = {
+    "Significant_Wave_Height": "meter",
+    "sea_surface_wave_maximum_height": "meter",
+    "significant_wave_from_direction": "degree",
+    "Significant_Wave_Period": "second",
+    "Air_Temperature": "degC",
+    "Relative_Humidity": "percent",
+    "degrees_Celsius": "Dew_Point",
+    "Air_Pressure": "hPa",
+    "Wind_from_Direction": "degree",
+    "Wind_Speed": "m s-1",
+    "Wind_Gust": "m s-1",
+    "WaterTemperature": "degC",
+    "Solar_Radiation": "W m-2",
+    "battery_voltage": "volts",
+    "dissolved_oxygen": "mgL-1",
+    "dissolved_oxygen_saturation": "percent",
+    "water_conductivity": "us_cm-1",
+    "ph": "ph",
+    "ysi_turbidity": "ntu",
+    "ysi_chlorophyll": "rfu",
+    "ysi_blue_green_algae": "rfu"
+}
+
+//Define standard parameter ID
+function getKeyByValue(object, value) {
+    //return Object.keys(object).find(key => object[key] === value);
+    for (var key in object) {
+        if (object.hasOwnProperty(key) && object[key] == value) {
+            return key;
+        }
+    }
+
+}
+
+function getAlertUnits(alertParameter) {
+    //Define units
+    var unitsSelect = $("#radioUnits input[type='radio']:checked").val();
+    if (alertParameter in _objUnits) {
+        var alertUnits = _objUnits[alertParameter];
+    } else {
+        console.log('Units does not exist');
+    }
+
+    if (alertParameter != null && unitsSelect == 'english') {
+        if (alertParameter.includes('Temperature' || 'Dew_Point')) {
+            alertUnits = 'degF';
+        } else if (alertParameter.includes('Speed' || 'Gust')) {
+            alertUnits = 'knots';
+            console.log('true');
+        } else if (alertParameter.includes('height' || 'Height')) {
+            alertUnits = 'ft';
+        }
+    }
+    return alertUnits
+}
+
 function alertFormPop(ID, allBuoysObj) {
     var paramOptions = [];
     var buoysList = [];
@@ -110,7 +192,7 @@ function alertFormPop(ID, allBuoysObj) {
         if (allBuoysObj[i].id == ID) {
             var paramOptions = allBuoysObj[i].obsLongName;
             $.each(paramOptions, function (i, p) {
-                if (paramOptions != 'Current Speed' || paramOptions != 'Current Direction') {
+                if (p != "Current Speed" && p != "Current Direction") {
                     $('#parameters').append($('<option></option>').val(p).html(p));
                 }
             });
@@ -135,75 +217,7 @@ function sendRequest() {
     //Close modal
     document.getElementById('alertForm').style.display = 'none';
 
-    //Use conversion from obslongname to GLOS standard names
-    var _objParamNames = {
-        "Significant_Wave_Height": "Significant Wave Height",
-        "sea_surface_wave_maximum_height": "Maximum Wave Height",
-        "significant_wave_from_direction": "Mean Wave Direction",
-        "Significant_Wave_Period": "Wave Period",
-        "Air_Temperature": "Air Temperature",
-        "Relative_Humidity": "Relative Humidity",
-        "Dew_Point": "Dew Point",
-        "Air_Pressure": "Air Pressure",
-        "Wind_from_Direction": "Wind Direction",
-        "Wind_Speed": "Wind Speed",
-        "Wind_Gust": "Wind Gust",
-        "WaterTemperature": "Water Temp",
-        "Solar_Radiation": "Solar Radiation",
-        "battery_voltage": "Battery Voltage",
-        "dissolved_oxygen": "Dissolved Oxygen",
-        "dissolved_oxygen_saturation": "DO Saturation",
-        "water_conductivity": "Specific Conductivity",
-        "ph": "PH",
-        "ysi_turbidity": "Turbidity",
-        "ysi_chlorophyll": "Chlorophyll",
-        "ysi_blue_green_algae": "Blue-Green-Algae"
-    }
-
-    var _objUnits = {
-        "Significant_Wave_Height": "meters",
-        "sea_surface_wave_maximum_height": "meters",
-        "significant_wave_from_direction": "degrees",
-        "Significant_Wave_Period": "seconds",
-        "Air_Temperature": "degrees_Celsius",
-        "Relative_Humidity": "%",
-        "Dew_Point": "degrees_Celsius",
-        "Air_Pressure": "mbar",
-        "Wind_from_Direction": "degrees",
-        "Wind_Speed": "m/s",
-        "Wind_Gust": "m/s",
-        "WaterTemperature": "degrees_Celsius",
-        "Solar_Radiation": "",
-        "battery_voltage": "volts",
-        "dissolved_oxygen": "",
-        "dissolved_oxygen_saturation": "%",
-        "water_conductivity": "",
-        "ph": "PH",
-        "ysi_turbidity": "",
-        "ysi_chlorophyll": "",
-        "ysi_blue_green_algae": ""
-    }
-
-    //Define standard parameter ID
-    function getKeyByValue(object, value) {
-        //return Object.keys(object).find(key => object[key] === value);
-        for (var key in object) {
-            if (object.hasOwnProperty(key) && object[key] == value) {
-                return key;
-            }
-        }
-
-    }
-
-    //Define units
-    var unitsSelect = $("#radioUnits input[type='radio']:checked");
-    if (unitsSelect.val() == 'english') {
-        alertUnits = 'degrees_Fahrenheit';
-    } else {
-        alertUnits = 'degrees_Celsius';
-    }
-
-    //Define min and max threshold
+    //Define min and max threshold selections
     var thresholdSelect = $("#radioThresholds input[type='radio']:checked");
     if (thresholdSelect.val() == 'maximum') {
         thresholdType = 'maximum';
@@ -216,25 +230,26 @@ function sendRequest() {
         var alertMinThreshold = $("#threshold").val()
     }
 
+    //Get the parameter value and find the standard name in _objParamNames object
     paramValue = $('#parameters').val();
-    var alertParameter = getKeyByValue(_objParamNames, paramValue)
-
-    if (alertParameter != null && alertUnits == 'english'){
-    }
-
+    var alertParameter = getKeyByValue(_objParamNames, paramValue);
+    
+    //Get units
+    var alertUnits = getAlertUnits(alertParameter);
 
     //Check to see if a water temperature string depth was selected. If so check the units, convert if neccesary then pass name to API. 
     if (alertParameter == null && paramValue.includes('Water Temp at')) {
         var depthVal = (paramValue.match(/\d/g)).join(""); //Join values in error without commmas in between
         if (units == 'english') {
             alertParameter = 'Thermistor_String_at_' + Math.round(depthVal * 0.3048) + 'm';
+            alertUnits = 'deg';
         }
         else {
             alertParameter = 'Thermistor_string_at_' + depthVal + 'm';
+            alertUnits = 'degrees_Celsius';
         }
     }
 
-    console.log('alertParameter: '+alertParameter);
     var SendInfo = {
         "parameter": alertParameter,
         "units": alertUnits,
@@ -248,6 +263,7 @@ function sendRequest() {
         "contact_flag": false
     }
 
+    console.log(SendInfo);
     $.ajax({   
  	//headers : {'Content-Type' : 'text/html; charset=utf-8'},
 	type: 'POST',
@@ -265,7 +281,8 @@ function sendRequest() {
 
 function initialize(jsonObj) {
 	
-		var stations = [];
+    var stations = [];
+    var stationsLongName = [];
 		var	lats = [];
 		var lons = [];
 		var obs = [];
@@ -274,7 +291,8 @@ function initialize(jsonObj) {
 		var recovered = [];
 
 			for (i = 0; i < jsonObj.length; i++) {
-				stations[i] = jsonObj[i].id;
+                stations[i] = jsonObj[i].id;
+                stationsLongName[i] = jsonObj[i].longName;
 				lats[i] = jsonObj[i].lat;
 				lons[i] = jsonObj[i].lon;
 				obs[i] = jsonObj[i].obsValues;
@@ -318,7 +336,7 @@ function initialize(jsonObj) {
 					if (stations[i]==ID){
 						marker = new google.maps.Marker({
 							position: new google.maps.LatLng(lats[i], lons[i]),
-							title:stations[i],
+                            title: stationsLongName[i],
 							map: map,
 							optimized: false,
 							zIndex:4,
@@ -327,7 +345,7 @@ function initialize(jsonObj) {
 					}else if (obs[i] && !offline[i]){
 						marker = new google.maps.Marker({
 							position: new google.maps.LatLng(lats[i], lons[i]),
-							title:stations[i],
+                            title: stationsLongName[i],
 							map: map,
 							zIndex:3,
                             icon: prePath + 'img/BuoyOnlineIcon.png',
@@ -335,7 +353,7 @@ function initialize(jsonObj) {
 					}else if (offline[i] && obs[i]){
 						marker = new google.maps.Marker({
 							position: new google.maps.LatLng(lats[i], lons[i]),
-							title:stations[i],
+                            title: stationsLongName[i],
 							map: map,
 							zIndex:2,
                             icon: prePath + 'img/OldDataBuoyIcon.png',
@@ -343,7 +361,7 @@ function initialize(jsonObj) {
 					}else if (!obs[i]) {
 						marker = new google.maps.Marker({
 							position: new google.maps.LatLng(lats[i], lons[i]),
-							title:stations[i],
+                            title: stationsLongName[i],
 							map: map,
 							zIndex:1,
 							opacity:0.7,
@@ -354,7 +372,7 @@ function initialize(jsonObj) {
 						return function () {
                 var div = document.createElement('div');
                 div.innerHTML = stations[i];
-                var contentString = '<div id="content" style="cursor: pointer;font-family: Inconsolata,Verdana; margin-right:5px; font-size:15px; color:#333;font-weight:700" onclick="PassStation(\'' + stations[i] +'\',\'' + lats[i] +'\',\'' + lons[i] + '\');dataLayer.push({\'event\':\'glbuoysEvent\',\'glbuoysCategory\':\'map\',\'glbuoysLabel\':\''+stations[i]+'\',\'glbuoysAction\':\'click_internal_url\'});">' + stations[i] + '</div>';
+                var contentString = '<div id="content" style="cursor: pointer;font-family: Inconsolata,Verdana; margin-right:5px; font-size:15px; color:#333;font-weight:700" onclick="PassStation(\'' + stations[i] + '\',\'' + lats[i] + '\',\'' + lons[i] + '\');dataLayer.push({\'event\':\'glbuoysEvent\',\'glbuoysCategory\':\'map\',\'glbuoysLabel\':\'' + stations[i] + '\',\'glbuoysAction\':\'click_internal_url\'});">' + stationsLongName[i] + '</div>';
                 map.setCenter({
                     lat: lats[i],
                     lng: lons[i]
@@ -738,7 +756,8 @@ function loadbuoyinfo(ID, jsonObj) {
 						} else if(jsonObj[i].thermistorValues.length==1){		//Add if statement if buoy owners issues surface temp as 'tp001' and not 'wtmp'
 							columnSpan = 2;
 						}
-                        if (jsonObj[i].obsID.indexOf('CurSpd')) {       //Check if there is any current data
+                        //if (jsonObj[i].obsID.indexOf('CurSpd')) {       //Check if there is any current data
+                        if ($.inArray('CurSpd', jsonObj[i].obsID) > 0) {  //returns 1 if exist and -1 if doesn't exist
                             $('#ADCP').addClass("w3-center w3-panel w3-card-4 w3-padding");
                             $('#ADCP h4').append('Currents');
                             $('#ADCP h4').addClass("glosBlue w3-center");
@@ -748,7 +767,7 @@ function loadbuoyinfo(ID, jsonObj) {
                             ADCPfig(ID);
                         }
 
-						var parameterOrder = ['WSPD','GST','WDIR','WTMP','WVHT','MAXWVHT','WPRD','MWDIR','MWD','APD','CurSpd','CurDir','ATMP','PRES','SRAD','DEWP','PH','DISOXY','DIOSAT','SPCOND','COND','YCHLOR','YBGALG','YTURBI','VBAT'];
+						var parameterOrder = ['WSPD','GST','WDIR','WTMP','WVHT','MAXWVHT','WPRD','MWDIR','MWD','APD','CurSpd','CurDir','ATMP','PRES','SRAD','DEWP','pH','DISOXY','DIOSAT','SPCOND','COND','YCHLOR','YBGALG','YTURBI','VBAT'];
 						var excludedObs = ['DPD','TIDE','VIS','PTDY','DEPTH','OTMP','CHILL','HEAT','ICE','WSPD10','WSPD20'];
 						for (g = 0; g < parameterOrder.length; g++){
 							for (j = 0; j < jsonObj[i].obsLongName.length; j++) {
@@ -993,7 +1012,7 @@ function reloadbuoyinfo() {
                             ADCPfig(ID);
                         }
 
-                        var parameterOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'MAXWVHT', 'WPRD', 'MWDIR', 'MWD', 'APD', 'CurSpd', 'CurDir', 'ATMP', 'PRES', 'SRAD', 'DEWP', 'PH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI', 'VBAT'];
+                        var parameterOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'MAXWVHT', 'WPRD', 'MWDIR', 'MWD', 'APD', 'CurSpd', 'CurDir', 'ATMP', 'PRES', 'SRAD', 'DEWP', 'pH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI', 'VBAT'];
 						for (g = 0; g < parameterOrder.length; g++){
 							for (j = 0; j < jsonObj[i].obsLongName.length; j++) {
 								if(jsonObj[i].obsID[j]===parameterOrder[g] && jsonObj[i].obsValues[j]!=='NaN' && jsonObj[i].obsValues[j]!=='NULL'){

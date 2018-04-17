@@ -98,7 +98,7 @@
 
 function PastForecastGraphic(ID, longName, units, DateTime, ForecastDateTime, Data, ForecastData) {
     
-    if (Highcharts.getOptions().exporting) {
+    /**if (Highcharts.getOptions().exporting) {
         Highcharts.getOptions().exporting.buttons.contextButton.menuItems.pop();
     }
     
@@ -109,7 +109,7 @@ function PastForecastGraphic(ID, longName, units, DateTime, ForecastDateTime, Da
             document.getElementById("alertForm").style.display = "block";
             $("#parameters").val(longName);
         }
-    });
+    });**/
     
 
     var options = {
@@ -165,13 +165,13 @@ function PastForecastGraphic(ID, longName, units, DateTime, ForecastDateTime, Da
 				
         plotOptions: {
             series: {
-							marker: {
-								enabled: false
-							}
-						},
-						area: {
                 marker: {
-                    radius: 2
+                    enabled: true
+                }
+            },
+            area: {
+                marker: {
+                    radius: 1.5,
                 },
                 lineWidth: 1,
                 states: {
@@ -194,10 +194,7 @@ function PastForecastGraphic(ID, longName, units, DateTime, ForecastDateTime, Da
         type: 'area',
 				fillOpacity: 0.5,
 				zIndex: 2,
-        connectNulls: true,
-				marker: {
-                enabled: false
-            },
+        connectNulls: false,
         lineWidth: 1,
         states: {
             hover: {

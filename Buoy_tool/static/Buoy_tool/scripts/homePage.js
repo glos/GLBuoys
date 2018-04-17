@@ -415,7 +415,8 @@ function unitConversion() {
 }
 
 function initialize(lat,lon) {
-		var stations = [];
+        var stations = [];
+        var stationsLongName = [];
 		var	lats = [];
 		var lons = [];
 		var obs = [];
@@ -424,9 +425,10 @@ function initialize(lat,lon) {
 		var recovered = [];
         loadbuoyinfo_home(function (jsonObj) {
 			for (i = 0; i < jsonObj.length; i++) {
-            stations[i] = jsonObj[i].id;
-            lats[i] = jsonObj[i].lat;
-            lons[i] = jsonObj[i].lon;
+                stations[i] = jsonObj[i].id;
+                stationsLongName[i] = jsonObj[i].longName;
+                lats[i] = jsonObj[i].lat;
+                lons[i] = jsonObj[i].lon;
 						obs[i] = jsonObj[i].obsValues;
 						WQ[i] = jsonObj[i].WqOnly;
 						offline[i] = ifOffline(jsonObj[i].updateTime);
@@ -451,7 +453,7 @@ function initialize(lat,lon) {
 					if (obs[i] && !offline[i]){
 						marker = new google.maps.Marker({
 							position: new google.maps.LatLng(lats[i], lons[i]),
-							title:stations[i],
+							title:stationsLongName[i],
 							map: map,
 							zIndex:3,
 							icon: prePath + 'img/BuoyOnlineIcon.png',
@@ -459,7 +461,7 @@ function initialize(lat,lon) {
 					}else if (offline[i] && obs[i]){
 						marker = new google.maps.Marker({
 							position: new google.maps.LatLng(lats[i], lons[i]),
-							title:stations[i],
+                            title: stationsLongName[i],
 							map: map,
 							zIndex:2,
                             icon: prePath + 'img/OldDataBuoyIcon.png',
@@ -467,7 +469,7 @@ function initialize(lat,lon) {
 					}else if (!obs[i]) {
 						marker = new google.maps.Marker({
 							position: new google.maps.LatLng(lats[i], lons[i]),
-							title:stations[i],
+                            title: stationsLongName[i],
 							map: map,
 							zIndex:1,
 							opacity:0.7,
@@ -479,7 +481,7 @@ function initialize(lat,lon) {
             return function () {
                 var div = document.createElement('div');
                 div.innerHTML = stations[i];
-                var contentString = '<div id="content" style="cursor:pointer;font-family: Inconsolata,Verdana; font-size:15px; color:#333;font-weight:700" onclick="PassStation(\'' + stations[i] + '\');dataLayer.push({\'event\':\'glbuoysEvent\',\'glbuoysCategory\':\'map\',\'glbuoysLabel\':\''+stations[i]+'\',\'glbuoysAction\':\'click internal url\'});">' + stations[i] + '</div>';
+                var contentString = '<div id="content" style="cursor:pointer;font-family: Inconsolata,Verdana; font-size:15px; color:#333;font-weight:700" onclick="PassStation(\'' + stations[i] + '\');dataLayer.push({\'event\':\'glbuoysEvent\',\'glbuoysCategory\':\'map\',\'glbuoysLabel\':\'' + stations[i] + '\',\'glbuoysAction\':\'click internal url\'});">' + stationsLongName[i] + '</div>';
                 map.setCenter({
                     lat: lats[i],
                     lng: lons[i]
