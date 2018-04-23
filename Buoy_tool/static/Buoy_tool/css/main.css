@@ -29,11 +29,17 @@ a#navFooter{
 button#homepage {
     margin-top: 30px;
     padding: 10px;
+    font-family: Roboto,Verdana;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 button#feedback {
     margin-top: 30px;
     padding: 10px;
+    font-family: Roboto,Verdana;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 button#units {

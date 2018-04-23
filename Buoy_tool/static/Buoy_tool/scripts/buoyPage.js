@@ -1104,9 +1104,8 @@ function callfooterInfo(ID){
     $('a#comments').click(function () { dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'feedback', 'glbuoysLabel': 'mailto:dmac@glos.us', 'glbuoysAction': 'click_external_url' }); });
     $('a#comments').click(function () { dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'footer', 'glbuoysLabel': 'http://glbuoys.glos.us', 'glbuoysAction': 'click_internal_url' }); });
 	var googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdYV4V0Dw6CpZHZRzZRgEyoRJb8erSdoSBQgLCtlXc-jLN9kQ/viewform?usp=pp_url&entry.1512652591&entry.578184834&entry.1388061372&entry.1336006565='+ID+'';
-	$('a#navFooter').click(function() {window.open(googleFormUrl,'_blank')});
-	$('a#navFooter').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':'mailto:dmac@glos.us','glbuoysAction':'click_external_url'});});
-
+    $('button#feedback').click(function() {window.open(googleFormUrl,'_blank')});
+    $('button#feedback').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':'mailto:dmac@glos.us','glbuoysAction':'click_external_url'});});
 }
 
 function PassStation(stationID,lat,lon) {																 
