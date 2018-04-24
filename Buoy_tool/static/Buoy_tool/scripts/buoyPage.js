@@ -862,7 +862,14 @@ function loadbuoyinfo(ID, jsonObj) {
 					}else{
 						$('#recovered').addClass('w3-panel w3-center w3-pale-red w3-small').append('<h6>' + jsonObj[i].longName + ' (' + ID + ') is currently unavailable.</h6>');
 					}
-					
+
+                    //Show downloand, plot, and export tools if buoy is part of GLOS
+                    if (jsonObj[i].metaGLOS) {
+                        $('button#btn-show-export').show();
+                        $('button#btn-show-plot').show();
+                        //$('button#btn-show-alerts').show();
+                    }
+
 					if (jsonObj[i].NWSForecast){
 						if (jsonObj[i].NWSForecast.hazardName){
 							for (a = 0; a < jsonObj[i].NWSForecast.hazardName.length; a++){
@@ -928,7 +935,7 @@ function loadbuoyinfo(ID, jsonObj) {
 					}
 					if (jsonObj[i].metaGLOS){
 						$('#stationMeta p#metaGLOS').append("View <a id='metadata' target='_blank' href=" + jsonObj[i].metaGLOS + ">metadata for this buoy</a> stored in the <a id='catalog' target='_blank' href='http://data.glos.us/metadata/'>Great Lakes Observing System Metadata Catalog</a>.");
-					  $('#stationMeta a#catalog').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'metadata catalog','glbuoysLabel':'glos','glbuoysAction':'click_external_url'});});
+					    $('#stationMeta a#catalog').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'metadata catalog','glbuoysLabel':'glos','glbuoysAction':'click_external_url'});});
 						$('#stationMeta a#metadata').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'View metadata for buoy','glbuoysLabel':ID,'glbuoysAction':'click_external_url'});});
 					}
 					if (jsonObj[i].uglosLink){
