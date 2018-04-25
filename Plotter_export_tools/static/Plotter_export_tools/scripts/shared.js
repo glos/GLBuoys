@@ -13,7 +13,7 @@ var _arrParamOrder = ['Wind_Speed', 'Wind_Gust', 'Wind_from_Direction', 'Water_T
 
 var _objParamNames = {
     "Significant_Wave_Height": "Significant Wave Height",
-    "sea_surface_wave_maximum_height": "Maximum Wave Height",
+    "max_wave_height": "Maximum Wave Height",
     "significant_wave_from_direction": "Mean Wave Direction",
     "Significant_Wave_Period": "Wave Period",
     "Air_Temperature": "Air Temperature",
