@@ -9,7 +9,7 @@ var _objLocs = {};
 var _metaJSON = '../../static/Buoy_tool/data/meta_english.json';
 //var _metaJSON = 'http://34.209.199.227/static/Buoy_tool/data/meta_english.json';
 
-var _arrParamOrder = ['Wind_Speed', 'Wind_Gust', 'Wind_from_Direction', 'Water_Temperature_at_Surface', 'Significant_Wave_Height', 'sea_surface_wave_maximum_height', 'Significant_Wave_Period', 'significant_wave_from_direction', 'Air_Temperature', 'Air_Pressure', 'Dew_Point', 'Relative_Humidity', 'Solar_Radiation', 'dissolved_oxygen', 'dissolved_oxygen_saturation', 'water_conductivity', 'ysi_chlorophyll', 'ysi_blue_green_algae', 'ysi_turbidity','ph'];
+var _arrParamOrder = ['Wind_Speed', 'Wind_Gust', 'Wind_from_Direction', 'Water_Temperature_at_Surface', 'Significant_Wave_Height', 'max_wave_height', 'Significant_Wave_Period', 'significant_wave_from_direction', 'Air_Temperature', 'Air_Pressure', 'Dew_Point', 'Relative_Humidity', 'Solar_Radiation', 'dissolved_oxygen', 'dissolved_oxygen_saturation', 'water_conductivity', 'ysi_chlorophyll', 'ysi_blue_green_algae', 'ysi_turbidity','ph'];
 
 var _objParamNames = {
     "Significant_Wave_Height": "Significant Wave Height",
