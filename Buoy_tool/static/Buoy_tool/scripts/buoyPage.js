@@ -594,6 +594,8 @@ $(document).ready(function () {
 
     //---------------------- Event for buoy page buttons------------------------------------------
     $('#btn-show-plot').on('click', function (evt) {
+        dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'plotter', 'glbuoysLabel': ID, 'glbuoysAction': 'click_internal_url' }); 
+
         var prepend = '';
 
         if (document.location.href.includes('/buoy/')) {
@@ -610,6 +612,7 @@ $(document).ready(function () {
     });
 
     $('#btn-show-export').on('click', function (evt) {
+        dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'exporter', 'glbuoysLabel': ID, 'glbuoysAction': 'click_internal_url' }); 
         var prepend = '';
 
         if (document.location.href.includes('/buoy/')) {
@@ -866,7 +869,9 @@ function loadbuoyinfo(ID, jsonObj) {
                     //Show downloand, plot, and export tools if buoy is part of GLOS
                     if (jsonObj[i].metaGLOS) {
                         $('button#btn-show-export').show();
+                        //$('button#btn-show-export').click(function () { dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'exporter', 'glbuoysLabel': ID, 'glbuoysAction': 'click_internal_url' }); });
                         $('button#btn-show-plot').show();
+                        //$('button#btn-show-plot').click(function () { dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'plotter', 'glbuoysLabel': ID, 'glbuoysAction': 'click_internal_url' }); });
                         //$('button#btn-show-alerts').show();
                     }
 
