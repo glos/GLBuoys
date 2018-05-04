@@ -63,7 +63,7 @@ $(function () {
     var strPage = arrParts[arrParts.length - 1]; 
     _isExport = (strPage.startsWith('export'));
     _isPlotter = (strPage.startsWith('plotter'));
-    if (_isExport) { _toolType = 'exporter' } else { _toolType = 'plotter' };
+    if (_isExport) { _toolType = 'glosExporter' } else { _toolType = 'glosPlotter' };
 
     if (_isExport) {
         _strTitle = "Data Export";
