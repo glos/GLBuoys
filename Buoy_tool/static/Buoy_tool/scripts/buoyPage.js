@@ -759,7 +759,7 @@ function loadbuoyinfo(ID, jsonObj) {
 						} else if(jsonObj[i].thermistorValues.length==1){		//Add if statement if buoy owners issues surface temp as 'tp001' and not 'wtmp'
 							columnSpan = 2;
 						}
-                        //if (jsonObj[i].obsID.indexOf('CurSpd')) {       //Check if there is any current data
+
                         if ($.inArray('CurSpd', jsonObj[i].obsID) > 0) {  //returns 1 if exist and -1 if doesn't exist
                             $('#ADCP').addClass("w3-center w3-panel w3-card-4 w3-padding");
                             $('#ADCP h4').append('Currents');
@@ -1019,7 +1019,7 @@ function reloadbuoyinfo() {
 							columnSpan = 2;
                         }
 
-                        if (jsonObj[i].obsID.indexOf('CurSpd')) {       //Check if there is any current data
+                        if ($.inArray('CurSpd', jsonObj[i].obsID) > 0) {       //Check if there is any current data
                             $('#ADCP').append('<div id="adcpMap" class="w3-hide"><div id="ADCP_Chart" style="height: 500px"></div></div>');
                             ADCPfig(ID);
                         }
