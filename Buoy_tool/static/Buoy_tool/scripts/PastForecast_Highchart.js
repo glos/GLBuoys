@@ -1,83 +1,117 @@
 ﻿function PastForecastGrab(variableName,stationID) {
-	/**	var data_file = "http://34.211.180.62/BuoyALP/buoydata_"+units+"/"+stationID+"";
-    var http_request = new XMLHttpRequest();
 
-    try {
-        // Opera 8.0+, Firefox, Chrome, Safari
-        http_request = new XMLHttpRequest();
-    } catch (e) {
-        // Internet Explorer Browsers
-        try {
-            http_request = new ActiveXObject("Msxml2.XMLHTTP");
-
-        } catch (e) {
-
-            try {
-                http_request = new ActiveXObject("Microsoft.XMLHTTP");
-            } catch (e) {
-                // Something went wrong
-                alert("Your browser broke!");
-                return false;
-            }
-
-        }
-    }
- */
-
-    //http_request.onreadystatechange = function () {
-    //    if (http_request.readyState == 4) {
     $.getJSON('../static/Buoy_tool/data/' + ID + '_' + units + '_data.json', function (jsonObj) {
+        
         var Dates = [];
         var ForecastDates = [];
         var Data = [];
         var ForecastData = [];
         var Depths = [];
-        // Javascript function JSON.parse to parse JSON data
-        //var jsonObj = JSON.parse(http_request.responseText);
 
-        $.each(jsonObj, function (key, value) {
-            if (key == variableName) {
-                Data.push(value);
+        if (variableName !== 'CurSpd' && variableName !== 'CurDir') {
+
+            // Javascript function JSON.parse to parse JSON data
+            //var jsonObj = JSON.parse(http_request.responseText);
+
+            $.each(jsonObj, function (key, value) {
+                if (key == variableName) {
+                    Data.push(value);
+                }
+                if (key == "obsDates") {
+                    Dates.push(value);
+                }
+            });
+            if (variableName === 'WVHT') {
+                var variableName_GLCFS = 'WVHGT';
             }
-            if (key == "obsDates") {
-                Dates.push(value);
+            if (variableName === 'WPRD' || variableName === 'APD') {
+                var variableName_GLCFS = 'DOMPD';
             }
-        });
-        if (variableName === 'WVHT') {
-            var variableName_GLCFS = 'WVHGT';
-        }
-        if (variableName === 'WPRD' || variableName === 'APD') {
-            var variableName_GLCFS = 'DOMPD';
-        }
-        $.each(jsonObj.GLCFS, function (key, value) {
-            if (key == variableName_GLCFS) {
-                ForecastData.push(value);
+            $.each(jsonObj.GLCFS, function (key, value) {
+                if (key == variableName_GLCFS) {
+                    ForecastData.push(value);
+                }
+                if (key == "GlcfsDates") {
+                    ForecastDates.push(value);
+                }
+            });
+            console.log(jsonObj);
+            Data[0].reverse(); 	//Place data in ascending order W.R.T dates for highcharts
+            Dates[0].reverse();	//Place dates in ascending order
+            var variableIndex = jsonObj.obsID.indexOf(variableName);
+            var longName = jsonObj.obsLongName[variableIndex];
+            var units = jsonObj.obsUnits[variableIndex];
+            if (variableName == 'PH') {
+                units = 'PH';
             }
-            if (key == "GlcfsDates") {
-                ForecastDates.push(value);
+            if (variableName == 'WDIR' || variableName == 'MWD' || variableName == 'MWDIR') {
+                PastForecastPolar(longName, units, Dates[0], Data[0]);
+            } else {
+                PastForecastGraphic(ID, longName, units, Dates[0], ForecastDates[0], Data[0], ForecastData[0]);
             }
-        });
-        console.log(jsonObj);
-        Data[0].reverse(); 	//Place data in ascending order W.R.T dates for highcharts
-        Dates[0].reverse();	//Place dates in ascending order
-        var variableIndex = jsonObj.obsID.indexOf(variableName);
-        var longName = jsonObj.obsLongName[variableIndex];
-        var units = jsonObj.obsUnits[variableIndex];
-        if (variableName == 'PH') {
-            units = 'PH';
+
+        }else {
+
+            jsonObj = jsonObj.ADCP
+            dateLength = jsonObj.obsDates.length
+            var i = 0    
+            //Run if current speed
+            if (variableName == 'CurSpd') {
+                $.each(jsonObj, function (key, value) {
+                    if (key == 'ADCP_Speed') {
+                        Data.push(value);
+                    }
+                    if (key == "obsDates") {
+                        Dates.push(value);
+                    }
+                    i++
+                });
+
+                Data[0].reverse(); 	//Place data in ascending order W.R.T dates for highcharts
+                Dates[0].reverse();	//Place dates in ascending order
+                var units = jsonObj.obsUnits[0];
+                PastForecastGraphic(ID, 'Surface Current', units, Dates[0], ForecastDates[0], Data[0].slice(0, dateLength), ForecastData[0]);
+            }
+            //Run if current direction
+            if (variableName == 'CurDir') {
+                $.each(jsonObj, function (key, value) {
+                    if (key == 'ADCP_Dir') {
+                        Data.push(value);
+                        console.log(value);
+                    }
+                    if (key == "obsDates") {
+                        Dates.push(value);
+                    }
+                    console.log(i);
+                    i++
+                });
+
+                Data[0].reverse(); 	//Place data in ascending order W.R.T dates for highcharts
+                Dates[0].reverse();	//Place dates in ascending order
+                var units = jsonObj.obsUnits[0];
+                console.log('Current Direction', units, Dates[0], Data[0].slice(0, dateLength));
+                PastForecastPolar('Current Direction', units, Dates[0], Data[0].slice(0, dateLength));
+            }
         }
-        if (variableName == 'WDIR' || variableName == 'MWD') {
-            PastForecastPolar(longName, units, Dates[0], Data[0]);
-        } else {
-            PastForecastGraphic(longName, units, Dates[0], ForecastDates[0], Data[0], ForecastData[0]);
-        }
-        //}
     });
-    //http_request.open("Get", data_file, true)
-    //http_request.send()
 }
 
-function PastForecastGraphic(longName, units, DateTime, ForecastDateTime, Data, ForecastData) {
+function PastForecastGraphic(ID, longName, units, DateTime, ForecastDateTime, Data, ForecastData) {
+    
+    /**if (Highcharts.getOptions().exporting) {
+        Highcharts.getOptions().exporting.buttons.contextButton.menuItems.pop();
+    }
+    
+    var buttons = Highcharts.getOptions().exporting.buttons.contextButton.menuItems;
+    buttons.push({
+        text: "Buoy Alert",
+        onclick: function () {
+            document.getElementById("alertForm").style.display = "block";
+            $("#parameters").val(longName);
+        }
+    });**/
+    
+
     var options = {
 
         chart: {
@@ -118,6 +152,7 @@ function PastForecastGraphic(longName, units, DateTime, ForecastDateTime, Data, 
                 margin: 5,
             },
             labels: {
+                format: '{value:.1f}',
                 x: -5,
             },
             floor: 0,
@@ -130,13 +165,13 @@ function PastForecastGraphic(longName, units, DateTime, ForecastDateTime, Data, 
 				
         plotOptions: {
             series: {
-							marker: {
-								enabled: false
-							}
-						},
-						area: {
                 marker: {
-                    radius: 2
+                    enabled: true
+                }
+            },
+            area: {
+                marker: {
+                    radius: 1.5,
                 },
                 lineWidth: 1,
                 states: {
@@ -159,10 +194,7 @@ function PastForecastGraphic(longName, units, DateTime, ForecastDateTime, Data, 
         type: 'area',
 				fillOpacity: 0.5,
 				zIndex: 2,
-        connectNulls: true,
-				marker: {
-                enabled: false
-            },
+        connectNulls: false,
         lineWidth: 1,
         states: {
             hover: {
@@ -236,12 +268,27 @@ function PastForecastGraphic(longName, units, DateTime, ForecastDateTime, Data, 
 			//options.chart = addFooter.chart;
 			$("#id01_a").append('<div id="forecastFooter" class="w3-panel w3-center" style="padding-top:8px"><p style="font-size:10px;"></p></div>');
 			$("#forecastFooter p").append("Forecasts are created by NOAA’s <a href='https://www.glerl.noaa.gov/' target='_blank'> Great Lakes Environmental Research Laboratory</a>'s <a href='https://www.glerl.noaa.gov/res/glcfs/' target='_blank'> Great Lakes Coastal Forecasting System</a> model.");
-		}
+        }
+
     var chart = new Highcharts.Chart(options);
 }
 
 //Function to plot directional parameters
 function PastForecastPolar(longName, units, DateTime, Data) {
+
+    if (Highcharts.getOptions().exporting) {
+        Highcharts.getOptions().exporting.buttons.contextButton.menuItems.pop();
+    }
+
+    var buttons = Highcharts.getOptions().exporting.buttons.contextButton.menuItems;
+    buttons.push({
+        text: "Buoy Alert",
+        onclick: function () {
+            document.getElementById("alertForm").style.display = "block";
+            $("#parameters").val(longName);
+        }
+    });
+
     var options = {
 
         chart: {

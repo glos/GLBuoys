@@ -122,7 +122,6 @@ def process_interval_avg(dct_response, avg_ivld):
 
     return dct_response_avg
 
-
 # download data to 'csv' or 'xls' format
 def download_data(request):
 
@@ -313,14 +312,19 @@ def getTSData_fast(request, type):
     for loc_id in lst_locs:
 
         dct_data = {}       #initialize data dictionary
-         
+        
+        #Check if this is an aliased ID; if so, set the base ID:
+        loc_alias = loc_id
+        if (loc_id == '45165' or loc_id == '45029'):
+            loc_alias = loc_id + '_1'
+
         # Initialize response dictionary:
         dct_response[loc_id] = {}
         dct_response[loc_id]['dattim'] = []
         dct_response[loc_id]['params'] = []
 
         # Get time index:
-        lst_timerng = getTimeIndices(loc_id, date_start, date_end) 
+        lst_timerng = getTimeIndices(loc_id, loc_alias, date_start, date_end) 
         tidx1 = lst_timerng[0]; tidx2 = lst_timerng[1]
 
         # Initialize parameters in data dictionary:
@@ -342,7 +346,7 @@ def getTSData_fast(request, type):
             if (data_type == 'buoy'):
 
                 # Construct URL for OpenDAP access of date-specific netCDF file (** currently hardcoded for buoys**):
-                url_nc = 'http://tds.glos.us/thredds/dodsC/buoy_agg_standard/{0}/{0}.ncml'.format(loc_id)
+                url_nc = 'http://tds.glos.us/thredds/dodsC/buoy_agg_standard/{0}/{1}.ncml'.format(loc_alias, loc_id)
         
                 try:
                     ds = open_url(url_nc);
@@ -644,9 +648,9 @@ def dateRange(start_date, end_date):
 
 
 # Function to return a list with indices referencing the start date and end date:
-def getTimeIndices(loc_id, date_start, date_end):
+def getTimeIndices(loc_id, loc_alias, date_start, date_end):
 
-    url_nc = 'http://tds.glos.us/thredds/dodsC/buoy_agg/{0}/{0}.ncml'.format(loc_id)
+    url_nc = 'http://tds.glos.us/thredds/dodsC/buoy_agg_standard/{0}/{1}.ncml'.format(loc_alias, loc_id)
 
     try:
         ds = open_url(url_nc);
@@ -772,7 +776,7 @@ def getTimeIndices(loc_id, date_start, date_end):
         return [-9999, -9999]
 
 
-def getTSInterval(loc_id):
+def getTSInterval(loc_id, loc_alias):
 
     # Check for existing "[loc_id]_intervals.json":
     strFile = './json/' + loc_id + '_intervals.json'
@@ -788,13 +792,13 @@ def getTSInterval(loc_id):
         # Read the aggregate dataset and parse
         i = 0
 
-        url_nc = 'http://tds.glos.us/thredds/dodsC/buoy_agg/{0}/{0}.ncml'.format(loc_id)
+        url_nc = 'http://tds.glos.us/thredds/dodsC/buoy_agg_standard/{0}/{1}.ncml'.format(loc_alias, loc_id)
 
         try:
             ds = open_url(url_nc);
 
             # "times" list:
-            lst_times = ds['time'];
+            lst_times = ds['time']
 
             lst = ds['time'].units.split('since')
             tunit = lst[0].strip()

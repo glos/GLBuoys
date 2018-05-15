@@ -94,6 +94,10 @@ function DegreeToCardinal(value) {
 }
 				
 $(document).ready(function () {
+    $('button#feedback').click(function () {
+        window.open('https://docs.google.com/forms/d/e/1FAIpQLSdYV4V0Dw6CpZHZRzZRgEyoRJb8erSdoSBQgLCtlXc-jLN9kQ/viewform?usp=pp_url&entry.1512652591&entry.578184834&entry.1388061372&entry.1336006565=all', '_blank')
+    });
+    $('button#feedback').click(function () { dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'nav menu', 'glbuoysLabel': 'mailto:dmac@glos.us', 'glbuoysAction': 'click_external_url' }); });
 	loadBuoySummary();
 	var refresher = setInterval(loadBuoySummary,600000); // refresh content every 10 minutes 
 });
@@ -259,7 +263,8 @@ var maptiler = new google.maps.ImageMapType({
 });
 									 
 function initialize() {
-		var stations = [];
+    var stations = [];
+    var stationsLongName = [];
 		var	lats = [];
 		var lons = [];
 		var obs = [];
@@ -271,7 +276,8 @@ function initialize() {
         loadbuoyinfo_home(function (jsonObj) {
 			//var jsonObj = JSON.parse(response);
 			for (i = 0; i < jsonObj.length; i++) {
-            stations[i] = jsonObj[i].id;
+                stations[i] = jsonObj[i].id;
+                stationsLongName[i] = jsonObj[i].longName;
             lats[i] = jsonObj[i].lat;
             lons[i] = jsonObj[i].lon;
 						obs[i] = jsonObj[i].obsValues;
@@ -299,7 +305,7 @@ function initialize() {
 					if (obs[i] && !offline[i]){
 						marker = new google.maps.Marker({
 							position: new google.maps.LatLng(lats[i], lons[i]),
-							title:stations[i],
+                            title: stationsLongName[i],
 							map: map,
 							zIndex:3,
                             icon: prePath + 'img/BuoyOnlineIcon.png',
@@ -307,7 +313,7 @@ function initialize() {
 					}else if (offline[i] && obs[i]){
 						marker = new google.maps.Marker({
 							position: new google.maps.LatLng(lats[i], lons[i]),
-							title:stations[i],
+                            title: stationsLongName[i],
 							map: map,
 							zIndex:2,
                             icon: prePath + 'img/OldDataBuoyIcon.png',
@@ -315,7 +321,7 @@ function initialize() {
 					}else if (!obs[i]) {
 						marker = new google.maps.Marker({
 							position: new google.maps.LatLng(lats[i], lons[i]),
-							title:stations[i],
+                            title: stationsLongName[i],
 							map: map,
 							zIndex:1,
 							opacity:0.7,
@@ -328,7 +334,7 @@ function initialize() {
             return function () {
                 var div = document.createElement('div');
                 div.innerHTML = stations[i];
-                var contentString = '<div id="content" style="cursor:pointer;font-family: Inconsolata,Verdana; font-size:15px; color:#333;font-weight:700" onclick="PassStation(\'' + stations[i] + '\');dataLayer.push({\'event\':\'glbuoysEvent\',\'glbuoysCategory\':\'map\',\'glbuoysLabel\':\''+stations[i]+'\',\'glbuoysAction\':\'click internal url\'});">' + stations[i] + '</div>';
+                var contentString = '<div id="content" style="cursor:pointer;font-family: Inconsolata,Verdana; font-size:15px; color:#333;font-weight:700" onclick="PassStation(\'' + stations[i] + '\');dataLayer.push({\'event\':\'glbuoysEvent\',\'glbuoysCategory\':\'map\',\'glbuoysLabel\':\'' + stations[i] + '\',\'glbuoysAction\':\'click internal url\'});">' + stationsLongName[i] + '</div>';
                 map.setCenter({
                     lat: lats[i],
                     lng: lons[i]

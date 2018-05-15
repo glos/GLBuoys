@@ -9,8 +9,9 @@ $(function () {
     // Download file:
     $('#btn-download').on('click', function (evt) {
         evt.preventDefault();
-        // download csv/excel file
-        downloadData();
+        // GTM! - "Download File"
+        updateTracker('Tool Options', 'Download File', '');
+        downloadData();         // download csv/xls file
     });
 
 
@@ -22,7 +23,7 @@ $(function () {
     // window.location = "download.action?para1=value1...."
     //https://stackoverflow.com/questions/4545311/download-a-file-by-jquery-ajax
 
-    function downloadData() {
+    downloadData = function() {
 
         // Get date information:
         date_start = $('#date-start').val();
@@ -51,6 +52,8 @@ $(function () {
 
         // Submit GET request:
         if (params !== '') {
+            //showMessage('Please wait...', 'A file containing the data you requested will be downloaded shortly.', false);
+
             window.location = "download_data" +
                 "?ftype=" + getReqParam('ftype') +
                 "&units=" + getReqParam('units') +
@@ -70,8 +73,5 @@ $(function () {
         return;
 
     }
-
-
-
 
 });     // end jQuery "ready"

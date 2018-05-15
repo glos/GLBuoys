@@ -7,11 +7,11 @@
         dataLayer = [];
     </script>
 	
-	<!--<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	})(window,document,'script','dataLayer','GTM-NV5RBN8');</script>-->
+	})(window,document,'script','dataLayer','GTM-NV5RBN8');</script>
 	<!-- End Google Tag Manager -->
 	
     <title>Great Lakes Buoys</title>
@@ -52,13 +52,13 @@
 		<nav class="w3-sidenav w3-round w3-white w3-collapse w3-card-4 w3-animate-right w3-top" style="width:110px;right:0;z-index:2;" id="mySidenav">
         <a href="javascript:void(0)" onclick="w3_close(); return false;" class="w3-closenav w3-hide-large w3-right-align">Close X</a>
         <div class="w3-container w3-padding-tiny">
-            <p id="navHeader" class="glosBlue w3-center w3-round">Buoy List</p>
+            <p id="navHeader" class="glosBlue w3-center w3-round">Buoys</p>
         </div>
         <div class="w3-border" style="cursor:pointer" id="Lake Michigan">
             <a onclick="myAccFunc();">
                 Lake Michigan <i class="fa fa-caret-down"></i>
             </a>
-            <div id="MichiganAcc"class="w3-hide w3-white w3-card-4">
+            <div id="MichiganAcc" class="w3-hide w3-white w3-card-4">
             </div>
         </div>
         <div class="w3-border-right w3-border-left w3-border-bottom" style="cursor:pointer" id="Lake Superior">
@@ -82,21 +82,26 @@
             <div id="HuronAcc" class="w3-hide w3-white w3-card-4">
             </div>
         </div>
-				<div class="w3-border" style="cursor:pointer" id="Lake Ontario">
-            <a onclick="myAccFunc5();">
+		    <div class="w3-border" style="cursor:pointer" id="Lake Ontario">
+                <a onclick="myAccFunc5();">
                 Lake Ontario<i class="fa fa-caret-down"></i>
-            </a>
+                </a>
             <div id="OntarioAcc" class="w3-hide w3-white w3-card-4">
             </div>
         </div>
-				<div id="unitConversion" class="w3-container">
-					<div id="ConvButton">
-						<button onclick="unitConversion();" id="units" class="w3-button w3-white w3-border w3-round w3-text-black">To Metric</button>
-					</div>
-				</div>
-				<div class="w3-container">
-                    <button id="feedback" class="w3-button w3-white w3-border w3-round"><a id="navFooter" style="padding:0px">Feedback</a></button>
-                </div>
+		<div id="unitConversion" class="w3-container w3-center">
+			<div id="ConvButton">
+				<button onclick="unitConversion();" id="units" class="w3-button w3-white w3-border w3-round w3-text-black">To Metric</button>
+			</div>
+		</div>
+        <div id="navFooter">
+            <div class="w3-container w3-center">
+                 <button id="homepage" class="w3-button w3-white w3-border w3-round" onclick="window.location.href='http://glbuoys.glos.us'">Home</button>
+            </div>
+		    <div class="w3-container w3-center">
+                 <button id="feedback" class="w3-button w3-white w3-border w3-round">Feedback</button>
+            </div>
+        </div>
     </nav>
 
     <div class="w3-main" style="margin-right:100px">
@@ -122,8 +127,82 @@
         </header>
 
         {% block content %}{% endblock %}
+        <div id="alertForm" class="w3-modal">
+            <div class="w3-modal-content" style="max-width:550px;">
+                <header class="w3-container glosBlue"> 
+                    <span onclick="document.getElementById('alertForm').style.display='none'" class="w3-button w3-white w3-display-topright">&times;</span>
+                    <h3>Buoy Alert Notifications</h3>
+                </header>
+                <form method='post' class="w3-container" action="javascript:sendRequest()">
+                    {% csrf_token %}
+                    <div class="w3-row-padding">
+                        <div class="w3-half">
+                            <label class="w3-text-teal"><b>Buoy ID</b></label>
+                            <select required id="buoyID" class="w3-select w3-border" name="buoyIDoptions">
+                            </select>
+                        </div>  
+                        <div class="w3-half">
+                            <label class="w3-text-teal"><b>Choose Parameter</b></label>
+                            <select required id="parameters" class="w3-select w3-border" name="parametersOption">
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    
+                    <div class="w3-row-padding">
+                        <div class="w3-half">
+                            <label class="w3-text-teal"><b>Units</b></label>
+                        </div>
+                        <div class="w3-half">
+                            <div id="radioUnits" class="w3-row-padding" >
+                                <!--<p style="padding-left:5px">-->
+                                    <input class="w3-radio" type="radio" name="units" value="english" checked>
+                                    <label>English</label>
+                                    <input class="w3-radio" type="radio" name="units" value="metric">
+                                    <label>Metric</label>
+                                <!--</p>-->
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <br />
 
+                    <div class="w3-row-padding">
+                        <div class="w3-half">
+                            <label class="w3-text-teal"><b>Threshold Type</b></label>
+                        </div>
+                        <div class="w3-half">
+                            <div id="radioThresholds" class="w3-row-padding" >
+                                <!--<p style="padding-left:5px">-->
+                                    <input class="w3-radio" type="radio" name="threshold" value="maximum" checked>
+                                    <label>Greater or</label>
+                                    <input class="w3-radio" type="radio" name="threshold" value="minimum">
+                                    <label>Less Than</label>
+                                <!--</p>-->
+                           </div>
+                        </div>
+                   </div>
+                    <br />
+
+                    <div class="w3-row-padding">
+                        <div class="w3-half" >
+                            <label class="w3-text-teal"><b>Threshold Value</b></label>
+                            <input required id="threshold" class="w3-input w3-border w3-white" type="text" placeholder="Value to trigger alert">
+                        </div>
+                        <div class="w3-half">
+                            <label class="w3-text-teal"><b>Email Address</b></label>
+                            <input required id="email" class="w3-input w3-border w3-white" type="email" placeholder="Email Address">
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <p><button type="submit" id="alertRequest" class="w3-btn w3-blue-grey">Register Alert</button></p>
+                    <p>* Buoy alert notifications will remain active for 2018</p>
+                </form>
+            </div>
         </div>
+    </div>
 
 	</body>
 </html>

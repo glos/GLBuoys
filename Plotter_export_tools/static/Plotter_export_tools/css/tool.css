@@ -6,8 +6,16 @@ div {
     display: block;
 }
 
+p, tr, h1, h2, h3, h4, h5, h6 {
+    font-family: Roboto,Verdana;
+}
+
 p {
     font-size: 1.0em;
+}
+
+@media (max-width:450px) {
+    h3 {font-size: 18px;}
 }
 
 div.content-wrapper {

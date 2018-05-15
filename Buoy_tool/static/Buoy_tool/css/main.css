@@ -26,9 +26,20 @@ a#navFooter{
 		padding: 0px;
 }
 
+button#homepage {
+    margin-top: 30px;
+    padding: 10px;
+    font-family: Roboto,Verdana;
+    font-size: 14px;
+    font-weight: 500;
+}
+
 button#feedback {
     margin-top: 30px;
     padding: 10px;
+    font-family: Roboto,Verdana;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 button#units {
@@ -89,12 +100,13 @@ table#buoySummary td.homeWaveHeight{text-align:right;width:70px;padding-right:16
     }
 }
 
-#buoyCam, #Thermistor, #MarineForecast, #buoyLocation, #stationMeta, #ADCP, footer {
-	max-width:800px;
-	margin: auto;
+#buoyCam, #ThermistorLine, #ThermistorHeat, #MarineForecast, #buoyLocation, #stationMeta, #ADCP, footer {
+    max-width: 800px;
+    margin: auto;
 }
 
-p#stationID{
+
+p#stationID {
     font-family: Roboto,Verdana;
     line-height: 0;
     font-size: 18px;
@@ -160,9 +172,27 @@ img.sponsors{
 			max-width:128px;
 			vertical-align:middle;
 		}
+    /*Change padding around accord*/
+    .w3-table th:first-child, .w3-table td:first-child, .w3-table-all th:first-child, .w3-table-all td:first-child {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    /*Change padding around graph icon*/
+    td.graph{
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+    /*Change padding of rows*/
+    .w3-table td{
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
 }
 
-table#realtime tr {font-size:14px;
+table#realtime tr {
+    font-size:15px;
 	text-align:center;
 }
 
@@ -182,6 +212,7 @@ table#realtime#TAccord td {
 	padding-right:0px;
 	width:30px;
 }
+
 
 .video-js {
   position: relative !important;

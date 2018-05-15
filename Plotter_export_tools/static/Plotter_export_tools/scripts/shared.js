@@ -4,15 +4,16 @@
 
 var _strTitle = '';
 var _isExport = false, _isPlotter = false;
+var _toolType = '';
 var _objLocs = {};
 var _metaJSON = '../../static/Buoy_tool/data/meta_english.json';
 //var _metaJSON = 'http://34.209.199.227/static/Buoy_tool/data/meta_english.json';
 
-var _arrParamOrder = ['Wind_Speed', 'Wind_Gust', 'Wind_from_Direction', 'Water_Temperature_at_Surface', 'Significant_Wave_Height', 'sea_surface_wave_maximum_height', 'Significant_Wave_Period', 'significant_wave_from_direction', 'Air_Temperature', 'Air_Pressure', 'Dew_Point', 'Relative_Humidity', 'Solar_Radiation', 'dissolved_oxygen', 'dissolved_oxygen_saturation', 'water_conductivity', 'ysi_chlorophyll', 'ysi_blue_green_algae', 'ysi_turbidity','ph'];
+var _arrParamOrder = ['Wind_Speed', 'Wind_Gust', 'Wind_from_Direction', 'Water_Temperature_at_Surface', 'Significant_Wave_Height', 'max_wave_height', 'Significant_Wave_Period', 'significant_wave_from_direction', 'Air_Temperature', 'Air_Pressure', 'Dew_Point', 'Relative_Humidity', 'Solar_Radiation', 'dissolved_oxygen', 'dissolved_oxygen_saturation', 'water_conductivity', 'ysi_chlorophyll', 'ysi_blue_green_algae', 'ysi_turbidity','ph'];
 
 var _objParamNames = {
     "Significant_Wave_Height": "Significant Wave Height",
-    "sea_surface_wave_maximum_height": "Maximum Wave Height",
+    "max_wave_height": "Maximum Wave Height",
     "significant_wave_from_direction": "Mean Wave Direction",
     "Significant_Wave_Period": "Wave Period",
     "Air_Temperature": "Air Temperature",
@@ -62,6 +63,7 @@ $(function () {
     var strPage = arrParts[arrParts.length - 1]; 
     _isExport = (strPage.startsWith('export'));
     _isPlotter = (strPage.startsWith('plotter'));
+    if (_isExport) { _toolType = 'exporter' } else { _toolType = 'plotter' };
 
     if (_isExport) {
         _strTitle = "Data Export";
@@ -143,6 +145,7 @@ $(function () {
         $.each(arrLocMeta, function (index, objLoc) {
             //Notify users data from NDBC or Env CA is not available. 
             var naFlag = (objLoc.buoyOwners == 'NOAA-NDBC' || objLoc.buoyOwners == "Env CA");
+            var loc_id = objLoc.id;
 
             if (naFlag) {
                 var strLoc = objLoc.id + ': ' + objLoc.longName + ' (Not Available)';
@@ -158,7 +161,7 @@ $(function () {
                 var strHTML = '';
 
                 if (_flagLocChkbox) {
-                    strHTML = '<label class="multiselect"><input type="checkbox" class="multiselect loc" id="' + objLoc.id + '" ' + strChk + ' />' + strLoc + '</label>'
+                    strHTML = '<label class="multiselect"><input type="checkbox" class="multiselect loc" id="' + loc_id + '" ' + strChk + ' />' + strLoc + '</label>'
 
                     if (objLoc.id === strLoc) {
                         $('#lst-locs').prepend(strHTML);
@@ -167,7 +170,7 @@ $(function () {
                     };
 
                 } else {
-                    strHTML = '<option value="' + objLoc.id + '">' + strLoc + '</option>';
+                    strHTML = '<option value="' + loc_id + '">' + strLoc + '</option>';
                     $('.sel-loc').append(strHTML);
                 }
 
@@ -358,12 +361,19 @@ $(function () {
 
         // Select event for location list:
         $(document).on('change', '#lst-locs input[type="checkbox"]', function (e) {
+            // GTM! - "Locations"
+            if ($(this).is(':checked')) {
+                updateTracker('Data Selections', 'Locations', $(this).attr('id'));
+            }
             updateParams();
         });
 
     } else {
         // Select event for location select:
         $('.sel-loc').on('change', function (evt) {
+            // GTM! - "Locations"
+            updateTracker('Data Selections', 'Locations', $(this).val());
+
             updateParams();
         });
 
@@ -455,6 +465,8 @@ $(function () {
         */
 
         // If nothing selected, select first parameter:
+        
+
         if (_flagParChkbox) {
             $selParams = $('#lst-params input:checked');
             if ($selParams.length === 0) {
@@ -470,6 +482,22 @@ $(function () {
 
     }
 
+    // Parameter selection tracking:
+    if (_flagParChkbox) {
+        $(document).on('change', '#lst-params input[type="checkbox"]', function (e) {
+            // GTM! - "Parameters"
+            if ($(this).is(':checked')) {
+                updateTracker('Data Selections', 'Parameters', $(this).attr('id'));
+            }
+        });
+
+    } else {
+        $('.sel-param').on('change', function (e) {
+            // GTM! - "Parameters"
+            updateTracker('Data Selections', 'Parameters', $(this).val());
+        });
+    }
+
 
     function getUniqueParams(arrLocs) {
 
@@ -477,7 +505,14 @@ $(function () {
 
         if (arrLocs.length > 0) {
             $.each(arrLocs, function (idx) {
-                var objLoc = _objLocs[arrLocs[idx]];
+                var loc_id = arrLocs[idx]
+                var objLoc = _objLocs[loc_id];
+
+                if (objLoc === undefined) {
+                    loc_id = loc_id.slice(0, -2);
+                    objLoc = _objLocs[loc_id];
+                }
+
                 var arrParamID = [];
 
                 arrParamID = objLoc.staticObs;
@@ -511,22 +546,52 @@ $(function () {
     //==================================================================================
     // Events Related to User Selections (shared across plotter & export pages):
     //==================================================================================
+    // Event to filter by monitoring data type (*disabled* - placeholder for now)
+    $('#sel-datatype').on('change', function (e) {
+        e.preventDefault();
+        // GTM! - "Monitoring Type"
+        updateTracker('Data Selections', 'Monitoring Type', $(this).val());
+    });
+
+    $('#sel-filetype').on('change', function (e) {
+        e.preventDefault();
+        // GTM! - "File Format"
+        updateTracker('Tool Options', 'File Format', $(this).val());
+    });
+
     // Event to filter by Great Lake:
     $('#sel-lake').on('change', function (e) {
+        e.preventDefault();
+        // GTM! - "Lake"
+        updateTracker('Data Selections', 'Lake', $(this).val());
 
         var arrSelLocs = [];
         $.each($('.sel-loc'), function (idx, objLoc) { arrSelLocs.push($(this).val()) });
 
-        $('.sel-loc').empty();
-        $('.sel-loc').append('<option value="" selected>' + '-------' + '</option>')
+        if (_flagLocChkbox) {
+            $('#lst-locs').empty();
+        } else {
+            $('.sel-loc').empty();
+            $('.sel-loc').append('<option value="">' + '-------' + '</option>')
+        }
 
         var strLake = $(this).val();
+        var strHTML = '';
 
         $.each(_objLocs, function (key, objLoc) {
             if (strLake === 'ALL' || objLoc.lake === strLake) {
-                var strLoc = objLoc.id + ': ' + objLoc.longName;
-                var strHTML = '<option value="' + objLoc.id + '">' + strLoc + '</option>';
-                $('.sel-loc').append(strHTML);
+                var loc_id = objLoc.id;
+                var strLoc = loc_id + ': ' + objLoc.longName;
+
+                // Populate multi-checkbox or selects:
+                if (_flagLocChkbox) {
+                    strHTML = '<label class="multiselect"><input type="checkbox" class="multiselect loc" id="' + loc_id + '" ' + strChk + ' />' + strLoc + '</label>'
+                    $('#lst-locs').append(strHTML);
+                } else {
+                    strHTML = '<option value="' + loc_id + '">' + strLoc + '</option>';
+                    $('.sel-loc').append(strHTML);
+                }
+
             }
         });
 
@@ -539,8 +604,17 @@ $(function () {
 
     });
 
+    // Select units:
+    $('#sel-units').on('change', function (e) {
+        // GTM! - "Units"
+        updateTracker('Data Selections', 'Units', $(this).val());
+    });
+
     // Select event for time period:
     $('#sel-tperiod').on('change', function (e) {
+        // GTM! - "Time Period"
+        updateTracker('Data Selections', 'Time Period', $(this).val());
+
         $('#date-start, #date-end').prop('disabled', $(this).val() !== 'custom');
 
         if ($(this).val() !== 'custom') {
@@ -551,7 +625,10 @@ $(function () {
 
     // Time-averaging interval:
     $('#sel-tavg').on('change', function (e) {
-        $(this).val() === 'none';       // TMR!!! - force to "none"
+        // GTM! - "Avg Interval"
+        updateTracker('Data Selections', 'Avg Interval', $(this).val());
+
+        //$(this).val() === 'none';       // TMR!!! - force to "none"
     });
 
     // Permalink generation:
@@ -563,6 +640,9 @@ $(function () {
 
     $('#btn-get-link').on('click', function (evt) {
         evt.preventDefault();
+        // GTM! - "Get Permalink"
+        updateTracker('Tool Options', 'Get Permalink', '');
+
         // Create & populate permalink:
         $('#txt-plink').val(getPermalink());
 
@@ -584,6 +664,9 @@ $(function () {
     // Show buoy map:
     $('a#view-map').on('click', function (evt) {
         evt.preventDefault();
+        // GTM! - "View Map"
+        updateTracker('Tool Options', 'View Map', '');
+
         // Show dialog:
         $('#dlg-map').dialog('open');
     });
@@ -632,11 +715,25 @@ $(function () {
                 var param_arr = objGET.params.split('|');
                 var param_ct = 0;
 
+                // Make sure no parameters are selected:
+                $('.sel-param').val('');
+                $('#lst-params input').prop('checked', false);
+
+                // Select parameters in UI:
                 $.each(param_arr, function (idx, param_id) {
-                    var $par = $('#sel-param' + (idx + 1).toString());
-                    if ($par.find('option[value="' + param_id + '"]').length > 0) {
-                        $par.val(param_id);
-                        param_ct += 1;
+                    if (_flagParChkbox) {
+                        var $chkPar = $('#lst-params input').filter('#' + param_id);
+                        if ($chkPar.length > 0) {
+                            $chkPar.prop('checked', true);
+                            param_ct += 1;
+                        }
+
+                    } else {
+                        var $par = $('#sel-param' + (idx + 1).toString());
+                        if ($par.find('option[value="' + param_id + '"]').length > 0) {
+                            $par.val(param_id);
+                            param_ct += 1;
+                        }
                     }
                 });
             };
@@ -703,8 +800,15 @@ $(function () {
         //--------------------------------------------
         // Query data & update chart:
         //--------------------------------------------
-        if (_isPlotter && loc_ct > 0 && param_ct > 0 && !errDate) {
-            queryData();
+        if (loc_ct > 0 && param_ct > 0 && !errDate) {
+            if (_isPlotter) {
+                queryData();
+
+            } else if (_isExport) {
+                // GTM! - "Download File"
+                updateTracker('Tool Options', 'Download File', '');
+                downloadData();         // download csv/xls file
+            }
         }
 
     }
@@ -855,7 +959,7 @@ getPermalink = function () {
 
     var arr = document.location.href.split('?');
     var strLink = arr[0] + '?';
-    strLink = strLink.replace('/export?', '/download_data?');
+    //strLink = strLink.replace('/export?', '/download_data?');
 
     // File type, data type, units:
     if (_isExport) {
@@ -955,3 +1059,24 @@ getSelections = function (strSelClass, strLstID, strDelim) {
         return arrVals;
     }
 }           // end "getSelections" function...
+
+
+// Update Google Tracking array:
+updateTracker = function (strCategory, strAction, strLabel) {
+
+    // Event key/value:
+    var evt_key = 'event';
+    var evt_val = _toolType + 'Event';
+    // Category, Action, Label keys:
+    var cat_key = _toolType + 'Category';
+    var act_key = _toolType + 'Action';
+    var lab_key = _toolType + 'Label';
+
+    var objGTM = {};
+    objGTM[evt_key] = evt_val;
+    objGTM[cat_key] = strCategory;
+    objGTM[act_key] = strAction;
+    objGTM[lab_key] = strLabel;
+
+    dataLayer.push(objGTM);
+}           // end "updateTracker" function

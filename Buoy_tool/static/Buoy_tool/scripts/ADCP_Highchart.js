@@ -1,20 +1,13 @@
-﻿function ADCPfig(stationID) {
+﻿function ADCPfig(jsonObj, stationID) {
 
-    $.getJSON('../static/Buoy_tool/json/45026_adcp.json', function (jsonObj) {
+    $.getJSON('../static/Buoy_tool/data/' + ID + '_' + units + '_data.json', function (jsonObj) {
         var Dates = [];
         var Data = [];
         var Depth = [];
-
-        // jsonObj variable now contains the data structure and can
-        // be accessed as jsonObj.name and jsonObj.country.
-
-        //Find out which strings have values and only save those depths and associated values.
-        //for (h = 0; h < jsonObj.thermistorDepths.length; h++){
-        //	if (!isNaN(jsonObj.thermistorValues[h][0])){
-        //		Depth.push(Math.round(jsonObj.thermistorDepths[h]));
-        //		Data.push(jsonObj.thermistorValues[h]);
-        //	}
-        //}
+	
+	//Define ADCP object in the data file
+	jsonObj = jsonObj.ADCP
+    console.log(jsonObj);
         $.each(jsonObj, function (key, value) {
             if (key == "obsDates") {
                 Dates.push(value);
@@ -49,23 +42,27 @@
             }
         }
 
-        ADCP_Highchart(series, Dates[0], jsonObj.ADCP_Depths)
+        ADCP_Highchart(series, Dates[0], jsonObj.ADCP_Depths, jsonObj.obsUnits[1])
     });
 
-						
-        //}
-    //}
-    
-    //http_request.open("Get", data_file, true)
-    //http_request.send()
 }
 
 
-function ADCP_Highchart(data, DateString, depths) {
-    
+function ADCP_Highchart(data, DateString, depths, speedUnits) {
+
+    function floatTostring(float) {
+        integer = Math.round(float);
+        return integer.toString()
+    }
+
+    //Check the viewed units. If units are english change 'max value' and legend values from cm/s to knots (0.0194384) 
+    var conv = 1;
+    if (units == 'english') {
+        conv = 0.0194384;
+    }
+
     //Add max value of 50 at depth -1 on the last date
-    data.push([data[data.length - 1][0], -1, 50, 360]);
-    console.log(data);
+    data.push([data[data.length - 1][0], -1, 50 * conv, 360]);
 
     var H = Highcharts;
     H.seriesTypes['vector'].prototype.drawLegendSymbol = function (legend, item) {
@@ -100,15 +97,15 @@ function ADCP_Highchart(data, DateString, depths) {
             zoomType: 'x',
             spacing: [7, 0, 0, 0]
         },
-				
+
         title: {
             text: 'Current Speed and Direction',
-            style: { display: 'none'}
+            style: { display: 'none' }
         },
 
         legend: {
             title: {
-                text: 'Speed (cm/s)'
+                text: 'Speed (' + speedUnits + ')'
             }
         },
 
@@ -132,7 +129,7 @@ function ADCP_Highchart(data, DateString, depths) {
             //categories: DateString,
             labels: {
                 formatter: function () {
-					//return this.value
+                    //return this.value
                     return Highcharts.dateFormat('%m/%d %H:%M', this.value);
                 }
             },
@@ -142,7 +139,7 @@ function ADCP_Highchart(data, DateString, depths) {
 
         yAxis: {
             //categories: depths,
-            name: 'water depth ('+depthUnits+')',
+            name: 'water depth (' + depthUnits + ')',
             endOnTick: false,
             gridLineWidth: 1,
             offset: 0,
@@ -153,7 +150,7 @@ function ADCP_Highchart(data, DateString, depths) {
             },
             labels: {
                 formatter: function () {
-				    return this.value
+                    return this.value.toFixed(1)
                 },
                 x: -5,
             },
@@ -167,39 +164,40 @@ function ADCP_Highchart(data, DateString, depths) {
                 var Depth = this.point.y.toFixed(1);
                 try {
                     return 'Date: <b>' + date + '</b><br />Depth: <b>' + Depth + ' ' + depthUnits + '</b><br />Speed: <b>' + this.point.length + ' ' + speedUnits + '</b><br />Direction: <b>' + this.point.direction + '°</b>';
-								} catch (err) {
+                } catch (err) {
                     return 'Date: <b>' + date + '</b><br />Depth: <b>' + Depth + ' ' + depthUnits + '</b><br />Speed: <b>NA</b><br />Direction: <b>NA';
-								}
+                }
             }
         },
 
         series: [{
-            name: '50',
+            name: Number((50 * conv).toFixed(1)),
             color: Highcharts.getOptions().colors[1],
             data: data,
             showInLegend: true,
             vectorLength: -30,
             },
-            {vectorLength: 24,
-                name: '40',
+            {
+                vectorLength: 24,
+                name: Number((40 * conv).toFixed(1)),
                 type: 'vector',
                 color: Highcharts.getOptions().colors[1],
             },
             {
                 vectorLength: 18,
-                name: '30',
+                name: Number((30 * conv).toFixed(1)),
                 type: 'vector',
                 color: Highcharts.getOptions().colors[1],
             },
             {
                 vectorLength: 12,
-                name: '20',
+                name: Number((20 * conv).toFixed(1)),
                 type: 'vector',
                 color: Highcharts.getOptions().colors[1],
             },
             {
                 vectorLength: 6,
-                name: '10',
+                name: Number((10 * conv).toFixed(1)),
                 type: 'vector',
                 color: Highcharts.getOptions().colors[1],
         }],

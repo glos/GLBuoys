@@ -10,18 +10,25 @@ $(function () {
     // Button events:
     $('#btn-plot-update').on('click', function (evt) {
         evt.preventDefault();
+        // GTM! - "Update Plot"
+        updateTracker('Tool Options', 'Update Plot', '');
 
         queryData();
     });
 
     $('#btn-export-menu').on('click', function (evt) {
         evt.preventDefault();
+        // GTM! - "GoTo Export"
+        updateTracker('Tool Options', 'GoTo Export', '');
+
         window.location.href = '/tools/export';
         return false;
     });
 
     $('#btn-plot-table').on('click', function (evt) {
         evt.preventDefault();
+        // GTM! - "View Table"
+        updateTracker('Tool Options', 'View Table', '');
 
         if (!$.isEmptyObject(_objPlotSeries)) {
 
@@ -134,7 +141,81 @@ $(function () {
             }
         },
 
-        series: []
+        series: [],
+
+        exporting: {
+            buttons: {
+                contextButton: {
+                    menuItems: [
+                        // Print chart:
+                        {
+                            text: 'Print Chart',
+                            onclick: function () {
+                                // GTM! - "Print Chart"
+                                updateTracker('Plotter Menu', 'Print Chart', '');
+                                this.print();
+                            }
+                        },
+                        'separator',
+                        // PNG export:
+                        {
+                            text: 'Download PNG image',
+                            onclick: function () {
+                                // GTM! - "Download: PNG"
+                                updateTracker('Plotter Menu', 'Download', 'PNG');
+                                this.exportChart({ type: 'image/png', filename: 'chart' });
+                            }
+                        },
+                        // JPEG export:
+                        {
+                            text: 'Download JPEG image',
+                            onclick: function () {
+                                // GTM! - "Download: JPEG"
+                                updateTracker('Plotter Menu', 'Download', 'JPEG');
+                                this.exportChart({ type: 'image/jpeg', filename: 'chart' });
+                            }
+                        },
+                        // PDF export:
+                        {
+                            text: 'Download PDF document',
+                            onclick: function () {
+                                // GTM! - "Download: PDF"
+                                updateTracker('Plotter Menu', 'Download', 'PDF');
+                                this.exportChart({ type: 'application/pdf', filename: 'chart' });
+                            }
+                        },
+                        // SVG export:
+                        {
+                            text: 'Download SVG vector image',
+                            onclick: function () {
+                                // GTM! - "Download: SVG"
+                                updateTracker('Plotter Menu', 'Download', 'SVG');
+                                this.exportChart({ type: 'image/svg+xml', filename: 'chart' });
+                            }
+                        },
+                        'separator',
+                        // CSV download:
+                        {
+                            text: 'Download CSV',
+                            onclick: function () {
+                                // GTM! - "Download: CSV"
+                                updateTracker('Plotter Menu', 'Download', 'CSV');
+                                this.downloadCSV();
+                            }
+                        },
+                        // XLS download:
+                        {
+                            text: 'Download XLS',
+                            onclick: function () {
+                                // GTM! - "Download: XLS"
+                                updateTracker('Plotter Menu', 'Download', 'XLS');
+                                this.downloadXLS();
+                            }
+                        }
+                    ]
+                }
+            }
+        }
     });
 
 
@@ -169,7 +250,9 @@ queryData = function () {
             var loc_id = $(this).val();
             if (loc_id !== '' && $.inArray(loc_id, loc_arr) === -1) {
                 loc_arr.push(loc_id);
-                owners[loc_id] = _objLocs[loc_id].buoyOwners;
+
+                var objLoc = _objLocs[loc_id];
+                owners[loc_id] = objLoc.buoyOwners;
             }
         })
     }
