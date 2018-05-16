@@ -770,7 +770,7 @@ function loadbuoyinfo(ID, jsonObj) {
                             ADCPfig(ID);
                         }
 
-						var parameterOrder = ['WSPD','GST','WDIR','WTMP','WVHT','MAXWVHT','WPRD','MWDIR','MWD','APD','CurSpd','CurDir','ATMP','PRES','SRAD','DEWP','pH','DISOXY','DIOSAT','SPCOND','COND','YCHLOR','YBGALG','YTURBI','VBAT'];
+						var parameterOrder = ['WSPD','GST','WDIR','WTMP','WVHT','MAXWVHT','WPRD','MWDIR','MWD','APD','CurSpd','CurDir','ATMP','PRES','SRAD','DEWP','pH','DISOXY','DIOSAT','SPCOND','COND','YCHLOR','YBGALG','TURB','VBAT'];
 						var excludedObs = ['DPD','TIDE','VIS','PTDY','DEPTH','OTMP','CHILL','HEAT','ICE','WSPD10','WSPD20'];
 						for (g = 0; g < parameterOrder.length; g++){
 							for (j = 0; j < jsonObj[i].obsLongName.length; j++) {
