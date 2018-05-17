@@ -60,7 +60,7 @@ $(function () {
                 var isplit = [];
                 split.forEach(function (elem) { isplit.push(+elem); }); // string to integer
                 //console.log(isplit);
-                var cdate = new Date(isplit[0], isplit[1] - 1, isplit[2], isplit[3], isplit[4], isplit[5], 0, 0); //changed for Safari
+                var cdate = new Date(Date.UTC(isplit[0], isplit[1] - 1, isplit[2], isplit[3], isplit[4], isplit[5], 0, 0)); //changed for Safari
                 var dt = cdate.getTime()
                 strHTML += formatDateTime(dt);
                 strHTML += '</td>'
@@ -404,7 +404,7 @@ plotData = function (objData) {
                         var isplit = [];
                         split.forEach(function (elem) { isplit.push(+elem); }); // string to integer
                         //console.log(isplit);
-                        var cdate = new Date(isplit[0], isplit[1] - 1, isplit[2], isplit[3], isplit[4], isplit[5], 0, 0); //changed for Safari
+                        var cdate = new Date(Date.UTC(isplit[0], isplit[1] - 1, isplit[2], isplit[3], isplit[4], isplit[5], 0, 0)); //changed for Safari
                         var dt = cdate.getTime()
 
                         var tsval = objParam.values[t];
@@ -419,7 +419,7 @@ plotData = function (objData) {
                         var isplit = [];
                         split.forEach(function (elem) { isplit.push(+elem); }); // string to integer
                         //console.log(isplit);
-                        var cdate = new Date(isplit[0], isplit[1]-1, isplit[2], isplit[3], isplit[4], isplit[5], 0, 0); //changed for Safari
+                        var cdate = new Date(Date.UTC(isplit[0], isplit[1]-1, isplit[2], isplit[3], isplit[4], isplit[5], 0, 0)); //changed for Safari
                         var dt = cdate.getTime()
                         if (parseFloat(tsval) === -9999.0) {
                             series_data.push([dt, null]);

@@ -682,7 +682,6 @@ def getTimeIndices(loc_id, loc_alias, date_start, date_end):
 
             if (date_chk > dt_today):
                 try:
-                    idx = lst_times.index(idsec)
                     idx = (len(lst_times) - 1)
                     lst_idx.append(idx)
                     continue
