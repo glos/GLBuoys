@@ -57,8 +57,10 @@ function ADCP_Highchart(data, DateString, depths, speedUnits) {
 
     //Check the viewed units. If units are english change 'max value' and legend values from cm/s to knots (0.0194384) 
     var conv = 1;
+    var convDepth = 1;
     if (units == 'english') {
         conv = 0.0194384;
+        convDepth = 3.28084;
     }
 
     //Add max value of 50 at depth -1 on the last date
@@ -150,7 +152,7 @@ function ADCP_Highchart(data, DateString, depths, speedUnits) {
             },
             labels: {
                 formatter: function () {
-                    return this.value.toFixed(1)
+                    return (this.value *convDepth).toFixed(1)
                 },
                 x: -5,
             },
@@ -161,7 +163,7 @@ function ADCP_Highchart(data, DateString, depths, speedUnits) {
         tooltip: {
             formatter: function () {
                 var date = Highcharts.dateFormat('%m\\%d\\%y %H:%M', (this.point.x));
-                var Depth = this.point.y.toFixed(1);
+                var Depth = (this.point.y*convDepth).toFixed(1);
                 try {
                     return 'Date: <b>' + date + '</b><br />Depth: <b>' + Depth + ' ' + depthUnits + '</b><br />Speed: <b>' + this.point.length + ' ' + speedUnits + '</b><br />Direction: <b>' + this.point.direction + '°</b>';
                 } catch (err) {
