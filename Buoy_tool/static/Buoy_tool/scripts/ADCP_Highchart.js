@@ -21,23 +21,44 @@
         var depthCount = jsonObj.ADCP_Depths.length
 
         //Go through each depth for each date. Invert the depth assignment since UV001, VV001 would actually be bottom depth. 
+        //If any non numeric values exist in array (ie. "NaN") then assign null values to direction and speed. 
         for (j = 0; j < Dates[0].length; j++) {
             for (i = 0; i < depthCount; i++) {
                 if (i == 0 && j == 0) {
-                    series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - 1], jsonObj.ADCP_Speed[j].toFixed(1), jsonObj.ADCP_Dir[j].toFixed(1)];
-                    h += 1;
+                    try {
+                        series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - 1], jsonObj.ADCP_Speed[j].toFixed(1), jsonObj.ADCP_Dir[j].toFixed(1)];
+                        h += 1;
+                    } catch (err) {
+                        series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - 1], null, null];
+                        h += 1;
+                    }
                 }
                 else if (j == 0) {
-                    series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - i - 1], jsonObj.ADCP_Speed[i * seriesLen].toFixed(1), jsonObj.ADCP_Dir[i * seriesLen].toFixed(1)];
-                    h += 1;
+                    try {
+                        series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - i - 1], jsonObj.ADCP_Speed[i * seriesLen].toFixed(1), jsonObj.ADCP_Dir[i * seriesLen].toFixed(1)];
+                        h += 1;
+                    } catch (err) {
+                        series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - i - 1], null, null];
+                        h += 1;
+                    }
                 }
                 else if (i == 0) {
-                    series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - 1], jsonObj.ADCP_Speed[(j)].toFixed(1), jsonObj.ADCP_Dir[j].toFixed(1)];
-                    h += 1;
+                    try {
+                        series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - 1], jsonObj.ADCP_Speed[(j)].toFixed(1), jsonObj.ADCP_Dir[j].toFixed(1)];
+                        h += 1;
+                    } catch (err) {
+                        series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - 1], null, null];
+                        h += 1;
+                    }
                 }
                 else {
-                    series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - i - 1], jsonObj.ADCP_Speed[(i * seriesLen) + j].toFixed(1), jsonObj.ADCP_Dir[(i * seriesLen) + j].toFixed(1)];
-                    h += 1;
+                    try {
+                        series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - i - 1], jsonObj.ADCP_Speed[(i * seriesLen) + j].toFixed(1), jsonObj.ADCP_Dir[(i * seriesLen) + j].toFixed(1)];
+                        h += 1;
+                    } catch (err) {
+                        series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - i - 1], null, null];
+                        h += 1;
+                    }
                 }
             }
         }
