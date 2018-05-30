@@ -63,20 +63,29 @@
 }
 
 function TempStringHeatMap(Depths, DateString, DateTime, TStringdata) {
-	
+
+    //Only display interpolated graph on non-phone devices.
+    console.log(screen.height, screen.width);
+    if (screen.width > 800) {
+        var chartType = 'contour';
+        var exporting = false;
+    } else {
+        var chartType = 'heatmap';
+        var exporting = true;
+    } 
+
     var options2 = {
 
         chart: {
             renderTo: 'TempStringHighMap',
-            //type: 'heatmap',
-            type: 'contour',
+            type: chartType,
             //spacing: [0,5,0,5]
         },
 				
-        //exporting: {
-		//    enabled: false,
-		//	url: 'http://export.highcharts.com/'
-		//},
+        exporting: {
+            enabled: exporting,
+			//url: 'http://export.highcharts.com/'
+		},
 				
         legend: {
 			align: 'center', //was left
@@ -206,6 +215,7 @@ function TempStringHeatMap(Depths, DateString, DateTime, TStringdata) {
     });**/
 
 	//options2.title.text = ('Water Temperature Profile');	Enable if using static image
+
   var chart2 = new Highcharts.Chart(options2);
 }
 
