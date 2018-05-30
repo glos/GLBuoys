@@ -68,20 +68,20 @@ function TempStringHeatMap(Depths, DateString, DateTime, TStringdata) {
 
         chart: {
             renderTo: 'TempStringHighMap',
-            type: 'heatmap',
-            //type: 'contour',
+            //type: 'heatmap',
+            type: 'contour',
             //spacing: [0,5,0,5]
         },
 				
-        exporting: {
-					enabled: false,
-					url: 'http://export.highcharts.com/'
-				},
+        //exporting: {
+		//    enabled: false,
+		//	url: 'http://export.highcharts.com/'
+		//},
 				
         legend: {
-						align: 'center', //was left
+			align: 'center', //was left
             //verticalAlign: 'bottom',
-						//enabled: true,
+			//enabled: true,
             margin: 0,
             itemLarginTop: 0,
             itemMarginBottom: 0,
@@ -90,6 +90,14 @@ function TempStringHeatMap(Depths, DateString, DateTime, TStringdata) {
 
         title: {
             text: null
+        },
+
+        navigation: {
+            buttonOptions: {
+                verticalAlign: 'top',
+                y: -10,
+                symbolSize: 15,
+            }
         },
 
         boost: {
@@ -115,9 +123,12 @@ function TempStringHeatMap(Depths, DateString, DateTime, TStringdata) {
             tickInterval: (DateString.length)/10,
         },
         yAxis: {
+            lineWidth: 0,
+            minorGridLineWidth: 0,
+            gridLineColor: 'transparent',
             categories: Depths,
-            name: 'water depth ('+depthUnits+')',
-						endOnTick: false,
+            name: 'water depth (' + depthUnits + ')',
+			endOnTick: false,
             offset: 0,
             reversed: true,
             title: {
@@ -125,8 +136,8 @@ function TempStringHeatMap(Depths, DateString, DateTime, TStringdata) {
             },
             labels: {
                 formatter: function () {
-										return this.value
-										//var feet = this.value;
+				    return this.value
+				    //var feet = this.value;
                     //return feet.toFixed(0);
                 }
             },
@@ -139,10 +150,10 @@ function TempStringHeatMap(Depths, DateString, DateTime, TStringdata) {
 				
         colorAxis: {
             stops: [
-                [0, '#3060cf'],
-                [0.5, '#fffbbc'],
-                [0.9, '#c4463a'],
-                [1, '#c4463a']
+                [0, '#004cff'],
+                [0.5, '#fced00'],
+                [0.9, '#f91500'],
+                [1, '#f91500']
             ],
             step: 1,
             startOnTick: true,
@@ -176,23 +187,25 @@ function TempStringHeatMap(Depths, DateString, DateTime, TStringdata) {
         }],
     };
 	
-	var obj = {};
+    //Enable to create static image from highchart server
+    /**
+    var obj = {};
     exportUrl = options2.exporting.url;
     obj.options = JSON.stringify(options2);
     obj.type = 'image/png';
     obj.async = true;
-		obj.constr = 'Chart';
+	obj.constr = 'Chart';
 
-		$.ajax({
+	$.ajax({
         type: 'post',
         url: exportUrl,
         data: obj,
         success: function (data) {
             $('#ThermistorHeat img').attr('src', exportUrl + data);
         }
-    });
+    });**/
 
-	options2.title.text = ('Water Temperature Profile');	
+	//options2.title.text = ('Water Temperature Profile');	Enable if using static image
   var chart2 = new Highcharts.Chart(options2);
 }
 
