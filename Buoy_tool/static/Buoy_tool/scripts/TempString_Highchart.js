@@ -18,22 +18,26 @@
                 Dates.push(value);
             }
         });
+
         //2 category axis: x and y. Then the index of x/y axis becomes the [x, y, value]. So, if your data starts on "2013-04-01" then it is your first index such that 
         //[ ["2013-04-01",0,-0.7], ["2013-04-02",0,-3.4], ["2013-04-03",0,-1.1] ] becomes: [ [0,0,-0.7], [1,0,-3.4], [2,0,-1.1] ]
+
+        //////////////////////////////////////////////////////////////////////////
+        //Read in data for interpolation graphs. Graphs don't use all data points/
+        //////////////////////////////////////////////////////////////////////////
         var h = -1;
-        var g = -1;
         var series = [];
-        /**for (j = 0; j < Depth.length; j++) {
-            for (i = 0; i < Dates.length; i++) {
-                series[h + 1] = [i, j, Data[g + 1]];
-                h += 1;
-                g += 1;
-            }
-        }
-                    **/
         var valueFixed = [];
+        if (screen.width > 800) {
+            var timeStep = 3;
+        } else {
+            var timeStep = 6;
+        }
+        var timeStep;
+
         for (j = 0; j < Depth.length; j++) {
-            for (i = 0; i < Dates[0].length; i++) {
+            var binTimeStep = 0;
+            for (i = 0; i < Dates[0].length; i += timeStep) { //Only record every other temp for each depth
                 /**Check if the value is an integer, if so fix value, if not pass the non-int value. 
                 try {
                     valueFixed = ((Data[j][Data[j].length-[i+1]]));//.toFixed(1));
@@ -41,55 +45,78 @@
                     valueFixed = Data[j][Data[j].length-[i+1]];
                 }
                 **/
-                series[h + 1] = [i, j, Data[j][Data[j].length - [i + 1]]];	//Read in values in reverse order
+                series[h + 1] = [binTimeStep, j, Data[j][Data[j].length - [i + 1]]];      //Increase bin step with binTimeStep since can't use i because of increment by 2
                 h += 1;
+                binTimeStep += 1;
             }
         }
+
         //Convert string date and time to unix 
         var i = -1;
         var DateTime = [];
         var DateString = [];
-        while (Dates[0][++i]) {
+        while (Dates[0][i += timeStep]) {  //Only read in every other date corresponding to every over temperature
             DateTime.push(Date.parse(Dates[0][i]));
             DateString.push(moment(Dates[0][i]).format('M/D HH:mm'));
         }
         DateString.reverse();
         DateTime.reverse();
         TempStringHeatMap(Depth, DateString, DateTime, series);
-        TempStringLineChart(Depth, DateString, DateTime, series);
 
+        //////////////////////////////////////////////////////////////////////////
+        //Read in data for line graphs. Graphs  use all data points             //
+        //////////////////////////////////////////////////////////////////////////
+        var h = -1;
+        var seriesLine = [];
+
+        for (j = 0; j < Depth.length; j++) {
+            for (i = 0; i < Dates[0].length; i++) {
+                seriesLine[h + 1] = [i, j, Data[j][Data[j].length - [i + 1]]];	//Read in values in reverse order
+                h += 1;
+            }
+        }
+
+        //Convert string date and time to unix 
+        var i = -1;
+        var DateTimeLine = [];
+        var DateStringLine = [];
+        while (Dates[0][++i]) {
+            DateTimeLine.push(Date.parse(Dates[0][i]));
+            DateStringLine.push(moment(Dates[0][i]).format('M/D HH:mm'));
+        }
+        DateStringLine.reverse();
+        DateTimeLine.reverse();
+        TempStringLineChart(Depth, DateStringLine, DateTimeLine, seriesLine);
     });
 
 }
 
 function TempStringHeatMap(Depths, DateString, DateTime, TStringdata) {
 
-    //Only display interpolated graph on non-phone devices.
+    /**Only display interpolated graph on non-phone devices.
     if (screen.width > 800) {
         var chartType = 'contour';
         var exporting = false;
     } else {
         var chartType = 'heatmap';
         var exporting = true;
-    } 
+    } **/
 
     var options2 = {
 
         chart: {
             renderTo: 'TempStringHighMap',
-            type: chartType,
-            //spacing: [0,5,0,5]
+            type: 'contour',
+            spacing: [7, 0, 0, 0]
         },
 				
         exporting: {
-            enabled: exporting,
+            enabled: false,
 			//url: 'http://export.highcharts.com/'
 		},
 				
         legend: {
-			align: 'center', //was left
-            //verticalAlign: 'bottom',
-			//enabled: true,
+			align: 'center', 
             margin: 0,
             itemLarginTop: 0,
             itemMarginBottom: 0,
@@ -140,14 +167,16 @@ function TempStringHeatMap(Depths, DateString, DateTime, TStringdata) {
             offset: 0,
             reversed: true,
             title: {
-                text: 'Water Depth ('+depthUnits+')'
+                text: 'Water Depth (' + depthUnits + ')',
+                margin: 5,
             },
             labels: {
                 formatter: function () {
 				    return this.value
 				    //var feet = this.value;
                     //return feet.toFixed(0);
-                }
+                },
+                x: -5,
             },
         },
 				
@@ -240,6 +269,7 @@ function TempStringLineChart(Depths, DateString, DateTime, TStringdata) {
             renderTo: 'TempStringLineChart',
             type: 'series',
             alignTicks: false,
+            spacing: [7, 0, 0, 0]
         },
 
         title: {
@@ -271,11 +301,14 @@ function TempStringLineChart(Depths, DateString, DateTime, TStringdata) {
 				
         yAxis: {
             title: {
-			    text: 'Temperature '+tempUnits+''
+                text: 'Temperature ' + tempUnits + '',
+                margin: 3,
             },
             floor: 0,
+            offset: 0,
             labels: {
                 format: '{value:.1f}',
+                x: -5,
             }
         },
 

@@ -441,8 +441,10 @@ function toggleSection(divID) {
     var x = document.getElementById(divID);
     if (x.className.indexOf("w3-show") == -1) {
         x.className += " w3-show";
+        dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'section', 'glbuoysLabel': divID, 'glbuoysAction': 'expand'});
     } else {
         x.className = x.className.replace(" w3-show", "");
+        dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'section', 'glbuoysLabel': divID, 'glbuoysAction': 'collapse' });
     }
 }
 
@@ -667,7 +669,7 @@ $(document).ready(function () {
 				}
 			});
     });
-    var refresher = setInterval("reloadbuoyinfo();", 600000);
+    var refresher = setInterval("reloadbuoyinfo();", 600000); 
 });
 
 
@@ -740,11 +742,11 @@ function loadbuoyinfo(ID, jsonObj) {
                             $('#ThermistorHeat h4').append('Water Temperature Heat Map');
                             $('#ThermistorHeat h4').addClass("glosBlue w3-center");
                             $('#ThermistorHeat h4').css("cursor","pointer");
-                            $('#ThermistorHeat h4').click(function () { toggleSection('heatMap'); });
+                            $('#ThermistorHeat h4').click(function () { toggleSection('heatMap');});
                             var tempStringProfile = '<div id="heatMap" class="w3-hide"><div id="TempStringHighMap" style="min-width: 310px; height: 400px;"></div>';
                     
                             //var tempStringProfile = "<div id='heatMap' class='w3-hide'><img onclick=document.getElementById('id02').style.display='block';dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'temp_string','glbuoysAction':'popup'}); style='height:350px; width:100%; max-width:550px; cursor: pointer'/>" +
-                                                    '<p style="margin-top:0px">(Click image for interactive graph.)</p></div>';
+                            //                            '<p style="margin-top:0px">(Click image for interactive graph.)</p></div>';
                             $('#ThermistorHeat').append(tempStringProfile);
 
                             $('#ThermistorLine').addClass("w3-center w3-panel w3-card-4 w3-padding");
@@ -961,7 +963,7 @@ function reloadbuoyinfo() {
 	//$('#stationTime').empty();
 	//$('#realtime tbody').empty();
     $('#ADCP_Chart').remove();
-	$('#Thermistor img').remove();
+	//$('#Thermistor img').remove();
     $('#TempStringLineChart').remove();
     $('#heatMap').remove();
     $('#lineChart').remove();
@@ -1006,8 +1008,9 @@ function reloadbuoyinfo() {
 						if (jsonObj[i].thermistorValues.length>1 && !isNaN(jsonObj[i].thermistorValues[0])){ //Check to make sure there are multiple temperature nodes and first two depths are not missing
                             columnSpan = 2;
 
-                            var tempStringProfile = "<div id='heatMap' class='w3-hide'><img onclick=document.getElementById('id02').style.display='block';dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'temp_string','glbuoysAction':'popup'}); style='height:350px; width:100%; max-width:550px; cursor: pointer'/>" +
-                                '<p style="margin-top:0px">(Click image for interactive graph.)</p></div>';
+                            var tempStringProfile = '<div id="heatMap" class="w3-hide"><div id="TempStringHighMap" style="min-width: 310px; height: 400px;"></div>';
+                            //var tempStringProfile = "<div id='heatMap' class='w3-hide'><img onclick=document.getElementById('id02').style.display='block';dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'temp_string','glbuoysAction':'popup'}); style='height:350px; width:100%; max-width:550px; cursor: pointer'/>" +
+                            //    '<p style="margin-top:0px">(Click image for interactive graph.)</p></div>';
                             $('#ThermistorHeat').append(tempStringProfile);
 
                             var tempStringLines = '<div id="lineChart" class="w3-hide"><div id="TempStringLineChart" style="min-width: 310px; height: 400px;"></div>' +
