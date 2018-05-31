@@ -394,7 +394,7 @@ plotData = function (objData) {
                 var series_data = [];
                 var unit = [];
                 var val_arr = [];
-
+                
                 if ($('#sel-units').val() === 'met') {
                     unit = objLoc.params[param_id].units;
                     for (var t = 0; t < objLoc.dattim.length; t++) {
@@ -421,6 +421,8 @@ plotData = function (objData) {
                         //console.log(isplit);
                         var cdate = new Date(Date.UTC(isplit[0], isplit[1]-1, isplit[2], isplit[3], isplit[4], isplit[5], 0, 0)); //changed for Safari
                         var dt = cdate.getTime()
+
+                        var tsval = objParam.values[t];
                         if (parseFloat(tsval) === -9999.0) {
                             series_data.push([dt, null]);
                             val_arr.push(null);

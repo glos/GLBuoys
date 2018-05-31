@@ -65,7 +65,6 @@
 function TempStringHeatMap(Depths, DateString, DateTime, TStringdata) {
 
     //Only display interpolated graph on non-phone devices.
-    console.log(screen.height, screen.width);
     if (screen.width > 800) {
         var chartType = 'contour';
         var exporting = false;
