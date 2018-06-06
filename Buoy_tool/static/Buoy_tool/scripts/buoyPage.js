@@ -1096,7 +1096,7 @@ function reloadbuoyinfo() {
 																		 "<td class='graph' width='20px' colspan='"+columnSpan+"'><div align=right><i class='material-icons'>timeline</i></div></td>" +
 																		 "<td class='long_name' align=left>Water Temp @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
 																		 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].thermistorValues[k]) + "</div></td>" +
-																		 "<td class='float_value'><div align=left>"+ decimalValue(jsonObj[i].thermistorValues[k]).toFixed(1).substring(1) + "" +tempUnits+ "</div></td>" +
+																		 "<td class='float_value'><div align=left>"+ decimalValue(jsonObj[i].thermistorValues[k]) + "" +tempUnits+ "</div></td>" +
 																		 "</tr>";
                                         //$(newRowContent2).appendTo($("#realtime tbody"));
                                         $('tr#tp0' + k).replaceWith(newRowContent2);
