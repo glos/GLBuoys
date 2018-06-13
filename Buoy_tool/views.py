@@ -74,6 +74,16 @@ def buoy(request, buoy_id):
             }
         )
 
+def alert(request):
+    """Renders the experimental alert page."""
+    return render(
+        request,
+        'alert.html',
+        {
+            'title':'Alert',
+            }
+    )
+
 def handler404(request):
     response = render_to_response('404.html', {},
     context_instance=RequestContext(request))

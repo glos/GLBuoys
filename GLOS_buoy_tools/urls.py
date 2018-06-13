@@ -11,7 +11,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 # Main buoy tool app:
-from Buoy_tool.views import buoy, eriehome
+from Buoy_tool.views import buoy, eriehome, alert
 import Buoy_tool.forms
 #from Buoy_tool import views
 
@@ -44,6 +44,9 @@ urlpatterns = [
     # Export URLs:
     #url(r'^tools/export/$', export, name='export_get'),     #permalink URLs
     url(r'^tools/export', export, name='export'),           #basic URL
+
+    # Alert URL:
+    url(r'^experimental/alert', alert, name='alert'),           #basic URL
 
     # Buoy page URLs:
     url(r'^buoy/([^/]+)/$', buoy, name='buoy'),

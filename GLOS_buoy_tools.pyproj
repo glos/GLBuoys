@@ -267,6 +267,7 @@
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\xdate.js" />
     <None Include="Buoy_tool\static\Buoy_tool\scripts\_references.js" />
     <Content Include="Buoy_tool\templates\404.html" />
+    <Content Include="Buoy_tool\templates\alert.html" />
     <Content Include="Buoy_tool\templates\erie.html" />
     <Content Include="Buoy_tool\templates\layout_erie.html" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\img\BuoyMap.jpg" />

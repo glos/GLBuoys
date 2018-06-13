@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Model Alerts</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <link rel="StyleSheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" type="text/css">
+    <script>
+
+        // Create the XHR object.
+        function createCORSRequest(method, url) {
+            var xhr = new XMLHttpRequest();
+            if ("withCredentials" in xhr) {
+                // XHR for Chrome/Firefox/Opera/Safari.
+                xhr.open(method, url, true);
+            } else if (typeof XDomainRequest != "undefined") {
+                // XDomainRequest for IE.
+                xhr = new XDomainRequest();
+                xhr.open(method, url);
+            } else {
+                // CORS not supported.
+                xhr = null;
+            }
+            return xhr;
+        }
+
+        // Helper method to parse the title tag from the response.
+        function getTitle(text) {
+            return text.match('<title>(.*)?</title>')[1];
+        }
+
+        // Make the actual CORS request.
+        function makeCorsRequest(url) {
+            // This is a sample server that supports CORS.
+
+            var xhr = createCORSRequest('GET', url);
+            if (!xhr) {
+                alert('CORS not supported');
+                return;
+            }
+
+            // Response handlers.
+            xhr.onload = function () {
+                var text = xhr.responseText;
+                var title = getTitle(text);
+                alert('Response from CORS request to ' + url + ': ' + title);
+            };
+
+            xhr.onerror = function () {
+                alert('Woops, there was an error making the request.');
+            };
+
+            xhr.send();
+        }
+
+        function makeAlerts() {
+
+            var dependencies = [
+                null,
+                null,
+                null,
+                {"units": "degrees C", "parameter": "Water Temperature", "ref": "NOSLEOFS_SST"},
+                {"units": "degrees", "parameter": "Wave Direction", "ref": "LAKE_ERIE_WAVE_DIRECTION"},
+                {"units": "meters", "parameter": "Wave Height", "ref": "LAKE_ERIE_WAVE_HEIGHT"}];
+
+            var jsonObject = {
+                "phone": "734-478-3011",
+                "parameter": "i-dependent",
+                "catalog_id": "i-dependent",
+                "lat": "i01",
+                "lon": "i02",
+                "units": "i-dependent",
+                "origin": "model-dependent",
+                "email": "i8",
+                "user_id": "",
+                "min_threshold": "ii1",
+                "max_threshold": "ii2",
+                "contact_flag": false
+            };
+
+            // First check for missing inputs
+
+            if ($('#i01').val() == "" || $('#i02').val() == "")
+                alert("Please specify latitude and longitude");
+            else if ($('#i81').val() == "")
+                alert("Please specify e-mail address");
+            else {
+
+                jsonObject.lat = $('#i01').val();
+                jsonObject.lon = $('#i02').val();
+                jsonObject.email = $('#i81').val();
+
+                for (var i = 3; i < 6; i++) {
+                    var condition = $('#s' + i + " option:selected").text();
+
+                    if (!condition.includes('Not')) {
+                        if (condition.includes("great") || condition.includes('between'))
+                            jsonObject.min_threshold = $('#i' + i + '1').val();
+                        else
+                            jsonObject.min_threshold = null;
+
+                        if (condition.includes("less") || condition.includes('between'))
+                            jsonObject.max_threshold = $('#i' + i + '2').val();
+                        else
+                            jsonObject.max_threshold = null;
+
+                        jsonObject.units = dependencies[i].units;
+                        jsonObject.parameter = dependencies[i].parameter;
+                        jsonObject.catalog_id = dependencies[i].ref;
+                        jsonObject.origin = dependencies[i].ref;
+
+                        if (jsonObject.min_threshold == "" || jsonObject.max_threshold == "")
+                            alert("Threshold missing for " + jsonObject.parameter);
+                        else {
+
+                            // // Check for valid  lat/long
+                            //
+                            // checkURL = "http://coastmap.com/ecop/wms.aspx?STYLES=+&LAYERS="
+                            //     + jsonObject.origin
+                            //     + "&WIDTH=1&SERVICE=WMS&FORMAT=image%2Fpng&REQUEST=GetFeatureInfo&HEIGHT=1&SRS=EPSG%3A4326&VERSION=1.1.1&BBOX="
+                            //     + jsonObject.lon + "%2C" + jsonObject.lat + "%2C" + jsonObject.lon + "%2C" + jsonObject.lat
+                            //
+                            // makeCorsRequest(checkURL);
+                            // //alert(checkURL + "\n" + JSON.stringify(jsonObject));
+                            // console.log('new xhr');
+                            // xhr = new XMLHttpRequest();
+                            // xhr.open('GET', checkURL, true);
+                            // xhr.onload = function () {
+                            //     alert(this.status + ":" + xhr.responseText);
+                            // }
+                            // xhr.onerror = function () {
+                            //     alert('Error - ' + this.status);
+                            // }
+                            // console.log('sending')
+                            // xhr.send();
+
+                            // Build and send request
+
+                            $.ajax({
+                                type: 'POST',
+                                url: 'http://dev.oceansmap.com/myglos/api/alert',
+                                contentType: 'application/json',
+                                crossDomain: true,
+                                dataType: "json",
+                                data: JSON.stringify(jsonObject),
+                                success: function (data) {
+                                    console.log(data);
+                                }
+                            })
+                        }
+                    }
+                }
+            }
+        }
+
+        $(document).ready(function () {
+
+            for (var i = 3; i < 6; i++) {
+
+                // Hide unused input fields
+
+                $('#i' + i + '1').hide()
+                $('#i' + i + '2').hide()
+
+                $('#d' + i).hide()
+
+                // Add listener to hide/show depending on selector state
+
+                $('#s' + i).on('change', function () {
+
+                        var selection = this.value
+                        var group = this.id.substring(1)
+
+                        if (selection.includes("between")) {
+
+                            $('#i' + group + '1').show()
+                            $('#i' + group + '2').show()
+                            $('#d' + group).show()
+                        } else {
+
+                            $('#i' + group + '2').hide()
+                            $('#d' + group).hide()
+
+                            if (selection.includes("Not"))
+                                $('#i' + group + '1').hide()
+                            else
+                                $('#i' + group + '1').show()
+
+                        }
+                    }
+                )
+
+
+            }
+
+            // Add listener for Process button
+
+            $('#btnProcess').click(function () {
+                makeAlerts();
+            })
+
+        });
+    </script>
+</head>
+<body>
+
+<div id="main" width="500px">
+    <fieldset style="width:750px">
+        <table>
+            <tr>
+                <td><b>Location</b>
+
+            <tr>
+                <td>Latitude (DD)
+                <td><input id="i01" type="text">
+
+            <tr>
+                <td>Longitude (DD)
+                <td><input id="i02" type="text">
+
+        </table>
+        <hr>
+        <table>
+            <tr>
+                <td colspan="3"><b>Lake Erie Operational Forecast System (2D)</b>
+            <tr>
+                <td>Water Temperature (degrees C)
+                <td><select name="s3" id="s3">
+                    <option selected="selected">Not checked</option>
+                    <option>Is greater than</option>
+                    <option>Is less than</option>
+                    <option>Is not between</option>
+                </select></td>
+                <td><input id="i31" type="text">
+                <td>
+                    <div id="d3"> and
+                        <input id="i32" type="text"></div>
+
+            <tr>
+                <td colspan="3"><b>Great Lakes Coastal Forecast System - Lake Erie Forecast (2D)</b>
+            <tr>
+                <td>Wave Direction (degrees)
+                <td><select name="s4" id="s4">
+                    <option selected="selected">Not checked</option>
+                    <option>Is greater than</option>
+                    <option>Is less than</option>
+                    <option>Is not between</option>
+                </select></td>
+                <td><input id="i41" type="text">
+                <td>
+                    <div id="d4"> and
+                        <input id="i42" type="text"></div>
+            <tr>
+                <td>Wave Height (m)
+                <td><select name="s5" id="s5">
+                    <option selected="selected">Not checked</option>
+                    <option>Is greater than</option>
+                    <option>Is less than</option>
+                    <option>Is not between</option>
+                </select></td>
+                <td><input id="i51" type="text">
+                <td>
+                    <div id="d5"> and
+                        <input id="i52" type="text"></div>
+        </table>
+        <hr>
+        <table>
+            <tr>
+                <td><b>E-mail</b>
+                <td><input id="i81" type="text">
+                <td>
+                    <button id="btnProcess" type="button">Process</button>
+        </table>
+    </fieldset>
+</div>
+<div id="holder">holder</div>
+</body>
+</html>
