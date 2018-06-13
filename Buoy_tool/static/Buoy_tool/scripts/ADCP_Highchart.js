@@ -21,23 +21,44 @@
         var depthCount = jsonObj.ADCP_Depths.length
 
         //Go through each depth for each date. Invert the depth assignment since UV001, VV001 would actually be bottom depth. 
+        //If any non numeric values exist in array (ie. "NaN") then assign null values to direction and speed. 
         for (j = 0; j < Dates[0].length; j++) {
             for (i = 0; i < depthCount; i++) {
                 if (i == 0 && j == 0) {
-                    series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - 1], jsonObj.ADCP_Speed[j].toFixed(1), jsonObj.ADCP_Dir[j].toFixed(1)];
-                    h += 1;
+                    try {
+                        series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - 1], jsonObj.ADCP_Speed[j].toFixed(1), jsonObj.ADCP_Dir[j].toFixed(1)];
+                        h += 1;
+                    } catch (err) {
+                        series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - 1], null, null];
+                        h += 1;
+                    }
                 }
                 else if (j == 0) {
-                    series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - i - 1], jsonObj.ADCP_Speed[i * seriesLen].toFixed(1), jsonObj.ADCP_Dir[i * seriesLen].toFixed(1)];
-                    h += 1;
+                    try {
+                        series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - i - 1], jsonObj.ADCP_Speed[i * seriesLen].toFixed(1), jsonObj.ADCP_Dir[i * seriesLen].toFixed(1)];
+                        h += 1;
+                    } catch (err) {
+                        series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - i - 1], null, null];
+                        h += 1;
+                    }
                 }
                 else if (i == 0) {
-                    series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - 1], jsonObj.ADCP_Speed[(j)].toFixed(1), jsonObj.ADCP_Dir[j].toFixed(1)];
-                    h += 1;
+                    try {
+                        series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - 1], jsonObj.ADCP_Speed[(j)].toFixed(1), jsonObj.ADCP_Dir[j].toFixed(1)];
+                        h += 1;
+                    } catch (err) {
+                        series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - 1], null, null];
+                        h += 1;
+                    }
                 }
                 else {
-                    series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - i - 1], jsonObj.ADCP_Speed[(i * seriesLen) + j].toFixed(1), jsonObj.ADCP_Dir[(i * seriesLen) + j].toFixed(1)];
-                    h += 1;
+                    try {
+                        series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - i - 1], jsonObj.ADCP_Speed[(i * seriesLen) + j].toFixed(1), jsonObj.ADCP_Dir[(i * seriesLen) + j].toFixed(1)];
+                        h += 1;
+                    } catch (err) {
+                        series[h] = [Date.parse(Dates[0][j]), jsonObj.ADCP_Depths[depthCount - i - 1], null, null];
+                        h += 1;
+                    }
                 }
             }
         }
@@ -57,8 +78,10 @@ function ADCP_Highchart(data, DateString, depths, speedUnits) {
 
     //Check the viewed units. If units are english change 'max value' and legend values from cm/s to knots (0.0194384) 
     var conv = 1;
+    var convDepth = 1;
     if (units == 'english') {
         conv = 0.0194384;
+        convDepth = 3.28084;
     }
 
     //Add max value of 50 at depth -1 on the last date
@@ -150,7 +173,7 @@ function ADCP_Highchart(data, DateString, depths, speedUnits) {
             },
             labels: {
                 formatter: function () {
-                    return this.value.toFixed(1)
+                    return (this.value *convDepth).toFixed(1)
                 },
                 x: -5,
             },
@@ -161,7 +184,7 @@ function ADCP_Highchart(data, DateString, depths, speedUnits) {
         tooltip: {
             formatter: function () {
                 var date = Highcharts.dateFormat('%m\\%d\\%y %H:%M', (this.point.x));
-                var Depth = this.point.y.toFixed(1);
+                var Depth = (this.point.y*convDepth).toFixed(1);
                 try {
                     return 'Date: <b>' + date + '</b><br />Depth: <b>' + Depth + ' ' + depthUnits + '</b><br />Speed: <b>' + this.point.length + ' ' + speedUnits + '</b><br />Direction: <b>' + this.point.direction + '°</b>';
                 } catch (err) {

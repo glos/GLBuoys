@@ -441,8 +441,10 @@ function toggleSection(divID) {
     var x = document.getElementById(divID);
     if (x.className.indexOf("w3-show") == -1) {
         x.className += " w3-show";
+        dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'section', 'glbuoysLabel': divID, 'glbuoysAction': 'expand'});
     } else {
         x.className = x.className.replace(" w3-show", "");
+        dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'section', 'glbuoysLabel': divID, 'glbuoysAction': 'collapse' });
     }
 }
 
@@ -590,6 +592,20 @@ function DegreeToCardinal(value) {
 	}
 }
 
+function intValue(value) {
+    if (value < 1) { toFixedValue = 2; } else { toFixedValue = 1; }
+    if (value % 1 < 0.95) {
+        return Math.floor(value);
+    } else {
+        return Math.round(value);
+    }
+}
+
+function decimalValue(value) {
+    if (value < 1) { toFixedValue = 2; } else { toFixedValue = 1; }
+    return (value - Math.floor(value)).toFixed(toFixedValue).substring(1);
+}
+
 $(document).ready(function () {
 
     //---------------------- Event for buoy page buttons------------------------------------------
@@ -667,7 +683,7 @@ $(document).ready(function () {
 				}
 			});
     });
-    var refresher = setInterval("reloadbuoyinfo();", 600000);
+    var refresher = setInterval("reloadbuoyinfo();", 600000); 
 });
 
 
@@ -740,9 +756,11 @@ function loadbuoyinfo(ID, jsonObj) {
                             $('#ThermistorHeat h4').append('Water Temperature Heat Map');
                             $('#ThermistorHeat h4').addClass("glosBlue w3-center");
                             $('#ThermistorHeat h4').css("cursor","pointer");
-                            $('#ThermistorHeat h4').click(function () { toggleSection('heatMap'); });
-                            var tempStringProfile = "<div id='heatMap' class='w3-hide'><img onclick=document.getElementById('id02').style.display='block';dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'temp_string','glbuoysAction':'popup'}); style='height:350px; width:100%; max-width:550px; cursor: pointer'/>" +
-                                                    '<p style="margin-top:0px">(Click image for interactive graph.)</p></div>';
+                            $('#ThermistorHeat h4').click(function () { toggleSection('heatMap');});
+                            var tempStringProfile = '<div id="heatMap" class="w3-hide"><div id="TempStringHighMap" style="min-width: 310px; height: 400px;"></div>';
+                    
+                            //var tempStringProfile = "<div id='heatMap' class='w3-hide'><img onclick=document.getElementById('id02').style.display='block';dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'temp_string','glbuoysAction':'popup'}); style='height:350px; width:100%; max-width:550px; cursor: pointer'/>" +
+                            //                            '<p style="margin-top:0px">(Click image for interactive graph.)</p></div>';
                             $('#ThermistorHeat').append(tempStringProfile);
 
                             $('#ThermistorLine').addClass("w3-center w3-panel w3-card-4 w3-padding");
@@ -781,8 +799,8 @@ function loadbuoyinfo(ID, jsonObj) {
 										var newRowContent = "<tr id='" + jsonObj[i].obsID[j] + "' onclick=PastForecastGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
 																"<td class='graph' width='20px' colspan='"+columnSpan+"'><div align=right><i class='material-icons'>timeline</i></div></td>" +
 																"<td class='long_name' align=left>" + jsonObj[i].obsLongName[j] + "</td>" +
-																"<td class='interger_value 'style='padding:8px 0px'><div align=right>" + Math.floor(jsonObj[i].obsValues[j]) + "</div></td>" +
-																"<td class='float_value'><div align=left>" + (jsonObj[i].obsValues[j]-Math.floor(jsonObj[i].obsValues[j])).toFixed(toFixedValue).substring(1) + " " + jsonObj[i].obsUnits[j] + "</div></td>" +
+                                            "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].obsValues[j]) + "</div></td>" +
+                                            "<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].obsValues[j]) + " " + jsonObj[i].obsUnits[j] + "</div></td>" +
 																"</tr>";
 									}else if(jsonObj[i].obsUnits[j] == '°') {
 										var cardinalDir = DegreeToCardinal(jsonObj[i].obsValues[j]);
@@ -793,11 +811,11 @@ function loadbuoyinfo(ID, jsonObj) {
 																"</tr>";
 									}else{
 										var newRowContent = "<tr id='" + jsonObj[i].obsID[j] + "' onclick=PastForecastGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
-																"<td class='graph' width='20px' colspan='"+columnSpan+"'><div align=right><i class='material-icons'>timeline</i></div></td>" +
-																"<td class='long_name' align=left>" + jsonObj[i].obsLongName[j] + "</td>" +
-																"<td class='interger_value 'style='padding:8px 0px'><div align=right>" + Math.floor(jsonObj[i].obsValues[j]) + "</div></td>" +
-																"<td class='float_value'><div align=left>" + (jsonObj[i].obsValues[j]-Math.floor(jsonObj[i].obsValues[j])).toFixed(toFixedValue).substring(1) + "" + jsonObj[i].obsUnits[j] + "</div></td>" +
-																"</tr>";
+											"<td class='graph' width='20px' colspan='"+columnSpan+"'><div align=right><i class='material-icons'>timeline</i></div></td>" +
+											"<td class='long_name' align=left>" + jsonObj[i].obsLongName[j] + "</td>" +
+                                            "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].obsValues[j]) + "</div></td>" +
+                                            "<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].obsValues[j]) + "" + jsonObj[i].obsUnits[j] + "</div></td>" +
+											"</tr>";
 									}		
                                     $(newRowContent).appendTo($("#realtime tbody"));
 								}
@@ -821,8 +839,8 @@ function loadbuoyinfo(ID, jsonObj) {
 										var newRowContent2 = "<tr id='tp0" + (k) + "'onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" + 
 																		 "<td class='graph' width='20px' colspan='"+columnSpan+"'><div align=right><i class='material-icons'>timeline</i></div></td>" +
 																		 "<td class='long_name' align=left>Water Temp @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
-																		 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + Math.round(jsonObj[i].thermistorValues[k]) + "</div></td>" +
-																		 "<td class='float_value'><div align=left>"+ (jsonObj[i].thermistorValues[k]-Math.floor(jsonObj[i].thermistorValues[k])).toFixed(1).substring(1) + "" +tempUnits+ "</div></td>" +
+																		 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].thermistorValues[k]) + "</div></td>" +
+																		 "<td class='float_value'><div align=left>"+ decimalValue((jsonObj[i].thermistorValues[k])) + "" +tempUnits+ "</div></td>" +
 																		 "</tr>";
 										$(newRowContent2).appendTo($("#realtime tbody"));
 									} else {
@@ -830,8 +848,8 @@ function loadbuoyinfo(ID, jsonObj) {
 																		"<tr class='TAccord' id='tp0" + (k) + "'onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;''>" + 
 																		"<td class='graph' width='15px' colspan='"+columnSpan+"'><div align=right><i class='material-icons' onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');document.getElementById('id01').style.display='block' style='cursor: pointer;'>timeline</i></div></td>" +
 																		 "<td class='long_name' align=left>Water Temp @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
-																		 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + Math.round(jsonObj[i].thermistorValues[k]) + "</div></td>" +
-																		 "<td class='float_value'><div align=left>"+ (jsonObj[i].thermistorValues[k]-Math.floor(jsonObj[i].thermistorValues[k])).toFixed(1).substring(1) + "" +tempUnits+ "</div></td>" +
+																		 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].thermistorValues[k]) + "</div></td>" +
+																		 "<td class='float_value'><div align=left>"+ decimalValue(jsonObj[i].thermistorValues[k]) + "" +tempUnits+ "</div></td>" +
 																		 "</tr>";
 											$(moreTemps).appendTo($("#realtime tbody"));
 									}
@@ -959,7 +977,7 @@ function reloadbuoyinfo() {
 	//$('#stationTime').empty();
 	//$('#realtime tbody').empty();
     $('#ADCP_Chart').remove();
-	$('#Thermistor img').remove();
+	//$('#Thermistor img').remove();
     $('#TempStringLineChart').remove();
     $('#heatMap').remove();
     $('#lineChart').remove();
@@ -1004,8 +1022,9 @@ function reloadbuoyinfo() {
 						if (jsonObj[i].thermistorValues.length>1 && !isNaN(jsonObj[i].thermistorValues[0])){ //Check to make sure there are multiple temperature nodes and first two depths are not missing
                             columnSpan = 2;
 
-                            var tempStringProfile = "<div id='heatMap' class='w3-hide'><img onclick=document.getElementById('id02').style.display='block';dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'temp_string','glbuoysAction':'popup'}); style='height:350px; width:100%; max-width:550px; cursor: pointer'/>" +
-                                '<p style="margin-top:0px">(Click image for interactive graph.)</p></div>';
+                            var tempStringProfile = '<div id="heatMap" class="w3-hide"><div id="TempStringHighMap" style="min-width: 310px; height: 400px;"></div>';
+                            //var tempStringProfile = "<div id='heatMap' class='w3-hide'><img onclick=document.getElementById('id02').style.display='block';dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'temp_string','glbuoysAction':'popup'}); style='height:350px; width:100%; max-width:550px; cursor: pointer'/>" +
+                            //    '<p style="margin-top:0px">(Click image for interactive graph.)</p></div>';
                             $('#ThermistorHeat').append(tempStringProfile);
 
                             var tempStringLines = '<div id="lineChart" class="w3-hide"><div id="TempStringLineChart" style="min-width: 310px; height: 400px;"></div>' +
@@ -1034,8 +1053,8 @@ function reloadbuoyinfo() {
 										var newRowContent = "<tr id='" + jsonObj[i].obsID[j] + "' onclick=PastForecastGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
 																"<td class='graph' width='20px' colspan='"+columnSpan+"'><div align=right><i class='material-icons'>timeline</i></div></td>" +
 																"<td class='long_name' align=left>" + jsonObj[i].obsLongName[j] + "</td>" +
-																"<td class='interger_value 'style='padding:8px 0px'><div align=right>" + Math.floor(jsonObj[i].obsValues[j]) + "</div></td>" +
-																"<td class='float_value'><div align=left>" + (jsonObj[i].obsValues[j]-Math.floor(jsonObj[i].obsValues[j])).toFixed(toFixedValue).substring(1) + " " + jsonObj[i].obsUnits[j] + "</div></td>" +
+																"<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].obsValues[j]) + "</div></td>" +
+																"<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].obsValues[j]) + " " + jsonObj[i].obsUnits[j] + "</div></td>" +
 																"</tr>";
 									}else if(jsonObj[i].obsUnits[j] == '°') {
 										var cardinalDir = DegreeToCardinal(jsonObj[i].obsValues[j]);
@@ -1048,8 +1067,8 @@ function reloadbuoyinfo() {
 										var newRowContent = "<tr id='" + jsonObj[i].obsID[j] + "' onclick=PastForecastGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
 																"<td class='graph' width='20px' colspan='"+columnSpan+"'><div align=right><i class='material-icons'>timeline</i></div></td>" +
 																"<td class='long_name' align=left>" + jsonObj[i].obsLongName[j] + "</td>" +
-																"<td class='interger_value 'style='padding:8px 0px'><div align=right>" + Math.floor(jsonObj[i].obsValues[j]) + "</div></td>" +
-																"<td class='float_value'><div align=left>" + (jsonObj[i].obsValues[j]-Math.floor(jsonObj[i].obsValues[j])).toFixed(toFixedValue).substring(1) + "" + jsonObj[i].obsUnits[j] + "</div></td>" +
+																"<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].obsValues[j]) + "</div></td>" +
+																"<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].obsValues[j]) + "" + jsonObj[i].obsUnits[j] + "</div></td>" +
 																"</tr>";
                                     }
                                     $('tr#' + jsonObj[i].obsID[j]).replaceWith(newRowContent);
@@ -1076,8 +1095,8 @@ function reloadbuoyinfo() {
 										var newRowContent2 = "<tr id='tp0" + (k) + "'onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" + 
 																		 "<td class='graph' width='20px' colspan='"+columnSpan+"'><div align=right><i class='material-icons'>timeline</i></div></td>" +
 																		 "<td class='long_name' align=left>Water Temp @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
-																		 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + Math.round(jsonObj[i].thermistorValues[k]) + "</div></td>" +
-																		 "<td class='float_value'><div align=left>"+ (jsonObj[i].thermistorValues[k]-Math.floor(jsonObj[i].thermistorValues[k])).toFixed(1).substring(1) + "" +tempUnits+ "</div></td>" +
+																		 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].thermistorValues[k]) + "</div></td>" +
+																		 "<td class='float_value'><div align=left>"+ decimalValue(jsonObj[i].thermistorValues[k]) + "" +tempUnits+ "</div></td>" +
 																		 "</tr>";
                                         //$(newRowContent2).appendTo($("#realtime tbody"));
                                         $('tr#tp0' + k).replaceWith(newRowContent2);
@@ -1086,8 +1105,8 @@ function reloadbuoyinfo() {
 																		"<tr class='TAccord' id='tp0" + (k) + "'onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;''>" + 
 																		"<td class='graph' width='15px' colspan='"+columnSpan+"'><div align=right><i class='material-icons' onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');document.getElementById('id01').style.display='block' style='cursor: pointer;'>timeline</i></div></td>" +
 																		 "<td class='long_name' align=left>Water Temp @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
-																		 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + Math.round(jsonObj[i].thermistorValues[k]) + "</div></td>" +
-																		 "<td class='float_value'><div align=left>"+ (jsonObj[i].thermistorValues[k]-Math.floor(jsonObj[i].thermistorValues[k])).toFixed(1).substring(1) + "" +tempUnits+ "</div></td>" +
+																		 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].thermistorValues[k]) + "</div></td>" +
+																		 "<td class='float_value'><div align=left>"+ decimalValue(jsonObj[i].thermistorValues[k]) + "" +tempUnits+ "</div></td>" +
 																		 "</tr>";
                                         //$(moreTemps).appendTo($("#realtime tbody"));
                                         $('tr#tp0'+k).replaceWith(moreTemps);
