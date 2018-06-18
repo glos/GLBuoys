@@ -155,7 +155,7 @@ function PastForecastGraphic(ID, longName, units, DateTime, ForecastDateTime, Da
                 format: '{value:.1f}',
                 x: -5,
             },
-            floor: 0,
+            //floor: 0,
         },
 
 				tooltip: {
