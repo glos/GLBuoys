@@ -111,7 +111,7 @@ function PastForecastGraphic(ID, longName, units, DateTime, ForecastDateTime, Da
         }
     });**/
 
-    dataMin = Math.min(...Data);  //Determine minimum of data array
+    //dataMin = Math.min(...Data);  //Determine minimum of data array
 
     var options = {
 
@@ -156,7 +156,7 @@ function PastForecastGraphic(ID, longName, units, DateTime, ForecastDateTime, Da
                 format: '{value:.1f}',
                 x: -5,
             },
-            floor: dataMin,
+            //floor: dataMin,
         },
 
 				tooltip: {
