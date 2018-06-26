@@ -198,7 +198,7 @@ function alertFormPop(ID, allBuoysObj) {
             });
             if (allBuoysObj[i].thermistorDepths.length > 0) {
                 for (j = 0; j < allBuoysObj[i].thermistorValues.length; j++) {
-                    if (allBuoysObj[i].thermistorValues[j] != 'NaN') {
+                    if (allBuoysObj[i].thermistorValues[j] != null) {
                         var depth = allBuoysObj[i].thermistorDepths[j];
                         $('#parameters').append($('<option></option>').val('Water Temp at ' + depth.toFixed(0) + ' ' + depthUnits).html('Water Temp at ' + depth.toFixed(0) + ' ' + depthUnits));
                     }
@@ -750,7 +750,7 @@ function loadbuoyinfo(ID, jsonObj) {
 							document.getElementById("stationTime").innerHTML = ""+dateNum.format("LT")+" "+tzAbbr+"&nbsp;&nbsp;"+dateNum.format("ddd, MMM D")+ " (>1 day ago)"
 						}
 						var columnSpan  = 1;
-						if (jsonObj[i].thermistorValues.length>1 && !isNaN(jsonObj[i].thermistorValues[0])){ //Check to make sure there are multiple temperature nodes and first two depths are not missing
+						if (jsonObj[i].thermistorValues.length>1 && !null(jsonObj[i].thermistorValues[0])){ //Check to make sure there are multiple temperature nodes and first two depths are not missing
 							columnSpan = 2;
                             $('#ThermistorHeat').addClass("w3-center w3-panel w3-card-4 w3-padding");
                             $('#ThermistorHeat h4').append('Water Temperature Heat Map');
@@ -792,7 +792,7 @@ function loadbuoyinfo(ID, jsonObj) {
 						var excludedObs = ['DPD','TIDE','VIS','PTDY','DEPTH','OTMP','CHILL','HEAT','ICE','WSPD10','WSPD20'];
 						for (g = 0; g < parameterOrder.length; g++){
 							for (j = 0; j < jsonObj[i].obsLongName.length; j++) {
-								if(excludedObs.indexOf(jsonObj[i].obsID[j])<0 && jsonObj[i].obsID[j]===parameterOrder[g] && jsonObj[i].obsValues[j]!=='NaN' && jsonObj[i].obsValues[j]!=='NULL'){
+								if(excludedObs.indexOf(jsonObj[i].obsID[j])<0 && jsonObj[i].obsID[j]===parameterOrder[g] && jsonObj[i].obsValues[j]!==null && jsonObj[i].obsValues[j]!=='NULL'){
 									var toFixedValue = [];
 									if (jsonObj[i].obsValues[j]<1){toFixedValue = 2;}else{toFixedValue = 1;}	//Add an additional significant digit if value is less than 1. 
 									if (jsonObj[i].obsUnits[j].charAt(0) !== '°') {
@@ -824,7 +824,7 @@ function loadbuoyinfo(ID, jsonObj) {
 					
 						if (jsonObj[i].thermistorValues.length>0){
 							for (k = 0; k < jsonObj[i].thermistorValues.length; k++) {
-								if(!isNaN(jsonObj[i].thermistorValues[k])){		//Check if thermistor is 'NaN'. If so do not write out
+								if(!null(jsonObj[i].thermistorValues[k])){		//Check if thermistor is null. If so do not write out
 									if (k == 0) {
 										var newRowContent1 = "<tr id='tp0" + (k) + "'>" +
 																		 "<td style='cursor:pointer; width:10px;'><div class='TAccord' align='left'><i onclick=$('.TAccord').toggle();dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'temp_string','glbuoysLabel':'water_temp','glbuoysAction':'expand'}); class='material-icons'>remove</i></div>" +
@@ -1019,7 +1019,7 @@ function reloadbuoyinfo() {
                             $("#stationTime").css('color', '#f70000');
 						}
 						var columnSpan  = 1;
-						if (jsonObj[i].thermistorValues.length>1 && !isNaN(jsonObj[i].thermistorValues[0])){ //Check to make sure there are multiple temperature nodes and first two depths are not missing
+						if (jsonObj[i].thermistorValues.length>1 && !null(jsonObj[i].thermistorValues[0])){ //Check to make sure there are multiple temperature nodes and first two depths are not missing
                             columnSpan = 2;
 
                             var tempStringProfile = '<div id="heatMap" class="w3-hide"><div id="TempStringHighMap" style="min-width: 310px; height: 400px;"></div>';
@@ -1046,7 +1046,7 @@ function reloadbuoyinfo() {
                         var parameterOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'MAXWVHT', 'WPRD', 'MWDIR', 'MWD', 'APD', 'CurSpd', 'CurDir', 'ATMP', 'PRES', 'SRAD', 'DEWP', 'pH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI', 'VBAT'];
 						for (g = 0; g < parameterOrder.length; g++){
 							for (j = 0; j < jsonObj[i].obsLongName.length; j++) {
-								if(jsonObj[i].obsID[j]===parameterOrder[g] && jsonObj[i].obsValues[j]!=='NaN' && jsonObj[i].obsValues[j]!=='NULL'){
+								if(jsonObj[i].obsID[j]===parameterOrder[g] && jsonObj[i].obsValues[j]!==null && jsonObj[i].obsValues[j]!=='NULL'){
 									var toFixedValue = [];
 									if (jsonObj[i].obsValues[j]<1){toFixedValue = 2;}else{toFixedValue = 1;}	//Add an additional significant digit if value is less than 1. 
 									if (jsonObj[i].obsUnits[j].charAt(0) !== '°') {
@@ -1079,7 +1079,7 @@ function reloadbuoyinfo() {
 					
 						if (jsonObj[i].thermistorValues.length>0){
 							for (k = 0; k < jsonObj[i].thermistorValues.length; k++) {
-								if(!isNaN(jsonObj[i].thermistorValues[k])){		//Check if thermistor is 'NaN'. If so do not write out
+								if(!null(jsonObj[i].thermistorValues[k])){		//Check if thermistor is null. If so do not write out
 									if (k == 0) {
 										var newRowContent1 = "<tr id='tp0" + (k) + "'>" +
 																		 "<td style='cursor:pointer; width:10px;'><div class='TAccord' align=right><i onclick=$('.TAccord').toggle();dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'temp_string','glbuoysLabel':'water_temp','glbuoysAction':'expand'}); class='material-icons'>remove</i></div>" +
