@@ -8,7 +8,7 @@
         console.log(jsonObj);
         //Find out which strings have values and only save those depths and associated values.
         for (h = 0; h < jsonObj.thermistorDepths.length; h++) {
-            if (!null(jsonObj.thermistorValues[h][0])) {
+            if (jsonObj.thermistorValues[h][0]) {
                 Depth.push(Math.round(jsonObj.thermistorDepths[h]));
                 Data.push(jsonObj.thermistorValues[h]);
             }

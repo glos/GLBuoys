@@ -750,7 +750,7 @@ function loadbuoyinfo(ID, jsonObj) {
 							document.getElementById("stationTime").innerHTML = ""+dateNum.format("LT")+" "+tzAbbr+"&nbsp;&nbsp;"+dateNum.format("ddd, MMM D")+ " (>1 day ago)"
 						}
 						var columnSpan  = 1;
-						if (jsonObj[i].thermistorValues.length>1 && !null(jsonObj[i].thermistorValues[0])){ //Check to make sure there are multiple temperature nodes and first two depths are not missing
+						if (jsonObj[i].thermistorValues.length>1 && jsonObj[i].thermistorValues[0]){ //Check to make sure there are multiple temperature nodes and first two depths are not missing
 							columnSpan = 2;
                             $('#ThermistorHeat').addClass("w3-center w3-panel w3-card-4 w3-padding");
                             $('#ThermistorHeat h4').append('Water Temperature Heat Map');
@@ -824,7 +824,7 @@ function loadbuoyinfo(ID, jsonObj) {
 					
 						if (jsonObj[i].thermistorValues.length>0){
 							for (k = 0; k < jsonObj[i].thermistorValues.length; k++) {
-								if(!null(jsonObj[i].thermistorValues[k])){		//Check if thermistor is null. If so do not write out
+								if(jsonObj[i].thermistorValues[k]){		//Check if thermistor is null. If so do not write out
 									if (k == 0) {
 										var newRowContent1 = "<tr id='tp0" + (k) + "'>" +
 																		 "<td style='cursor:pointer; width:10px;'><div class='TAccord' align='left'><i onclick=$('.TAccord').toggle();dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'temp_string','glbuoysLabel':'water_temp','glbuoysAction':'expand'}); class='material-icons'>remove</i></div>" +
@@ -1019,7 +1019,7 @@ function reloadbuoyinfo() {
                             $("#stationTime").css('color', '#f70000');
 						}
 						var columnSpan  = 1;
-						if (jsonObj[i].thermistorValues.length>1 && !null(jsonObj[i].thermistorValues[0])){ //Check to make sure there are multiple temperature nodes and first two depths are not missing
+						if (jsonObj[i].thermistorValues.length>1 && jsonObj[i].thermistorValues[0]){ //Check to make sure there are multiple temperature nodes and first two depths are not missing
                             columnSpan = 2;
 
                             var tempStringProfile = '<div id="heatMap" class="w3-hide"><div id="TempStringHighMap" style="min-width: 310px; height: 400px;"></div>';
@@ -1079,7 +1079,7 @@ function reloadbuoyinfo() {
 					
 						if (jsonObj[i].thermistorValues.length>0){
 							for (k = 0; k < jsonObj[i].thermistorValues.length; k++) {
-								if(!null(jsonObj[i].thermistorValues[k])){		//Check if thermistor is null. If so do not write out
+								if(jsonObj[i].thermistorValues[k]){		//Check if thermistor is null. If so do not write out
 									if (k == 0) {
 										var newRowContent1 = "<tr id='tp0" + (k) + "'>" +
 																		 "<td style='cursor:pointer; width:10px;'><div class='TAccord' align=right><i onclick=$('.TAccord').toggle();dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'temp_string','glbuoysLabel':'water_temp','glbuoysAction':'expand'}); class='material-icons'>remove</i></div>" +

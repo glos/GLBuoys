@@ -127,7 +127,7 @@ function PastTempNodeGraphic(DateTime, Data, Depth) {
         connectNulls: true,
 				showInLegend: false,
 				marker: {
-                enabled: false
+                enabled: true
             },
         //tooltip: {
         //    valueSuffix: ' knots'
