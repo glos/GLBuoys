@@ -50,6 +50,7 @@ urlpatterns = [
 
     # Buoy page URLs:
     url(r'^buoy/([^/]+)/$', buoy, name='buoy'),
+    url(r'^([^/]+)$', buoy, name='buoy'),
     url(r'^([^/]+)/$', buoy, name='buoy'),
 
     # Requests for /favicon.ico redirected to the URL of 'favicon.ico'according to staticfiles storage. http://staticfiles.productiondjango.com/blog/failproof-favicons/

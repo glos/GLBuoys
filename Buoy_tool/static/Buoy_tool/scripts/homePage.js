@@ -120,7 +120,7 @@ function loadBuoySummary(){
 			var OntarioRows
 			$.each(jsonObj, function (i, option) {
 				function checkMissing(value){
-					if(isNaN(value)){
+					if(value==null){
 						return 'NA'
 					}else{
 						return value.toFixed(1)
