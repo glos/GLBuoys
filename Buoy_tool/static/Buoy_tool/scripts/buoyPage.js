@@ -650,11 +650,6 @@ $(document).ready(function () {
         document.getElementById("alertForm").style.display = "block";
     });
 
-    $('#bannerNews').addClass('w3-panel w3-pale-green w3-small');
-    $('#bannerNews').attr('style', 'max-width:600px; margin: 0 auto;');
-    $('#bannerNews').append('<p> An issue has been discovered keeping some stations from updating.We hope to have this resolved Wednesday morning.</p>');
-    $('#main').attr('style', 'margin-top:70px')
-
     $('#buoyID').on('change', function () {
         var newID = $(this).val()
         loadMetaJSON(function (jsonObj) {
