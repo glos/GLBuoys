@@ -34,10 +34,10 @@ google.charts.load('current', {
   callback: getBannerNews,
   packages: ['corechart']
 });
-google.charts.load('current', {
-  callback: getBuoyAlerts,
-  packages: ['corechart']
-});
+//google.charts.load('current', {
+//  callback: getBuoyAlerts,
+//  packages: ['corechart']
+//});
 var buoyAlert;
 var bannerNews;
 function getBannerNews(){
@@ -51,6 +51,7 @@ function BannerNewsResponse(response) {
         return;
     }
     var data = response.getDataTable();
+    console.log(data);
 		try {
 			bannerNews = data.getValue(0,0);
 		}
@@ -75,12 +76,13 @@ function getBuoyAlerts(){
 	query.send(BuoyAlertsResponse);
 }
 
-function BuoyAlertsResponse(response) {
-    if (response.isError()) {
-        console.log('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+function BuoyAlertsResponse(response2) {
+    if (response2.isError()) {
+        console.log('Error in query: ' + response2.getMessage() + ' ' + response2.getDetailedMessage());
         return;
     }
-    var data = response.getDataTable();
+    var data = response2.getDataTable();
+    console.log(data);
 		try {
 			buoyAlert = data.getValue(0,0);
 		}
@@ -647,6 +649,11 @@ $(document).ready(function () {
     $('#btn-show-alerts').on('click', function (evt) {
         document.getElementById("alertForm").style.display = "block";
     });
+
+    $('#bannerNews').addClass('w3-panel w3-pale-green w3-small');
+    $('#bannerNews').attr('style', 'max-width:600px; margin: 0 auto;');
+    $('#bannerNews').append('<p> An issue has been discovered keeping some stations from updating.We hope to have this resolved Wednesday morning.</p>');
+    $('#main').attr('style', 'margin-top:70px')
 
     $('#buoyID').on('change', function () {
         var newID = $(this).val()
