@@ -121,7 +121,9 @@ var _objParamNames = {
     "ph": "pH",
     "ysi_turbidity": "Turbidity",
     "ysi_chlorophyll": "Chlorophyll",
-    "ysi_blue_green_algae": "Blue-Green Algae"
+    "ysi_blue_green_algae": "Blue-Green Algae",
+    "fluorescent_dissolved_organic_matter": "Fluorescent Dissolved Organic Matter",
+
 }
 
 var _objUnits = {
@@ -138,6 +140,7 @@ var _objUnits = {
     "Wind_Gust": "m s-1",
     "WaterTemperature": "degC",
     "Solar_Radiation": "W m-2",
+    "Photosynthetic_active_radiation": "(µmol·s-1·m-2)",
     "battery_voltage": "volts",
     "dissolved_oxygen": "mgL-1",
     "dissolved_oxygen_saturation": "percent",
@@ -145,7 +148,8 @@ var _objUnits = {
     "ph": "ph",
     "ysi_turbidity": "ntu",
     "ysi_chlorophyll": "rfu",
-    "ysi_blue_green_algae": "rfu"
+    "ysi_blue_green_algae": "rfu",
+    "fluorescent_dissolved_organic_matter": "rfu",
 }
 
 //Define standard parameter ID
@@ -790,7 +794,7 @@ function loadbuoyinfo(ID, jsonObj) {
                             ADCPfig(ID);
                         }
 
-						var parameterOrder = ['WSPD','GST','WDIR','WTMP','WVHT','MAXWVHT','WPRD','MWDIR','MWD','APD','CurSpd','CurDir','ATMP','PRES','SRAD','DEWP','pH','DISOXY','DIOSAT','SPCOND','COND','YCHLOR','YBGALG','TURB','VBAT'];
+						var parameterOrder = ['WSPD','GST','WDIR','WTMP','WVHT','MAXWVHT','WPRD','MWDIR','MWD','APD','CurSpd','CurDir','ATMP','PRES','SRAD','PAR','DEWP','pH','DISOXY','DIOSAT','SPCOND','COND','YCHLOR','YBGALG','TURB','fDOM','VBAT'];
 						var excludedObs = ['DPD','TIDE','VIS','PTDY','DEPTH','OTMP','CHILL','HEAT','ICE','WSPD10','WSPD20'];
 						for (g = 0; g < parameterOrder.length; g++){
 							for (j = 0; j < jsonObj[i].obsLongName.length; j++) {
@@ -1045,7 +1049,7 @@ function reloadbuoyinfo() {
                             ADCPfig(ID);
                         }
 
-                        var parameterOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'MAXWVHT', 'WPRD', 'MWDIR', 'MWD', 'APD', 'CurSpd', 'CurDir', 'ATMP', 'PRES', 'SRAD', 'DEWP', 'pH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI', 'VBAT'];
+                        var parameterOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'MAXWVHT', 'WPRD', 'MWDIR', 'MWD', 'APD', 'CurSpd', 'CurDir', 'ATMP', 'PRES', 'SRAD','PAR','DEWP', 'pH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI', 'fDOM', 'VBAT'];
 						for (g = 0; g < parameterOrder.length; g++){
 							for (j = 0; j < jsonObj[i].obsLongName.length; j++) {
 								if(jsonObj[i].obsID[j]===parameterOrder[g] && jsonObj[i].obsValues[j]!==null && jsonObj[i].obsValues[j]!=='NULL'){

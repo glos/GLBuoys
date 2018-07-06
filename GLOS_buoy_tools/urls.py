@@ -6,6 +6,7 @@ from datetime import datetime
 from django.conf.urls import url
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView
+from django.http import HttpResponseRedirect
 import django.contrib.auth.views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -49,10 +50,10 @@ urlpatterns = [
     url(r'^experimental/alert', alert, name='alert'),           #basic URL
 
     # Buoy page URLs:
+    #url(r'^([^/]+)/$', RedirectView.as_view(url=r'^([^/]+)$')),
     url(r'^buoy/([^/]+)/$', buoy, name='buoy'),
     url(r'^([^/]+)$', buoy, name='buoy'),
     url(r'^([^/]+)/$', buoy, name='buoy'),
-
     # Requests for /favicon.ico redirected to the URL of 'favicon.ico'according to staticfiles storage. http://staticfiles.productiondjango.com/blog/failproof-favicons/
     url(r'^favicon.ico$',RedirectView.as_view(url=staticfiles_storage.url('Buoy_tool/img/favicon.ico'),permanent=False),name="favicon"),
 ]
