@@ -34,10 +34,10 @@ google.charts.load('current', {
   callback: getBannerNews,
   packages: ['corechart']
 });
-//google.charts.load('current', {
-//  callback: getBuoyAlerts,
-//  packages: ['corechart']
-//});
+google.charts.load('current', {
+  callback: getBuoyAlerts,
+  packages: ['corechart']
+});
 var buoyAlert;
 var bannerNews;
 function getBannerNews(){
