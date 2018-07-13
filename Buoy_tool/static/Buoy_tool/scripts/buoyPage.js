@@ -687,7 +687,7 @@ $(document).ready(function () {
         return false;
     });
     $('#btn-laterSplash').on('click', function () {
-        setCookie('glosSurveyed', false, 0.5);
+        setCookie('glosSurveyed', false, 0.041666667);
         document.getElementById("splashscreen").style.display = "none";
     });
     $('#btn-noSplash').on('click', function () {
