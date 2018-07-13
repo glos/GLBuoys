@@ -612,6 +612,29 @@ function decimalValue(value) {
     return (value - Math.floor(value)).toFixed(toFixedValue).substring(1);
 }
 
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
 $(document).ready(function () {
 
     //---------------------- Event for buoy page buttons------------------------------------------
@@ -652,6 +675,24 @@ $(document).ready(function () {
 
     $('#btn-show-alerts').on('click', function (evt) {
         document.getElementById("alertForm").style.display = "block";
+    });
+
+    if (!getCookie('glosSurveyed')) {
+        document.getElementById("splashscreen").style.display = "block";
+    }
+    $('#btn-yesSplash').on('click', function () {
+        setCookie('glosSurveyed', true, 365);
+        document.getElementById("splashscreen").style.display = "none";
+        window.open('https://www.surveymonkey.com/r/96BTR55');
+        return false;
+    });
+    $('#btn-laterSplash').on('click', function () {
+        setCookie('glosSurveyed', false, 0.5);
+        document.getElementById("splashscreen").style.display = "none";
+    });
+    $('#btn-noSplash').on('click', function () {
+        document.getElementById("splashscreen").style.display = "none";
+        setCookie('glosSurveyed', true, 365);
     });
 
     $('#buoyID').on('change', function () {

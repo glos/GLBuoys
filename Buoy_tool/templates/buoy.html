@@ -68,10 +68,30 @@
 
     <section id="main" class="w3-container" style="margin-top:110px">
 
-				<div id="recovered"></div>
-				<div id="bannerNews"></div>
-				<div id = "sponsorsHeader" class="w3-container w3-center" style="margin-bottom:15px"></div>
-				<div id="buoyAlert"></div>
+        <div id="splashscreen" class="w3-modal">
+            <div class="w3-modal-content w3-round" style="max-width:550px;">
+                <header class="w3-container glosBlue"> 
+                <span onclick="document.getElementById('splashscreen').style.display = 'none';setCookie('glosSurveyed', false, 0.5);" class="w3-button w3-round w3-xlarge w3-white w3-display-topright">&times;</span>
+                    <h3>GLOS Survey</h3>
+                </header>
+                <div class="w3-container w3-padding-large">
+                    <h5>Will you take a brief survey to help us better serve your needs?</h5>
+                    <br />
+                    <div class="w3-center">
+                        <div class="w3-bar">
+                            <button id="btn-yesSplash" class="w3-button w3-teal w3-border w3-round w3-text-white">Yes, I'm ready!</button>
+                            <button id="btn-laterSplash" class="w3-button w3-teal w3-border w3-round w3-text-white">Yes, but later.</button>
+                            <button id="btn-noSplash" class="w3-button w3-teal w3-border w3-round w3-text-white">No, thanks.</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+		<div id="recovered"></div>
+		<div id="bannerNews"></div>
+		<div id = "sponsorsHeader" class="w3-container w3-center" style="margin-bottom:15px"></div>
+	    <div id="buoyAlert"></div>
 
         <table id="realtime" class="w3-table w3-striped w3-bordered w3-small" style="max-width:500px" align="center" cellspacing="0">
             <tbody></tbody>
