@@ -805,7 +805,14 @@ function loadbuoyinfo(ID, jsonObj) {
                             document.getElementById("stationTime").innerHTML = "" + dateNum.format("LT") + " " + tzAbbr + "&nbsp;&nbsp;" + dateNum.format("ddd, MMM D") + " (>1 day ago)"
                         }
                         var columnSpan = 1;
-                        if (jsonObj[i].thermistorValues.length > 1 && jsonObj[i].thermistorValues[0]) { //Check to make sure there are multiple temperature nodes and first two depths are not missing
+
+                        //Check to make sure there are multiple temperature nodes measuring water temperature before call heat map. 
+                        tempNodeCount = 0;
+                        for (aa = 0; jsonObj[i].thermistorValues.length; aa++) {
+                            if (jsonObj[i].thermistorValues[aa]) { tempNodeCount += 1 };
+                            if (tempNodeCount == 2) { break };
+                        };
+                        if (tempNodeCount == 2) { 
                             columnSpan = 2;
                             $('#ThermistorHeat').addClass("w3-center w3-panel w3-card-4 w3-padding");
                             $('#ThermistorHeat h4').append('Water Temperature Heat Map');
@@ -1077,9 +1084,15 @@ function reloadbuoyinfo() {
                             $("#stationTime").css('color', '#f70000');
 						}
 						var columnSpan  = 1;
-						if (jsonObj[i].thermistorValues.length>1 && jsonObj[i].thermistorValues[0]){ //Check to make sure there are multiple temperature nodes and first two depths are not missing
-                            columnSpan = 2;
 
+                        //Check to make sure there are multiple temperature nodes measuring water temperature before call heat map.
+                        tempNodeCount = 0;
+                        for (aa = 0; jsonObj[i].thermistorValues.length; aa++) {
+                            if (jsonObj[i].thermistorValues[aa]) { tempNodeCount += 1 };
+                            if (tempNodeCount == 2) { break };
+                        };
+                        if (tempNodeCount == 2) {
+                            columnSpan = 2;
                             var tempStringProfile = '<div id="heatMap" class="w3-hide"><div id="TempStringHighMap" style="min-width: 310px; height: 400px;"></div>';
                             //var tempStringProfile = "<div id='heatMap' class='w3-hide'><img onclick=document.getElementById('id02').style.display='block';dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'temp_string','glbuoysAction':'popup'}); style='height:350px; width:100%; max-width:550px; cursor: pointer'/>" +
                             //    '<p style="margin-top:0px">(Click image for interactive graph.)</p></div>';
