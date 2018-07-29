@@ -1,3 +1,5 @@
+const _mapType = 'ol';
+
 var prePath = '../static/Buoy_tool/';
 var units = 'english' //global variables
 var speedUnits = 'kts';
@@ -286,7 +288,13 @@ function sendRequest() {
 
 
 function initialize(jsonObj) {
-	
+
+    // Initialize OL4 map:
+    if (_mapType === 'ol') {
+        initializeMapOL(jsonObj, ID);
+        return;
+    }
+
     var stations = [];
     var stationsLongName = [];
 		var	lats = [];

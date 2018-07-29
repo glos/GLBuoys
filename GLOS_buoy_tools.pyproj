@@ -122,6 +122,7 @@
     <Content Include="Buoy_tool\static\Buoy_tool\css\images\spinning_gear.GIF" />
     <Content Include="Buoy_tool\static\Buoy_tool\css\main.css" />
     <Content Include="Buoy_tool\static\Buoy_tool\css\main_old.css" />
+    <Content Include="Buoy_tool\static\Buoy_tool\css\map.css" />
     <Content Include="Buoy_tool\static\Buoy_tool\css\normalize.css" />
     <Content Include="Buoy_tool\static\Buoy_tool\css\save\main.css" />
     <Content Include="Buoy_tool\static\Buoy_tool\css\save\normalize.css" />
@@ -225,6 +226,7 @@
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\bootstrap.min.js" />
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\buoy.plot.tool.js" />
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\buoyPage.js" />
+    <Content Include="Buoy_tool\static\Buoy_tool\scripts\buoy.map.js" />
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\clipboard.min.js" />
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\ContourPlugin.js" />
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\export-csv.js" />
