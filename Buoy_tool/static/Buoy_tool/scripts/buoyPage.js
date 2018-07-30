@@ -808,7 +808,7 @@ function loadbuoyinfo(ID, jsonObj) {
 
                         //Check to make sure there are multiple temperature nodes measuring water temperature before call heat map. 
                         tempNodeCount = 0;
-                        for (aa = 0; jsonObj[i].thermistorValues.length; aa++) {
+                        for (aa = 0; aa < jsonObj[i].thermistorValues.length -1 ; aa++) {
                             if (jsonObj[i].thermistorValues[aa]) { tempNodeCount += 1 };
                             if (tempNodeCount == 2) { break };
                         };
@@ -1085,9 +1085,9 @@ function reloadbuoyinfo() {
 						}
 						var columnSpan  = 1;
 
-                        //Check to make sure there are multiple temperature nodes measuring water temperature before call heat map.
+                        //Check to make sure there are multiple temperature nodes measuring water temperature before call heat map. 
                         tempNodeCount = 0;
-                        for (aa = 0; jsonObj[i].thermistorValues.length; aa++) {
+                        for (aa = 0; aa < jsonObj[i].thermistorValues.length - 1; aa++) {
                             if (jsonObj[i].thermistorValues[aa]) { tempNodeCount += 1 };
                             if (tempNodeCount == 2) { break };
                         };
