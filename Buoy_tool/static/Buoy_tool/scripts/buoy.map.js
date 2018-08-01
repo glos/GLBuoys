@@ -1,4 +1,3 @@
-
 // Projection: WGS 84
 var map;
 const olProj = ol.proj.get('EPSG:3857');
@@ -171,19 +170,19 @@ var initializeMapOL = function (objBuoys, actBuoyID) {
         if (feature) {
             setTimeout(function () {
                 centerToPoint(feature);
-                displayPopup(feature, evt.coordinate);
+                var coord = feature.getGeometry().getCoordinates();
+                displayPopup(feature, coord);
+                //displayPopup(feature, evt.coordinate);
             }, 500);
         };
     });
 
     // Popup close button - click handler:
     $('#popup-closer').on('click', function (evt) {
+        evt.preventDefault();       // prevent scroll to top of page caused by href="#"
+
         _olPopup.setPosition(undefined);
         $(this).blur();
-
-        // Stay on map
-        var m = $("#map-container");
-        m.scrollTop();
     });
 
     // Mouse over event:
@@ -285,11 +284,14 @@ function displayPopup(feature, coordinate) {
     var $popContent = $('#popup-content');
     var $popCloser = $('#popup-closer');
 
+    // Define popup content:
     var buoy_id = feature.get('id');
     var $anchorBuoy = $('<a href="#" class="nav-buoy" title="' + _strNavMsg + '">' + feature.get('longName') + ' (' + buoy_id + ')</a>');
     $anchorBuoy.attr('data-buoy', buoy_id);
 
     $popContent.html($anchorBuoy);
+
+    // Set popup position:
     _olPopup.setPosition(coordinate);
 }
 
@@ -331,10 +333,16 @@ function setBuoyStyles() {
     }
 
     $.each(_objMarkers, function (markerType, objMark) {
+        var opacity = 1.0;
+        if (markerType === 'offline' || markerType === 'recovered') {
+            opacity = 0.5;
+        }
+
         objMark.style = new ol.style.Style({
             image: new ol.style.Icon({
-                anchor: [0.0, 0.0],
-                src: prePath + 'img/' + objMark.imgFile
+                anchor: [0.5, 1.0],
+                src: prePath + 'img/' + objMark.imgFile,
+                opacity: opacity
             }),
             zIndex: objMark.zIndex
         })
