@@ -129,3 +129,19 @@ div.map-legend {
     .ol-popup-closer:after {
         content: "✖";
     }
+
+ /*Change curser when over map and dragging*/
+.ol-viewport {
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+    .ol-viewport:active {
+        cursor: grabbing;
+        cursor: -moz-grabbing;
+        cursor: -webkit-grabbing;
+    }
+
+; 
