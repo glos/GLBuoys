@@ -62,6 +62,7 @@ var initializeMapOL = function (objBuoys, actBuoyID) {
         maxResolution: 1920
     });
 
+
     //----------------------------------------------------------
     //- Construct & Add Buoy Layer:
     //----------------------------------------------------------
@@ -195,6 +196,7 @@ var initializeMapOL = function (objBuoys, actBuoyID) {
         var hit = map.hasFeatureAtPixel(pixel);
         map.getTarget().style.cursor = hit ? 'pointer' : '';
     });
+
 
     //----------------------------------------------------------
     //- Add Map Legend:
