@@ -1,3 +1,5 @@
+const _mapType = 'ol';
+
 var prePath = '../static/Buoy_tool/';
 var units = 'english' //global variables
 var speedUnits = 'kts';
@@ -417,28 +419,37 @@ function unitConversion() {
 	}
 }
 
-function initialize(lat,lon) {
-        var stations = [];
-        var stationsLongName = [];
-		var	lats = [];
-		var lons = [];
-		var obs = [];
-		var WQ = [];
-		var offline = [];
-		var recovered = [];
-        loadbuoyinfo_home(function (jsonObj) {
-			for (i = 0; i < jsonObj.length; i++) {
-                stations[i] = jsonObj[i].id;
-                stationsLongName[i] = jsonObj[i].longName;
-                lats[i] = jsonObj[i].lat;
-                lons[i] = jsonObj[i].lon;
-						obs[i] = jsonObj[i].obsValues;
-						WQ[i] = jsonObj[i].WqOnly;
-						offline[i] = ifOffline(jsonObj[i].updateTime);
-						recovered[i] = jsonObj[i].recovered;
-            }
+function initialize(lat, lon) {
+
+    var stations = [];
+    var stationsLongName = [];
+    var lats = [];
+    var lons = [];
+    var obs = [];
+    var WQ = [];
+    var offline = [];
+    var recovered = [];
+
+    loadbuoyinfo_home(function (jsonObj) {
+
+        // Initialize OL4 map:
+        if (_mapType === 'ol') {
+            initializeMapOL(jsonObj, '');
+            return;
+        }
+
+		for (i = 0; i < jsonObj.length; i++) {
+            stations[i] = jsonObj[i].id;
+            stationsLongName[i] = jsonObj[i].longName;
+            lats[i] = jsonObj[i].lat;
+            lons[i] = jsonObj[i].lon;
+            obs[i] = jsonObj[i].obsValues;
+			WQ[i] = jsonObj[i].WqOnly;
+			offline[i] = ifOffline(jsonObj[i].updateTime);
+			recovered[i] = jsonObj[i].recovered;
+        }
 		
-			map = new google.maps.Map(document.getElementById("map_canvas"), {
+		map = new google.maps.Map(document.getElementById("map_canvas"), {
             zoom: 5,
             center: new google.maps.LatLng(45.0, -84.5),
             mapTypeControl: true,
@@ -446,82 +457,84 @@ function initialize(lat,lon) {
             navigationControl: true,
             navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
             mapTypeId: google.maps.MapTypeId.ROADMAP
-            });
+        });
 			
-			var infowindow = new google.maps.InfoWindow();
+        var infowindow = new google.maps.InfoWindow();
 			
-			var marker, i;  
-			for (i = 0; i < stations.length; i++) {
-				if(!WQ[i]){
-					if (obs[i] && !offline[i]){
-						marker = new google.maps.Marker({
-							position: new google.maps.LatLng(lats[i], lons[i]),
-							title:stationsLongName[i],
-							map: map,
-							zIndex:3,
-							icon: prePath + 'img/BuoyOnlineIcon.png',
-						});
-					}else if (offline[i] && obs[i]){
-						marker = new google.maps.Marker({
-							position: new google.maps.LatLng(lats[i], lons[i]),
-                            title: stationsLongName[i],
-							map: map,
-							zIndex:2,
-                            icon: prePath + 'img/OldDataBuoyIcon.png',
-						});	
-					}else if (!obs[i]) {
-						marker = new google.maps.Marker({
-							position: new google.maps.LatLng(lats[i], lons[i]),
-                            title: stationsLongName[i],
-							map: map,
-							zIndex:1,
-							opacity:0.7,
-                            icon: prePath + 'img/RecoveredBuoyIcon.png',
-						});
-					}
+		var marker, i;  
+		for (i = 0; i < stations.length; i++) {
+			if(!WQ[i]){
+				if (obs[i] && !offline[i]){
+                    marker = new google.maps.Marker({
+						position: new google.maps.LatLng(lats[i], lons[i]),
+						title:stationsLongName[i],
+						map: map,
+						zIndex:3,
+						icon: prePath + 'img/BuoyOnlineIcon.png',
+					});
+                } else if (offline[i] && obs[i]) {
+					marker = new google.maps.Marker({
+						position: new google.maps.LatLng(lats[i], lons[i]),
+                        title: stationsLongName[i],
+						map: map,
+						zIndex:2,
+                        icon: prePath + 'img/OldDataBuoyIcon.png',
+					});	
+                } else if (!obs[i]) {
+					marker = new google.maps.Marker({
+						position: new google.maps.LatLng(lats[i], lons[i]),
+                        title: stationsLongName[i],
+						map: map,
+						zIndex:1,
+						opacity:0.7,
+                        icon: prePath + 'img/RecoveredBuoyIcon.png',
+					});
+				}
 						
-					google.maps.event.addListener(marker, 'click', (function (marker, i) {
-            return function () {
-                var div = document.createElement('div');
-                div.innerHTML = stations[i];
-                var contentString = '<div id="content" style="cursor:pointer;font-family: Inconsolata,Verdana; font-size:15px; color:#333;font-weight:700" onclick="PassStation(\'' + stations[i] + '\');dataLayer.push({\'event\':\'glbuoysEvent\',\'glbuoysCategory\':\'map\',\'glbuoysLabel\':\'' + stations[i] + '\',\'glbuoysAction\':\'click internal url\'});">' + stationsLongName[i] + '</div>';
-                map.setCenter({
-                    lat: lats[i],
-                    lng: lons[i]
-                })
-                infowindow.setContent(contentString);
-                infowindow.open(map, marker);
-						}
-					})(marker, i));
-				}
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            var div = document.createElement('div');
+                            div.innerHTML = stations[i];
+                            var contentString = '<div id="content" style="cursor:pointer;font-family: Inconsolata,Verdana; font-size:15px; color:#333;font-weight:700" onclick="PassStation(\'' + stations[i] + '\');dataLayer.push({\'event\':\'glbuoysEvent\',\'glbuoysCategory\':\'map\',\'glbuoysLabel\':\'' + stations[i] + '\',\'glbuoysAction\':\'click internal url\'});">' + stationsLongName[i] + '</div>';
+                            map.setCenter({
+                                lat: lats[i],
+                                lng: lons[i]
+                            });
+                            infowindow.setContent(contentString);
+                            infowindow.open(map, marker);
+                    }
+
+                })(marker, i));
+            }
+        }
+
+		$('#main').append('<div id="googleMapLegend"></div>');
+		map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(document.getElementById('googleMapLegend'));
+		var legend = document.getElementById('googleMapLegend');
+			var icons = {
+				online: {
+				name: 'Current',
+                icon: prePath + 'img/BuoyOnlineIcon.png'
+			},
+			NotCurrent: {
+				name: 'Delayed',
+                icon: prePath + 'img/OldDataBuoyIcon.png'
+			},
+			Recovered: {
+				name: 'Out of Water',
+                icon: prePath + 'img/RecoveredBuoyIcon.png'
 			}
-			$('#main').append('<div id="googleMapLegend"></div>');
-			map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(document.getElementById('googleMapLegend'));
-			var legend = document.getElementById('googleMapLegend');
-				var icons = {
-					online: {
-					name: 'Current',
-                    icon: prePath + 'img/BuoyOnlineIcon.png'
-				},
-				NotCurrent: {
-					name: 'Delayed',
-                    icon: prePath + 'img/OldDataBuoyIcon.png'
-				},
-				Recovered: {
-					name: 'Out of Water',
-                    icon: prePath + 'img/RecoveredBuoyIcon.png'
-				}
-			};
-			for (var key in icons) {
-				var type = icons[key];
-				var name = type.name;
-				var icon = type.icon;
-				var div = document.createElement('div');
-				div.className='legendList';
-				div.innerHTML = '<img style="padding-left:4px;" src="' + icon + '"> ' + name;
-				legend.appendChild(div);
-			}
-		});
+		};
+		for (var key in icons) {
+			var type = icons[key];
+			var name = type.name;
+			var icon = type.icon;
+			var div = document.createElement('div');
+			div.className='legendList';
+			div.innerHTML = '<img style="padding-left:4px;" src="' + icon + '"> ' + name;
+			legend.appendChild(div);
+		}
+    });
 }
 
 function reloadTableSummary() {
