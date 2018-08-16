@@ -1,4 +1,4 @@
-const _mapType = 'ol';
+const _mapType = 'ol'; //declare which map service to use
 
 var prePath = '../static/Buoy_tool/';
 var units = 'english' //global variables
