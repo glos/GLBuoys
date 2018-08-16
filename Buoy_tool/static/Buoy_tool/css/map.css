@@ -1,8 +1,11 @@
 ﻿
 /* General */
 a.nav-buoy {
-    color: royalblue;
+    font-family: Inconsolata,Verdana;
+    font-size: 15px;
+    color: #333;
     text-decoration: none;
+    font-weight: 700;
 }
 
 /* OL map container & DIV element */
@@ -52,6 +55,7 @@ a.nav-buoy {
 
 /* Map custom legend */
 div.map-legend {
+    font-family: Roboto,Verdana;
     position: absolute;
     bottom: 10px;
     left: 125px;
@@ -83,12 +87,12 @@ div.map-legend {
     background-color: white;
     -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
     filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
-    padding: 15px;
-    border-radius: 10px;
+    padding: 10px;
+    border-radius: 5px;
     border: 1px solid #cccccc;
-    bottom: 12px;
-    left: -50px;
-    min-width: 160px;
+    bottom: 26px;
+    left: -49px;
+    min-width: 130px;
 }
 
     .ol-popup:after, .ol-popup:before {

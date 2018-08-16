@@ -248,9 +248,9 @@ function buildLegend(objLegItems, buoy_id) {
     var w_leg = 0;
 
     if (buoy_id === '') {        // 3 items (map container width: 550px)
-        w_leg = 300;
+        w_leg = 260;
     } else {                    // 4 items (map container width: 400px)
-        w_leg = 380;
+        w_leg = 335;
     }
 
     var w_map = $('#map-container').width();
@@ -304,7 +304,8 @@ function getMarkerType(f, buoy_id) {
 
     var mType = 'none';
 
-    if (!f.get('WqOnly')) {
+    if (!f.get('wqOnly')) {
+        console.log(f, f.get('wqOnly'));
         if (buoy_id !== '' && f.get('id') === buoy_id) {
             mType = 'active';
         } else if (f.get('obs') && !f.get('offline')) {
