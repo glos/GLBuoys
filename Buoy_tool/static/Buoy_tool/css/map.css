@@ -2,7 +2,7 @@
 /* General */
 a.nav-buoy {
     font-family: Inconsolata,Verdana;
-    font-size: 15px;
+    font-size: 14px;
     color: #333;
     text-decoration: none;
     font-weight: 700;
@@ -24,7 +24,6 @@ a.nav-buoy {
 
 
 /* Full screen mode */
-
 .map:-moz-full-screen {
     height: 100%;
 }
@@ -42,20 +41,24 @@ a.nav-buoy {
 }
 
 .ol-rotate {
-    top: 3em;
+    top: 6em;
 }
 
-/* OL Attributions */
+/* OL Attributions
 .ol-attribution {
     top: 0.5em !important;
     right: 2.5em !important;
     left: auto !important;
     bottom: auto !important;
 }
+*/
+
+/* OL Buttons */
+.ol-full-screen-false {
+}
 
 /* Map custom legend */
 div.map-legend {
-    font-family: Roboto,Verdana;
     position: absolute;
     bottom: 10px;
     left: 125px;
@@ -73,6 +76,7 @@ div.map-legend {
     }
 
     div.map-legend span {
+        font-family: Roboto,Verdana;
         height: 32px;
         display: inline-block;
         vertical-align: middle;
@@ -87,7 +91,7 @@ div.map-legend {
     background-color: white;
     -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
     filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
-    padding: 10px;
+    padding: 15px;
     border-radius: 5px;
     border: 1px solid #cccccc;
     bottom: 26px;

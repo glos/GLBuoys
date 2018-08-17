@@ -167,6 +167,9 @@ var initializeMapOL = function (objBuoys, actBuoyID) {
                 return feature;
             });
 
+        //Increase area around pixel that can be clicked. Geared towards mobile view. 
+        var hitTolerance = 5;           
+
         // Create popup if buoy point was clicked:
         if (feature) {
             setTimeout(function () {
@@ -186,17 +189,18 @@ var initializeMapOL = function (objBuoys, actBuoyID) {
         $(this).blur();
     });
 
-    // Mouse over event:
+    // Mouse over event. By default show hand. Once dragging change hand to dragging.:
     map.on('pointermove', function (e) {
         if (e.dragging) {
             _olPopup.setPosition(undefined);
+            map.getTarget().style.cursor = "-webkit-grabbing";
             return;
+        } else {
+            var pixel = map.getEventPixel(e.originalEvent);
+            var hit = map.hasFeatureAtPixel(pixel);
+            map.getTarget().style.cursor = hit ? 'pointer' : '-webkit-grab';
         }
-        var pixel = map.getEventPixel(e.originalEvent);
-        var hit = map.hasFeatureAtPixel(pixel);
-        map.getTarget().style.cursor = hit ? 'pointer' : '';
     });
-
 
     //----------------------------------------------------------
     //- Add Map Legend:

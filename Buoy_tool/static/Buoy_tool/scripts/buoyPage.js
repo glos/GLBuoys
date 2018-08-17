@@ -291,6 +291,7 @@ function initialize(jsonObj) {
 
     // Initialize OL4 map:
     if (_mapType === 'ol') {
+        initializeMapOL(jsonObj, ID);
         return;
     }
 
