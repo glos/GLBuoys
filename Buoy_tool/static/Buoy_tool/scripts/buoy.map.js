@@ -31,7 +31,21 @@ var initializeMapOL = function (objBuoys, actBuoyID) {
     //- Create Map w/ Basemap Layer:
     //----------------------------------------------------------
 
+    // Bing Roads basemap:
+    var lyrBasemap = new ol.layer.Tile({
+        visible: true,
+        preload: Infinity,
+        source: new ol.source.BingMaps({
+            key: 'AlKEwMTryhkZabRaZoSSoURWL9JrVK7M2XiB7pAOfJ8IHl8YNlSFee0csXP8IVtp',
+            imagerySet: 'Road'
+            // use maxZoom 19 to see stretched tiles instead of the BingMaps
+            // "no photos at this zoom level" tiles
+            //maxZoom: 19
+        })
+    });
+
     // ESRI Oceans basemap:
+    /*
     var urlOceans = 'https://services.arcgisonline.com/arcgis/rest/services/Ocean_Basemap/MapServer';
 
     var lyrBasemap = new ol.layer.Tile({
@@ -41,6 +55,7 @@ var initializeMapOL = function (objBuoys, actBuoyID) {
             url: urlOceans
         })
     });
+    */
 
     // Create OL4 map:
     var olView = new ol.View({
