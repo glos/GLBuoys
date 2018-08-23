@@ -4,6 +4,7 @@
         var Dates = [];
         var Data = [];
         var Depth = [];
+        var IDlongName = jsonObj.longName;
 
         console.log(jsonObj);
         //Find out which strings have values and only save those depths and associated values.
@@ -61,7 +62,7 @@
         }
         DateString.reverse();
         DateTime.reverse();
-        TempStringHeatMap(Depth, DateString, DateTime, series);
+        TempStringHeatMap(Depth, DateString, DateTime, series, stationID, IDlongName);
 
         //////////////////////////////////////////////////////////////////////////
         //Read in data for line graphs. Graphs  use all data points             //
@@ -86,12 +87,12 @@
         }
         DateStringLine.reverse();
         DateTimeLine.reverse();
-        TempStringLineChart(Depth, DateStringLine, DateTimeLine, seriesLine);
+        TempStringLineChart(Depth, DateStringLine, DateTimeLine, seriesLine, stationID, IDlongName);
     });
 
 }
 
-function TempStringHeatMap(Depths, DateString, DateTime, TStringdata) {
+function TempStringHeatMap(Depths, DateString, DateTime, TStringdata, stationID, IDlongName) {
 
     /**Only display interpolated graph on non-phone devices.
     if (screen.width > 800) {
@@ -113,6 +114,11 @@ function TempStringHeatMap(Depths, DateString, DateTime, TStringdata) {
         exporting: {
             enabled: false,
 			//url: 'http://export.highcharts.com/'
+            chartOptions: {
+                title: {
+                    text: IDlongName + '('+ stationID + ') - Water Temperature'
+                }
+            }
 		},
 				
         legend: {
@@ -248,7 +254,7 @@ function TempStringHeatMap(Depths, DateString, DateTime, TStringdata) {
 }
 
 
-function TempStringLineChart(Depths, DateString, DateTime, TStringdata) {
+function TempStringLineChart(Depths, DateString, DateTime, TStringdata, stationID, IDlongName) {
 
     $('button#showAll').click(function () {
         dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'graph', 'glbuoysLabel': 'temp_string_lines', 'glbuoysAction': 'showAll' });
@@ -273,7 +279,7 @@ function TempStringLineChart(Depths, DateString, DateTime, TStringdata) {
         },
 
         title: {
-            text: false
+            text: null
         },
 				
 				legend: {
@@ -282,7 +288,18 @@ function TempStringLineChart(Depths, DateString, DateTime, TStringdata) {
 				
         credits: {
             enabled: false
+                },
+
+        exporting: {
+            enabled: true,
+            //url: 'http://export.highcharts.com/'
+            chartOptions: {
+                title: {
+                    text: IDlongName + ' (' + stationID + ') - Water Temperature'
+                }
+            }
         },
+
         legend: {
             align: 'center', 
             marginBottom: 0,

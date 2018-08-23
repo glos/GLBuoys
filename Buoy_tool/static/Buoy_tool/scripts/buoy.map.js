@@ -31,7 +31,21 @@ var initializeMapOL = function (objBuoys, actBuoyID) {
     //- Create Map w/ Basemap Layer:
     //----------------------------------------------------------
 
+    // Bing Roads basemap:
+    var lyrBasemap = new ol.layer.Tile({
+        visible: true,
+        preload: Infinity,
+        source: new ol.source.BingMaps({
+            key: 'AlKEwMTryhkZabRaZoSSoURWL9JrVK7M2XiB7pAOfJ8IHl8YNlSFee0csXP8IVtp',
+            imagerySet: 'Road'
+            // use maxZoom 19 to see stretched tiles instead of the BingMaps
+            // "no photos at this zoom level" tiles
+            //maxZoom: 19
+        })
+    });
+
     // ESRI Oceans basemap:
+    /*
     var urlOceans = 'https://services.arcgisonline.com/arcgis/rest/services/Ocean_Basemap/MapServer';
 
     var lyrBasemap = new ol.layer.Tile({
@@ -41,6 +55,7 @@ var initializeMapOL = function (objBuoys, actBuoyID) {
             url: urlOceans
         })
     });
+    */
 
     // Create OL4 map:
     var olView = new ol.View({
@@ -229,6 +244,30 @@ var initializeMapOL = function (objBuoys, actBuoyID) {
         zoomToPoint(featSelBuoy);
     }
 
+    //----------------------------------------------------------
+    //- Create custom fullscreen icon
+    //----------------------------------------------------------
+    fullscreenPath = prePath + 'img/fullscreen_icon.png';
+    fullscreenClosePath = prePath + 'img/fullscreenClose_icon.png';
+    $('.ol-full-screen-false').attr('title', 'Enter Fullscreen Mode');
+    $('.ol-full-screen-false').html('<img src="' + fullscreenPath + '"/>');
+
+    if (document.addEventListener) {
+        document.addEventListener('webkitfullscreenchange', fullscreenHandler, false);
+        document.addEventListener('mozfullscreenchange', fullscreenHandler, false);
+        document.addEventListener('fullscreenchange', fullscreenHandler, false);
+        document.addEventListener('MSFullscreenChange', fullscreenHandler, false);
+    }
+
+    function fullscreenHandler() {
+        if (document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement !== null) {
+            $('.ol-full-screen-true').attr('title', 'Close Full Screen Mode');
+            $('.ol-full-screen-true').html('<img src="' + fullscreenClosePath + '"/>');
+
+            $('.ol-full-screen-false').attr('title', 'Enter Fullscreen Mode');
+            $('.ol-full-screen-false').html('<img src="' + fullscreenPath + '"/>');
+        }
+    }
 }
 
 /*==============================================================*/
@@ -311,7 +350,6 @@ function getMarkerType(f, buoy_id) {
     var mType = 'none';
 
     if (!f.get('wqOnly')) {
-        console.log(f, f.get('wqOnly'));
         if (buoy_id !== '' && f.get('id') === buoy_id) {
             mType = 'active';
         } else if (f.get('obs') && !f.get('offline')) {

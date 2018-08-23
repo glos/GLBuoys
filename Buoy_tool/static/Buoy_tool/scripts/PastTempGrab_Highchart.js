@@ -4,7 +4,7 @@
         var Dates = [];
         var Data = [];
         var Depths = [];
-
+        var IDlongName = jsonObj.longName;
         var tempNode = parseInt(variableName.slice(-2))
         var Depth = jsonObj.thermistorDepths[tempNode]; //Subtract one since array starts at 0
 
@@ -19,12 +19,12 @@
         });
         Data[0].reverse(); 	//Place data in ascending order W.R.T dates for highcharts
         Dates[0].reverse();	//Place dates in ascending order
-        PastTempNodeGraphic(Dates[0], Data[0], Depth);
+        PastTempNodeGraphic(Dates[0], Data[0], Depth, stationID, IDlongName);
     });
 
 }
 
-function PastTempNodeGraphic(DateTime, Data, Depth) {
+function PastTempNodeGraphic(DateTime, Data, Depth, stationID, IDlongName) {
 
     /**if (Highcharts.getOptions().exporting) {
         Highcharts.getOptions().exporting.buttons.contextButton.menuItems.pop();
@@ -50,7 +50,7 @@ function PastTempNodeGraphic(DateTime, Data, Depth) {
         },
 
         title: {
-            text: 'Water Temperature at ' + Depth.toFixed(0) + ' feet'
+            text: IDlongName + ' ('+ stationID + ') - Water Temperature at ' + Depth.toFixed(0) + ' feet'
         },
 				
 				legend: {

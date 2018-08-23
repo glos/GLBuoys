@@ -7,6 +7,7 @@
         var Data = [];
         var ForecastData = [];
         var Depths = [];
+        var IDlongName = jsonObj.longName;
 
         if (variableName !== 'CurSpd' && variableName !== 'CurDir') {
 
@@ -45,9 +46,9 @@
                 units = 'PH';
             }
             if (variableName == 'WDIR' || variableName == 'MWD' || variableName == 'MWDIR') {
-                PastForecastPolar(longName, units, Dates[0], Data[0]);
+                PastForecastPolar(longName, units, Dates[0], Data[0], stationID, IDlongName);
             } else {
-                PastForecastGraphic(ID, longName, units, Dates[0], ForecastDates[0], Data[0], ForecastData[0]);
+                PastForecastGraphic(ID, longName, units, Dates[0], ForecastDates[0], Data[0], ForecastData[0], stationID, IDlongName);
             }
 
         }else {
@@ -70,7 +71,7 @@
                 Data[0].reverse(); 	//Place data in ascending order W.R.T dates for highcharts
                 Dates[0].reverse();	//Place dates in ascending order
                 var units = jsonObj.obsUnits[0];
-                PastForecastGraphic(ID, 'Surface Current', units, Dates[0], ForecastDates[0], Data[0].slice(0, dateLength), ForecastData[0]);
+                PastForecastGraphic(ID, 'Surface Current', units, Dates[0], ForecastDates[0], Data[0].slice(0, dateLength), ForecastData[0], stationID, IDlongName);
             }
             //Run if current direction
             if (variableName == 'CurDir') {
@@ -90,13 +91,13 @@
                 Dates[0].reverse();	//Place dates in ascending order
                 var units = jsonObj.obsUnits[0];
                 console.log('Current Direction', units, Dates[0], Data[0].slice(0, dateLength));
-                PastForecastPolar('Current Direction', units, Dates[0], Data[0].slice(0, dateLength));
+                PastForecastPolar('Current Direction', units, Dates[0], Data[0].slice(0, dateLength), stationID, IDlongName);
             }
         }
     });
 }
 
-function PastForecastGraphic(ID, longName, units, DateTime, ForecastDateTime, Data, ForecastData) {
+function PastForecastGraphic(ID, longName, units, DateTime, ForecastDateTime, Data, ForecastData, stationID, IDlongName) {
     
     /**if (Highcharts.getOptions().exporting) {
         Highcharts.getOptions().exporting.buttons.contextButton.menuItems.pop();
@@ -124,7 +125,7 @@ function PastForecastGraphic(ID, longName, units, DateTime, ForecastDateTime, Da
         },
 
         title: {
-            text: longName 
+            text: IDlongName + ' (' + stationID + ')' + ' - ' + longName 
         },
 
 				legend: {
@@ -275,7 +276,7 @@ function PastForecastGraphic(ID, longName, units, DateTime, ForecastDateTime, Da
 }
 
 //Function to plot directional parameters
-function PastForecastPolar(longName, units, DateTime, Data) {
+function PastForecastPolar(longName, units, DateTime, Data, stationID, IDlongName) {
 
     if (Highcharts.getOptions().exporting) {
         Highcharts.getOptions().exporting.buttons.contextButton.menuItems.pop();
@@ -299,7 +300,7 @@ function PastForecastPolar(longName, units, DateTime, Data) {
         },
 				
 				title: {
-            text: longName + '  (Past 24 hours)',
+                    text: IDlongName + ' (' + stationID + ')' + ' - ' + longName + '  (Past 24 hours)',
         },
 				
 				credits: {
