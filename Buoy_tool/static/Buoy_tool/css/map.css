@@ -44,18 +44,26 @@ a.nav-buoy {
     top: 6em;
 }
 
-/* OL Attributions
+/* OL Attributions*/
 .ol-attribution {
     top: 0.5em !important;
     right: 2.5em !important;
     left: auto !important;
     bottom: auto !important;
 }
-*/
+
 
 /* OL Buttons */
 .ol-full-screen-false {
 }
+
+.ol-full-screen-false img {
+        margin-bottom: 0;
+}
+
+    .ol-full-screen-true img {
+        margin-bottom: 0;
+    }
 
 /* Map custom legend */
 div.map-legend {

@@ -1,10 +1,11 @@
-﻿function ADCPfig(jsonObj, stationID) {
+﻿function ADCPfig(stationID) {
 
     $.getJSON('../static/Buoy_tool/data/' + ID + '_' + units + '_data.json', function (jsonObj) {
         var Dates = [];
         var Data = [];
         var Depth = [];
-	
+        var IDlongName = jsonObj.longName;
+
 	//Define ADCP object in the data file
 	jsonObj = jsonObj.ADCP
     console.log(jsonObj);
@@ -63,13 +64,13 @@
             }
         }
 
-        ADCP_Highchart(series, Dates[0], jsonObj.ADCP_Depths, jsonObj.obsUnits[1])
+        ADCP_Highchart(series, Dates[0], jsonObj.ADCP_Depths, jsonObj.obsUnits[1], stationID, IDlongName)
     });
 
 }
 
 
-function ADCP_Highchart(data, DateString, depths, speedUnits) {
+function ADCP_Highchart(data, DateString, depths, speedUnits, stationID, IDlongName) {
 
     function floatTostring(float) {
         integer = Math.round(float);
@@ -119,6 +120,16 @@ function ADCP_Highchart(data, DateString, depths, speedUnits) {
             type: 'vector',
             zoomType: 'x',
             spacing: [7, 0, 0, 0]
+        },
+
+        exporting: {
+            enabled: true,
+            //url: 'http://export.highcharts.com/'
+            chartOptions: {
+                title: {
+                    text: IDlongName + ' (' + stationID + ') - Water Currents'
+                }
+            }
         },
 
         title: {

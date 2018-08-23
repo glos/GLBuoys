@@ -229,6 +229,30 @@ var initializeMapOL = function (objBuoys, actBuoyID) {
         zoomToPoint(featSelBuoy);
     }
 
+    //----------------------------------------------------------
+    //- Create custom fullscreen icon
+    //----------------------------------------------------------
+    fullscreenPath = prePath + 'img/fullscreen_icon.png';
+    fullscreenClosePath = prePath + 'img/fullscreenClose_icon.png';
+    $('.ol-full-screen-false').attr('title', 'Enter Fullscreen Mode');
+    $('.ol-full-screen-false').html('<img src="' + fullscreenPath + '"/>');
+
+    if (document.addEventListener) {
+        document.addEventListener('webkitfullscreenchange', fullscreenHandler, false);
+        document.addEventListener('mozfullscreenchange', fullscreenHandler, false);
+        document.addEventListener('fullscreenchange', fullscreenHandler, false);
+        document.addEventListener('MSFullscreenChange', fullscreenHandler, false);
+    }
+
+    function fullscreenHandler() {
+        if (document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement !== null) {
+            $('.ol-full-screen-true').attr('title', 'Close Full Screen Mode');
+            $('.ol-full-screen-true').html('<img src="' + fullscreenClosePath + '"/>');
+
+            $('.ol-full-screen-false').attr('title', 'Enter Fullscreen Mode');
+            $('.ol-full-screen-false').html('<img src="' + fullscreenPath + '"/>');
+        }
+    }
 }
 
 /*==============================================================*/
@@ -311,7 +335,6 @@ function getMarkerType(f, buoy_id) {
     var mType = 'none';
 
     if (!f.get('wqOnly')) {
-        console.log(f, f.get('wqOnly'));
         if (buoy_id !== '' && f.get('id') === buoy_id) {
             mType = 'active';
         } else if (f.get('obs') && !f.get('offline')) {
