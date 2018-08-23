@@ -58,12 +58,18 @@ a.nav-buoy {
 }
 
 .ol-full-screen-false img {
-        margin-bottom: 0;
+    margin-bottom: 0;
 }
 
-    .ol-full-screen-true img {
-        margin-bottom: 0;
+.ol-full-screen-true img {
+   margin-bottom: 0;
+}
+
+@media (max-width:450px){
+    .ol-touch .ol-control button {
+        font-size: 1.2em !important;
     }
+}
 
 /* Map custom legend */
 div.map-legend {
