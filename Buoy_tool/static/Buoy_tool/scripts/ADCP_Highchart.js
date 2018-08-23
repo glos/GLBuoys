@@ -127,7 +127,10 @@ function ADCP_Highchart(data, DateString, depths, speedUnits, stationID, IDlongN
             //url: 'http://export.highcharts.com/'
             chartOptions: {
                 title: {
-                    text: IDlongName + ' (' + stationID + ') - Water Currents'
+                    text: 'Water Currents'
+                },
+                subtitle: {
+                    text: IDlongName + ' (' + stationID + ')'
                 }
             }
         },

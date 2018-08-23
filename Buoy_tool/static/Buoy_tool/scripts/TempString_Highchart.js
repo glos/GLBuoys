@@ -295,7 +295,10 @@ function TempStringLineChart(Depths, DateString, DateTime, TStringdata, stationI
             //url: 'http://export.highcharts.com/'
             chartOptions: {
                 title: {
-                    text: IDlongName + ' (' + stationID + ') - Water Temperature'
+                    text: 'Water Temperature'
+                },
+                subtitle: {
+                    text: IDlongName + ' (' + stationID + ')'
                 }
             }
         },

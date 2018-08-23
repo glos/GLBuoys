@@ -125,7 +125,10 @@ function PastForecastGraphic(ID, longName, units, DateTime, ForecastDateTime, Da
         },
 
         title: {
-            text: IDlongName + ' (' + stationID + ')' + ' - ' + longName 
+            text: longName 
+        },
+        subtitle: {
+            text: IDlongName + ' (' + stationID + ')' 
         },
 
 				legend: {
@@ -300,8 +303,11 @@ function PastForecastPolar(longName, units, DateTime, Data, stationID, IDlongNam
         },
 				
 				title: {
-                    text: IDlongName + ' (' + stationID + ')' + ' - ' + longName + '  (Past 24 hours)',
+                    text: longName + '  (Past 24 hours)',
         },
+                subtitle: {
+                    text: IDlongName + ' (' + stationID + ')'
+                },
 				
 				credits: {
             enabled: false
