@@ -50,9 +50,11 @@ function PastTempNodeGraphic(DateTime, Data, Depth, stationID, IDlongName) {
         },
 
         title: {
-            text: IDlongName + ' ('+ stationID + ') - Water Temperature at ' + Depth.toFixed(0) + ' feet'
+            text: 'Water Temperature at ' + Depth.toFixed(0) + ' feet'
         },
-				
+        subtitle: {
+            text: IDlongName + ' (' + stationID + ')'
+        },
 				legend: {
 					enable: true
 				},

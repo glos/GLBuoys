@@ -192,7 +192,7 @@ var initializeMapOL = function (objBuoys, actBuoyID) {
                 var coord = feature.getGeometry().getCoordinates();
                 displayPopup(feature, coord);
                 //displayPopup(feature, evt.coordinate);
-            }, 500);
+            }, 0);
         };
     });
 
