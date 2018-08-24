@@ -78,9 +78,11 @@ table#buoySummary thead td {text-align: center;}
 table#buoySummary td.homeWindSpDir {padding-left: 0px; padding-right: 0px}
 table#buoySummary td.homeWaveHeight{text-align:right;width:70px;padding-right:16px}
 
-.legendList  {
-    display: inline-block;
-    vertical-align: middle;
+@media (max-width:450px) {
+    #buoySummary.w3-table td {
+        padding: 4px;
+    }
+    table#buoySummary td.homeWaveHeight {text-align: right;width: 70px;padding-right: 10px}
 }
 
 #NWSForecast img{
