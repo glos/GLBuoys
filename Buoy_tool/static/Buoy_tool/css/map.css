@@ -12,7 +12,7 @@ a.nav-buoy {
 #map-container {
     width: 100%;
     max-width: 550px;   /* 400px */
-    height: 400px;      /* 350px */
+    height: 350px;      /* 350px */
     display: none;
     margin: 0 auto 0 auto;
 }
@@ -82,7 +82,7 @@ div.map-legend {
     border-radius: 5px;
     border: solid 1px black;
     margin: 0 auto 0 auto;
-    z-index: 99999;
+    z-index: 0;
 }
 
     div.map-legend img {
