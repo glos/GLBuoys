@@ -919,7 +919,7 @@ function loadbuoyinfo(ID, jsonObj) {
 							$('#textBuoy').append('<p><i>SMS: &nbsp;Text '+jsonObj[i].id+' to <a  id="SMS" href="sms:1-734-418-7299">(734) 418-7299</a> for the latest observations.</i></p>');
 							$('#textBuoy a#SMS').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'SMS','glbuoysLabel':ID,'glbuoysAction':'click_external_url'});});
 						}
-						$('#textBuoy').append('<p><i>GLOS <a id="Portal" href="http://portal.glos.us/" target="_blank">Data Portal</a>: &nbsp;Access more data, models, and create alerts.</i></p>');
+						$('#textBuoy').append('<p><i>GLOS <a id="Portal" href="https://portal.glos.us/" target="_blank">Data Portal</a>: &nbsp;Access more data, models, and create alerts.</i></p>');
 						$('#textBuoy a#Portal').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'Data Portal','glbuoysLabel':'glos','glbuoysAction':'click_external_url'});});
 						
 						if (jsonObj[i].webcamSrc.length>0){
@@ -928,9 +928,9 @@ function loadbuoyinfo(ID, jsonObj) {
 							$('#BuoyCamTitle h4').addClass("glosBlue w3-center");
 							$('#BuoyCamPic').append('<video id="my-video" class="video-js vjs-default-skin vjs-fluid" controls preload="none" poster=../media/'+jsonObj[i].webcamSrc+' data-setup="{}">');
 							$('#BuoyCamPic video').append($('<source>').attr("src", "../media/"+jsonObj[i].webcamSrc[0].slice(0,-10)+".mp4").attr("type","video/mp4"));
-							$('#BuoyCamPic video').append('<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>');
+							$('#BuoyCamPic video').append('<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>');
 							$('#BuoyCamPic').append('</video>');
-							$('body').append('<script src="http://vjs.zencdn.net/6.2.7/video.js"></script>');
+							$('body').append('<script src="https://vjs.zencdn.net/6.2.7/video.js"></script>');
 							$('#buoyCam p').append('Click <a id="archive" href='+jsonObj[i].webcamLink+' target="_blank">here</a> to access archived buoy images and video from a third party.');
 							$('#my-video').on('loadeddata', function (e) {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'buoycam','glbuoysLabel':ID,'glbuoysAction':'play_buoycam'});});
 							$(window).bind("fullscreen-on", function(e) {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'buoycam','glbuoysLabel':ID,'glbuoysAction':'fullscreen'});});
@@ -962,14 +962,14 @@ function loadbuoyinfo(ID, jsonObj) {
 						for (k = 0; k < 4; k++){		//Only use first two days for forecast
 							if (k == 0){
 								var newRowContent1 = "<tr><th>"+jsonObj[i].NWSForecast.startPeriodName[k]+"<th>";
-								var newRowContent2 = "<tr><td><img class='nwsIcon w3-round' src='http://forecast.weather.gov"+jsonObj[i].NWSForecast.iconLink[k]+"'/><td>";
+								var newRowContent2 = "<tr><td><img class='nwsIcon w3-round' src='https://forecast.weather.gov"+jsonObj[i].NWSForecast.iconLink[k]+"'/><td>";
 								var newRowContent3 = "<tr><td class='NWSIconSubtext'>"+jsonObj[i].NWSForecast.windspeed[k]+"<td>";
 								var newRowContent4 = "<tr><td class='NWSIconSubtext'>"+jsonObj[i].NWSForecast.waveheight[k]+"<td>";
 								var newRowContent5 = "<tr><td class='NWSIconSubtext'><b>"+jsonObj[i].NWSForecast.tempLabel[k]+"</b>: "+jsonObj[i].NWSForecast.temperature[k]+ "°F<td>";
 								var newRowContent6 = "<p><b>"+jsonObj[i].NWSForecast.startPeriodName[k]+"</b>: "+jsonObj[i].NWSForecast.forecastText[k]+ "</p>";
 							}else {
 								newRowContent1 += "<th>"+jsonObj[i].NWSForecast.startPeriodName[k]+"<th>";
-								newRowContent2 += "<td><img class='nwsIcon w3-round' src='http://forecast.weather.gov"+jsonObj[i].NWSForecast.iconLink[k]+"'/><td>";
+								newRowContent2 += "<td><img class='nwsIcon w3-round' src='https://forecast.weather.gov"+jsonObj[i].NWSForecast.iconLink[k]+"'/><td>";
 								newRowContent3 += "<td class='NWSIconSubtext'>"+jsonObj[i].NWSForecast.windspeed[k]+"<td>";
 								newRowContent4 += "<td class='NWSIconSubtext'>"+jsonObj[i].NWSForecast.waveheight[k]+"<td>";
 								newRowContent5 += "<td class='NWSIconSubtext'><b>"+jsonObj[i].NWSForecast.tempLabel[k]+"</b>: "+jsonObj[i].NWSForecast.temperature[k]+ "°F<td>";
@@ -1013,7 +1013,7 @@ function loadbuoyinfo(ID, jsonObj) {
 						$('#stationMeta p#buoyInfo').append(jsonObj[i].buoyInfo);
 					}
 					if (jsonObj[i].metaGLOS){
-						$('#stationMeta p#metaGLOS').append("View <a id='metadata' target='_blank' href=" + jsonObj[i].metaGLOS + ">metadata for this buoy</a> stored in the <a id='catalog' target='_blank' href='http://data.glos.us/metadata/'>Great Lakes Observing System Metadata Catalog</a>.");
+						$('#stationMeta p#metaGLOS').append("View <a id='metadata' target='_blank' href=" + jsonObj[i].metaGLOS + ">metadata for this buoy</a> stored in the <a id='catalog' target='_blank' href='https://data.glos.us/metadata/'>Great Lakes Observing System Metadata Catalog</a>.");
 					    $('#stationMeta a#catalog').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'metadata catalog','glbuoysLabel':'glos','glbuoysAction':'click_external_url'});});
 						$('#stationMeta a#metadata').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'View metadata for buoy','glbuoysLabel':ID,'glbuoysAction':'click_external_url'});});
 					}
@@ -1174,9 +1174,9 @@ function reloadbuoyinfo() {
                         if (jsonObj[i].webcamSrc.length > 0) {
                            $('#BuoyCamPic').append('<video id="my-video" class="video-js vjs-default-skin vjs-fluid" controls preload="none" poster=../media/' + jsonObj[i].webcamSrc +' data-setup="{}">');
                            $('#BuoyCamPic video').append($('<source>').attr("src", jsonObj[i].webcamSrc[0].slice(0,-10)+".mp4").attr("type","video/mp4"));
-                           $('#BuoyCamPic video').append('<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>');
+                           $('#BuoyCamPic video').append('<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>');
                            $('#BuoyCamPic').append('</video>');
-                           $('body').append('<script src="http://vjs.zencdn.net/6.2.7/video.js"></script>');
+                           $('body').append('<script src="https://vjs.zencdn.net/6.2.7/video.js"></script>');
 							$('#my-video').on('loadeddata', function (e) {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'buoycam','glbuoysLabel':ID,'glbuoysAction':'play_buoycam'});});
 						}
 					}
@@ -1187,7 +1187,7 @@ function reloadbuoyinfo() {
 }
 
 function callfooterInfo(ID){
-    $('footer p').append('<p>Please click <a id="comments" href="https://docs.google.com/forms/d/e/1FAIpQLSdYV4V0Dw6CpZHZRzZRgEyoRJb8erSdoSBQgLCtlXc-jLN9kQ/viewform?usp=pp_url&entry.1512652591&entry.578184834&entry.1388061372&entry.1336006565=' + ID +'" target="_blank">here</a> for assistance or to provide suggestions for improvement. Return to GLBuoys <a id="homepage" href="http://glbuoys.glos.us">Homepage</a>.</p>');
+    $('footer p').append('<p>Please click <a id="comments" href="https://docs.google.com/forms/d/e/1FAIpQLSdYV4V0Dw6CpZHZRzZRgEyoRJb8erSdoSBQgLCtlXc-jLN9kQ/viewform?usp=pp_url&entry.1512652591&entry.578184834&entry.1388061372&entry.1336006565=' + ID +'" target="_blank">here</a> for assistance or to provide suggestions for improvement. Return to GLBuoys <a id="homepage" href="https://glbuoys.glos.us">Homepage</a>.</p>');
     $('a#comments').click(function () { dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'feedback', 'glbuoysLabel': 'mailto:dmac@glos.us', 'glbuoysAction': 'click_external_url' }); });
     $('a#comments').click(function () { dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'footer', 'glbuoysLabel': 'http://glbuoys.glos.us', 'glbuoysAction': 'click_internal_url' }); });
 	var googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdYV4V0Dw6CpZHZRzZRgEyoRJb8erSdoSBQgLCtlXc-jLN9kQ/viewform?usp=pp_url&entry.1512652591&entry.578184834&entry.1388061372&entry.1336006565='+ID+'';
