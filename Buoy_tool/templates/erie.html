@@ -26,8 +26,20 @@
                     margin: 0 auto 0 auto;
                 }
             </style>
-            <div id="map_canvas" class="w3-card-4" style="width:100%;max-width:550px;height:400px">
+            
+            <!--Google map-->
+            <div id="map_canvas" class="w3-card-4 map" style="width:100%;max-width:550px;height:400px;">
                 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhlUyFNacPYsUz4dZZUmf7lu7SrwkLRIo"></script>-->
+            </div>
+
+            <!-- OpenLayers map -->
+            <div id="map-container" class="w3-card-4 map">
+				<div id="map" class="map">
+                    <div id="popup" class="ol-popup">
+                        <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                        <div id="popup-content"></div>
+                    </div>
+				</div>
             </div>
 
             <div class="w3-center">

@@ -547,6 +547,18 @@ function myAccFunc5() {
     }
 }
 
+function myAccFunc6() {
+    var x = document.getElementById("otherAcc");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+        x.previousElementSibling.className += "w3-theme-d4";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+        x.previousElementSibling.className =
+            x.previousElementSibling.className.replace("w3-theme-d4", "");
+    }
+}
+
 function unitConversion() {
 	dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':$('button#units').text(),'glbuoysAction':'click_internal_url'});
 	if($('button#units').text() == 'To Metric'){
@@ -735,7 +747,10 @@ $(document).ready(function () {
 					}
 					else if (option.lake == "ON") {
 						$('#OntarioAcc').append($('<a>').click(function () { PassStation(option.id,option.lat,option.lon);dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':option.id,'glbuoysAction':'click_internal_url'}); }).text(option.id).attr("style",'cursor:pointer'));
-					}
+                    }
+                    else if (option.lake == "Other") {
+                        $('#otherAcc').append($('<a>').click(function () { PassStation(option.id, option.lat, option.lon); dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'nav menu', 'glbuoysLabel': option.id, 'glbuoysAction': 'click_internal_url' }); }).text(option.id).attr("style", 'cursor:pointer'));
+                    }
 				}
 			});
     });

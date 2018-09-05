@@ -119,7 +119,9 @@ function loadBuoySummary(){
 			var MichiganRows;
 			var SuperiorRows;
 			var HuronRows;
-			var OntarioRows
+            var OntarioRows;
+            var otherRows;
+
 			$.each(jsonObj, function (i, option) {
 				function checkMissing(value){
 					if(value==null){
@@ -260,7 +262,31 @@ function loadBuoySummary(){
 						} catch (err) {
 							OntarioRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Currently unavailable</i></td></tr>';
 						}
-					}
+                    }
+                    else if (option.lake == "Other") {
+                        $('#otherAcc').append($('<a>').click(function () { PassStation(option.id, option.lat, option.lon); dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'nav menu', 'glbuoysLabel': option.id, 'glbuoysAction': 'click internal url' }); }).text(option.id).attr("style", 'cursor:pointer'));
+                        try {
+                            if (!option.recovered || option.obsUnits) {
+                                if (!ifOffline(moment(option.updateTime))) {
+                                    otherRows += '<tr onclick=PassStation("' + option.id + '",' + option.lat + ',' + option.lon + ');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"' + option.id + '","glbuoysAction":"click_internal_url"}); style=cursor:pointer;>' +
+                                        '<td>' + checkAltID(option) + '</td>' +
+                                        '<td>' + option.longName + '</td>' +
+                                        '<td>' + option.buoyOwners + '</td>' +
+                                        '<td style="text-align:right;">' + moment(option.updateTime).format("LT") + '</td>' +
+                                        '<td style="text-align:right;width:65px;padding-right:12px">' + checkMissing(option.obsValues[option.obsID.indexOf('WTMP')]) + '</td>' +
+                                        '<td class="homeWindSpDir" style="text-align:right;width:35px;">' + checkMissing(option.obsValues[option.obsID.indexOf('WSPD')]) + '</td>' +
+                                        '<td class="homeWindSpDir" style="text-align:left;width:35px;">&nbsp;' + DegreeToCardinal(checkMissing(option.obsValues[option.obsID.indexOf('WDIR')])) + '</td>' +
+                                        '<td class="homeWaveHeight">' + checkMissing(option.obsValues[option.obsID.indexOf('WVHT')]) + '</td><tr>';
+                                } else {
+                                    otherRows += '<tr onclick=PassStation("' + option.id + '",' + option.lat + ',' + option.lon + ');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"' + option.id + '","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>' + checkAltID(option) + '</td><td>' + option.longName + '</td><td>' + option.buoyOwners + '</td><td class=w3-center colspan=5><i>Data older than 6 hours</i></td></tr>';
+                                }
+                            } else {
+                                otherRows += '<tr onclick=PassStation("' + option.id + '",' + option.lat + ',' + option.lon + ');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"' + option.id + '","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>' + checkAltID(option) + '</td><td>' + option.longName + '</td><td>' + option.buoyOwners + '</td><td class=w3-center colspan=5><i>Currently unavailable</i></td></tr>';
+                            }
+                        } catch (err) {
+                            otherRows += '<tr onclick=PassStation("' + option.id + '",' + option.lat + ',' + option.lon + ');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"' + option.id + '","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>' + checkAltID(option) + '</td><td>' + option.longName + '</td><td>' + option.buoyOwners + '</td><td class=w3-center colspan=5><i>Currently unavailable</i></td></tr>';
+                        }
+                    }
 				}
 			});
 			$('#buoySummary tbody').append('<tr class="w3-center w3-theme-d4 w3-hoverable"><td colspan=8 class="w3-center w3-blue-pale">Lake Michigan</td></tr>');
@@ -272,7 +298,9 @@ function loadBuoySummary(){
 			$('#buoySummary tbody').append('<tr class="w3-center w3-theme-d4 w3-hoverable"><td colspan=8 class="w3-center w3-blue-pale">Lake Huron</td></tr>');
 			$('#buoySummary tbody').append(HuronRows);
 			$('#buoySummary tbody').append('<tr class="w3-center w3-theme-d4 w3-hoverable"><td colspan=8 class="w3-center w3-blue-pale">Lake Ontario</td></tr>');
-			$('#buoySummary tbody').append(OntarioRows);
+            $('#buoySummary tbody').append(OntarioRows);
+            $('#buoySummary tbody').append('<tr class="w3-center w3-theme-d4 w3-hoverable"><td colspan=8 class="w3-center w3-blue-pale">Other Lakes</td></tr>');
+            $('#buoySummary tbody').append(otherRows);
 			$('#buoySummary thead').append('<tr id="tableHeader">' +
 															'<td>ID</td>' +
 															'<td>Location</td>' +
@@ -395,6 +423,18 @@ function myAccFunc5() {
         x.className = x.className.replace(" w3-show", "");
         x.previousElementSibling.className =
         x.previousElementSibling.className.replace("w3-theme-d4", "");
+    }
+}
+
+function myAccFunc6() {
+    var x = document.getElementById("otherAcc");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+        x.previousElementSibling.className += "w3-theme-d4";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+        x.previousElementSibling.className =
+            x.previousElementSibling.className.replace("w3-theme-d4", "");
     }
 }
 
