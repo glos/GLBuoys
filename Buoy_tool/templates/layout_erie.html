@@ -20,10 +20,12 @@
 
     {% load staticfiles %}
 
-    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
     <link rel="stylesheet" href="{% static 'Buoy_tool/css/main.css' %}">
-	<link rel="shortcut icon" type="image/x-icon" href="http://www.glos.us/wp-content/themes/optimizer-child/favicon.ico">
-	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-blue.css">
+    <link rel="stylesheet" href="{% static 'Buoy_tool/css/map.css' %}">
+	<!--<link rel="shortcut icon" type="image/x-icon" href="http://www.glos.us/wp-content/themes/optimizer-child/favicon.ico">-->
+    <link rel="shortcut icon" href="{% static 'Buoy_tool/img/favicon.ico' %}"> 
+	<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue.css">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
@@ -35,6 +37,11 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhlUyFNacPYsUz4dZZUmf7lu7SrwkLRIo"></script>
 	<script src="{% static 'Buoy_tool/scripts/moment.js' %}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone-with-data-2012-2022.min.js"></script>
+
+    <!-- OpenLayers 4.6.5 -->
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>    
 
     {% block scripts %}{% endblock %}
     
