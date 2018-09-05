@@ -1,3 +1,5 @@
+const _mapType = 'ol';
+
 var loadLocal = false;
 var prePath = '../static/Buoy_tool/';
 var units = 'english' //global variables
@@ -263,6 +265,7 @@ var maptiler = new google.maps.ImageMapType({
 });
 									 
 function initialize() {
+
     var stations = [];
     var stationsLongName = [];
 		var	lats = [];
@@ -274,6 +277,13 @@ function initialize() {
 		var recovered = [];
 		
         loadbuoyinfo_home(function (jsonObj) {
+
+            // Initialize OL4 map:
+            if (_mapType === 'ol') {
+                initializeMapOL(jsonObj, '');
+                return;
+            }
+
 			//var jsonObj = JSON.parse(response);
 			for (i = 0; i < jsonObj.length; i++) {
                 stations[i] = jsonObj[i].id;
