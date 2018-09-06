@@ -112,7 +112,15 @@ function loadBuoySummary(){
 			//Empty content before second load
 			if (reloadCount > 0){
 				$('#buoySummary tbody').empty();
-				$('#buoySummary thead').empty();
+                $('#buoySummary thead').empty();
+                $('#buoySummary tbody').empty();
+                $('#buoySummary thead').empty();
+                $('#ErieAcc').empty();
+                $('#MichiganAcc').empty();
+                $('#HuronAcc').empty();
+                $('#SuperiorAcc').empty();
+                $('#OntarioAcc').empty();
+                $('#otherAcc').empty();
 			}
 			reloadCount += 1;
 			var ErieRows;

@@ -99,7 +99,7 @@ $(document).ready(function () {
         window.open('https://docs.google.com/forms/d/e/1FAIpQLSdYV4V0Dw6CpZHZRzZRgEyoRJb8erSdoSBQgLCtlXc-jLN9kQ/viewform?usp=pp_url&entry.1512652591&entry.578184834&entry.1388061372&entry.1336006565=all', '_blank') });
     $('button#feedback').click(function () { dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'nav menu', 'glbuoysLabel': 'mailto:dmac@glos.us', 'glbuoysAction': 'click_external_url' }); });
 	loadBuoySummary();
-	var refresher = setInterval(loadBuoySummary,600000); // refresh content every 10 minutes 
+    var refresher = setInterval(loadBuoySummary, 600000); // refresh content every 10 minutes 
 });
 
 var reloadCount = 0;
@@ -111,7 +111,13 @@ function loadBuoySummary(){
 			//Empty content before second load
 			if (reloadCount > 0){
 				$('#buoySummary tbody').empty();
-				$('#buoySummary thead').empty();
+                $('#buoySummary thead').empty();
+                $('#ErieAcc').empty();
+                $('#MichiganAcc').empty();
+                $('#HuronAcc').empty();
+                $('#SuperiorAcc').empty();
+                $('#OntarioAcc').empty();
+                $('#otherAcc').empty();
 			}
 			reloadCount += 1;
 			//var jsonObj = JSON.parse(response);
