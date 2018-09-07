@@ -931,7 +931,7 @@ function loadbuoyinfo(ID, jsonObj) {
 						//Check if buoy starts with a number, if so it is an NDBC buoy and can be text messaged
 						$('#textBuoy').addClass('w3-panel w3-light-gray w3-small');
 						if(!isNaN(ID.charAt(0))){
-							$('#textBuoy').append('<p><i>SMS: &nbsp;Text '+jsonObj[i].id+' to <a  id="SMS" href="sms:1-734-418-7299">(734) 418-7299</a> for the latest observations.</i></p>');
+                            $('#textBuoy').append('<p><i>SMS: &nbsp;Text ' + jsonObj[i].id +' to <a  id="SMS" href="sms:866-218-9973">866-218-9973</a> for the latest observations.</i></p>');
 							$('#textBuoy a#SMS').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'SMS','glbuoysLabel':ID,'glbuoysAction':'click_external_url'});});
 						}
 						$('#textBuoy').append('<p><i>GLOS <a id="Portal" href="https://portal.glos.us/" target="_blank">Data Portal</a>: &nbsp;Access more data, models, and create alerts.</i></p>');
