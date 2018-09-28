@@ -619,11 +619,20 @@ function DegreeToCardinal(value) {
 }
 
 function intValue(value) {
-    if (value < 1) { toFixedValue = 2; } else { toFixedValue = 1; }
-    if (value % 1 < 0.95) {
-        return Math.floor(value);
+    if (value < 1) {
+        toFixedValue = 2;
+        if (value % 1 < 0.99999999) {
+            return Math.floor(value);
+        } else {
+            return Math.round(value);
+        }
     } else {
-        return Math.round(value);
+        toFixedValue = 1;
+        if (value % 1 <= 0.95) {
+            return Math.floor(value);
+        } else {
+            return Math.round(value);
+        }
     }
 }
 
