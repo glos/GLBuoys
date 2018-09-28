@@ -29,7 +29,8 @@ urlpatterns = [
     url(r'^$', Buoy_tool.views.home, name='home'),
 
     # Lake Erie Home Page:
-    url(r'^erie/$', Buoy_tool.views.eriehome, name='eriehome'),
+    #url(r'^erie/$', Buoy_tool.views.eriehome, name='eriehome'),
+    url(r'^erie$', Buoy_tool.views.eriehome, name='eriehome'),
 
     # AJAX URLs:
     url(r'^ajax/getTSData$', getTSData, name='getTSData'),
