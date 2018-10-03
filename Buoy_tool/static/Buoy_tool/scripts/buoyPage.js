@@ -904,9 +904,10 @@ function loadbuoyinfo(ID, jsonObj) {
 
                         //Check if buoy has wave height and GLCFS data exist. If not print forecasted wave height and allow user to view forecast wave height. 
                         if ($.inArray('WVHT', jsonObj[i].obsID) < 0 && jsonObj[i].GLCFS) { //returns 1 if exist and -1 if doesn't exist
+                            //var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD', 'IceFract', 'IceThick'];
                             var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD'];
-                            var parameterUnits = [depthUnits, '&#176', 'sec'];
-                            var longNames = ['Wave Height', 'Wave Direction', 'Wave Period']
+                            var parameterUnits = [depthUnits, '&#176', 'sec', '%', depthUnits];
+                            var longNames = ['Wave Height', 'Wave Direction', 'Wave Period', 'Ice Concentration', 'Ice Thickness'];
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
                             var count = 0;
                             for (g = 0; g < parameterOrder.length; g++) {
@@ -994,7 +995,7 @@ function loadbuoyinfo(ID, jsonObj) {
 							$('a#archive').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'buoycam','glbuoysLabel':ID,'glbuoysAction':'click_external_url'});});
 						}
 					}else{
-						$('#recovered').addClass('w3-panel w3-center w3-pale-red w3-small').append('<h6>' + jsonObj[i].longName + ' (' + ID + ') is currently unavailable.</h6>');
+						$('#recovered').addClass('w3-panel w3-center w3-pale-red w3-small').append('<h6>' + jsonObj[i].longName + ' (' + ID + ') has been recovered for 2018.</h6>');
 
                         //Check if buoy has wave height. If not print forecasted wave height and allow user to view forecast wave height.
                         if ($.inArray('WVHT', jsonObj[i].obsID) < 0 && jsonObj[i].GLCFS) { //returns 1 if exist and -1 if doesn't exist
@@ -1007,9 +1008,10 @@ function loadbuoyinfo(ID, jsonObj) {
                             });
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
                             var columnSpan = 1;
+                            //var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD', 'IceFract', 'IceThick'];
                             var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD'];
-                            var parameterUnits = [depthUnits, '&#176', 'sec'];
-                            var longNames = ['Wave Height', 'Wave Direction', 'Wave Period']
+                            var parameterUnits = [depthUnits, '&#176', 'sec', '%', depthUnits];
+                            var longNames = ['Wave Height', 'Wave Direction', 'Wave Period', 'Ice Concentration', 'Ice Thickness'];
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
                             var count = 0;
                             for (g = 0; g < parameterOrder.length; g++) {
@@ -1236,9 +1238,10 @@ function reloadbuoyinfo() {
                         if ($.inArray('WVHT', jsonObj[i].obsID) < 0 && jsonObj[i].GLCFS) { //returns 1 if exist and -1 if doesn't exist
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
                             var tzAbbr = moment.tz(dateNum.timeZone).format('z');	//define time zone abbreviation for station update time
+                            //var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD', 'IceFract', 'IceThick'];
                             var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD'];
-                            var parameterUnits = [depthUnits, '&#176', 'sec'];
-                            var longNames = ['Wave Height', 'Wave Direction', 'Wave Period']
+                            var parameterUnits = [depthUnits, '&#176', 'sec', '%', depthUnits];
+                            var longNames = ['Wave Height', 'Wave Direction', 'Wave Period', 'Ice Concentration', 'Ice Thickness'];
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
                             var count = 0;
                             for (g = 0; g < parameterOrder.length; g++) {
@@ -1319,9 +1322,10 @@ function reloadbuoyinfo() {
                         if ($.inArray('WVHT', jsonObj[i].obsID) < 0 && jsonObj[i].GLCFS) { //returns 1 if exist and -1 if doesn't exist
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
                             var tzAbbr = moment.tz(dateNum.timeZone).format('z');	//define time zone abbreviation for station update time
+                            //var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD', 'IceFract', 'IceThick'];
                             var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD'];
-                            var parameterUnits = [depthUnits, '&#176', 'sec'];
-                            var longNames = ['Wave Height', 'Wave Direction', 'Wave Period']
+                            var parameterUnits = [depthUnits, '&#176', 'sec', '%', depthUnits];
+                            var longNames = ['Wave Height', 'Wave Direction', 'Wave Period', 'Ice Concentration', 'Ice Thickness'];
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
                             var count = 0;
                             for (g = 0; g < parameterOrder.length; g++) {

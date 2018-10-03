@@ -23,6 +23,10 @@
             longName = 'Wave Direction';
         } else if (variableName === 'DOMPD') {
             longName = 'Wave Period';
+        } else if (variableName === 'IceFract') {
+            longName = 'Ice Concentration';
+        } else if (variableName === 'IceThick') {
+            longName = 'Ice Thickness';
         }
 
         console.log(jsonObj);
