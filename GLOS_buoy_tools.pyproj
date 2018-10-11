@@ -256,6 +256,7 @@
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\moduleHeatmap.js" />
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\moduleMapSrc.js" />
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\moment.js" />
+    <Content Include="Buoy_tool\static\Buoy_tool\scripts\Forecast_Highchart.js" />
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\PastForecast_Highchart.js" />
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\PastTempGrab_Highchart.js" />
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\PastTempGrab_Highchart2.js" />

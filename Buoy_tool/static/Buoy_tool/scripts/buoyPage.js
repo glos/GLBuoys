@@ -204,7 +204,7 @@ function alertFormPop(ID, allBuoysObj) {
                     $('#parameters').append($('<option></option>').val(p).html(p));
                 }
             });
-            if (allBuoysObj[i].thermistorDepths.length > 0) {
+            if (allBuoysObj[i].thermistorDepths && allBuoysObj[i].thermistorDepths.length > 0) {
                 for (j = 0; j < allBuoysObj[i].thermistorValues.length; j++) {
                     if (allBuoysObj[i].thermistorValues[j] != null) {
                         var depth = allBuoysObj[i].thermistorDepths[j];
@@ -619,11 +619,20 @@ function DegreeToCardinal(value) {
 }
 
 function intValue(value) {
-    if (value < 1) { toFixedValue = 2; } else { toFixedValue = 1; }
-    if (value % 1 < 0.95) {
-        return Math.floor(value);
+    if (value < 1) {
+        toFixedValue = 2;
+        if (value % 1 < 0.99999999) {
+            return Math.floor(value);
+        } else {
+            return Math.round(value);
+        }
     } else {
-        return Math.round(value);
+        toFixedValue = 1;
+        if (value % 1 <= 0.95) {
+            return Math.floor(value);
+        } else {
+            return Math.round(value);
+        }
     }
 }
 
@@ -892,7 +901,41 @@ function loadbuoyinfo(ID, jsonObj) {
 								}
 							}
 						}
-					
+
+                        //Check if buoy has wave height and GLCFS data exist. If not print forecasted wave height and allow user to view forecast wave height. 
+                        if ($.inArray('WVHT', jsonObj[i].obsID) < 0 && jsonObj[i].GLCFS) { //returns 1 if exist and -1 if doesn't exist
+                            //var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD', 'IceFract', 'IceThick'];
+                            var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD'];
+                            var parameterUnits = [depthUnits, '&#176', 'sec', '%', depthUnits];
+                            var longNames = ['Wave Height', 'Wave Direction', 'Wave Period', 'Ice Concentration', 'Ice Thickness'];
+                            var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
+                            var count = 0;
+                            for (g = 0; g < parameterOrder.length; g++) {
+                                for (var key in jsonObj[i].GLCFS) {
+                                    if (key === parameterOrder[g]) {
+                                        if (count == 0) {
+                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                                "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
+                                                "<td class='long_name' align=left> Forecasted " + longNames[g] + " @ " + dateNum.format("LT") + " " + tzAbbr + "</td>" +
+                                                "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].GLCFS[key]) + "</div></td>" +
+                                                "<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].GLCFS[key]) + " " + parameterUnits[g] + "</div></td>" +
+                                                "</tr>";
+                                        } else {
+                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                                "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
+                                                "<td class='long_name' align=left> Forecasted " + longNames[g] + "</td>" +
+                                                "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].GLCFS[key]) + "</div></td>" +
+                                                "<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].GLCFS[key]) + " " + parameterUnits[g] + "</div></td>" +
+                                                "</tr>";
+                                        }
+                                        count += 1
+                                        $(newRowContent).appendTo($("#realtime tbody"));
+                                    }
+                                    
+                                }
+                            }
+                        }
+
 						if (jsonObj[i].thermistorValues.length>0){
 							for (k = 0; k < jsonObj[i].thermistorValues.length; k++) {
 								if(jsonObj[i].thermistorValues[k]){		//Check if thermistor is null. If so do not write out
@@ -952,8 +995,51 @@ function loadbuoyinfo(ID, jsonObj) {
 							$('a#archive').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'buoycam','glbuoysLabel':ID,'glbuoysAction':'click_external_url'});});
 						}
 					}else{
-						$('#recovered').addClass('w3-panel w3-center w3-pale-red w3-small').append('<h6>' + jsonObj[i].longName + ' (' + ID + ') is currently unavailable.</h6>');
-					}
+						$('#recovered').addClass('w3-panel w3-center w3-pale-red w3-small').append('<h6>' + jsonObj[i].longName + ' (' + ID + ') has been recovered for 2018.</h6>');
+
+                        //Check if buoy has wave height. If not print forecasted wave height and allow user to view forecast wave height.
+                        if ($.inArray('WVHT', jsonObj[i].obsID) < 0 && jsonObj[i].GLCFS) { //returns 1 if exist and -1 if doesn't exist
+                            moment.tz.setDefault(jsonObj[i].timeZone); //set time zone from metadata
+                            var tzAbbr = moment.tz(jsonObj[i].timeZone).format('z');	//define time zone abbreviation for station update time
+                            Highcharts.setOptions({
+                                global: {
+                                    timezone: jsonObj[i].timeZone
+                                }
+                            });
+                            var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
+                            var columnSpan = 1;
+                            //var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD', 'IceFract', 'IceThick'];
+                            var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD'];
+                            var parameterUnits = [depthUnits, '&#176', 'sec', '%', depthUnits];
+                            var longNames = ['Wave Height', 'Wave Direction', 'Wave Period', 'Ice Concentration', 'Ice Thickness'];
+                            var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
+                            var count = 0;
+                            for (g = 0; g < parameterOrder.length; g++) {
+                                for (var key in jsonObj[i].GLCFS) {
+                                    if (key === parameterOrder[g]) {
+                                        if (count == 0) {
+                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                                "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
+                                                "<td class='long_name' align=left> Forecasted " + longNames[g] + " @ " + dateNum.format("LT") + " " + tzAbbr + "</td>" +
+                                                "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].GLCFS[key]) + "</div></td>" +
+                                                "<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].GLCFS[key]) + " " + parameterUnits[g] + "</div></td>" +
+                                                "</tr>";
+                                        } else {
+                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                                "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
+                                                "<td class='long_name' align=left> Forecasted " + longNames[g] + "</td>" +
+                                                "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].GLCFS[key]) + "</div></td>" +
+                                                "<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].GLCFS[key]) + " " + parameterUnits[g] + "</div></td>" +
+                                                "</tr>";
+                                        }
+                                        count += 1
+                                        $(newRowContent).appendTo($("#realtime tbody"));
+                                    }
+
+                                }
+                            }
+                        }
+                    }
 
                     //Show downloand, plot, and export tools if buoy is part of GLOS
                     if (jsonObj[i].metaGLOS) {
@@ -1064,33 +1150,33 @@ function reloadbuoyinfo() {
 	for (i = 0; i < jsonObj.length; i++) {
 				if (jsonObj[i].id == ID) {
 					console.log(jsonObj[i]);
-					if(jsonObj[i].obsUnits){
-						var dateNum = moment(jsonObj[i].updateTime);
+                    if (jsonObj[i].obsUnits) {
+                        var dateNum = moment(jsonObj[i].updateTime);
                         var hourDiff = moment.duration(currentTime.diff(dateNum)).asHours();
                         var tzAbbr = moment.tz(jsonObj[i].timeZone).format('z');	//define time zone abbreviation for station update time
-						if (hourDiff < 6) {  //assumes time from json is local. Checks if data is less than 1 hour old
-							//document.getElementById("stationTime").style.color = "#337ab7"
+                        if (hourDiff < 6) {  //assumes time from json is local. Checks if data is less than 1 hour old
+                            //document.getElementById("stationTime").style.color = "#337ab7"
                             //document.getElementById("stationTime").innerHTML = "" + dateNum.format("LT") + " EDT&nbsp;&nbsp;" + dateNum.format("ddd, MMM D") + ""
                             var stationDateTime = "" + dateNum.format("LT") + " " + tzAbbr + "&nbsp;&nbsp;" + dateNum.format("ddd, MMM D") + "";
                             $("#stationTime").html(stationDateTime);
                             $("#stationTime").css('color', '#337ab7');
-						}
-						else if (hourDiff > 6 && hourDiff < 24) {  //assumes time from json is local. Checks if data is less than 6 hour old
-							//document.getElementById("stationTime").style.color = "#FFC900"G
+                        }
+                        else if (hourDiff > 6 && hourDiff < 24) {  //assumes time from json is local. Checks if data is less than 6 hour old
+                            //document.getElementById("stationTime").style.color = "#FFC900"G
                             //document.getElementById("stationTime").innerHTML = "" + dateNum.format("LT") + " EDT&nbsp;&nbsp;" + dateNum.format("ddd, MMM D") + " (>6 hours ago)"
                             var stationDateTime = "" + dateNum.format("LT") + " " + tzAbbr + "&nbsp;&nbsp;" + dateNum.format("ddd, MMM D") + " (>6 hours ago)";
                             $("#stationTime").html(stationDateTime);
                             $("#stationTime").css('color', '#FFC900');
-						}
-						else {
-							//document.getElementById("stationTime").style.color = "#f70000"
+                        }
+                        else {
+                            //document.getElementById("stationTime").style.color = "#f70000"
                             //document.getElementById("stationTime").innerHTML = "" + dateNum.format("LT") + " EDT&nbsp;&nbsp;" + dateNum.format("ddd, MMM D") + " (>1 day ago)"
                             var stationDateTime = "" + dateNum.format("LT") + " " + tzAbbr + "&nbsp;&nbsp;" + dateNum.format("ddd, MMM D") + " (>1 day ago)";
                             $("#stationTime").html(stationDateTime);
                             $("#stationTime").css('color', '#f70000');
-						}
-						var columnSpan  = 1;
-						if (jsonObj[i].thermistorValues.length>1 && jsonObj[i].thermistorValues[0]){ //Check to make sure there are multiple temperature nodes and first two depths are not missing
+                        }
+                        var columnSpan = 1;
+                        if (jsonObj[i].thermistorValues.length > 1 && jsonObj[i].thermistorValues[0]) { //Check to make sure there are multiple temperature nodes and first two depths are not missing
                             columnSpan = 2;
 
                             var tempStringProfile = '<div id="heatMap" class="w3-hide"><div id="TempStringHighMap" style="min-width: 310px; height: 400px;"></div>';
@@ -1105,8 +1191,8 @@ function reloadbuoyinfo() {
                             $('#ThermistorLine').append(tempStringLines);
                             TempStringGrab(ID);
 
-						} else if(jsonObj[i].thermistorValues.length==1){		//Add if statement if buoy owners issues surface temp as 'tp001' and not 'wtmp'
-							columnSpan = 2;
+                        } else if (jsonObj[i].thermistorValues.length == 1) {		//Add if statement if buoy owners issues surface temp as 'tp001' and not 'wtmp'
+                            columnSpan = 2;
                         }
 
                         if ($.inArray('CurSpd', jsonObj[i].obsID) > 0) {       //Check if there is any current data
@@ -1114,87 +1200,160 @@ function reloadbuoyinfo() {
                             ADCPfig(ID);
                         }
 
-                        var parameterOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'MAXWVHT', 'WPRD', 'MWDIR', 'MWD', 'APD', 'CurSpd', 'CurDir', 'ATMP', 'PRES', 'SRAD','PAR','DEWP', 'pH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI', 'fDOM', 'VBAT'];
-						for (g = 0; g < parameterOrder.length; g++){
-							for (j = 0; j < jsonObj[i].obsLongName.length; j++) {
-								if(jsonObj[i].obsID[j]===parameterOrder[g] && jsonObj[i].obsValues[j]!==null && jsonObj[i].obsValues[j]!=='NULL'){
-									var toFixedValue = [];
-									if (jsonObj[i].obsValues[j]<1){toFixedValue = 2;}else{toFixedValue = 1;}	//Add an additional significant digit if value is less than 1. 
-									if (jsonObj[i].obsUnits[j].charAt(0) !== '°') {
-										var newRowContent = "<tr id='" + jsonObj[i].obsID[j] + "' onclick=PastForecastGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
-																"<td class='graph' width='20px' colspan='"+columnSpan+"'><div align=right><i class='material-icons'>timeline</i></div></td>" +
-																"<td class='long_name' align=left>" + jsonObj[i].obsLongName[j] + "</td>" +
-																"<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].obsValues[j]) + "</div></td>" +
-																"<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].obsValues[j]) + " " + jsonObj[i].obsUnits[j] + "</div></td>" +
-																"</tr>";
-									}else if(jsonObj[i].obsUnits[j] == '°') {
-										var cardinalDir = DegreeToCardinal(jsonObj[i].obsValues[j]);
-										var newRowContent = "<tr id='" + jsonObj[i].obsID[j] + "' onclick=PastForecastGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
-																"<td class='graph' width='20px' colspan='"+columnSpan+"'><div align=right><i class='material-icons'>timeline</i></div></td>" +
-																"<td class='long_name' align=left>" + jsonObj[i].obsLongName[j] + "</td>" +
-																"<td colspan='2' style='text-align:center;'>" + cardinalDir + " (" + Math.round(jsonObj[i].obsValues[j]) + "°)</td>" +
-																"</tr>";
-									}else{
-										var newRowContent = "<tr id='" + jsonObj[i].obsID[j] + "' onclick=PastForecastGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
-																"<td class='graph' width='20px' colspan='"+columnSpan+"'><div align=right><i class='material-icons'>timeline</i></div></td>" +
-																"<td class='long_name' align=left>" + jsonObj[i].obsLongName[j] + "</td>" +
-																"<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].obsValues[j]) + "</div></td>" +
-																"<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].obsValues[j]) + "" + jsonObj[i].obsUnits[j] + "</div></td>" +
-																"</tr>";
+                        var parameterOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'MAXWVHT', 'WPRD', 'MWDIR', 'MWD', 'APD', 'CurSpd', 'CurDir', 'ATMP', 'PRES', 'SRAD', 'PAR', 'DEWP', 'pH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI', 'fDOM', 'VBAT'];
+                        for (g = 0; g < parameterOrder.length; g++) {
+                            for (j = 0; j < jsonObj[i].obsLongName.length; j++) {
+                                if (jsonObj[i].obsID[j] === parameterOrder[g] && jsonObj[i].obsValues[j] !== null && jsonObj[i].obsValues[j] !== 'NULL') {
+                                    var toFixedValue = [];
+                                    if (jsonObj[i].obsValues[j] < 1) { toFixedValue = 2; } else { toFixedValue = 1; }	//Add an additional significant digit if value is less than 1. 
+                                    if (jsonObj[i].obsUnits[j].charAt(0) !== '°') {
+                                        var newRowContent = "<tr id='" + jsonObj[i].obsID[j] + "' onclick=PastForecastGrab($(this).closest('tr').attr('id'),'" + ID + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                            "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
+                                            "<td class='long_name' align=left>" + jsonObj[i].obsLongName[j] + "</td>" +
+                                            "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].obsValues[j]) + "</div></td>" +
+                                            "<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].obsValues[j]) + " " + jsonObj[i].obsUnits[j] + "</div></td>" +
+                                            "</tr>";
+                                    } else if (jsonObj[i].obsUnits[j] == '°') {
+                                        var cardinalDir = DegreeToCardinal(jsonObj[i].obsValues[j]);
+                                        var newRowContent = "<tr id='" + jsonObj[i].obsID[j] + "' onclick=PastForecastGrab($(this).closest('tr').attr('id'),'" + ID + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                            "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
+                                            "<td class='long_name' align=left>" + jsonObj[i].obsLongName[j] + "</td>" +
+                                            "<td colspan='2' style='text-align:center;'>" + cardinalDir + " (" + Math.round(jsonObj[i].obsValues[j]) + "°)</td>" +
+                                            "</tr>";
+                                    } else {
+                                        var newRowContent = "<tr id='" + jsonObj[i].obsID[j] + "' onclick=PastForecastGrab($(this).closest('tr').attr('id'),'" + ID + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                            "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
+                                            "<td class='long_name' align=left>" + jsonObj[i].obsLongName[j] + "</td>" +
+                                            "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].obsValues[j]) + "</div></td>" +
+                                            "<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].obsValues[j]) + "" + jsonObj[i].obsUnits[j] + "</div></td>" +
+                                            "</tr>";
                                     }
                                     $('tr#' + jsonObj[i].obsID[j]).replaceWith(newRowContent);
                                     //$(newRowContent).replaceWith($("#realtime tbody"));
-								}
-							}
-						}
-					
-						if (jsonObj[i].thermistorValues.length>0){
-							for (k = 0; k < jsonObj[i].thermistorValues.length; k++) {
-								if(jsonObj[i].thermistorValues[k]){		//Check if thermistor is null. If so do not write out
-									if (k == 0) {
-										var newRowContent1 = "<tr id='tp0" + (k) + "'>" +
-																		 "<td style='cursor:pointer; width:10px;'><div class='TAccord' align=right><i onclick=$('.TAccord').toggle();dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'temp_string','glbuoysLabel':'water_temp','glbuoysAction':'expand'}); class='material-icons'>remove</i></div>" +
-																		 "<div class='TAccord' style='display:none' align=right><i onclick=$('.TAccord').toggle();dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'temp_string','glbuoysLabel':'water_temp','glbuoysAction':'collapse'}); class='material-icons'>add</i></div></td>" +
-																		 "<td class='graph' width='10px' style='cursor: pointer;'><div align=right><i class='material-icons' onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block'>timeline</i></div></td>" +
-																		 "<td class='long_name' align=left onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>Water Temp @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
-																		 "<td class='interger_value' style='padding:8px 0px;cursor: pointer;' onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block'><div align=right>" + Math.round(jsonObj[i].thermistorValues[k]) + "</div></td>" +
-																		 "<td class='float_value' style='cursor: pointer;' onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"','glbuoysAction':'popup'});document.getElementById('id01').style.display='block'><div align=left >"+ (jsonObj[i].thermistorValues[k]-Math.floor(jsonObj[i].thermistorValues[k])).toFixed(1).substring(1) + "" +tempUnits+ "</div></td>" +
-																		 "</tr>";
-										//$(newRowContent1).appendTo($("#realtime tbody"));
-                                        $('tr#tp0'+k).replaceWith(newRowContent1);
-									}	else if (k == jsonObj[i].thermistorValues.length - 1) {
-										var newRowContent2 = "<tr id='tp0" + (k) + "'onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" + 
-																		 "<td class='graph' width='20px' colspan='"+columnSpan+"'><div align=right><i class='material-icons'>timeline</i></div></td>" +
-																		 "<td class='long_name' align=left>Water Temp @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
-																		 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].thermistorValues[k]) + "</div></td>" +
-																		 "<td class='float_value'><div align=left>"+ decimalValue(jsonObj[i].thermistorValues[k]) + "" +tempUnits+ "</div></td>" +
-																		 "</tr>";
+                                }
+                            }
+                        }
+
+                        //Check if buoy has wave height. If not print forecasted wave height and allow user to view forecast wave height. 
+                        if ($.inArray('WVHT', jsonObj[i].obsID) < 0 && jsonObj[i].GLCFS) { //returns 1 if exist and -1 if doesn't exist
+                            var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
+                            var tzAbbr = moment.tz(dateNum.timeZone).format('z');	//define time zone abbreviation for station update time
+                            //var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD', 'IceFract', 'IceThick'];
+                            var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD'];
+                            var parameterUnits = [depthUnits, '&#176', 'sec', '%', depthUnits];
+                            var longNames = ['Wave Height', 'Wave Direction', 'Wave Period', 'Ice Concentration', 'Ice Thickness'];
+                            var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
+                            var count = 0;
+                            for (g = 0; g < parameterOrder.length; g++) {
+                                for (var key in jsonObj[i].GLCFS) {
+                                    if (key === parameterOrder[g]) {
+                                        if (count == 0) {
+                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                                "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
+                                                "<td class='long_name' align=left> Forecasted " + longNames[g] + " @ " + dateNum.format("LT") + " " + tzAbbr + "</td>" +
+                                                "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].GLCFS[key]) + "</div></td>" +
+                                                "<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].GLCFS[key]) + " " + parameterUnits[g] + "</div></td>" +
+                                                "</tr>";
+                                        } else {
+                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                                "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
+                                                "<td class='long_name' align=left> Forecasted " + longNames[g] + "</td>" +
+                                                "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].GLCFS[key]) + "</div></td>" +
+                                                "<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].GLCFS[key]) + " " + parameterUnits[g] + "</div></td>" +
+                                                "</tr>";
+                                        }
+                                        count += 1
+                                        $('tr#' + key).replaceWith(newRowContent);
+                                    }
+
+                                }
+                            }
+                        }
+
+                        if (jsonObj[i].thermistorValues.length > 0) {
+                            for (k = 0; k < jsonObj[i].thermistorValues.length; k++) {
+                                if (jsonObj[i].thermistorValues[k]) {		//Check if thermistor is null. If so do not write out
+                                    if (k == 0) {
+                                        var newRowContent1 = "<tr id='tp0" + (k) + "'>" +
+                                            "<td style='cursor:pointer; width:10px;'><div class='TAccord' align=right><i onclick=$('.TAccord').toggle();dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'temp_string','glbuoysLabel':'water_temp','glbuoysAction':'expand'}); class='material-icons'>remove</i></div>" +
+                                            "<div class='TAccord' style='display:none' align=right><i onclick=$('.TAccord').toggle();dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'temp_string','glbuoysLabel':'water_temp','glbuoysAction':'collapse'}); class='material-icons'>add</i></div></td>" +
+                                            "<td class='graph' width='10px' style='cursor: pointer;'><div align=right><i class='material-icons' onclick=PastTempGrab($(this).closest('tr').attr('id'),'" + ID + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@" + jsonObj[i].thermistorDepths[k].toFixed(0) + "feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block'>timeline</i></div></td>" +
+                                            "<td class='long_name' align=left onclick=PastTempGrab($(this).closest('tr').attr('id'),'" + ID + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@" + jsonObj[i].thermistorDepths[k].toFixed(0) + "','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>Water Temp @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " " + depthUnits + "</td>" +
+                                            "<td class='interger_value' style='padding:8px 0px;cursor: pointer;' onclick=PastTempGrab($(this).closest('tr').attr('id'),'" + ID + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@" + jsonObj[i].thermistorDepths[k].toFixed(0) + "feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block'><div align=right>" + Math.round(jsonObj[i].thermistorValues[k]) + "</div></td>" +
+                                            "<td class='float_value' style='cursor: pointer;' onclick=PastTempGrab($(this).closest('tr').attr('id'),'" + ID + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@" + jsonObj[i].thermistorDepths[k].toFixed(0) + "','glbuoysAction':'popup'});document.getElementById('id01').style.display='block'><div align=left >" + (jsonObj[i].thermistorValues[k] - Math.floor(jsonObj[i].thermistorValues[k])).toFixed(1).substring(1) + "" + tempUnits + "</div></td>" +
+                                            "</tr>";
+                                        //$(newRowContent1).appendTo($("#realtime tbody"));
+                                        $('tr#tp0' + k).replaceWith(newRowContent1);
+                                    } else if (k == jsonObj[i].thermistorValues.length - 1) {
+                                        var newRowContent2 = "<tr id='tp0" + (k) + "'onclick=PastTempGrab($(this).closest('tr').attr('id'),'" + ID + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@" + jsonObj[i].thermistorDepths[k].toFixed(0) + "feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                            "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
+                                            "<td class='long_name' align=left>Water Temp @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " " + depthUnits + "</td>" +
+                                            "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].thermistorValues[k]) + "</div></td>" +
+                                            "<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].thermistorValues[k]) + "" + tempUnits + "</div></td>" +
+                                            "</tr>";
                                         //$(newRowContent2).appendTo($("#realtime tbody"));
                                         $('tr#tp0' + k).replaceWith(newRowContent2);
-									} else {
-										var moreTemps = //"<tr class='TAccord' style='display:none' id='tp0" + (k) + "'onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;''>" + 
-																		"<tr class='TAccord' id='tp0" + (k) + "'onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;''>" + 
-																		"<td class='graph' width='15px' colspan='"+columnSpan+"'><div align=right><i class='material-icons' onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');document.getElementById('id01').style.display='block' style='cursor: pointer;'>timeline</i></div></td>" +
-																		 "<td class='long_name' align=left>Water Temp @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " "+depthUnits+"</td>" +
-																		 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].thermistorValues[k]) + "</div></td>" +
-																		 "<td class='float_value'><div align=left>"+ decimalValue(jsonObj[i].thermistorValues[k]) + "" +tempUnits+ "</div></td>" +
-																		 "</tr>";
+                                    } else {
+                                        var moreTemps = //"<tr class='TAccord' style='display:none' id='tp0" + (k) + "'onclick=PastTempGrab($(this).closest('tr').attr('id'),'"+ID+"');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@"+jsonObj[i].thermistorDepths[k].toFixed(0)+"feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;''>" + 
+                                            "<tr class='TAccord' id='tp0" + (k) + "'onclick=PastTempGrab($(this).closest('tr').attr('id'),'" + ID + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'water_temp@" + jsonObj[i].thermistorDepths[k].toFixed(0) + "feet','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;''>" +
+                                            "<td class='graph' width='15px' colspan='" + columnSpan + "'><div align=right><i class='material-icons' onclick=PastTempGrab($(this).closest('tr').attr('id'),'" + ID + "');document.getElementById('id01').style.display='block' style='cursor: pointer;'>timeline</i></div></td>" +
+                                            "<td class='long_name' align=left>Water Temp @ " + jsonObj[i].thermistorDepths[k].toFixed(0) + " " + depthUnits + "</td>" +
+                                            "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].thermistorValues[k]) + "</div></td>" +
+                                            "<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].thermistorValues[k]) + "" + tempUnits + "</div></td>" +
+                                            "</tr>";
                                         //$(moreTemps).appendTo($("#realtime tbody"));
-                                        $('tr#tp0'+k).replaceWith(moreTemps);
-									}
-								}
-							}
-						}
-					
+                                        $('tr#tp0' + k).replaceWith(moreTemps);
+                                    }
+                                }
+                            }
+                        }
+
                         if (jsonObj[i].webcamSrc.length > 0) {
-                           $('#BuoyCamPic').append('<video id="my-video" class="video-js vjs-default-skin vjs-fluid" controls preload="none" poster=../media/' + jsonObj[i].webcamSrc +' data-setup="{}">');
-                           $('#BuoyCamPic video').append($('<source>').attr("src", jsonObj[i].webcamSrc[0].slice(0,-10)+".mp4").attr("type","video/mp4"));
-                           $('#BuoyCamPic video').append('<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>');
-                           $('#BuoyCamPic').append('</video>');
-                           $('body').append('<script src="https://vjs.zencdn.net/6.2.7/video.js"></script>');
-							$('#my-video').on('loadeddata', function (e) {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'buoycam','glbuoysLabel':ID,'glbuoysAction':'play_buoycam'});});
-						}
-					}
+                            $('#BuoyCamPic').append('<video id="my-video" class="video-js vjs-default-skin vjs-fluid" controls preload="none" poster=../media/' + jsonObj[i].webcamSrc + ' data-setup="{}">');
+                            $('#BuoyCamPic video').append($('<source>').attr("src", jsonObj[i].webcamSrc[0].slice(0, -10) + ".mp4").attr("type", "video/mp4"));
+                            $('#BuoyCamPic video').append('<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>');
+                            $('#BuoyCamPic').append('</video>');
+                            $('body').append('<script src="https://vjs.zencdn.net/6.2.7/video.js"></script>');
+                            $('#my-video').on('loadeddata', function (e) { dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'buoycam', 'glbuoysLabel': ID, 'glbuoysAction': 'play_buoycam' }); });
+                        }
+                    }
+                    else {
+                        //Check if buoy has wave height. If not print forecasted wave height and allow user to view forecast wave height. 
+                        if ($.inArray('WVHT', jsonObj[i].obsID) < 0 && jsonObj[i].GLCFS) { //returns 1 if exist and -1 if doesn't exist
+                            var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
+                            var tzAbbr = moment.tz(dateNum.timeZone).format('z');	//define time zone abbreviation for station update time
+                            //var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD', 'IceFract', 'IceThick'];
+                            var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD'];
+                            var parameterUnits = [depthUnits, '&#176', 'sec', '%', depthUnits];
+                            var longNames = ['Wave Height', 'Wave Direction', 'Wave Period', 'Ice Concentration', 'Ice Thickness'];
+                            var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
+                            var count = 0;
+                            for (g = 0; g < parameterOrder.length; g++) {
+                                for (var key in jsonObj[i].GLCFS) {
+                                    if (key === parameterOrder[g]) {
+                                        if (count == 0) {
+                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                                "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
+                                                "<td class='long_name' align=left> Forecasted " + longNames[g] + " @ " + dateNum.format("LT") + " " + tzAbbr + "</td>" +
+                                                "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].GLCFS[key]) + "</div></td>" +
+                                                "<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].GLCFS[key]) + " " + parameterUnits[g] + "</div></td>" +
+                                                "</tr>";
+                                        } else {
+                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                                "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
+                                                "<td class='long_name' align=left> Forecasted " + longNames[g] + "</td>" +
+                                                "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].GLCFS[key]) + "</div></td>" +
+                                                "<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].GLCFS[key]) + " " + parameterUnits[g] + "</div></td>" +
+                                                "</tr>";
+                                        }
+                                        count += 1
+                                        $('tr#' + key).replaceWith(newRowContent);
+                                    }
+
+                                }
+                            }
+                        }
+                    }
 				}	
       }
     });
