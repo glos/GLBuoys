@@ -438,14 +438,14 @@ plotData = function (objData) {
                     }
                 }
 
-                //Determine if the parameters have the same description. Reset sameDesc after moving to new parameter.
-                if (seriesCt == 0 || objLocParam == 0) {
+                //Determine if the parameters have the same description. 
+                if (seriesCt == 0) {
                     var sameDesc = false;
                     var paramDesc = objParam.desc;
                 }
                 else {
-                    if (paramDesc === objParam.desc) {var sameDesc = true;}
-                    else {sameDesc = false;}
+                    if (paramDesc === objParam.desc) { var sameDesc = true;}
+                    else { paramDesc = objParam.desc;}
                 }
 
                 // Add to series object:
