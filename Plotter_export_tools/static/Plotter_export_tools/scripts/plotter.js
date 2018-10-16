@@ -379,6 +379,9 @@ plotData = function (objData) {
                 _objPlotSeries.params = {}
             }
 
+            //Count parameters for an station
+            var objLocParam = 0;
+
             // Add axis for each parameter:
             for (param_id in objLoc.params) {
                 var objParam = objLoc.params[param_id];
@@ -391,6 +394,7 @@ plotData = function (objData) {
                     seriesName += ' (' + arr[1] + ')';
                 }
 
+                objLocParam += 1;
                 var series_data = [];
                 var unit = [];
                 var val_arr = [];
@@ -434,6 +438,16 @@ plotData = function (objData) {
                     }
                 }
 
+                //Determine if the parameters have the same description. Reset sameDesc after moving to new parameter.
+                if (seriesCt == 0 || objLocParam == 0) {
+                    var sameDesc = false;
+                    var paramDesc = objParam.desc;
+                }
+                else {
+                    if (paramDesc === objParam.desc) {var sameDesc = true;}
+                    else {sameDesc = false;}
+                }
+
                 // Add to series object:
                 seriesCt += 1;
                 _objPlotSeries[seriesCt-1] = {};
@@ -462,19 +476,31 @@ plotData = function (objData) {
                 }
 
                 // Add the new series:
-                if (series_data.length > 0) {
+                // Only if the parameter description between a single station is different OR there are multiple stations with a new unique parameter then add series with yAxis
+                if ((series_data.length > 0 && sameDesc == false) || (series_data.length > 0 && loc_ct > 1 && objLocParam === 1)) {
                     hChart.addSeries({
                         yAxis: param_id,
                         type: 'line',
                         name: seriesName,
                         //color: 'blue',
                         data: series_data
-                    })
+                    });
+                }
+                //If a station has multiple parameters of the sameDesc then do not addSeries yAxis and hide the yAxis labels and title on chart for particular series
+                else if (series_data.length > 0 && sameDesc == true && axes_ct > 0) {
+                    hChart.addSeries({
+                        type: 'line',
+                        name: seriesName,
+                        data: series_data
+                    });
+                    hChart.yAxis[axes_ct].update({
+                        labels: {enabled: false},
+                        title: {text: null}
+                    });
                 }
             }
         }
     }
-
     // Update chart title:
     hChart.setTitle({ text: 'Site(s): ' + arrLocs.join(', ') });
 }
