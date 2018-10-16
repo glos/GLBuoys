@@ -53,7 +53,6 @@ function BannerNewsResponse(response) {
         return;
     }
     var data = response.getDataTable();
-    console.log(data);
 		try {
 			bannerNews = data.getValue(0,0);
 		}
@@ -84,7 +83,6 @@ function BuoyAlertsResponse(response2) {
         return;
     }
     var data = response2.getDataTable();
-    console.log(data);
 		try {
 			buoyAlert = data.getValue(0,0);
 		}
