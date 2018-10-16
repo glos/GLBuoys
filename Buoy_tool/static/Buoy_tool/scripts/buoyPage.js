@@ -53,7 +53,6 @@ function BannerNewsResponse(response) {
         return;
     }
     var data = response.getDataTable();
-    console.log(data);
 		try {
 			bannerNews = data.getValue(0,0);
 		}
@@ -84,7 +83,6 @@ function BuoyAlertsResponse(response2) {
         return;
     }
     var data = response2.getDataTable();
-    console.log(data);
 		try {
 			buoyAlert = data.getValue(0,0);
 		}
@@ -904,8 +902,8 @@ function loadbuoyinfo(ID, jsonObj) {
 
                         //Check if buoy has wave height and GLCFS data exist. If not print forecasted wave height and allow user to view forecast wave height. 
                         if ($.inArray('WVHT', jsonObj[i].obsID) < 0 && jsonObj[i].GLCFS) { //returns 1 if exist and -1 if doesn't exist
-                            //var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD', 'IceFract', 'IceThick'];
-                            var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD'];
+                            //var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD', 'IceFract', 'IceThick'];
+                            var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD'];
                             var parameterUnits = [depthUnits, '&#176', 'sec', '%', depthUnits];
                             var longNames = ['Wave Height', 'Wave Direction', 'Wave Period', 'Ice Concentration', 'Ice Thickness'];
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
@@ -914,14 +912,14 @@ function loadbuoyinfo(ID, jsonObj) {
                                 for (var key in jsonObj[i].GLCFS) {
                                     if (key === parameterOrder[g]) {
                                         if (count == 0) {
-                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'GLCFS_ "+ key +"','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
                                                 "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
                                                 "<td class='long_name' align=left> Forecasted " + longNames[g] + " @ " + dateNum.format("LT") + " " + tzAbbr + "</td>" +
                                                 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].GLCFS[key]) + "</div></td>" +
                                                 "<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].GLCFS[key]) + " " + parameterUnits[g] + "</div></td>" +
                                                 "</tr>";
                                         } else {
-                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'GLCFS_" + key +"','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
                                                 "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
                                                 "<td class='long_name' align=left> Forecasted " + longNames[g] + "</td>" +
                                                 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].GLCFS[key]) + "</div></td>" +
@@ -1008,8 +1006,8 @@ function loadbuoyinfo(ID, jsonObj) {
                             });
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
                             var columnSpan = 1;
-                            //var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD', 'IceFract', 'IceThick'];
-                            var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD'];
+                            //var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD', 'IceFract', 'IceThick'];
+                            var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD'];
                             var parameterUnits = [depthUnits, '&#176', 'sec', '%', depthUnits];
                             var longNames = ['Wave Height', 'Wave Direction', 'Wave Period', 'Ice Concentration', 'Ice Thickness'];
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
@@ -1018,14 +1016,14 @@ function loadbuoyinfo(ID, jsonObj) {
                                 for (var key in jsonObj[i].GLCFS) {
                                     if (key === parameterOrder[g]) {
                                         if (count == 0) {
-                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'GLCFS_ " + key +"','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
                                                 "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
                                                 "<td class='long_name' align=left> Forecasted " + longNames[g] + " @ " + dateNum.format("LT") + " " + tzAbbr + "</td>" +
                                                 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].GLCFS[key]) + "</div></td>" +
                                                 "<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].GLCFS[key]) + " " + parameterUnits[g] + "</div></td>" +
                                                 "</tr>";
                                         } else {
-                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'GLCFS_ " + key +"','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
                                                 "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
                                                 "<td class='long_name' align=left> Forecasted " + longNames[g] + "</td>" +
                                                 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].GLCFS[key]) + "</div></td>" +
@@ -1238,8 +1236,8 @@ function reloadbuoyinfo() {
                         if ($.inArray('WVHT', jsonObj[i].obsID) < 0 && jsonObj[i].GLCFS) { //returns 1 if exist and -1 if doesn't exist
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
                             var tzAbbr = moment.tz(dateNum.timeZone).format('z');	//define time zone abbreviation for station update time
-                            //var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD', 'IceFract', 'IceThick'];
-                            var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD'];
+                            //var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD', 'IceFract', 'IceThick'];
+                            var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD'];
                             var parameterUnits = [depthUnits, '&#176', 'sec', '%', depthUnits];
                             var longNames = ['Wave Height', 'Wave Direction', 'Wave Period', 'Ice Concentration', 'Ice Thickness'];
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
@@ -1248,14 +1246,14 @@ function reloadbuoyinfo() {
                                 for (var key in jsonObj[i].GLCFS) {
                                     if (key === parameterOrder[g]) {
                                         if (count == 0) {
-                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'GLCFS_ " + key +"','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
                                                 "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
                                                 "<td class='long_name' align=left> Forecasted " + longNames[g] + " @ " + dateNum.format("LT") + " " + tzAbbr + "</td>" +
                                                 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].GLCFS[key]) + "</div></td>" +
                                                 "<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].GLCFS[key]) + " " + parameterUnits[g] + "</div></td>" +
                                                 "</tr>";
                                         } else {
-                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'GLCFS_ " + key +"','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
                                                 "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
                                                 "<td class='long_name' align=left> Forecasted " + longNames[g] + "</td>" +
                                                 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].GLCFS[key]) + "</div></td>" +
@@ -1322,8 +1320,8 @@ function reloadbuoyinfo() {
                         if ($.inArray('WVHT', jsonObj[i].obsID) < 0 && jsonObj[i].GLCFS) { //returns 1 if exist and -1 if doesn't exist
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
                             var tzAbbr = moment.tz(dateNum.timeZone).format('z');	//define time zone abbreviation for station update time
-                            //var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD', 'IceFract', 'IceThick'];
-                            var parameterOrder = ['WVHGT', 'WDIR1', 'DOMPD'];
+                            //var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD', 'IceFract', 'IceThick'];
+                            var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD'];
                             var parameterUnits = [depthUnits, '&#176', 'sec', '%', depthUnits];
                             var longNames = ['Wave Height', 'Wave Direction', 'Wave Period', 'Ice Concentration', 'Ice Thickness'];
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
@@ -1332,14 +1330,14 @@ function reloadbuoyinfo() {
                                 for (var key in jsonObj[i].GLCFS) {
                                     if (key === parameterOrder[g]) {
                                         if (count == 0) {
-                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'GLCFS_ " + key +"','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
                                                 "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
                                                 "<td class='long_name' align=left> Forecasted " + longNames[g] + " @ " + dateNum.format("LT") + " " + tzAbbr + "</td>" +
                                                 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].GLCFS[key]) + "</div></td>" +
                                                 "<td class='float_value'><div align=left>" + decimalValue(jsonObj[i].GLCFS[key]) + " " + parameterUnits[g] + "</div></td>" +
                                                 "</tr>";
                                         } else {
-                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':$(this).closest('tr').attr('id'),'glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
+                                            var newRowContent = "<tr id='" + key + "' onclick=ForecastGrab($(this).closest('tr').attr('id'),'" + ID + "','" + parameterUnits[g] + "');dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'graph','glbuoysLabel':'GLCFS_ " + key +"','glbuoysAction':'popup'});document.getElementById('id01').style.display='block' style='cursor: pointer;'>" +
                                                 "<td class='graph' width='20px' colspan='" + columnSpan + "'><div align=right><i class='material-icons'>timeline</i></div></td>" +
                                                 "<td class='long_name' align=left> Forecasted " + longNames[g] + "</td>" +
                                                 "<td class='interger_value 'style='padding:8px 0px'><div align=right>" + intValue(jsonObj[i].GLCFS[key]) + "</div></td>" +
