@@ -167,11 +167,11 @@ function loadBuoySummary(){
 									ErieRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Data older than 6 hours</i></td></tr>';
 								}
 							}else{
-								ErieRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Currently unavailable</i></td></tr>';
+								ErieRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
 							}
 						} catch (err) {
-							ErieRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Currently unavailable</i></td></tr>';
-						}
+							ErieRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
+                        }
 					}
 					else if (option.lake == "MI") {
 						$('#MichiganAcc').append($('<a>').click(function() { PassStation(option.id,option.lat,option.lon);dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':option.id,'glbuoysAction':'click internal url'});}).text(option.id).attr("style",'cursor:pointer')); //Remove when using one buoy.html
@@ -191,10 +191,10 @@ function loadBuoySummary(){
 									MichiganRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Data older than 6 hours</i></td></tr>';
 								}
 							}else{
-								MichiganRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Currently unavailable</i></td></tr>';
+								MichiganRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
 							}
 						} catch (err) {
-							MichiganRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Currently unavailable</i></td></tr>';
+							MichiganRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
 						}
 					}
 					else if (option.lake == "HU") {
@@ -215,10 +215,10 @@ function loadBuoySummary(){
 									HuronRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Data older than 6 hours</i></td></tr>';
 								}
 							}else{
-								HuronRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Currently unavailable</i></td></tr>';
+								HuronRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
 							}
 						} catch (err) {
-							HuronRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Currently unavailable</i></td></tr>';
+							HuronRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
 						}
 					}
 					else if (option.lake == "SUP") {
@@ -239,10 +239,10 @@ function loadBuoySummary(){
 									SuperiorRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Data older than 6 hours</i></td></tr>';
 								}
 							}else{
-								SuperiorRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Currently unavailable</i></td></tr>';
+								SuperiorRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
 							}
 						} catch (err) {
-							SuperiorRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Currently unavailable</i></td></tr>';
+							SuperiorRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
 						}
 					}
 					else if (option.lake == "ON") {
@@ -263,10 +263,10 @@ function loadBuoySummary(){
 									OntarioRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Data older than 6 hours</i></td></tr>';
 								}
 							}else{
-								OntarioRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Currently unavailable</i></td></tr>';
+								OntarioRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
 							}
 						} catch (err) {
-							OntarioRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Currently unavailable</i></td></tr>';
+							OntarioRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
 						}
                     }
                     else if (option.lake == "Other") {
@@ -287,10 +287,10 @@ function loadBuoySummary(){
                                     otherRows += '<tr onclick=PassStation("' + option.id + '",' + option.lat + ',' + option.lon + ');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"' + option.id + '","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>' + checkAltID(option) + '</td><td>' + option.longName + '</td><td>' + option.buoyOwners + '</td><td class=w3-center colspan=5><i>Data older than 6 hours</i></td></tr>';
                                 }
                             } else {
-                                otherRows += '<tr onclick=PassStation("' + option.id + '",' + option.lat + ',' + option.lon + ');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"' + option.id + '","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>' + checkAltID(option) + '</td><td>' + option.longName + '</td><td>' + option.buoyOwners + '</td><td class=w3-center colspan=5><i>Currently unavailable</i></td></tr>';
+                                otherRows += '<tr onclick=PassStation("' + option.id + '",' + option.lat + ',' + option.lon + ');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"' + option.id + '","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>' + checkAltID(option) + '</td><td>' + option.longName + '</td><td>' + option.buoyOwners + '</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
                             }
                         } catch (err) {
-                            otherRows += '<tr onclick=PassStation("' + option.id + '",' + option.lat + ',' + option.lon + ');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"' + option.id + '","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>' + checkAltID(option) + '</td><td>' + option.longName + '</td><td>' + option.buoyOwners + '</td><td class=w3-center colspan=5><i>Currently unavailable</i></td></tr>';
+                            otherRows += '<tr onclick=PassStation("' + option.id + '",' + option.lat + ',' + option.lon + ');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"' + option.id + '","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>' + checkAltID(option) + '</td><td>' + option.longName + '</td><td>' + option.buoyOwners + '</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
                         }
                     }
 				}
