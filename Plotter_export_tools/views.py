@@ -168,11 +168,13 @@ def download_data(request):
         # convert to English units
         if (unit_type=='eng'):
             for loc in lst_locs:
+                dctLoc = dct_response['locations'][loc]
+
                 for param in lst_params:
-                    newvals, newunit = metricToEnglish(dct_response[loc]['params'][param]['values'],
-                                        dct_response[loc]['params'][param]['units'])
-                    dct_response[loc]['params'][param]['values'] = newvals
-                    dct_response[loc]['params'][param]['units'] = newunit
+                    newvals, newunit = metricToEnglish(dctLoc['params'][param]['values'],
+                                        dctLoc['params'][param]['units'])
+                    dctLoc['params'][param]['values'] = newvals
+                    dctLoc['params'][param]['units'] = newunit
 
         # source: http://thepythondjango.com/download-data-csv-excel-file-in-django/
         if file_type=='csv':
@@ -186,25 +188,27 @@ def download_data(request):
             #response.write(u'\ufeff'.encode('utf8'))
 
             for loc in lst_locs:
+                dctLoc = dct_response['locations'][loc]
+
                 writer.writerow([smart_str(loc)])
-                numRec = len(dct_response[loc]['dattim'])
+                numRec = len(dctLoc['dattim'])
 
                 if (len(lst_params) > 0 and numRec > 0):
                     headColumns=['Date/Time (UTC)']
 
                     for param in lst_params:
-                        param_w_units= param + " (" + dct_response[loc]['params'][param]['units'] + ")"
+                        param_w_units= param + " (" + dctLoc['params'][param]['units'] + ")"
                         headColumns.append(param_w_units)
                     
                     writer.writerow(headColumns)
 
                     for i in range(numRec):
-                        dattim = dct_response[loc]['dattim'][i]
+                        dattim = dctLoc['dattim'][i]
                         date_formated = dattim.strftime('%m/%d/%Y %H:%M:%S')
                         dataColumns=[date_formated]
 
                         for param in lst_params:
-                            dataColumns.append(dct_response[loc]['params'][param]['values'][i])
+                            dataColumns.append(dctLoc['params'][param]['values'][i])
 
                         writer.writerow(dataColumns)
                 else:
@@ -225,7 +229,8 @@ def download_data(request):
             wb = xlwt.Workbook(encoding='utf-8')
 
             for loc in lst_locs:
-                numRec = len(dct_response[loc]['dattim'])
+                dctLoc = dct_response['locations'][loc]
+                numRec = len(dctLoc['dattim'])
 
                 #adding sheet
                 ws=wb.add_sheet(loc)
@@ -252,7 +257,7 @@ def download_data(request):
                 if (len(lst_params) > 0 and numRec > 0):
                     # date time column
                     ws.write(row_num, col_num, 'Date/Time (UTC)', boldfont_style)
-                    for dattim in dct_response[loc]['dattim']:
+                    for dattim in dctLoc['dattim']:
                         row_num +=1
                         date_formated = dattim.strftime('%m/%d/%Y %H:%M:%S')
                         ws.write(row_num, col_num, date_formated, font_style)
@@ -261,10 +266,10 @@ def download_data(request):
                     for param in lst_params:
                         col_num += 1
                         row_num = 5
-                        param_w_units= param + " (" + dct_response[loc]['params'][param]['units'] + ")"
+                        param_w_units= param + " (" + dctLoc['params'][param]['units'] + ")"
 
                         ws.write(row_num, col_num, param_w_units, boldfont_style)
-                        for val in dct_response[loc]['params'][param]['values']:
+                        for val in dctLoc['params'][param]['values']:
                             row_num +=1
                             ws.write(row_num, col_num, val, font_style)
                 else:
