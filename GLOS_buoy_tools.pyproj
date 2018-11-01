@@ -224,7 +224,6 @@
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\ADCP_Highchart.js" />
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\bootstrap.js" />
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\bootstrap.min.js" />
-    <Content Include="Buoy_tool\static\Buoy_tool\scripts\buoy.plot.tool.js" />
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\buoyPage.js" />
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\buoy.map.js" />
     <Content Include="Buoy_tool\static\Buoy_tool\scripts\clipboard.min.js" />
@@ -278,14 +277,12 @@
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\img\glos_logo.png" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\export.js" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\highchart_export-data.js" />
-    <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\export_tool.js" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\plotter.js" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\shared.js" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\util.js" />
     <Content Include="Plotter_export_tools\templates\export.html" />
     <Content Include="Plotter_export_tools\templates\index.html" />
     <Content Include="Plotter_export_tools\static\Plotter_export_tools\css\tool.css" />
-    <Content Include="Plotter_export_tools\static\Plotter_export_tools\scripts\plotter_tool.js" />
     <Content Include="Plotter_export_tools\templates\layout_tool.html" />
     <Content Include="Plotter_export_tools\templates\plotter.html" />
     <Content Include="Buoy_tool\templates\buoy.html" />
