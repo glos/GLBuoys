@@ -315,7 +315,17 @@ queryData = function () {
         success: function (objData) {
 
             // Plot data:
-            plotData(objData);
+            if (objData.status !== 'abort') {
+                plotData(objData);
+
+            }
+
+            // Error message reporting:
+            if (objData.err_flag) {
+                if (objData.message) {
+                    showMessage(_strTitle, objData.message);
+                }
+            }
 
             // Hide preloader:
             $('.preloader').fadeOut("slow");
@@ -350,14 +360,14 @@ plotData = function (objData) {
     var point_ct = 0
     var objLoc = {};
 
-    for (loc_id in objData) {
-        objLoc = objData[loc_id];
+    for (loc_id in objData.locations) {
+        objLoc = objData.locations[loc_id];
         point_ct += objLoc.dattim.length;
     }
 
     if (point_ct === 0) {
         showMessage(_strTitle, 'No data were found for this date range for the selected location(s) and parameter(s). ' +
-            'Please note that this viewer does not support NOAA NDBC buoys that are not directly supported in the GLOS DMAC.')
+            'Please note that this viewer does not support NOAA NDBC buoys that are not directly supported in the GLOS DMAC.');
     }
 
     // Create chart series:
@@ -365,8 +375,8 @@ plotData = function (objData) {
     var arrLocs = [];
     var seriesCt = 0;
 
-    for (loc_id in objData) {
-        objLoc = objData[loc_id];
+    for (loc_id in objData.locations) {
+        objLoc = objData.locations[loc_id];
 
         if (objLoc.dattim.length > 0) {
             arrLocs.push(loc_id);
