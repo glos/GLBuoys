@@ -107,7 +107,7 @@ def process_interval_avg(dct_response, avg_ivld):
                 dct_data[param]['desc'] = param
 
                 try:
-                    lst_val=[val.item() for val in df_avg[param]]
+                    lst_val=[val for val in df_avg[param]]
                 except Exception as e:
                     dct_response_avg['err_flag'] = True
                     dct_response_avg['status'] = 'normal'
