@@ -859,7 +859,7 @@ setDateRange = function () {
 
     $('#date-start').val(formatDate(d_start, 'mm/dd/yyyy'));
     $('#date-end').val(formatDate(d_end, 'mm/dd/yyyy'));
-}
+};
 
 formatDate = function (date, fmt) {
     var d = new Date(date),
@@ -880,7 +880,7 @@ formatDate = function (date, fmt) {
         case ('yyyy-mm-dd'): return [year, month_2d, day_2d].join('-');
         default: return [month_1d, day_1d, year].join('/');
     }
-}
+};
 
 formatDateTime = function (dateVal) {
     // Returns formatted date/time based on UTC
@@ -896,7 +896,7 @@ formatDateTime = function (dateVal) {
     d.getUTCFullYear()].join('/') + ' ' +
         [hour, minute, second].join(':');
     return dformat;
-}
+};
 
 Date.daysBetween = function (date1, date2) {
     //Get 1 day in milliseconds
@@ -912,6 +912,38 @@ Date.daysBetween = function (date1, date2) {
     // Convert back to days and return
     return Math.round(difference_ms / one_day);
 };
+
+formatValue = function (val) {
+
+    if (isNaN(val)) {
+        return val;
+    } else {
+        absVal = Math.abs(val);
+
+        if (absVal === 0.0) {
+            return val.toFixed(0);
+        } else if (absVal <= 0.001) {
+            return val.toExponential(3);
+        } else if (absVal <= 0.01) {
+            return val.toFixed(6);
+        } else if (absVal <= 0.1) {
+            return val.toFixed(5);
+        } else if (absVal <= 1.0) {
+            return val.toFixed(4);
+        } else if (absVal <= 10.0) {
+            return val.toFixed(3);
+        } else if (absVal <= 100.0) {
+            return val.toFixed(2);
+        } else if (absVal <= 1000.0) {
+            return val.toFixed(1);
+        } else if (absVal >= 1000000.0) {
+            return val.toExponential(3);
+        } else {
+            return val.toFixed(0);
+        }
+    }
+};
+
 
 // Polyfill for Internet Explorer (added-2016/07/08):
 Number.isInteger = Number.isInteger || function (value) {
