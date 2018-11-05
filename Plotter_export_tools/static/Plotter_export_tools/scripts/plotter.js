@@ -38,41 +38,48 @@ $(function () {
 
             // Top header row:
             strHTML += '<thead><tr>';
-            strHTML += '<th>' + 'Date/Time (UTC)' + '</th>';
+            strHTML += '<th class="dattim">' + 'Date/Time (UTC)' + '</th>';
 
             $.each(_objPlotSeries.params, function (param_id, objSeries) {
-                strHTML += '<th>' + objSeries.desc + '</th>';
+                var strParamDesc;
+                try {
+                    strParamDesc = objSeries.desc.replace('_', ' ');
+                } catch(err) {
+                    strParamDesc = objSeries.desc;
+                } 
+
+                strHTML += '<th>' + strParamDesc + '</th>';
             });
             strHTML += '</tr></thead>';
 
             // Body of table:
-            strHTML += '<tbody>'
+            strHTML += '<tbody>';
 
             var dattim = _objPlotSeries.dattim;
 
             for (var t = 0; t < dattim.length; t++) {
-                strHTML += '<tr>'
+                strHTML += '<tr>';
 
                 // Date/time:
-                strHTML += '<td class="center">'
+                strHTML += '<td class="center dattim">';
                 //var dt = Date.parse(dattim[t].replace('T', ' ') + ' UTC');  // Append "UTC" to avoid assumption of local time
                 var split = dattim[t].split(/[^0-9]/);
                 var isplit = [];
                 split.forEach(function (elem) { isplit.push(+elem); }); // string to integer
                 //console.log(isplit);
                 var cdate = new Date(Date.UTC(isplit[0], isplit[1] - 1, isplit[2], isplit[3], isplit[4], isplit[5], 0, 0)); //changed for Safari
-                var dt = cdate.getTime()
+                var dt = cdate.getTime();
                 strHTML += formatDateTime(dt);
-                strHTML += '</td>'
+                strHTML += '</td>';
 
                 $.each(_objPlotSeries.params, function (param_id, objSeries) {
-                    strHTML += '<td class="center">' + objSeries.values[t] + '</td>';
+                    strHTML += '<td class="center">' + formatValue(objSeries.values[t]) + '</td>';
                 });
 
-                strHTML += '</tr>'
+                strHTML += '</tr>';
             }
-            strHTML += '</tbody>'
-            strHTML += '</table>'
+            strHTML += '</tbody>';
+            strHTML += '</table>';
 
             // Open dialog:
             $('#dlg-ptable').dialog('option', 'title', 'Plot Data Table (first location only)');
@@ -106,9 +113,6 @@ $(function () {
         },
         credits: {
             enabled: false
-        },
-        exporting: {
-            enabled: true,
         },
         title: {
             text: ''
@@ -144,6 +148,7 @@ $(function () {
         series: [],
 
         exporting: {
+            enabled: true,
             buttons: {
                 contextButton: {
                     menuItems: [
@@ -243,7 +248,7 @@ queryData = function () {
     if (_flagLocChkbox) {
         $.each($('#lst-locs input:checked'), function (idx, elem) {
             loc_arr.push($(this).attr('id'));
-        })
+        });
 
     } else {
         $.each($('select.sel-loc'), function (idx, elem) {
@@ -254,7 +259,7 @@ queryData = function () {
                 var objLoc = _objLocs[loc_id];
                 owners[loc_id] = objLoc.buoyOwners;
             }
-        })
+        });
     }
 
     var param_arr = [];
@@ -262,14 +267,14 @@ queryData = function () {
     if (_flagParChkbox) {
         $.each($('#lst-params input:checked'), function (idx, elem) {
             param_arr.push($(this).attr('id'));
-        })
+        });
     } else {
         $.each($('select.sel-param'), function (idx, elem) {
             var param_id = $(this).val();
             if (param_id !== '' && $.inArray(param_id, param_arr) === -1) {
                 param_arr.push(param_id);
             }
-        })
+        });
     }
 
     date_start = $('#date-start').val();
@@ -315,7 +320,17 @@ queryData = function () {
         success: function (objData) {
 
             // Plot data:
-            plotData(objData);
+            if (objData.status !== 'abort') {
+                plotData(objData);
+
+            }
+
+            // Error message reporting:
+            if (objData.err_flag) {
+                if (objData.message) {
+                    showMessage(_strTitle, objData.message);
+                }
+            }
 
             // Hide preloader:
             $('.preloader').fadeOut("slow");
@@ -329,7 +344,7 @@ queryData = function () {
             alert('failed');
         }
     });
-}
+};
 
 //==================================================================================
 // Update Chart Data & Configuration:
@@ -347,17 +362,17 @@ plotData = function (objData) {
     axes_ct = -1;
 
     // Check if there are any data to plot (if not, show message):
-    var point_ct = 0
+    var point_ct = 0;
     var objLoc = {};
 
-    for (loc_id in objData) {
-        objLoc = objData[loc_id];
+    for (loc_id in objData.locations) {
+        objLoc = objData.locations[loc_id];
         point_ct += objLoc.dattim.length;
     }
 
     if (point_ct === 0) {
         showMessage(_strTitle, 'No data were found for this date range for the selected location(s) and parameter(s). ' +
-            'Please note that this viewer does not support NOAA NDBC buoys that are not directly supported in the GLOS DMAC.')
+            'Please note that this viewer does not support NOAA NDBC buoys that are not directly supported in the GLOS DMAC.');
     }
 
     // Create chart series:
@@ -365,8 +380,8 @@ plotData = function (objData) {
     var arrLocs = [];
     var seriesCt = 0;
 
-    for (loc_id in objData) {
-        objLoc = objData[loc_id];
+    for (loc_id in objData.locations) {
+        objLoc = objData.locations[loc_id];
 
         if (objLoc.dattim.length > 0) {
             arrLocs.push(loc_id);
@@ -376,7 +391,7 @@ plotData = function (objData) {
             if (loc_ct === 1) {
                 _objPlotSeries.loc_id = loc_id;
                 _objPlotSeries.dattim = objLoc.dattim;
-                _objPlotSeries.params = {}
+                _objPlotSeries.params = {};
             }
 
             //Count parameters for an station
@@ -398,61 +413,64 @@ plotData = function (objData) {
                 var series_data = [];
                 var unit = [];
                 var val_arr = [];
-                
+                var split, isplit = [];
+                var t, cdate, dt;
+
                 if ($('#sel-units').val() === 'met') {
                     unit = objLoc.params[param_id].units;
-                    for (var t = 0; t < objLoc.dattim.length; t++) {
+                    for (t = 0; t < objLoc.dattim.length; t++) {
 
                         //var dt = Date.parse(objLoc.dattim[t].replace('T',' ') + ' UTC');  // Append "UTC" to avoid assumption of local time
-                        var split = objLoc.dattim[t].split(/[^0-9]/);
-                        var isplit = [];
+                        split = objLoc.dattim[t].split(/[^0-9]/);
+                        isplit = [];
                         split.forEach(function (elem) { isplit.push(+elem); }); // string to integer
                         //console.log(isplit);
-                        var cdate = new Date(Date.UTC(isplit[0], isplit[1] - 1, isplit[2], isplit[3], isplit[4], isplit[5], 0, 0)); //changed for Safari
-                        var dt = cdate.getTime()
+                        cdate = new Date(Date.UTC(isplit[0], isplit[1] - 1, isplit[2], isplit[3], isplit[4], isplit[5], 0, 0)); //changed for Safari
+                        dt = cdate.getTime();
 
                         var tsval = objParam.values[t];
-                        if (parseFloat(tsval) === -9999.0) { tsval = null };
+                        if (parseFloat(tsval) === -9999.0) { tsval = null; }
                         series_data.push([dt, tsval]);
                         val_arr.push(tsval);
                     }
                 } else {
-                    for (var t = 0; t < objLoc.dattim.length; t++) {
+                    for (t = 0; t < objLoc.dattim.length; t++) {
                         //var dt = Date.parse(objLoc.dattim[t].replace('T', ' ') + ' UTC');  // Append "UTC" to avoid assumption of local time
-                        var split = objLoc.dattim[t].split(/[^0-9]/);
-                        var isplit = [];
+                        split = objLoc.dattim[t].split(/[^0-9]/);
+                        isplit = [];
                         split.forEach(function (elem) { isplit.push(+elem); }); // string to integer
                         //console.log(isplit);
-                        var cdate = new Date(Date.UTC(isplit[0], isplit[1]-1, isplit[2], isplit[3], isplit[4], isplit[5], 0, 0)); //changed for Safari
-                        var dt = cdate.getTime()
+                        cdate = new Date(Date.UTC(isplit[0], isplit[1] - 1, isplit[2], isplit[3], isplit[4], isplit[5], 0, 0)); //changed for Safari
+                        dt = cdate.getTime();
 
-                        var tsval = objParam.values[t];
+                        tsval = objParam.values[t];
                         if (parseFloat(tsval) === -9999.0) {
                             series_data.push([dt, null]);
                             val_arr.push(null);
                         } else {
                             [tsval, unit] = unitConversion(objParam.values[t], objParam.units);
-                            series_data.push([dt, tsval])
+                            series_data.push([dt, tsval]);
                             val_arr.push(tsval);
                         }
                     }
                 }
 
-                //Determine if the parameters have the same description. 
-                if (seriesCt == 0) {
-                    var sameDesc = false;
+                //Determine if the parameters have the same description.
+                var sameDesc = false;
+                if (seriesCt === 0) {
+                    sameDesc = false;
                     var paramDesc = objParam.desc;
                 }
                 else {
-                    if (paramDesc === objParam.desc) { var sameDesc = true;}
-                    else { paramDesc = objParam.desc;}
+                    if (paramDesc === objParam.desc) { sameDesc = true; }
+                    else { paramDesc = objParam.desc; }
                 }
 
                 // Add to series object:
                 seriesCt += 1;
-                _objPlotSeries[seriesCt-1] = {};
-                _objPlotSeries[seriesCt-1].name = seriesName;
-                _objPlotSeries[seriesCt-1].data = series_data;
+                _objPlotSeries[seriesCt - 1] = {};
+                _objPlotSeries[seriesCt - 1].name = seriesName;
+                _objPlotSeries[seriesCt - 1].data = series_data;
 
                 // Add new Y-axis:
                 if (loc_ct === 1) {
@@ -477,7 +495,7 @@ plotData = function (objData) {
 
                 // Add the new series:
                 // Only if the parameter description between a single station is different OR there are multiple stations with a new unique parameter then add series with yAxis
-                if ((series_data.length > 0 && sameDesc == false) || (series_data.length > 0 && loc_ct > 1 && objLocParam === 1)) {
+                if ((series_data.length > 0 && !sameDesc) || (series_data.length > 0 && loc_ct > 1 && objLocParam === 1)) {
                     hChart.addSeries({
                         yAxis: param_id,
                         type: 'line',
@@ -487,15 +505,15 @@ plotData = function (objData) {
                     });
                 }
                 //If a station has multiple parameters of the sameDesc then do not addSeries yAxis and hide the yAxis labels and title on chart for particular series
-                else if (series_data.length > 0 && sameDesc == true && axes_ct > 0) {
+                else if (series_data.length > 0 && sameDesc && axes_ct > 0) {
                     hChart.addSeries({
                         type: 'line',
                         name: seriesName,
                         data: series_data
                     });
                     hChart.yAxis[axes_ct].update({
-                        labels: {enabled: false},
-                        title: {text: null}
+                        labels: { enabled: false },
+                        title: { text: null }
                     });
                 }
             }
@@ -503,7 +521,7 @@ plotData = function (objData) {
     }
     // Update chart title:
     hChart.setTitle({ text: 'Site(s): ' + arrLocs.join(', ') });
-}
+};
 
 //==================================================================================
 // Chart Utility Functions:

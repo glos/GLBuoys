@@ -43,6 +43,9 @@ var _flagParChkbox = true;
 //==================================================================================
 $(function () {
 
+    //Check if user is using Internet explorer
+    detectIE();
+
     // Hide preloader after page load:
     $('.preloader').hide();
 
@@ -62,6 +65,7 @@ $(function () {
     var arrParts = window.location.href.split('/');
     var strPage = arrParts[arrParts.length - 1]; 
     _isExport = (strPage.startsWith('export'));
+    console.log(_isExport, _isPlotter);
     _isPlotter = (strPage.startsWith('plotter'));
     if (_isExport) { _toolType = 'exporter' } else { _toolType = 'plotter' };
 
@@ -859,7 +863,7 @@ setDateRange = function () {
 
     $('#date-start').val(formatDate(d_start, 'mm/dd/yyyy'));
     $('#date-end').val(formatDate(d_end, 'mm/dd/yyyy'));
-}
+};
 
 formatDate = function (date, fmt) {
     var d = new Date(date),
@@ -880,7 +884,7 @@ formatDate = function (date, fmt) {
         case ('yyyy-mm-dd'): return [year, month_2d, day_2d].join('-');
         default: return [month_1d, day_1d, year].join('/');
     }
-}
+};
 
 formatDateTime = function (dateVal) {
     // Returns formatted date/time based on UTC
@@ -896,7 +900,7 @@ formatDateTime = function (dateVal) {
     d.getUTCFullYear()].join('/') + ' ' +
         [hour, minute, second].join(':');
     return dformat;
-}
+};
 
 Date.daysBetween = function (date1, date2) {
     //Get 1 day in milliseconds
@@ -912,6 +916,38 @@ Date.daysBetween = function (date1, date2) {
     // Convert back to days and return
     return Math.round(difference_ms / one_day);
 };
+
+formatValue = function (val) {
+
+    if (isNaN(val)) {
+        return val;
+    } else {
+        absVal = Math.abs(val);
+
+        if (absVal === 0.0) {
+            return val.toFixed(0);
+        } else if (absVal <= 0.001) {
+            return val.toExponential(3);
+        } else if (absVal <= 0.01) {
+            return val.toFixed(6);
+        } else if (absVal <= 0.1) {
+            return val.toFixed(5);
+        } else if (absVal <= 1.0) {
+            return val.toFixed(4);
+        } else if (absVal <= 10.0) {
+            return val.toFixed(3);
+        } else if (absVal <= 100.0) {
+            return val.toFixed(2);
+        } else if (absVal <= 1000.0) {
+            return val.toFixed(1);
+        } else if (absVal >= 1000000.0) {
+            return val.toExponential(3);
+        } else {
+            return val.toFixed(0);
+        }
+    }
+};
+
 
 // Polyfill for Internet Explorer (added-2016/07/08):
 Number.isInteger = Number.isInteger || function (value) {
@@ -1080,3 +1116,33 @@ updateTracker = function (strCategory, strAction, strLabel) {
 
     dataLayer.push(objGTM);
 }           // end "updateTracker" function
+
+// Check if user is using Internet Explorer. If so alert user that it is not supported. 
+function detectIE() {
+    var ua = window.navigator.userAgent;
+
+    var msie = ua.indexOf('MSIE ');
+    if (msie > 0) {
+        // IE 10 or older => return version number
+        alert('This tool does not support Internet Explorer. Please use another browser.');
+        return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+    }
+
+    var trident = ua.indexOf('Trident/');
+    if (trident > 0) {
+        // IE 11 => return version number
+        var rv = ua.indexOf('rv:');
+        alert('This tool does not support Internet Explorer. Please use another browser.');
+        return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+    }
+
+    //var edge = ua.indexOf('Edge/');
+    //if (edge > 0) {
+    //    // Edge (IE 12+) => return version number
+    //    alert('This tool does not support Internet Explorer. Please use another browser.');
+    //    return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+    //}
+
+    // other browser
+    return false;
+}

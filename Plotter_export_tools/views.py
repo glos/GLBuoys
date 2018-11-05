@@ -61,7 +61,12 @@ def export_get(request):
 
 # avg_ivld - user selected average interval: 
 def process_interval_avg(dct_response, avg_ivld):
+    
     dct_response_avg ={}
+    dct_response_avg['locations'] = {}
+    dct_response_avg['err_flag'] = False
+    dct_response_avg['status'] = 'normal'
+    dct_response_avg['message'] = ''
 
     interval_in_mins= get_interval_in_mins(avg_ivld)
 
@@ -70,37 +75,44 @@ def process_interval_avg(dct_response, avg_ivld):
 
     import pandas as pd
 
-    for loc in dct_response.keys():
-        
-        numRec = len(dct_response[loc]['dattim'])
+    for loc in dct_response['locations'].keys():
+
+        dctLoc_raw = dct_response['locations'][loc] 
+        numRec = len(dctLoc_raw['dattim'])
 
         if (numRec > 0):
 
             # start a new dataframe
             df= pd.DataFrame()
 
-            df['dattim'] = pd.to_datetime(dct_response[loc]['dattim'])
-            for param in dct_response[loc]['params'].keys():
+            df['dattim'] = pd.to_datetime(dctLoc_raw['dattim'])
+            for param in dctLoc_raw['params'].keys():
                 # add columns to dataframe
-                df[param] =dct_response[loc]['params'][param]['values']
+                df[param] = dctLoc_raw['params'][param]['values']
 
-            df.set_index(pd.DatetimeIndex(dct_response[loc]['dattim']), inplace=True)
+            df.set_index(pd.DatetimeIndex(dctLoc_raw['dattim']), inplace=True)
 
             # resample with new average interval
             df_avg=df.resample(str(interval_in_mins) + 'min').mean()
 
-            dct_loc={}
-            lst_time =[t.to_pydatetime() for t in df_avg.index]
-            dct_loc['dattim']= lst_time
+            dctLoc_avg = {}
+            lst_time = [t.to_pydatetime() for t in df_avg.index]
+            dctLoc_avg['dattim'] = lst_time
         
             dct_data={}
-            for param in dct_response[loc]['params'].keys():
+            for param in dctLoc_raw['params'].keys():
                 dct_data[param] = {}  
 
-                dct_data[param]['units'] = dct_response[loc]['params'][param]['units']
+                dct_data[param]['units'] = dctLoc_raw['params'][param]['units']
                 dct_data[param]['desc'] = param
 
-                lst_val=[val.item() for val in df_avg[param]]
+                try:
+                    lst_val=[val for val in df_avg[param]]
+                except Exception as e:
+                    dct_response_avg['err_flag'] = True
+                    dct_response_avg['status'] = 'normal'
+                    dct_response_avg['message'] = 'Temporal averaging failed, so raw data are being displayed instead.'
+                    break
 
                 # Eradicate NULLs:
                 lst_fval = []
@@ -110,15 +122,18 @@ def process_interval_avg(dct_response, avg_ivld):
                     else:
                         lst_fval.append(val)
 
-                dct_data[param]['values']=lst_fval    #lst_val
+                dct_data[param]['values'] = lst_fval    #lst_val
 
-            dct_loc['params']= dct_data
+            dctLoc_avg['params'] = dct_data
 
-            # add to the to-be-returned dictionary
-            dct_response_avg[loc]= dct_loc
+            # add to the to-be-returned dictionary (report raw values if error has occurred):
+            if (dct_response_avg['err_flag']):
+                dct_response_avg['locations'][loc] = dctLoc_raw
+            else:
+                dct_response_avg['locations'][loc] = dctLoc_avg
             
         else:
-            dct_response_avg[loc] = dct_response[loc]
+            dct_response_avg['locations'][loc] = dctLoc_raw
 
     return dct_response_avg
 
@@ -153,11 +168,13 @@ def download_data(request):
         # convert to English units
         if (unit_type=='eng'):
             for loc in lst_locs:
+                dctLoc = dct_response['locations'][loc]
+
                 for param in lst_params:
-                    newvals, newunit = metricToEnglish(dct_response[loc]['params'][param]['values'],
-                                        dct_response[loc]['params'][param]['units'])
-                    dct_response[loc]['params'][param]['values'] = newvals
-                    dct_response[loc]['params'][param]['units'] = newunit
+                    newvals, newunit = metricToEnglish(dctLoc['params'][param]['values'],
+                                        dctLoc['params'][param]['units'])
+                    dctLoc['params'][param]['values'] = newvals
+                    dctLoc['params'][param]['units'] = newunit
 
         # source: http://thepythondjango.com/download-data-csv-excel-file-in-django/
         if file_type=='csv':
@@ -171,25 +188,27 @@ def download_data(request):
             #response.write(u'\ufeff'.encode('utf8'))
 
             for loc in lst_locs:
+                dctLoc = dct_response['locations'][loc]
+
                 writer.writerow([smart_str(loc)])
-                numRec = len(dct_response[loc]['dattim'])
+                numRec = len(dctLoc['dattim'])
 
                 if (len(lst_params) > 0 and numRec > 0):
                     headColumns=['Date/Time (UTC)']
 
                     for param in lst_params:
-                        param_w_units= param + " (" + dct_response[loc]['params'][param]['units'] + ")"
+                        param_w_units= param + " (" + dctLoc['params'][param]['units'] + ")"
                         headColumns.append(param_w_units)
                     
                     writer.writerow(headColumns)
 
                     for i in range(numRec):
-                        dattim = dct_response[loc]['dattim'][i]
+                        dattim = dctLoc['dattim'][i]
                         date_formated = dattim.strftime('%m/%d/%Y %H:%M:%S')
                         dataColumns=[date_formated]
 
                         for param in lst_params:
-                            dataColumns.append(dct_response[loc]['params'][param]['values'][i])
+                            dataColumns.append(dctLoc['params'][param]['values'][i])
 
                         writer.writerow(dataColumns)
                 else:
@@ -210,7 +229,8 @@ def download_data(request):
             wb = xlwt.Workbook(encoding='utf-8')
 
             for loc in lst_locs:
-                numRec = len(dct_response[loc]['dattim'])
+                dctLoc = dct_response['locations'][loc]
+                numRec = len(dctLoc['dattim'])
 
                 #adding sheet
                 ws=wb.add_sheet(loc)
@@ -237,7 +257,7 @@ def download_data(request):
                 if (len(lst_params) > 0 and numRec > 0):
                     # date time column
                     ws.write(row_num, col_num, 'Date/Time (UTC)', boldfont_style)
-                    for dattim in dct_response[loc]['dattim']:
+                    for dattim in dctLoc['dattim']:
                         row_num +=1
                         date_formated = dattim.strftime('%m/%d/%Y %H:%M:%S')
                         ws.write(row_num, col_num, date_formated, font_style)
@@ -246,10 +266,10 @@ def download_data(request):
                     for param in lst_params:
                         col_num += 1
                         row_num = 5
-                        param_w_units= param + " (" + dct_response[loc]['params'][param]['units'] + ")"
+                        param_w_units= param + " (" + dctLoc['params'][param]['units'] + ")"
 
                         ws.write(row_num, col_num, param_w_units, boldfont_style)
-                        for val in dct_response[loc]['params'][param]['values']:
+                        for val in dctLoc['params'][param]['values']:
                             row_num +=1
                             ws.write(row_num, col_num, val, font_style)
                 else:
@@ -295,6 +315,11 @@ def getTSData_fast(request, type):
 
     # Initialize dictionary for JSON response:
     dct_response = {}
+    dct_response['locations'] = {}
+    dct_response['err_flag'] = False
+    dct_response['status'] = 'normal'
+    dct_response['message'] = ''
+
     lst_locs= []
     lst_params = []
     dct_owners= []
@@ -319,9 +344,9 @@ def getTSData_fast(request, type):
             loc_alias = loc_id + '_1'
 
         # Initialize response dictionary:
-        dct_response[loc_id] = {}
-        dct_response[loc_id]['dattim'] = []
-        dct_response[loc_id]['params'] = []
+        dct_response['locations'][loc_id] = {}
+        dct_response['locations'][loc_id]['dattim'] = []
+        dct_response['locations'][loc_id]['params'] = []
 
         # Get time index:
         lst_timerng = getTimeIndices(loc_id, loc_alias, date_start, date_end) 
@@ -349,7 +374,20 @@ def getTSData_fast(request, type):
                 url_nc = 'http://tds.glos.us/thredds/dodsC/buoy_agg_standard/{0}/{1}.ncml'.format(loc_alias, loc_id)
         
                 try:
-                    ds = open_url(url_nc);
+                    try:
+                        ds = open_url(url_nc);
+                    except Exception as e:
+                        # Error reporting:
+                        dct_response['err_flag'] = True
+                        dct_response['status'] = 'abort'
+                        strMsg = 'The requested data cannot be retrieved from the server at this time. '
+
+                        if (dct_owners[loc_id] == 'NOAA-NDBC'):
+                            strMsg += 'Please note that this viewer does not support NOAA NDBC buoys that are not directly supported in the GLOS DMAC.'
+                        
+                        dct_response['message'] = strMsg
+                        return dct_response                    
+                    
                     lstKeys = list(ds.keys());
 
                     # Extend "times" list:
@@ -376,7 +414,6 @@ def getTSData_fast(request, type):
                     initFlag = False
 
                 except:
-
                     if (dct_owners[loc_id] == 'NOAA-NDBC'):
                         ncFlag = False
 
@@ -440,8 +477,8 @@ def getTSData_fast(request, type):
           
             # Augment dictionary for JSON response:
             #dct_response[loc_id] = {}
-            dct_response[loc_id]['dattim'] = lst_dattim
-            dct_response[loc_id]['params'] = dct_data
+            dct_response['locations'][loc_id]['dattim'] = lst_dattim
+            dct_response['locations'][loc_id]['params'] = dct_data
 
         #--------------------------------------------------------
         #- End location loop
@@ -713,53 +750,37 @@ def getTimeIndices(loc_id, loc_alias, date_start, date_end):
                     except:
                         idx = -9999
 
-                    #If data for current day, then loop backward to find start time to the hour:
-                    #   (check forward 23 hours from start date, or backward 23 hours from end date)
-                    if (idx != -9999):                    
-                        for delt_hr in range(1,23):      
-                            os_sec = lst_sign[i] * (86400*delt_day + (3600*delt_hr))
+                    # Check forward/backward in 10-minute increments (if necessary):
+                    if (idx == -9999 and delt_day < 3):                
+                        for delt_min in range(10,1430,10):
+                            os_sec = lst_sign[i] * (86400*delt_day + (60*delt_min))
                             dt_tmp = date_chk + timedelta(seconds=os_sec)
+                            delt_sec = int((dt_tmp - tzero).total_seconds())                                
+                            
                             try:
-                                delt_sec = int((dt_tmp - tzero).total_seconds())
                                 idx = lst_times.index(delt_sec)
                                 break
-                            except:         #Preserve index (on the day)
-                                pass
+                            except:
+                                idx = -9999
+
+                    if (idx > 0):
+                        break
+
+                    #If data for current day, then loop backward to find start time to the hour:
+                    #(check forward 23 hours from start date, or backward 23 hours from end date)
+                    #if (idx != -9999):                    
+                    #    for delt_hr in range(1,23):      
+                    #        os_sec = lst_sign[i] * (86400*delt_day + (3600*delt_hr))
+                    #        dt_tmp = date_chk + timedelta(seconds=os_sec)
+                    #        try:
+                    #            delt_sec = int((dt_tmp - tzero).total_seconds())
+                    #            idx = lst_times.index(delt_sec)
+                    #            break
+                    #        except:         #Preserve index (on the day)
+                    #            pass
                                 #idx = -9999
-                    else:
-                        pass     #No match on the day, so move on to next day...
-
-                    ##Check hour for the first +/- 7 days:
-                    #rmin = 0
-                    #if (delt_day <= 7):
-                    #    rmax = 23
                     #else:
-                    #    rmax = 1
-
-                    ##Check forward "rmax" hours from start date, or backward "rmax" hours from end date
-                    #for delt_hr in range(rmin,rmax):      
-                    #    os_sec = lst_sign[i] * (86400*delt_day + (3600*delt_hr))
-                    #    dt_tmp = date_chk + timedelta(seconds=os_sec)
-                    #    try:
-                    #        delt_sec = int((dt_tmp - tzero).total_seconds())
-                    #        idx = lst_times.index(delt_sec)
-                    #        break
-                    #    except:
-                    #        idx = -9999
-                    
-                    #if (idx != -9999):
-                    #    #Loop back over hours in last day and refine index:
-                    #    if (delt_day > 7):
-                    #        for delt_hr in range(1,23):
-                    #            os_sec = lst_sign[i] * (86400*delt_day + (3600*delt_hr))
-                    #            dt_tmp = date_chk + timedelta(seconds=os_sec)
-                    #            try:
-                    #                delt_sec = int((dt_tmp - tzero).total_seconds())
-                    #                idx = lst_times.index(delt_sec)
-                    #                break
-                    #            except:
-                    #                pass
-                    #    break
+                    #    pass     #No match on the day, so move on to next day...
 
             # Add time index to list:
             lst_idx.append(idx)
