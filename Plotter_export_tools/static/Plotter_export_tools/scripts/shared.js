@@ -43,6 +43,9 @@ var _flagParChkbox = true;
 //==================================================================================
 $(function () {
 
+    //Check if user is using Internet explorer
+    detectIE();
+
     // Hide preloader after page load:
     $('.preloader').hide();
 
@@ -62,6 +65,7 @@ $(function () {
     var arrParts = window.location.href.split('/');
     var strPage = arrParts[arrParts.length - 1]; 
     _isExport = (strPage.startsWith('export'));
+    console.log(_isExport, _isPlotter);
     _isPlotter = (strPage.startsWith('plotter'));
     if (_isExport) { _toolType = 'exporter' } else { _toolType = 'plotter' };
 
@@ -1112,3 +1116,33 @@ updateTracker = function (strCategory, strAction, strLabel) {
 
     dataLayer.push(objGTM);
 }           // end "updateTracker" function
+
+// Check if user is using Internet Explorer. If so alert user that it is not supported. 
+function detectIE() {
+    var ua = window.navigator.userAgent;
+
+    var msie = ua.indexOf('MSIE ');
+    if (msie > 0) {
+        // IE 10 or older => return version number
+        alert('This tool does not support Internet Explorer. Please use another browser.');
+        return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+    }
+
+    var trident = ua.indexOf('Trident/');
+    if (trident > 0) {
+        // IE 11 => return version number
+        var rv = ua.indexOf('rv:');
+        alert('This tool does not support Internet Explorer. Please use another browser.');
+        return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+    }
+
+    //var edge = ua.indexOf('Edge/');
+    //if (edge > 0) {
+    //    // Edge (IE 12+) => return version number
+    //    alert('This tool does not support Internet Explorer. Please use another browser.');
+    //    return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+    //}
+
+    // other browser
+    return false;
+}
