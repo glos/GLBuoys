@@ -902,8 +902,8 @@ function loadbuoyinfo(ID, jsonObj) {
 
                         //Check if buoy has wave height and GLCFS data exist. If not print forecasted wave height and allow user to view forecast wave height. 
                         if ($.inArray('WVHT', jsonObj[i].obsID) < 0 && jsonObj[i].GLCFS) { //returns 1 if exist and -1 if doesn't exist
-                            //var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD', 'IceFract', 'IceThick'];
-                            var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD'];
+                            var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD', 'IceFract', 'IceThick'];
+                            //var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD'];
                             var parameterUnits = [depthUnits, '&#176', 'sec', '%', depthUnits];
                             var longNames = ['Wave Height', 'Wave Direction', 'Wave Period', 'Ice Concentration', 'Ice Thickness'];
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
@@ -1006,8 +1006,8 @@ function loadbuoyinfo(ID, jsonObj) {
                             });
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
                             var columnSpan = 1;
-                            //var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD', 'IceFract', 'IceThick'];
-                            var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD'];
+                            var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD', 'IceFract', 'IceThick'];
+                            //var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD'];
                             var parameterUnits = [depthUnits, '&#176', 'sec', '%', depthUnits];
                             var longNames = ['Wave Height', 'Wave Direction', 'Wave Period', 'Ice Concentration', 'Ice Thickness'];
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
@@ -1236,8 +1236,8 @@ function reloadbuoyinfo() {
                         if ($.inArray('WVHT', jsonObj[i].obsID) < 0 && jsonObj[i].GLCFS) { //returns 1 if exist and -1 if doesn't exist
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
                             var tzAbbr = moment.tz(dateNum.timeZone).format('z');	//define time zone abbreviation for station update time
-                            //var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD', 'IceFract', 'IceThick'];
-                            var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD'];
+                            var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD', 'IceFract', 'IceThick'];
+                            //var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD'];
                             var parameterUnits = [depthUnits, '&#176', 'sec', '%', depthUnits];
                             var longNames = ['Wave Height', 'Wave Direction', 'Wave Period', 'Ice Concentration', 'Ice Thickness'];
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
@@ -1320,8 +1320,8 @@ function reloadbuoyinfo() {
                         if ($.inArray('WVHT', jsonObj[i].obsID) < 0 && jsonObj[i].GLCFS) { //returns 1 if exist and -1 if doesn't exist
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
                             var tzAbbr = moment.tz(dateNum.timeZone).format('z');	//define time zone abbreviation for station update time
-                            //var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD', 'IceFract', 'IceThick'];
-                            var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD'];
+                            var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD', 'IceFract', 'IceThick'];
+                            //var parameterOrder = ['WVHGT', 'MWDIR', 'DOMPD'];
                             var parameterUnits = [depthUnits, '&#176', 'sec', '%', depthUnits];
                             var longNames = ['Wave Height', 'Wave Direction', 'Wave Period', 'Ice Concentration', 'Ice Thickness'];
                             var dateNum = moment(jsonObj[i].GLCFS.GlcfsDates);
