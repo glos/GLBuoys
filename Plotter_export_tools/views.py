@@ -19,7 +19,9 @@ import urllib.request
 import urllib3
 import xlwt
 import os
+import io
 import csv
+import xlsxwriter
 
 def plotter(request):
     # Renders plotting tool page
@@ -138,6 +140,7 @@ def process_interval_avg(dct_response, avg_ivld):
     return dct_response_avg
 
 # download data to 'csv' or 'xls' format
+# now support 'xlsx' format
 def download_data(request):
 
     file_type = request.GET.get('ftype','')  # csv / xls
@@ -279,6 +282,76 @@ def download_data(request):
 
             return response
 
+        elif file_type=='xlsx':
+            # source:https://xlsxwriter.readthedocs.io/example_django_simple.html
+            # Create an in-memory output file for the new workbook.
+            output = io.BytesIO()
+
+            # Even though the final file will be in memory the module uses temp
+            # files during assembly for efficiency. To avoid this on servers that
+            # don't allow temp files, for example the Google APP Engine, set the
+            # 'in_memory' Workbook() constructor option as shown in the docs.
+            wb = xlsxwriter.Workbook(output)
+
+            for loc in lst_locs:
+                dctLoc = dct_response['locations'][loc]
+                numRec = len(dctLoc['dattim'])
+
+                #adding sheet
+                ws=wb.add_worksheet(loc)
+
+                #sheet header, first row
+                row_num=0
+                col_num=0
+
+                # Create bold font type:
+                font_style = wb.add_format()
+                boldfont_style =  wb.add_format({'bold': True})
+
+                # Write header rows:
+                ws.write(0, 0, "Station ID:", boldfont_style)
+                ws.write(0, 1, loc, font_style)
+
+                ws.write(1, 0, "Station Description:", boldfont_style)
+                ws.write(1, 1, loc, font_style)
+
+                # Write data:
+                row_num = 5
+
+                if (len(lst_params) > 0 and numRec > 0):
+                    # date time column
+                    ws.write(row_num, col_num, 'Date/Time (UTC)', boldfont_style)
+                    for dattim in dctLoc['dattim']:
+                        row_num +=1
+                        date_formated = dattim.strftime('%m/%d/%Y %H:%M:%S')
+                        ws.write(row_num, col_num, date_formated, font_style)
+
+                    # each parameter
+                    for param in lst_params:
+                        col_num += 1
+                        row_num = 5
+                        param_w_units= param + " (" + dctLoc['params'][param]['units'] + ")"
+
+                        ws.write(row_num, col_num, param_w_units, boldfont_style)
+                        for val in dctLoc['params'][param]['values']:
+                            row_num +=1
+                            ws.write(row_num, col_num, val, font_style)
+                else:
+                    ws.write(5,0, 'No data available for the selected time period.', font_style)
+            
+            # Close the workbook before sending the data.
+            wb.close()
+            
+            # Rewind the buffer.
+            output.seek(0)
+
+            # content-type of response
+            response = HttpResponse(output, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+            response['Content-Disposition']='attachment; filename="' + filename + "." + file_type + '"'
+                        #creating workbook
+
+            return response
         else:
             return
 
