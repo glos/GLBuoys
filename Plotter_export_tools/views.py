@@ -2,6 +2,7 @@
 Definition of views.
 """
 
+from django.http import Http404
 from django.shortcuts import render
 from django.http import HttpRequest
 from django.http import HttpResponse
@@ -139,6 +140,7 @@ def process_interval_avg(dct_response, avg_ivld):
 
     return dct_response_avg
 
+
 # download data to 'csv' or 'xls' format
 # now support 'xlsx' format
 def download_data(request):
@@ -164,6 +166,13 @@ def download_data(request):
 
     if (flag == 'fast'):
         dct_response = getTSData_fast(request, 'GET')
+
+        if dct_response['err_flag']:
+
+            #return HttpResponseNotFound('<h1>' + dct_response['message'] + '</h1>')
+            #raise Http404(dct_response['message'])
+            html = "<html><body>Error message: %s</body></html>" % dct_response['message']
+            return HttpResponse(html)
         
         # process interval average (this is already handled in "getTSData_fast" function):
         #dct_response= process_interval_avg(dct_response, avg_ivld)
@@ -400,10 +409,24 @@ def getTSData_fast(request, type):
 
     [data_type, lst_locs, lst_params, str_date1, str_date2, dct_owners, avg_ivld] = queryRequestVars(request, type)
 
-    date_start = datetime.strptime(str_date1, '%Y-%m-%d')
-    date_end = datetime.strptime(str_date2, '%Y-%m-%d')
+    try:
+        date_start = datetime.strptime(str_date1, '%Y-%m-%d')
+    except Exception:
+        dct_response['err_flag'] = True
+        dct_response['message'] = 'Invalid start date!'
+        return dct_response
 
-    
+    try:
+        date_end = datetime.strptime(str_date2, '%Y-%m-%d')
+    except Exception:
+        dct_response['err_flag'] = True
+        dct_response['message'] = 'Invalid end date!'
+        return dct_response
+
+    if date_end <= date_start:
+        dct_response['err_flag'] = True
+        dct_response['message'] = 'End date should be greater than start date!'
+        return dct_response
     #--------------------------------------------------------
     # Iterate over locations list:
     #--------------------------------------------------------
@@ -423,6 +446,12 @@ def getTSData_fast(request, type):
 
         # Get time index:
         lst_timerng = getTimeIndices(loc_id, loc_alias, date_start, date_end) 
+
+        if isinstance(lst_timerng, dict):
+            dct_response['err_flag'] = True
+            dct_response['message'] = lst_timerng['message']
+            return dct_response
+
         tidx1 = lst_timerng[0]; tidx2 = lst_timerng[1]
 
         # Initialize parameters in data dictionary:
@@ -552,7 +581,10 @@ def getTSData_fast(request, type):
             #dct_response[loc_id] = {}
             dct_response['locations'][loc_id]['dattim'] = lst_dattim
             dct_response['locations'][loc_id]['params'] = dct_data
-
+        else:
+            dct_response['err_flag'] = True
+            dct_response['message'] = 'Error occurred while requesting data from server. Please try again later!'
+            return dct_response
         #--------------------------------------------------------
         #- End location loop
         #--------------------------------------------------------
@@ -772,6 +804,15 @@ def getTimeIndices(loc_id, loc_alias, date_start, date_end):
         lst = ds['time'].units.split('since')
         tunit = lst[0].strip()
         tzero = datetime.strptime(lst[1].strip(), '%Y-%m-%d %H:%M:%S')
+
+        # check data contains any of the requested time period
+        data_Start_DateTime = tzero + timedelta(0, lst_times[0])
+        data_End_DateTime = tzero + timedelta(0, lst_times[-1])
+
+        if date_start > data_End_DateTime:
+            return {'message': "Invalid start date. Available data are between %s and %s." % (data_Start_DateTime, data_End_DateTime)}
+        elif date_end < data_Start_DateTime:
+            return {'message': "Invalid end date. Available data are between %s and %s." % (data_Start_DateTime, data_End_DateTime)}
 
         # Convert start & end dates to seconds:
         lst_dsec = []
