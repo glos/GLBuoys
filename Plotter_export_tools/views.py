@@ -583,7 +583,7 @@ def getTSData_fast(request, type):
             dct_response['locations'][loc_id]['params'] = dct_data
         else:
             dct_response['err_flag'] = True
-            dct_response['message'] = 'Error occurred while requesting data from server. Please try again later!'
+            dct_response['message'] = 'No data for the requested selected period!'
             return dct_response
         #--------------------------------------------------------
         #- End location loop
@@ -796,7 +796,11 @@ def getTimeIndices(loc_id, loc_alias, date_start, date_end):
 
     try:
         ds = open_url(url_nc);
+    except Exception as e:
+        # Error reporting:
+        return {'message':'The requested data cannot be retrieved from the server at this time. '}
 
+    try:
         # "times" list:
         lst_times = []      #empty list
         lst_times.extend(ds['time']);
