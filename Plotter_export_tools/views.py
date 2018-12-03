@@ -2,6 +2,7 @@
 Definition of views.
 """
 
+from django.http import Http404
 from django.shortcuts import render
 from django.http import HttpRequest
 from django.http import HttpResponse
@@ -19,7 +20,9 @@ import urllib.request
 import urllib3
 import xlwt
 import os
+import io
 import csv
+import xlsxwriter
 
 def plotter(request):
     # Renders plotting tool page
@@ -137,7 +140,9 @@ def process_interval_avg(dct_response, avg_ivld):
 
     return dct_response_avg
 
+
 # download data to 'csv' or 'xls' format
+# now support 'xlsx' format
 def download_data(request):
 
     file_type = request.GET.get('ftype','')  # csv / xls
@@ -161,6 +166,13 @@ def download_data(request):
 
     if (flag == 'fast'):
         dct_response = getTSData_fast(request, 'GET')
+
+        if dct_response['err_flag']:
+
+            #return HttpResponseNotFound('<h1>' + dct_response['message'] + '</h1>')
+            #raise Http404(dct_response['message'])
+            html = "<html><body>Error message: %s</body></html>" % dct_response['message']
+            return HttpResponse(html)
         
         # process interval average (this is already handled in "getTSData_fast" function):
         #dct_response= process_interval_avg(dct_response, avg_ivld)
@@ -279,6 +291,76 @@ def download_data(request):
 
             return response
 
+        elif file_type=='xlsx':
+            # source:https://xlsxwriter.readthedocs.io/example_django_simple.html
+            # Create an in-memory output file for the new workbook.
+            output = io.BytesIO()
+
+            # Even though the final file will be in memory the module uses temp
+            # files during assembly for efficiency. To avoid this on servers that
+            # don't allow temp files, for example the Google APP Engine, set the
+            # 'in_memory' Workbook() constructor option as shown in the docs.
+            wb = xlsxwriter.Workbook(output)
+
+            for loc in lst_locs:
+                dctLoc = dct_response['locations'][loc]
+                numRec = len(dctLoc['dattim'])
+
+                #adding sheet
+                ws=wb.add_worksheet(loc)
+
+                #sheet header, first row
+                row_num=0
+                col_num=0
+
+                # Create bold font type:
+                font_style = wb.add_format()
+                boldfont_style =  wb.add_format({'bold': True})
+
+                # Write header rows:
+                ws.write(0, 0, "Station ID:", boldfont_style)
+                ws.write(0, 1, loc, font_style)
+
+                ws.write(1, 0, "Station Description:", boldfont_style)
+                ws.write(1, 1, loc, font_style)
+
+                # Write data:
+                row_num = 5
+
+                if (len(lst_params) > 0 and numRec > 0):
+                    # date time column
+                    ws.write(row_num, col_num, 'Date/Time (UTC)', boldfont_style)
+                    for dattim in dctLoc['dattim']:
+                        row_num +=1
+                        date_formated = dattim.strftime('%m/%d/%Y %H:%M:%S')
+                        ws.write(row_num, col_num, date_formated, font_style)
+
+                    # each parameter
+                    for param in lst_params:
+                        col_num += 1
+                        row_num = 5
+                        param_w_units= param + " (" + dctLoc['params'][param]['units'] + ")"
+
+                        ws.write(row_num, col_num, param_w_units, boldfont_style)
+                        for val in dctLoc['params'][param]['values']:
+                            row_num +=1
+                            ws.write(row_num, col_num, val, font_style)
+                else:
+                    ws.write(5,0, 'No data available for the selected time period.', font_style)
+            
+            # Close the workbook before sending the data.
+            wb.close()
+            
+            # Rewind the buffer.
+            output.seek(0)
+
+            # content-type of response
+            response = HttpResponse(output, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+            response['Content-Disposition']='attachment; filename="' + filename + "." + file_type + '"'
+                        #creating workbook
+
+            return response
         else:
             return
 
@@ -327,10 +409,24 @@ def getTSData_fast(request, type):
 
     [data_type, lst_locs, lst_params, str_date1, str_date2, dct_owners, avg_ivld] = queryRequestVars(request, type)
 
-    date_start = datetime.strptime(str_date1, '%Y-%m-%d')
-    date_end = datetime.strptime(str_date2, '%Y-%m-%d')
+    try:
+        date_start = datetime.strptime(str_date1, '%Y-%m-%d')
+    except Exception:
+        dct_response['err_flag'] = True
+        dct_response['message'] = 'Invalid start date!'
+        return dct_response
 
-    
+    try:
+        date_end = datetime.strptime(str_date2, '%Y-%m-%d')
+    except Exception:
+        dct_response['err_flag'] = True
+        dct_response['message'] = 'Invalid end date!'
+        return dct_response
+
+    if date_end <= date_start:
+        dct_response['err_flag'] = True
+        dct_response['message'] = 'End date should be greater than start date!'
+        return dct_response
     #--------------------------------------------------------
     # Iterate over locations list:
     #--------------------------------------------------------
@@ -350,6 +446,12 @@ def getTSData_fast(request, type):
 
         # Get time index:
         lst_timerng = getTimeIndices(loc_id, loc_alias, date_start, date_end) 
+
+        if isinstance(lst_timerng, dict):
+            dct_response['err_flag'] = True
+            dct_response['message'] = lst_timerng['message']
+            return dct_response
+
         tidx1 = lst_timerng[0]; tidx2 = lst_timerng[1]
 
         # Initialize parameters in data dictionary:
@@ -479,7 +581,10 @@ def getTSData_fast(request, type):
             #dct_response[loc_id] = {}
             dct_response['locations'][loc_id]['dattim'] = lst_dattim
             dct_response['locations'][loc_id]['params'] = dct_data
-
+        else:
+            dct_response['err_flag'] = True
+            dct_response['message'] = 'No data for the requested selected period!'
+            return dct_response
         #--------------------------------------------------------
         #- End location loop
         #--------------------------------------------------------
@@ -691,7 +796,11 @@ def getTimeIndices(loc_id, loc_alias, date_start, date_end):
 
     try:
         ds = open_url(url_nc);
+    except Exception as e:
+        # Error reporting:
+        return {'message':'The requested data cannot be retrieved from the server at this time. '}
 
+    try:
         # "times" list:
         lst_times = []      #empty list
         lst_times.extend(ds['time']);
@@ -699,6 +808,15 @@ def getTimeIndices(loc_id, loc_alias, date_start, date_end):
         lst = ds['time'].units.split('since')
         tunit = lst[0].strip()
         tzero = datetime.strptime(lst[1].strip(), '%Y-%m-%d %H:%M:%S')
+
+        # check data contains any of the requested time period
+        data_Start_DateTime = tzero + timedelta(0, lst_times[0])
+        data_End_DateTime = tzero + timedelta(0, lst_times[-1])
+
+        if date_start > data_End_DateTime:
+            return {'message': "Invalid start date. Available data are between %s and %s." % (data_Start_DateTime, data_End_DateTime)}
+        elif date_end < data_Start_DateTime:
+            return {'message': "Invalid end date. Available data are between %s and %s." % (data_Start_DateTime, data_End_DateTime)}
 
         # Convert start & end dates to seconds:
         lst_dsec = []
