@@ -818,6 +818,12 @@ def getTimeIndices(loc_id, loc_alias, date_start, date_end):
         elif date_end < data_Start_DateTime:
             return {'message': "Invalid end date. Available data are between %s and %s." % (data_Start_DateTime, data_End_DateTime)}
 
+        # To avoid error, shrink request date range if it's wider than available data time range
+        if date_start < data_Start_DateTime:
+            date_start = data_Start_DateTime
+        if date_end > data_End_DateTime:
+            date_end = data_End_DateTime
+
         # Convert start & end dates to seconds:
         lst_dsec = []
         lst_rdates = [date_start, date_end]
