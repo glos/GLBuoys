@@ -35,7 +35,7 @@ urlpatterns = [
     # AJAX URLs:
     url(r'^ajax/getTSData$', getTSData, name='getTSData'),
     #url(r'^ajax/getBuoyMeta$', Buoy_tool.views.getBuoyMeta, name='getBuoyMeta'),
-    
+
     # Data download call back
     url(r'download_data$', download_data, name='download_data'),
 
