@@ -147,7 +147,6 @@ def download_data(request):
             # call excel generator
             # content-type of response
             if file_type == "xls":
-                import ipdb; ipdb.set_trace()
                 content_type = 'application/ms-excel'
                 writer = "xlwt"
                 wb = xlwt.Workbook(encoding='utf-8')
@@ -328,10 +327,10 @@ def download_data(request):
                             ws.write(row_num, col_num, val, font_style)
                 else:
                     ws.write(5,0, 'No data available for the selected time period.', font_style)
-            
+
             # Close the workbook before sending the data.
             wb.close()
-            
+
             # Rewind the buffer.
             output.seek(0)
 
@@ -420,21 +419,41 @@ def getTSData_fast(request, type):
         #dct_response['locations'][loc_id]['params'] = []
 
         # Get time index:
-        ds_fn = lambda: getTimeIndices(loc_id, loc_alias, date_start, date_end)
-        if avg_ivld != "none":
-            # T is an offset string for minutes here
-            avg_min_string = "{}T".format(get_interval_in_mins(avg_ivld))
-            ds = ds_fn().resample(time=avg_min_string).mean()
-        else:
-            ds = ds_fn()
+        # TODO: handle missing variables
+        ds_raw = getTimeIndices(loc_id, loc_alias,
+                                date_start, date_end)[lst_params]
 
-        dct_response['locations'][loc_id] = ds
-        #dct_response = process_interval_avg(dct_response, avg_ivld)
-
-        if isinstance(ds, dict):
+        if isinstance(ds_raw, dict):
             dct_response['err_flag'] = True
             dct_response['message'] = ds['message']
             return dct_response
+        elif isinstance(ds_raw, list) and ds_raw == [-9999, -9999]:
+            dct_response['err_flag'] = True
+            dct_response['message'] = "An error occurred while fetching data"
+            return dct_response
+        elif isinstance(ds_raw, xarray.Dataset):
+            # load into memory prior to executing any operations
+            ds_raw.load()
+
+            if avg_ivld != "none":
+                # T is an offset string for minutes here
+                avg_min_string = "{}T".format(get_interval_in_mins(avg_ivld))
+                ds = ds_raw.resample(time=avg_min_string,
+                                     keep_attrs=True).mean()
+                # units get lost when averaging, even in spite of keep_attrs?
+                for var_name in lst_params:
+                    ds.variables[var_name].attrs["units"] = ds_raw.variables[var_name].attrs.get("units", "")
+            else:
+                ds = ds_raw
+            del ds_raw
+        # TODO: DRY up?
+        else:
+            dct_response['err_flag'] = True
+            dct_response['message'] = "An error occurred while fetching data"
+            return dct_response
+
+        dct_response['locations'][loc_id] = ds
+        #dct_response = process_interval_avg(dct_response, avg_ivld)
 
         #tidx1 = lst_timerng[0]; tidx2 = lst_timerng[1]
 
@@ -677,7 +696,7 @@ def getTimeIndices(loc_id, loc_alias, date_start, date_end):
 
     try:
         #ds = open_url(url_nc);
-        ds = xarray.open_dataset(url_nc)
+        ds = xarray.open_dataset(url_nc, decode_cf=True, decode_times=True)
     except Exception as e:
         # Error reporting:
         return {'message': 'The requested data cannot be retrieved from the server at this time. '}

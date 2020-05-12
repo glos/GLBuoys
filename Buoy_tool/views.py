@@ -187,7 +187,6 @@ def getBuoyData(request):
     #--------------------------------------------------------
 
     # Augment dictionary for JSON response & return response:
-    import ipdb; ipdb.set_trace()
     dct_response[buoy_id] = {}
     dct_response[buoy_id]['dattim'] = lst_dattim
     dct_response[buoy_id]['params'] = dct_data
