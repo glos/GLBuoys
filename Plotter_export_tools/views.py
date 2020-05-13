@@ -89,9 +89,6 @@ def download_data(request):
         html = "<html><body>Error message: %s</body></html>" % dct_response['message']
         return HttpResponse(html, status=500)
 
-    # process interval average (this is already handled in "getTSData_fast" function):
-    #dct_response= process_interval_avg(dct_response, avg_ivld)
-
     # convert to English units
     if unit_type == 'eng':
         for loc in lst_locs:
@@ -107,249 +104,89 @@ def download_data(request):
                     dctLoc.variables[param][:] = newvals
                     dctLoc.variables[param].attrs['units'] = newunit
 
-        var_units = (dctLoc.variables[var].attrs.get("units", "") for var in
-                     lst_params)
-        loc = next(iter(dct_response['locations'].keys()))
-        df = (dct_response['locations'][loc][lst_params].to_dataframe()
-              [lst_params])
-        #dct_response["locations"][loc].to_dataframe()
-        var_units = (dctLoc.variables[var].attrs.get("units", "") for var in
-                     lst_params)
-        def rename_columns_add_units(var_name):
-            return "{} ({})".format(var_name,
-                                    dctLoc.variables[var_name].attrs.get(
-                                                                    "units",
-                                                                    ""))
-        df.rename(columns=rename_columns_add_units, inplace=True)
-        df.index.name = "Date/Time (UTC)"
-        # source: http://thepythondjango.com/download-data-csv-excel-file-in-django/
-        if file_type == 'csv':
-        # TODO: adapt to CSV output of GLBuoys export -- one space after and
-        #
-        #df.columns = pd.MultiIndex.from_tuples(list(zip(lst_params, var_units))
-        #                                       + [('lon', 'degrees'),
-        #                                          ('lat', 'degrees'),
-        #                                          ('depth', 'm')],
-        #                                       names=("variables", "units"))
+    var_units = (dctLoc.variables[var].attrs.get("units", "") for var in
+                    lst_params)
+    loc = next(iter(dct_response['locations'].keys()))
+    df = (dct_response['locations'][loc][lst_params].to_dataframe()
+            [lst_params])
 
-            # response content type
-            response = HttpResponse(content_type='text/csv')
-            #decide the file name
-            response['Content-Disposition'] = 'attachment; filename="' + filename + "." + file_type + '"'
-            # TODO: add unit columns
-            response.write(df.to_csv())
+    var_units = (dctLoc.variables[var].attrs.get("units", "") for var in
+                    lst_params)
 
-            return response
+    def rename_columns_add_units(dctLoc, var_name):
+        return "{} ({})".format(var_name,
+                                dctLoc.variables[var_name].attrs.get(
+                                                                "units",
+                                                                ""))
+    dctLoc = dct_response['locations'][loc][lst_params]
+    df.rename(columns=lambda n: rename_columns_add_units(dctLoc, n),
+              inplace=True)
+    df.index.name = "Date/Time (UTC)"
+    # source: http://thepythondjango.com/download-data-csv-excel-file-in-django/
+    if file_type == 'csv':
+    # TODO: adapt to CSV output of GLBuoys export -- one space after and
+    #
+        df.reset_index(inplace=True)
+        df.columns = pd.MultiIndex.from_tuples([(loc, "Date/Time (UTC)")] +
+                                            [("", param) for param in
+                                                lst_params],
+                                            names=("station", "variables"))
 
-        elif file_type=='xls' or file_type=='xlsx':
-            excel_io = io.BytesIO()
+        # response content type
+        response = HttpResponse(content_type='text/csv')
+        #decide the file name
+        response['Content-Disposition'] = 'attachment; filename="' + filename + "." + file_type + '"'
+        # TODO: add unit columns
+        response.write(df.to_csv(index=False))
 
-            # call excel generator
-            # content-type of response
-            if file_type == "xls":
-                content_type = 'application/ms-excel'
-                writer = "xlwt"
-                wb = xlwt.Workbook(encoding='utf-8')
+        return response
 
-                #lst_locs = ["uwraeon4"]
-                #for loc in lst_locs:
-                #dctLoc = dct_response['locations'][loc]
-                dctLoc = dct_response
-                numRec = len(dctLoc['dattim'])
+    elif file_type=='xls' or file_type=='xlsx':
+        excel_io = io.BytesIO()
 
-                #adding sheet
-                ws=wb.add_sheet(loc)
+        def write_excel_data():
+            excel_writer = pd.ExcelWriter(excel_io, engine=writer)
 
-                #sheet header, first row
-                row_num=0
-                col_num=0
-
-                # Create bold font type:
-                font_style = xlwt.XFStyle()
-                boldfont_style = xlwt.XFStyle()
-                boldfont_style.font.bold = True
-
-                # Write header rows:
-                ws.write(0, 0, "Station ID:", boldfont_style)
-                ws.write(0, 1, loc, font_style)
-
-                ws.write(1, 0, "Station Description:", boldfont_style)
-                ws.write(1, 1, loc, font_style)
-
-                ## Write data:
-                #row_num = 5
-
-                #if (len(lst_params) > 0 and numRec > 0):
-                #    # date time column
-                #    ws.write(row_num, col_num, 'Date/Time (UTC)', boldfont_style)
-                #    for dattim in dctLoc['dattim']:
-                #        row_num +=1
-                #        date_formated = dattim.strftime('%m/%d/%Y %H:%M:%S')
-                #        ws.write(row_num, col_num, date_formated, font_style)
-
-                #    # each parameter
-                #    for param in lst_params:
-                #        col_num += 1
-                #        row_num = 5
-                #        param_w_units= param + " (" + dctLoc['params'][param]['units'] + ")"
-
-                #        ws.write(row_num, col_num, param_w_units, boldfont_style)
-                #        for val in dctLoc['params'][param]['values']:
-                #            row_num +=1
-                #            ws.write(row_num, col_num, val, font_style)
-                #else:
-                #    ws.write(5,0, 'No data available for the selected time period.', font_style)
-
-                wb.save(excel_io)
-
-            else:
-                # TODO: finish up
-                content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                writer = "xlsxwriter"
-            response = HttpResponse(content_type=content_type)
-
-            #decide file name
-            #writer = pd.ExcelWriter(io.BytesIO(), engine="xlwt")
-            excel_io = io.BytesIO()
-            writer = pd.ExcelWriter(excel_io, engine=writer)
-
-            response['Content-Disposition'] = 'attachment; filename="' + filename + "." + file_type + '"'
 
             #other rows
-            dct_response.to_dataframe().to_excel(writer, startrow=5)
-            writer.save()
+            df.to_excel(excel_writer, sheet_name=loc, startrow=5)
+            workbook = excel_writer.book
+            sheet = excel_writer.sheets[loc]
+            sheet.write(0, 0, "Station ID:")
+            sheet.write(0, 1, loc)
+
+            sheet.write(1, 0, "Station Description:")
+            sheet.write(1, 1, loc)
+            excel_writer.save()
             excel_io.seek(0)
-            response.write(excel_io.read())
-            #for loc in lst_locs:
-            #    dctLoc = dct_response['locations'][loc]
-            #    numRec = len(dctLoc['dattim'])
 
-            #    #adding sheet
-            #    ws=wb.add_sheet(loc)
 
-            #    #sheet header, first row
-            #    row_num=0
-            #    col_num=0
+        # call excel generator
+        # content-type of response
+        if file_type == "xls":
+            content_type = 'application/ms-excel'
+            writer = "xlwt"
+            write_excel_data()
 
-            #    # Create bold font type:
-            #    font_style = xlwt.XFStyle()
-            #    boldfont_style = xlwt.XFStyle()
-            #    boldfont_style.font.bold = True
-
-            #    # Write header rows:
-            #    ws.write(0, 0, "Station ID:", boldfont_style)
-            #    ws.write(0, 1, loc, font_style)
-
-            #    ws.write(1, 0, "Station Description:", boldfont_style)
-            #    ws.write(1, 1, loc, font_style)
-
-            #    # Write data:
-            #    row_num = 5
-
-            #    if (len(lst_params) > 0 and numRec > 0):
-            #        # date time column
-            #        ws.write(row_num, col_num, 'Date/Time (UTC)', boldfont_style)
-            #        for dattim in dctLoc['dattim']:
-            #            row_num +=1
-            #            date_formated = dattim.strftime('%m/%d/%Y %H:%M:%S')
-            #            ws.write(row_num, col_num, date_formated, font_style)
-
-            #        # each parameter
-            #        for param in lst_params:
-            #            col_num += 1
-            #            row_num = 5
-            #            param_w_units= param + " (" + dctLoc['params'][param]['units'] + ")"
-
-            #            ws.write(row_num, col_num, param_w_units, boldfont_style)
-            #            for val in dctLoc['params'][param]['values']:
-            #                row_num +=1
-            #                ws.write(row_num, col_num, val, font_style)
-            #    else:
-            #        ws.write(5,0, 'No data available for the selected time period.', font_style)
-
-            #wb.save(response)
-
-            return response
-
-        elif file_type=='xlsx':
-            # source:https://xlsxwriter.readthedocs.io/example_django_simple.html
-            # Create an in-memory output file for the new workbook.
-            output = io.BytesIO()
-
-            # Even though the final file will be in memory the module uses temp
-            # files during assembly for efficiency. To avoid this on servers that
-            # don't allow temp files, for example the Google APP Engine, set the
-            # 'in_memory' Workbook() constructor option as shown in the docs.
-            wb = xlsxwriter.Workbook(output)
-
-            for loc in lst_locs:
-                dctLoc = dct_response['locations'][loc]
-                numRec = len(dctLoc['dattim'])
-
-                #adding sheet
-                ws=wb.add_worksheet(loc)
-
-                #sheet header, first row
-                row_num=0
-                col_num=0
-
-                # Create bold font type:
-                font_style = wb.add_format()
-                boldfont_style =  wb.add_format({'bold': True})
-
-                # Write header rows:
-                ws.write(0, 0, "Station ID:", boldfont_style)
-                ws.write(0, 1, loc, font_style)
-
-                ws.write(1, 0, "Station Description:", boldfont_style)
-                ws.write(1, 1, loc, font_style)
-
-                # Write data:
-                row_num = 5
-
-                if (len(lst_params) > 0 and numRec > 0):
-                    # date time column
-                    ws.write(row_num, col_num, 'Date/Time (UTC)', boldfont_style)
-                    for dattim in dctLoc['dattim']:
-                        row_num +=1
-                        date_formated = dattim.strftime('%m/%d/%Y %H:%M:%S')
-                        ws.write(row_num, col_num, date_formated, font_style)
-
-                    # each parameter
-                    for param in lst_params:
-                        col_num += 1
-                        row_num = 5
-                        param_w_units= param + " (" + dctLoc['params'][param]['units'] + ")"
-
-                        ws.write(row_num, col_num, param_w_units, boldfont_style)
-                        for val in dctLoc['params'][param]['values']:
-                            row_num +=1
-                            ws.write(row_num, col_num, val, font_style)
-                else:
-                    ws.write(5,0, 'No data available for the selected time period.', font_style)
-
-            # Close the workbook before sending the data.
-            wb.close()
-
-            # Rewind the buffer.
-            output.seek(0)
-
-            # content-type of response
-            response = HttpResponse(output, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-
-            response['Content-Disposition']='attachment; filename="' + filename + "." + file_type + '"'
-                        #creating workbook
-
-            return response
         else:
-            return
+            content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            writer = "xlsxwriter"
+            write_excel_data()
 
+        excel_io.seek(0)
+        response = HttpResponse(content_type=content_type)
+        response['Content-Disposition'] = ('attachment; filename="' + filename +
+                                        "." + file_type + '"')
+        response.write(excel_io.read())
+        excel_io.close()
 
-    else: # todo: support slow method
+        return response
+
+    else:
         return
 
 
-download_data.short_description ="Export data"
+download_data.short_description = "Export data"
 
 
 #==================================================================================
@@ -497,27 +334,6 @@ def getTSData_fast(request, type):
                         dct_response['message'] = strMsg
                         return dct_response
 
-                    #lstKeys = [var.title() for var in ds.variables]
-
-                    ## Extend "times" list:
-                    ##times = ds['time'];
-                    #lst_times.extend(ds['time'][tidx1:tidx2]);
-
-                    ## Determine time zero:
-                    #if initFlag :
-                    #    lst = ds['time'].units.split('since')
-                    #    tunit = lst[0].strip()
-                    #    tzero = datetime.strptime(lst[1].strip(), '%Y-%m-%d %H:%M:%S')
-
-                    # Download data for each parameter:
-                    #dct_data = ds
-                    #for param_id in dct_data:
-                    ##for param_id in ds.variables:
-                    #    if param_id in ds.variables:
-                    #        var = ds.variables[param_id].to_dict()
-                    #        dct_data[param_id]['values'] = var['data']
-
-                    # Reset initialization flag:
                     initFlag = False
 
                 except:

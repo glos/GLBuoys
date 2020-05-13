@@ -81,7 +81,7 @@ def getTSData_fast(request):
 
     # Time averaging interval:
     avg_ivld = dct_request['avg_ivld']
-    
+
     #--------------------------------------------------------
     # Iterate over locations list:
     #--------------------------------------------------------
@@ -170,7 +170,7 @@ def getTSData_fast(request):
                             #Get date/time:
                             iyr = int(lst_vals[0]); imon = int(lst_vals[1]); iday = int(lst_vals[2])
                             ihr = int(lst_vals[3]); imin = int(lst_vals[4])
-                            dt = datetime(iyr,imon,iday,ihr,imin)
+                            dt = datetime(iyr, imon, iday, ihr, imin)
                             lst_dattim.append(dt)
 
                             #Get parameter values:
