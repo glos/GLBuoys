@@ -277,7 +277,8 @@ def getTSData_fast(request, type):
                 avg_min_string = "{}T".format(get_interval_in_mins(avg_ivld))
                 ds = ds_raw.resample(time=avg_min_string,
                                      keep_attrs=True).mean()
-                # units get lost when averaging, even in spite of keep_attrs?
+                # units get lost when averaging, even in spite of keep_attrs,
+                # so we need to reassign them
                 for var_name in lst_params:
                     ds.variables[var_name].attrs["units"] = ds_raw.variables[var_name].attrs.get("units", "")
             else:
@@ -336,6 +337,8 @@ def getTSData_fast(request, type):
 
                     initFlag = False
 
+                # is this block used?  If so, TODO: adapt to xarray data
+                # structures.
                 except:
                     if (dct_owners[loc_id] == 'NOAA-NDBC'):
                         ncFlag = False
@@ -384,25 +387,6 @@ def getTSData_fast(request, type):
                     # TMR - need error handling here?
                     pass
 
-            #-----------------------------------
-            # Conduct time averaging (*TMR!!! - code to be developed*):
-            #-----------------------------------
-            #if (int(avg_ivld) > 0):
-            #    ichk = 0
-
-            #-----------------------------------
-            # Convert list of times to date:
-            #-----------------------------------
-            #if (len(lst_times) > 0 and len(lst_dattim) == 0):
-            #    for t in lst_times:
-            #        lst_dattim.append(tzero + timedelta(seconds=t))
-            #-----------------------------------
-
-            # Augment dictionary for JSON response:
-            #dct_response[loc_id] = {}
-            #dct_response['locations'][loc_id]['dattim'] = lst_dattim
-            #dct_response['locations'][loc_id]['params'] = dct_data
-            #dct_response['locations'][loc_id] = dct_data
         else:
             dct_response['err_flag'] = True
             dct_response['message'] = 'No data for the requested selected period!'
@@ -411,13 +395,7 @@ def getTSData_fast(request, type):
         #- End location loop
         #--------------------------------------------------------
 
-    # process interval average
-    #dct_response = process_interval_avg(dct_response, avg_ivld)
-
-    # Return response:
-    #return dct_response
     return dct_response
-    #return JsonResponse(dct_response, safe=False)
 
 
 def queryRequestVars(request, type):
