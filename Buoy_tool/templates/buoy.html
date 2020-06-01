@@ -178,6 +178,9 @@
 					<p id="buoyInfo" class="w3-container"></p>
 					<p id="metaGLOS" class="w3-container"></p>
 					<p id="uglosLink" class="w3-container"></p>
+                    {% if last_time %}
+                    <p><b>Date and time of last recorded measurement:</b> {{last_time}}</p>
+                    {% endif %}
 
 					<div id = "sponsorsBottom" class="w3-container w3-center">
 			        <h5></h5>

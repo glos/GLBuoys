@@ -10,7 +10,9 @@ from django.http import JsonResponse
 from django.templatetags.static import static
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.conf import settings
+import logging
 
+from netCDF4 import Dataset
 from pydap.client import open_url
 from datetime import date, datetime, timedelta;
 import json
@@ -19,6 +21,8 @@ import os
 import posixpath
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+logger = logging.getLogger(__name__)
 
 def home(request):
     """Renders the home page."""
@@ -56,14 +60,23 @@ def buoy(request, buoy_id):
     for key in metaDic:
         idList.append(key['id'])
     if buoy_id in idList:
+        url_nc = "http://tds.glos.us/thredds/dodsC/buoy_agg_standard/{0}/{0}.ncml".format(buoy_id)
+        try:
+            ds = Dataset(url_nc)
+            last_time_str = ds.time_coverage_end
+        except:
+            logger.exception("Error occurred while attempting to fetch latest time from {}".format(url_nc))
+            last_time_str = None
         return render(
             request,
             'buoy.html',
             {
-                'buoy_id':buoy_id,
+                "buoy_id": buoy_id,
+                "last_time": last_time_str
             }
         )
     else:
+        # TODO: move this to logging statement
         print('false')
         return render(
             request,

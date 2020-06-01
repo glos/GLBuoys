@@ -35,7 +35,7 @@ urlpatterns = [
     # AJAX URLs:
     url(r'^ajax/getTSData$', getTSData, name='getTSData'),
     #url(r'^ajax/getBuoyMeta$', Buoy_tool.views.getBuoyMeta, name='getBuoyMeta'),
-    
+
     # Data download call back
     url(r'download_data$', download_data, name='download_data'),
 
@@ -58,37 +58,10 @@ urlpatterns = [
     # Requests for /favicon.ico redirected to the URL of 'favicon.ico'according to staticfiles storage. http://staticfiles.productiondjango.com/blog/failproof-favicons/
     url(r'^favicon.ico$',RedirectView.as_view(url=staticfiles_storage.url('Buoy_tool/img/favicon.ico'),permanent=False),name="favicon"),
 ]
-    
+
 #Tell django how to handle location of media files when in DEBUG mode
-#if settings.DEBUG is True:
-#    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-    # Login/logout:
-    
-    #url(r'^login/$',
-    #    django.contrib.auth.views.login,
-    #    {
-    #        'template_name': 'app/login.html',
-    #        'authentication_form': app.forms.BootstrapAuthenticationForm,
-    #        'extra_context':
-    #        {
-    #            'title': 'Log in',
-    #            'year': datetime.now().year,
-    #        }
-    #    },
-    #    name='login'),
-
-    #url(r'^logout$',
-    #    django.contrib.auth.views.logout,
-    #    {
-    #        'next_page': '/',
-    #    },
-    #    name='logout'),
-    
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
-
+if settings.DEBUG is True:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_URL,
+                          show_indexes=True)
