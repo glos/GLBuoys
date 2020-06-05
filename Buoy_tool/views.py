@@ -118,7 +118,7 @@ def getBuoyData(request):
 
     # Initialize dictionary for JSON response:
     dct_response = {}
-    
+
     # Iterate over buoy list:
     for buoy_id in lst_buoys:
 
@@ -140,7 +140,7 @@ def getBuoyData(request):
 
             # Construct URL for OpenDAP access of date-specific netCDF file:
             url_nc = 'http://tds.glos.us/thredds/dodsC/buoys_standard/{0}/{1}/{0}_{2}.nc'.format(buoy_id, dateVal.strftime("%Y"), dateVal.strftime("%Y%m%d"));
-        
+
             try:
                 ds = open_url(url_nc);
                 lstKeys = list(ds.keys());
@@ -162,8 +162,8 @@ def getBuoyData(request):
                         dct_data[param_id]['values'].extend(var.data[:])
 
                         if (initFlag == True):
-                            dct_data[param_id]['units'] = var.attributes['units']
-                            dct_data[param_id]['desc'] = var.attributes['description']
+                            dct_data[param_id]['units'] = var.attrs['units']
+                            dct_data[param_id]['desc'] = var.attrs['description']
 
                 initFlag = False
 
@@ -180,10 +180,10 @@ def getBuoyData(request):
 
         # Convert list of times to date:
         lst_dattim = []
- 
+
         for t in lst_times:
             lst_dattim.append(tzero + timedelta(seconds=t))
-          
+
     #--------------------------------------------------------
 
     # Augment dictionary for JSON response & return response:
