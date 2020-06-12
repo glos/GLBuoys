@@ -104,6 +104,12 @@ $(document).ready(function () {
 
 var reloadCount = 0;
 
+function station_not_recovered(station) {
+  var updateMoment = moment(station.updateTime);
+  var timeDiffDays = moment().diff(updateMoment, "days");
+  return (!station.recovered || station.obsUnits || timeDiffDays < 10);
+}
+
 function loadBuoySummary(){
     loadbuoyinfo_home(function (jsonObj) {
             //var jsonObj = response;
@@ -152,7 +158,7 @@ function loadBuoySummary(){
 					if (option.lake == "ER") {
 						$('#ErieAcc').append($('<a>').click(function () { PassStation(option.id,option.lat,option.lon);dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':option.id,'glbuoysAction':'click internal url'});}).text(option.id).attr("style",'cursor:pointer'));	//Remove when using one buoy.html
 						try{
-							if(!option.recovered || option.obsUnits){
+							if(station_not_recovered(option)){
 								if(!ifOffline(moment(option.updateTime))){
 									ErieRows += '<tr id="'+option.id+'" onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;>'+
 									'<td>'+checkAltID(option)+'</td>'+
@@ -176,7 +182,7 @@ function loadBuoySummary(){
 					else if (option.lake == "MI") {
 						$('#MichiganAcc').append($('<a>').click(function() { PassStation(option.id,option.lat,option.lon);dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':option.id,'glbuoysAction':'click internal url'});}).text(option.id).attr("style",'cursor:pointer')); //Remove when using one buoy.html
 						try{
-							if(!option.recovered || option.obsUnits){
+							if(station_not_recovered(option)){
 								if(!ifOffline(moment(option.updateTime))){
 									MichiganRows += '<tr id="'+option.id+'" onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;>'+
 									'<td>'+checkAltID(option)+'</td>'+
@@ -200,7 +206,7 @@ function loadBuoySummary(){
 					else if (option.lake == "HU") {
 						$('#HuronAcc').append($('<a>').click(function(){ PassStation(option.id,option.lat,option.lon);dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':option.id,'glbuoysAction':'click internal url'});}).text(option.id).attr("style",'cursor:pointer'));
 						try{
-							if(!option.recovered || option.obsUnits){
+							if(station_not_recovered(option)){
 								if(!ifOffline(moment(option.updateTime))){
 									HuronRows += '<tr id="'+option.id+'" onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;>'+
 									'<td>'+checkAltID(option)+'</td>'+
@@ -224,7 +230,7 @@ function loadBuoySummary(){
 					else if (option.lake == "SUP") {
 						$('#SuperiorAcc').append($('<a>').click(function (){ PassStation(option.id,option.lat,option.lon);dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':option.id,'glbuoysAction':'click internal url'});}).text(option.id).attr("style",'cursor:pointer'));
 						try{
-							if(!option.recovered || option.obsUnits){
+							if(station_not_recovered(option)){
 								if(!ifOffline(moment(option.updateTime))){
 									SuperiorRows += '<tr id="'+option.id+'" onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;>'+
 									'<td>'+checkAltID(option)+'</td>'+
@@ -248,7 +254,7 @@ function loadBuoySummary(){
 					else if (option.lake == "ON") {
 						$('#OntarioAcc').append($('<a>').click(function (){ PassStation(option.id,option.lat,option.lon);dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':option.id,'glbuoysAction':'click internal url'});}).text(option.id).attr("style",'cursor:pointer'));
 						try{
-							if(!option.recovered || option.obsUnits){
+							if(station_not_recovered(option)){
 								if(!ifOffline(moment(option.updateTime))){
 									OntarioRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;>'+
 									'<td>'+checkAltID(option)+'</td>'+
@@ -272,7 +278,7 @@ function loadBuoySummary(){
                     else if (option.lake == "Other") {
                         $('#otherAcc').append($('<a>').click(function () { PassStation(option.id, option.lat, option.lon); dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'nav menu', 'glbuoysLabel': option.id, 'glbuoysAction': 'click internal url' }); }).text(option.id).attr("style", 'cursor:pointer'));
                         try {
-                            if (!option.recovered || option.obsUnits) {
+                            if (station_not_recovered(option)) {
                                 if (!ifOffline(moment(option.updateTime))) {
                                     otherRows += '<tr onclick=PassStation("' + option.id + '",' + option.lat + ',' + option.lon + ');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"' + option.id + '","glbuoysAction":"click_internal_url"}); style=cursor:pointer;>' +
                                         '<td>' + checkAltID(option) + '</td>' +
@@ -492,7 +498,21 @@ function initialize(lat, lon) {
             obs[i] = jsonObj[i].obsValues;
 			WQ[i] = jsonObj[i].WqOnly;
 			offline[i] = ifOffline(jsonObj[i].updateTime);
-			recovered[i] = jsonObj[i].recovered;
+		        var time_difference;
+			if (jsonObj[i].updateTime !== null) {
+                            try {
+                              time_difference = new Date() - new Date(jsonObj[i].updateTime);
+                            } catch {
+                              console.log("Can't parse update date for " + jsonObj[i].id);
+                              time_difference = null;
+                            }
+                        } else {
+                          time_difference = null;
+                        }
+                        // consider anything ten days or over as recovered
+                        var recovered_by_time_diff = (time_difference !== null
+                                                      && time_difference >= 864000000);
+			recovered[i] = jsonObj[i].recovered || recovered_by_time_diff;
         }
 		
 		map = new google.maps.Map(document.getElementById("map_canvas"), {

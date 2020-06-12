@@ -95,6 +95,7 @@ var initializeMapOL = function (objBuoys, actBuoyID) {
             wqOnly: objBuoy.WqOnly,
             obs: objBuoy.obsValues,
             offline: ifOffline(objBuoy.updateTime),
+            updateTime: objBuoy.updateTime,
             recovered: objBuoy.recovered,
             lon: objBuoy.lon,
             lat: objBuoy.lat,
@@ -349,13 +350,38 @@ function getMarkerType(f, buoy_id) {
 
     var mType = 'none';
 
+    var time_difference;
+    if (f.get("updateTime")) {
+      try {
+        time_difference = new Date() - new Date(f.get("updateTime"));
+      } catch {
+        console.log("Can't parse update date for " + buoy_id);
+        time_difference = null;
+      }
+    } else {
+       time_difference = null;
+    }
+
     if (!f.get('wqOnly')) {
         if (buoy_id !== '' && f.get('id') === buoy_id) {
             mType = 'active';
-        } else if (f.get('obs') && !f.get('offline')) {
-            mType = 'online';
-        } else if (f.get('obs') && f.get('offline')) {
-            mType = 'offline';
+        } else if (f.get('obs')) {
+          /* if buoy has been recovered, have it appear on the map as such
+             regardless of whether obs are current or not.  If measurements are older
+             than 10 days, also show as recovered */
+          if (f.get("recovered") || 
+              (time_difference !== null && time_difference >= 864000000)) {
+             return "recovered";
+          }
+	  if (f.get('offline')) {
+            mType = 'offline'; 
+	  } else {
+            mType = 'online'; 
+          }
+        /* This rule says if there are no observations
+	   then assume recovered.  This isn't a great heuristic
+	   considering old records are now fetched. Generally,
+	   one should probably use "recovered" instead */
         } else if (!f.get('obs')) {
             mType = 'recovered';
         }
