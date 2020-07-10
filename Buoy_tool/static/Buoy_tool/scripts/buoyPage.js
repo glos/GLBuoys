@@ -869,7 +869,7 @@ function loadbuoyinfo(ID, jsonObj) {
                             ADCPfig(ID, jsonObj[i].longName);
                         }
 
-						var parameterOrder = ['WSPD','GST','WDIR','WTMP','WVHT','MAXWVHT','WPRD','MWDIR','MWD','APD','CurSpd','CurDir','ATMP','PRES','SRAD','PAR','DEWP','pH','DISOXY','DIOSAT','SPCOND','COND','YCHLOR','YBGALG','TURB','fDOM','VBAT'];
+						var parameterOrder = ['WSPD','GST','WDIR','WTMP','WVHT','MAXWVHT','WPRD','MWDIR','MWD','APD','CurSpd','CurDir','ATMP','PRES','SRAD','PAR','DEWP','RH1','pH','DISOXY','DIOSAT','SPCOND','COND','YCHLOR','YBGALG','TURB','fDOM','VBAT'];
 						var excludedObs = ['DPD','TIDE','VIS','PTDY','DEPTH','OTMP','CHILL','HEAT','ICE','WSPD10','WSPD20'];
 						for (g = 0; g < parameterOrder.length; g++){
 							for (j = 0; j < jsonObj[i].obsLongName.length; j++) {
@@ -1201,7 +1201,7 @@ function reloadbuoyinfo() {
                             ADCPfig(ID);
                         }
 
-                        var parameterOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'MAXWVHT', 'WPRD', 'MWDIR', 'MWD', 'APD', 'CurSpd', 'CurDir', 'ATMP', 'PRES', 'SRAD', 'PAR', 'DEWP', 'pH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI', 'fDOM', 'VBAT'];
+                        var parameterOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'MAXWVHT', 'WPRD', 'MWDIR', 'MWD', 'APD', 'CurSpd', 'CurDir', 'ATMP', 'PRES', 'SRAD', 'PAR', 'DEWP', 'RH1', 'pH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI', 'fDOM', 'VBAT'];
                         for (g = 0; g < parameterOrder.length; g++) {
                             for (j = 0; j < jsonObj[i].obsLongName.length; j++) {
                                 if (jsonObj[i].obsID[j] === parameterOrder[g] && jsonObj[i].obsValues[j] !== null && jsonObj[i].obsValues[j] !== 'NULL') {
