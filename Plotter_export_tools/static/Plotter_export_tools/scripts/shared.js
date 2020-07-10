@@ -525,7 +525,9 @@ $(function () {
                     var param_id = arrParamID[p];
 
                     if (!(param_id in objParams)) {
-                        if (_objParamNames[param_id]) {
+												//Added max_wave_height exclusion 9/18/2019 because causing break in data export all b/c does not exist on thredds anymore.
+												if (param_id == 'max_wave_height') {continue}
+                        else if (_objParamNames[param_id]) {
                             objParams[param_id] = _objParamNames[param_id];
 
                         } else {            // Not in the lookup list
