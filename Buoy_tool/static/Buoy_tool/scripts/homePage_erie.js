@@ -151,7 +151,7 @@ function loadBuoySummary(){
 				
 				moment.tz.setDefault('America/New_York'); //set time zone to eastern
 				
-				if (option.WqOnly || option.WqAndWx) {
+				if (option.WqOnly || option.WqAndWx && option.lake == "ER") {
 					$('#ErieAcc').append($('<a>').click(function () { PassStation(option.id,option.lat,option.lon);dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':option.id,'glbuoysAction':'click internal url'});}).text(option.id).attr("style",'cursor:pointer'));	//Remove when using one buoy.html
 					try{
 						if(!option.recovered || option.obsUnits){
