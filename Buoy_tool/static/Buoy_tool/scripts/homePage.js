@@ -14,7 +14,8 @@ function ifOffline(time){
 				var currentTime = moment();
 				var dateNum = moment(time);
 				var hourDiff = moment.duration(currentTime.diff(dateNum)).asHours();
-				if (hourDiff > 6) {
+                                // 30 days is automatically considered recovered
+				if (hourDiff > 6 && hourDiff < 24 * 30) {
 					return true;
 				}else{
 					return false;
@@ -392,9 +393,9 @@ function initialize(lat, lon) {
                         } else {
                           time_difference = null;
                         }
-                        // consider anything ten days or over as recovered
+                        // consider anything 30 days or over as recovered
                         var recovered_by_time_diff = (time_difference !== null
-                                                      && time_difference >= 864000000);
+                                                      && time_difference >= 864000000 * 3);
 			recovered[i] = jsonObj[i].recovered || recovered_by_time_diff;
         }
 		
