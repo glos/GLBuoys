@@ -21,5 +21,4 @@ WebOb==1.7.3
 wfastcgi==3.0.0
 xlwt==1.3.0
 zope.interface==4.4.3
-# add Bob's branch of Sofar API client for support of temperature data on spotters
--e 'git+https://github.com/Bobfrat/sofar-api-client-python.git@surface_temp#egg=pysofar'
+pysofar>=0.1.8
