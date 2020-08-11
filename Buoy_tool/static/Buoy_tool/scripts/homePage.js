@@ -133,6 +133,15 @@ function loadBuoySummary(){
 			var HuronRows;
             var OntarioRows;
             var otherRows;
+                        var lakeRows = {
+                                        MI: {rowElem: "#MichiganAcc", rows: "", name: "Lake Michigan"},
+                                        SUP: {rowElem: "#SuperiorAcc", rows: "", name: "Lake Superior"},
+                                        ER: {rowElem: "#ErieAcc", rows: "", name: "Lake Erie"},
+					HU: {rowElem: "#Huronacc", rows: "", name: "Lake Huron"},
+                                        ON: {rowElem: "#SuperiorAcc", rows: "", name: "Lake Ontario"},
+                                        Other: {rowElem: "#otherAcc", rows: "", name: "Other Lakes"}
+				       }
+
 
 			$.each(jsonObj, function (i, option) {
 				function checkMissing(value){
@@ -154,13 +163,15 @@ function loadBuoySummary(){
 				
 				moment.tz.setDefault('America/New_York'); //set time zone to eastern
 				
+                                var lakeObj;
 				if (!option.WqOnly){
-					if (option.lake == "ER") {
-						$('#ErieAcc').append($('<a>').click(function () { PassStation(option.id,option.lat,option.lon);dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':option.id,'glbuoysAction':'click internal url'});}).text(option.id).attr("style",'cursor:pointer'));	//Remove when using one buoy.html
+					if (option.lake in lakeRows) {
+                                           lakeObj = lakeRows[option.lake]
+						$(lakeObj.rowElem).append($('<a>').click(function () { PassStation(option.id,option.lat,option.lon);dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':option.id,'glbuoysAction':'click internal url'});}).text(option.id).attr("style",'cursor:pointer'));	//Remove when using one buoy.html
 						try{
 							if(station_not_recovered(option)){
 								if(!ifOffline(moment(option.updateTime))){
-									ErieRows += '<tr id="'+option.id+'" onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;>'+
+									lakeObj.rows += '<tr id="'+option.id+'" onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;>'+
 									'<td>'+checkAltID(option)+'</td>'+
 									'<td>'+option.longName+'</td>'+
 									'<td>'+option.buoyOwners+'</td>'+
@@ -170,149 +181,21 @@ function loadBuoySummary(){
 									'<td class="homeWindSpDir" style="text-align:left;width:35px;">&nbsp;'+DegreeToCardinal(checkMissing(option.obsValues[option.obsID.indexOf('WDIR')]))+'</td>'+
 									'<td class="homeWaveHeight">'+checkMissing(option.obsValues[option.obsID.indexOf('WVHT')])+'</td><tr>';
 								}else{
-									ErieRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Data older than 6 hours</i></td></tr>';
+									lakeObj.rows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Data older than 6 hours</i></td></tr>';
 								}
 							}else{
-								ErieRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
+								lakeObj.rows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
 							}
 						} catch (err) {
-							ErieRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
+							lakeObj.rows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
                         }
 					}
-					else if (option.lake == "MI") {
-						$('#MichiganAcc').append($('<a>').click(function() { PassStation(option.id,option.lat,option.lon);dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':option.id,'glbuoysAction':'click internal url'});}).text(option.id).attr("style",'cursor:pointer')); //Remove when using one buoy.html
-						try{
-							if(station_not_recovered(option)){
-								if(!ifOffline(moment(option.updateTime))){
-									MichiganRows += '<tr id="'+option.id+'" onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;>'+
-									'<td>'+checkAltID(option)+'</td>'+
-									'<td>'+option.longName+'</td>'+
-									'<td>'+option.buoyOwners+'</td>'+
-									'<td style="text-align:right;">'+moment(option.updateTime).format("LT") + '</td>'+
-									'<td style="text-align:right;width:65px;padding-right:12px">'+checkMissing(option.obsValues[option.obsID.indexOf('WTMP')])+'</td>'+
-									'<td class="homeWindSpDir" style="text-align:right;width:35px;">'+checkMissing(option.obsValues[option.obsID.indexOf('WSPD')])+'</td>'+
-									'<td class="homeWindSpDir" style="text-align:left;width:35px;">&nbsp;'+DegreeToCardinal(checkMissing(option.obsValues[option.obsID.indexOf('WDIR')]))+'</td>'+
-									'<td class="homeWaveHeight">'+checkMissing(option.obsValues[option.obsID.indexOf('WVHT')])+'</td><tr>';
-								}else{
-									MichiganRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Data older than 6 hours</i></td></tr>';
-								}
-							}else{
-								MichiganRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
-							}
-						} catch (err) {
-							MichiganRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
-						}
-					}
-					else if (option.lake == "HU") {
-						$('#HuronAcc').append($('<a>').click(function(){ PassStation(option.id,option.lat,option.lon);dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':option.id,'glbuoysAction':'click internal url'});}).text(option.id).attr("style",'cursor:pointer'));
-						try{
-							if(station_not_recovered(option)){
-								if(!ifOffline(moment(option.updateTime))){
-									HuronRows += '<tr id="'+option.id+'" onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;>'+
-									'<td>'+checkAltID(option)+'</td>'+
-									'<td>'+option.longName+'</td>'+
-									'<td>'+option.buoyOwners+'</td>'+
-									'<td style="text-align:right;">'+moment(option.updateTime).format("LT") + '</td>'+
-									'<td style="text-align:right;width:65px;padding-right:12px">'+checkMissing(option.obsValues[option.obsID.indexOf('WTMP')])+'</td>'+
-									'<td class="homeWindSpDir" style="text-align:right;width:35px;">'+checkMissing(option.obsValues[option.obsID.indexOf('WSPD')])+'</td>'+
-									'<td class="homeWindSpDir" style="text-align:left;width:35px;">&nbsp;'+DegreeToCardinal(checkMissing(option.obsValues[option.obsID.indexOf('WDIR')]))+'</td>'+
-									'<td class="homeWaveHeight">'+checkMissing(option.obsValues[option.obsID.indexOf('WVHT')])+'</td><tr>';
-								}else{
-									HuronRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Data older than 6 hours</i></td></tr>';
-								}
-							}else{
-								HuronRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
-							}
-						} catch (err) {
-							HuronRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
-						}
-					}
-					else if (option.lake == "SUP") {
-						$('#SuperiorAcc').append($('<a>').click(function (){ PassStation(option.id,option.lat,option.lon);dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':option.id,'glbuoysAction':'click internal url'});}).text(option.id).attr("style",'cursor:pointer'));
-						try{
-							if(station_not_recovered(option)){
-								if(!ifOffline(moment(option.updateTime))){
-									SuperiorRows += '<tr id="'+option.id+'" onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;>'+
-									'<td>'+checkAltID(option)+'</td>'+
-									'<td>'+option.longName+'</td>'+
-									'<td>'+option.buoyOwners+'</td>'+
-									'<td style="text-align:right;">'+moment(option.updateTime).format("LT") + '</td>'+
-									'<td style="text-align:right;width:65px;padding-right:12px">'+checkMissing(option.obsValues[option.obsID.indexOf('WTMP')])+'</td>'+
-									'<td class="homeWindSpDir" style="text-align:right;width:35px;">'+checkMissing(option.obsValues[option.obsID.indexOf('WSPD')])+'</td>'+
-									'<td class="homeWindSpDir" style="text-align:left;width:35px;">&nbsp;'+DegreeToCardinal(checkMissing(option.obsValues[option.obsID.indexOf('WDIR')]))+'</td>'+
-									'<td class="homeWaveHeight">'+checkMissing(option.obsValues[option.obsID.indexOf('WVHT')])+'</td><tr>';
-								}else{
-									SuperiorRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Data older than 6 hours</i></td></tr>';
-								}
-							}else{
-								SuperiorRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
-							}
-						} catch (err) {
-							SuperiorRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
-						}
-					}
-					else if (option.lake == "ON") {
-						$('#OntarioAcc').append($('<a>').click(function (){ PassStation(option.id,option.lat,option.lon);dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':option.id,'glbuoysAction':'click internal url'});}).text(option.id).attr("style",'cursor:pointer'));
-						try{
-							if(station_not_recovered(option)){
-								if(!ifOffline(moment(option.updateTime))){
-									OntarioRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;>'+
-									'<td>'+checkAltID(option)+'</td>'+
-									'<td>'+option.longName+'</td>'+
-									'<td>'+option.buoyOwners+'</td>'+
-									'<td style="text-align:right;">'+moment(option.updateTime).format("LT") + '</td>'+
-									'<td style="text-align:right;width:65px;padding-right:12px">'+checkMissing(option.obsValues[option.obsID.indexOf('WTMP')])+'</td>'+
-									'<td class="homeWindSpDir" style="text-align:right;width:35px;">'+checkMissing(option.obsValues[option.obsID.indexOf('WSPD')])+'</td>'+
-									'<td class="homeWindSpDir" style="text-align:left;width:35px;">&nbsp;'+DegreeToCardinal(checkMissing(option.obsValues[option.obsID.indexOf('WDIR')]))+'</td>'+
-									'<td class="homeWaveHeight">'+checkMissing(option.obsValues[option.obsID.indexOf('WVHT')])+'</td><tr>';
-								}else{
-									OntarioRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Data older than 6 hours</i></td></tr>';
-								}
-							}else{
-								OntarioRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
-							}
-						} catch (err) {
-							OntarioRows += '<tr onclick=PassStation("'+option.id+'",'+option.lat+','+option.lon+');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"'+option.id+'","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>'+checkAltID(option)+'</td><td>'+option.longName+'</td><td>'+option.buoyOwners+'</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
-						}
-                    }
-                    else if (option.lake == "Other") {
-                        $('#otherAcc').append($('<a>').click(function () { PassStation(option.id, option.lat, option.lon); dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'nav menu', 'glbuoysLabel': option.id, 'glbuoysAction': 'click internal url' }); }).text(option.id).attr("style", 'cursor:pointer'));
-                        try {
-                            if (station_not_recovered(option)) {
-                                if (!ifOffline(moment(option.updateTime))) {
-                                    otherRows += '<tr onclick=PassStation("' + option.id + '",' + option.lat + ',' + option.lon + ');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"' + option.id + '","glbuoysAction":"click_internal_url"}); style=cursor:pointer;>' +
-                                        '<td>' + checkAltID(option) + '</td>' +
-                                        '<td>' + option.longName + '</td>' +
-                                        '<td>' + option.buoyOwners + '</td>' +
-                                        '<td style="text-align:right;">' + moment(option.updateTime).format("LT") + '</td>' +
-                                        '<td style="text-align:right;width:65px;padding-right:12px">' + checkMissing(option.obsValues[option.obsID.indexOf('WTMP')]) + '</td>' +
-                                        '<td class="homeWindSpDir" style="text-align:right;width:35px;">' + checkMissing(option.obsValues[option.obsID.indexOf('WSPD')]) + '</td>' +
-                                        '<td class="homeWindSpDir" style="text-align:left;width:35px;">&nbsp;' + DegreeToCardinal(checkMissing(option.obsValues[option.obsID.indexOf('WDIR')])) + '</td>' +
-                                        '<td class="homeWaveHeight">' + checkMissing(option.obsValues[option.obsID.indexOf('WVHT')]) + '</td><tr>';
-                                } else {
-                                    otherRows += '<tr onclick=PassStation("' + option.id + '",' + option.lat + ',' + option.lon + ');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"' + option.id + '","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>' + checkAltID(option) + '</td><td>' + option.longName + '</td><td>' + option.buoyOwners + '</td><td class=w3-center colspan=5><i>Data older than 6 hours</i></td></tr>';
-                                }
-                            } else {
-                                otherRows += '<tr onclick=PassStation("' + option.id + '",' + option.lat + ',' + option.lon + ');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"' + option.id + '","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>' + checkAltID(option) + '</td><td>' + option.longName + '</td><td>' + option.buoyOwners + '</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
-                            }
-                        } catch (err) {
-                            otherRows += '<tr onclick=PassStation("' + option.id + '",' + option.lat + ',' + option.lon + ');dataLayer.push({"event":"glbuoysEvent","glbuoysCategory":"buoy_obs_list","glbuoysLabel":"' + option.id + '","glbuoysAction":"click_internal_url"}); style=cursor:pointer;><td>' + checkAltID(option) + '</td><td>' + option.longName + '</td><td>' + option.buoyOwners + '</td><td class=w3-center colspan=5><i>Recovered for the season</i></td></tr>';
-                        }
-                    }
 				}
 			});
-			$('#buoySummary tbody').append('<tr class="w3-center w3-theme-d4 w3-hoverable"><td colspan=8 class="w3-center w3-blue-pale">Lake Michigan</td></tr>');
-			$('#buoySummary tbody').append(MichiganRows);
-			$('#buoySummary tbody').append('<tr class="w3-center w3-theme-d4 w3-hoverable"><td colspan=8 class="w3-center w3-blue-pale">Lake Superior</td></tr>');
-			$('#buoySummary tbody').append(SuperiorRows);
-			$('#buoySummary tbody').append('<tr class="w3-center w3-theme-d4 w3-hoverable"><td colspan=8 class="w3-center w3-blue-pale">Lake Erie</td></tr>');
-			$('#buoySummary tbody').append(ErieRows);
-			$('#buoySummary tbody').append('<tr class="w3-center w3-theme-d4 w3-hoverable"><td colspan=8 class="w3-center w3-blue-pale">Lake Huron</td></tr>');
-			$('#buoySummary tbody').append(HuronRows);
-			$('#buoySummary tbody').append('<tr class="w3-center w3-theme-d4 w3-hoverable"><td colspan=8 class="w3-center w3-blue-pale">Lake Ontario</td></tr>');
-            $('#buoySummary tbody').append(OntarioRows);
-            $('#buoySummary tbody').append('<tr class="w3-center w3-theme-d4 w3-hoverable"><td colspan=8 class="w3-center w3-blue-pale">Other Lakes</td></tr>');
-            $('#buoySummary tbody').append(otherRows);
+                        for (var key of Object.keys(lakeRows)) {
+			  $('#buoySummary tbody').append('<tr class="w3-center w3-theme-d4 w3-hoverable"><td colspan=8 class="w3-center w3-blue-pale">' + lakeRows[key].name + '</td></tr>');
+			  $('#buoySummary tbody').append(lakeRows[key].rows);
+                        }
 			$('#buoySummary thead').append('<tr id="tableHeader">' +
 															'<td>ID</td>' +
 															'<td>Location</td>' +
