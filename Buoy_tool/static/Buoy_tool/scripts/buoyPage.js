@@ -32,22 +32,23 @@ function ifOffline(time){
 
 
 //--------------------------Load Banner News and Buoy alerts if available-----------------------------
-google.charts.load('current', {
-  callback: getBannerNews,
-  packages: ['corechart']
-});
-google.charts.load('current', {
-  callback: getBuoyAlerts,
-  packages: ['corechart']
-});
-var buoyAlert;
-var bannerNews;
-function getBannerNews(){
-	var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1pNrNz0BWd_ckJfBmTJbl4Vf8CdGq2rlWLL_1vRAqqco/edit#gid=0/gviz/tq?tq=');
-	query.setQuery('select B where A = "bannerNews"');
-	query.send(BannerNewsResponse);
-}
-function BannerNewsResponse(response) {
+try{
+	google.charts.load('current', {
+		callback: getBannerNews,
+		packages: ['corechart']
+	});
+	google.charts.load('current', {
+		callback: getBuoyAlerts,
+		packages: ['corechart']
+	});
+	var buoyAlert;
+	var bannerNews;
+	function getBannerNews(){
+		var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1pNrNz0BWd_ckJfBmTJbl4Vf8CdGq2rlWLL_1vRAqqco/edit#gid=0/gviz/tq?tq=');
+		query.setQuery('select B where A = "bannerNews"');
+		query.send(BannerNewsResponse);
+	}
+	function BannerNewsResponse(response) {
     if (response.isError()) {
         console.log('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
         return;
@@ -65,19 +66,19 @@ function BannerNewsResponse(response) {
 				$('#bannerNews').append('<p>'+bannerNews+'</p>');
 				$('#main').attr('style','margin-top:70px')
 			}
-}
+	}
 
-function getBuoyAlerts(){
-	var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1pNrNz0BWd_ckJfBmTJbl4Vf8CdGq2rlWLL_1vRAqqco/edit#gid=0/gviz/tq?tq=');
-	var ID;
-	var url = window.location.href;
-	var arr = url.split("/");
-	ID = arr[3];
-	query.setQuery('select B where A = "'+ID+'"');
-	query.send(BuoyAlertsResponse);
-}
+	function getBuoyAlerts(){
+		var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1pNrNz0BWd_ckJfBmTJbl4Vf8CdGq2rlWLL_1vRAqqco/edit#gid=0/gviz/tq?tq=');
+		var ID;
+		var url = window.location.href;
+		var arr = url.split("/");
+		ID = arr[3];
+		query.setQuery('select B where A = "'+ID+'"');
+		query.send(BuoyAlertsResponse);
+	}
 
-function BuoyAlertsResponse(response2) {
+	function BuoyAlertsResponse(response2) {
     if (response2.isError()) {
         console.log('Error in query: ' + response2.getMessage() + ' ' + response2.getDetailedMessage());
         return;
@@ -94,7 +95,9 @@ function BuoyAlertsResponse(response2) {
 						$('#buoyAlert').attr("style", 'max-width:800px; margin: 0 auto;');
 						$('#buoyAlert').append('<p style="font-size:14px">' + buoyAlert + '</p>');
 					}
+	}
 }
+catch(err){console.log(err)}
 //----------------------------------------------------------------------------------------
 
 
@@ -856,7 +859,7 @@ function loadbuoyinfo(ID, jsonObj) {
                             ADCPfig(ID, jsonObj[i].longName);
                         }
 
-						var parameterOrder = ['WSPD','GST','WDIR','WTMP','WVHT','MAXWVHT','WPRD','MWDIR','MWD','APD','CurSpd','CurDir','ATMP','PRES','SRAD','PAR','DEWP','pH','DISOXY','DIOSAT','SPCOND','COND','YCHLOR','YBGALG','TURB','fDOM','VBAT'];
+						var parameterOrder = ['WSPD','GST','WDIR','WTMP','WVHT','MAXWVHT','WPRD','MWDIR','MWD','APD','CurSpd','CurDir','ATMP','PRES','SRAD','PAR','DEWP','RH1','pH','DISOXY','DIOSAT','SPCOND','COND','YCHLOR','YBGALG','TURB','fDOM','VBAT'];
 						var excludedObs = ['DPD','TIDE','VIS','PTDY','DEPTH','OTMP','CHILL','HEAT','ICE','WSPD10','WSPD20'];
 						for (g = 0; g < parameterOrder.length; g++){
 							for (j = 0; j < jsonObj[i].obsLongName.length; j++) {
@@ -983,7 +986,7 @@ function loadbuoyinfo(ID, jsonObj) {
 							$('a#archive').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'buoycam','glbuoysLabel':ID,'glbuoysAction':'click_external_url'});});
 						}
 					}else{
-						$('#recovered').addClass('w3-panel w3-center w3-pale-red w3-small').append('<h6>' + jsonObj[i].longName + ' (' + ID + ') has been recovered for 2018.</h6>');
+						$('#recovered').addClass('w3-panel w3-center w3-pale-red w3-small').append('<h6>' + jsonObj[i].longName + ' (' + ID + ') is currently unavailable.</h6>');
 
                         //Check if buoy has wave height. If not print forecasted wave height and allow user to view forecast wave height.
                         if ($.inArray('WVHT', jsonObj[i].obsID) < 0 && jsonObj[i].GLCFS) { //returns 1 if exist and -1 if doesn't exist
@@ -1188,7 +1191,7 @@ function reloadbuoyinfo() {
                             ADCPfig(ID);
                         }
 
-                        var parameterOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'MAXWVHT', 'WPRD', 'MWDIR', 'MWD', 'APD', 'CurSpd', 'CurDir', 'ATMP', 'PRES', 'SRAD', 'PAR', 'DEWP', 'pH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI', 'fDOM', 'VBAT'];
+                        var parameterOrder = ['WSPD', 'GST', 'WDIR', 'WTMP', 'WVHT', 'MAXWVHT', 'WPRD', 'MWDIR', 'MWD', 'APD', 'CurSpd', 'CurDir', 'ATMP', 'PRES', 'SRAD', 'PAR', 'DEWP', 'RH1', 'pH', 'DISOXY', 'DIOSAT', 'SPCOND', 'COND', 'YCHLOR', 'YBGALG', 'YTURBI', 'fDOM', 'VBAT'];
                         for (g = 0; g < parameterOrder.length; g++) {
                             for (j = 0; j < jsonObj[i].obsLongName.length; j++) {
                                 if (jsonObj[i].obsID[j] === parameterOrder[g] && jsonObj[i].obsValues[j] !== null && jsonObj[i].obsValues[j] !== 'NULL') {
@@ -1349,12 +1352,13 @@ function reloadbuoyinfo() {
 }
 
 function callfooterInfo(ID){
-    $('footer p').append('<p>Please click <a id="comments" href="https://docs.google.com/forms/d/e/1FAIpQLSdYV4V0Dw6CpZHZRzZRgEyoRJb8erSdoSBQgLCtlXc-jLN9kQ/viewform?usp=pp_url&entry.1512652591&entry.578184834&entry.1388061372&entry.1336006565=' + ID +'" target="_blank">here</a> for assistance or to provide suggestions for improvement. Return to GLBuoys <a id="homepage" href="https://glbuoys.glos.us">Homepage</a>.</p>');
-    $('a#comments').click(function () { dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'feedback', 'glbuoysLabel': 'mailto:dmac@glos.us', 'glbuoysAction': 'click_external_url' }); });
-    $('a#comments').click(function () { dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'footer', 'glbuoysLabel': 'http://glbuoys.glos.us', 'glbuoysAction': 'click_internal_url' }); });
-	var googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdYV4V0Dw6CpZHZRzZRgEyoRJb8erSdoSBQgLCtlXc-jLN9kQ/viewform?usp=pp_url&entry.1512652591&entry.578184834&entry.1388061372&entry.1336006565='+ID+'';
-    $('button#feedback').click(function() {window.open(googleFormUrl,'_blank')});
-    $('button#feedback').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':'mailto:dmac@glos.us','glbuoysAction':'click_external_url'});});
+    //$('footer p').append('<p>Please click <a id="comments" href="https://docs.google.com/forms/d/e/1FAIpQLSdYV4V0Dw6CpZHZRzZRgEyoRJb8erSdoSBQgLCtlXc-jLN9kQ/viewform?usp=pp_url&entry.1512652591&entry.578184834&entry.1388061372&entry.1336006565=' + ID +'" target="_blank">here</a> for assistance or to provide suggestions for improvement. Return to GLBuoys <a id="homepage" href="https://glbuoys.glos.us">Homepage</a>.</p>');
+		$('footer p').append('<p>Return to GLBuoys <a id="homepage" href="https://glbuoys.glos.us">Homepage</a>.</p>');
+    //$('a#comments').click(function () { dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'feedback', 'glbuoysLabel': 'mailto:dmac@glos.us', 'glbuoysAction': 'click_external_url' }); });
+    //$('a#comments').click(function () { dataLayer.push({ 'event': 'glbuoysEvent', 'glbuoysCategory': 'footer', 'glbuoysLabel': 'http://glbuoys.glos.us', 'glbuoysAction': 'click_internal_url' }); });
+		//var googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdYV4V0Dw6CpZHZRzZRgEyoRJb8erSdoSBQgLCtlXc-jLN9kQ/viewform?usp=pp_url&entry.1512652591&entry.578184834&entry.1388061372&entry.1336006565='+ID+'';
+    //$('button#feedback').click(function() {window.open(googleFormUrl,'_blank')});
+    //$('button#feedback').click(function() {dataLayer.push({'event':'glbuoysEvent','glbuoysCategory':'nav menu','glbuoysLabel':'mailto:dmac@glos.us','glbuoysAction':'click_external_url'});});
 }
 
 function PassStation(stationID,lat,lon) {																 
