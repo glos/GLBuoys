@@ -381,18 +381,8 @@ function loadbuoyinfo(ID, jsonObj) {
 						document.getElementById("stationID").innerHTML = "" + jsonObj[i].longName + " (" + jsonObj[i].id + ")";
 						var dateNum = moment(jsonObj[i].updateTime);
 						var hourDiff = moment.duration(currentTime.diff(dateNum)).asHours();
-						if (hourDiff < 6) {  //assumes time from json is local. Checks if data is less than 1 hour old
-							document.getElementById("stationTime").style.color = "#337ab7"
-							document.getElementById("stationTime").innerHTML = ""+dateNum.format("LT")+" EDT&nbsp;&nbsp;"+dateNum.format("ddd, MMM D YYYY")+ ""
-						}
-						else if (hourDiff > 6 && hourDiff < 24) {  //assumes time from json is local. Checks if data is less than 6 hour old
-							document.getElementById("stationTime").style.color = "#FFC900"
-							document.getElementById("stationTime").innerHTML = ""+dateNum.format("LT")+" EDT&nbsp;&nbsp;"+dateNum.format("ddd, MMM D YYYY")+ " (>6 hours ago)"
-						}
-						else {
-							document.getElementById("stationTime").style.color = "#f70000"
-							document.getElementById("stationTime").innerHTML = ""+dateNum.format("LT")+" EDT&nbsp;&nbsp;"+dateNum.format("ddd, MMM D YYYY")+ " (>1 day ago)"
-						}
+						document.getElementById("stationTime").style.color = "#f70000"
+						document.getElementById("stationTime").innerHTML = dateNum.format("LT")+" EDT&nbsp;&nbsp;"+dateNum.format("ddd, MMM D YYYY")
 						var columnSpan  = 1;
 						if (jsonObj[i].thermistorValues.length>1 && !isNaN(jsonObj[i].thermistorValues[0])){ //Check to make sure there are multiple temperature nodes and first two depths are not missing
 							columnSpan = 2;
