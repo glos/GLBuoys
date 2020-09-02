@@ -21,10 +21,12 @@ from Plotter_export_tools.views import plotter, plotter_get, getTSData, export, 
 
 # Uncomment the next lines to enable the admin:
 # from django.conf.urls import include
-# from django.contrib import admin
+from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = [
+    # Admin
+    url(r'^admin/', admin.site.urls),
     # Home page:
     url(r'^$', Buoy_tool.views.home, name='home'),
 
